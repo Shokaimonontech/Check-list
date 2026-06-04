@@ -63,7 +63,7 @@
         .menu-item.active { background: var(--sakura-dark); color: #fff; }
 
         /* --- KHU VỰC CHÍNH --- */
-        .main-content { flex: 1; max-width: 800px; margin: 0 auto; padding: 20px; padding-top: 75px; width: 100%; box-sizing: border-box; }
+        .main-content { flex: 1; max-width: 900px; margin: 0 auto; padding: 20px; padding-top: 75px; width: 100%; box-sizing: border-box; }
         h1 { text-align: center; font-size: 1.8rem; margin-bottom: 5px; color: #d63384; }
          
         /* Bộ điều hướng banner cải tiến */
@@ -87,29 +87,15 @@
         }
         .date-banner:active { transform: scale(0.98); }
 
-        /* Giao diện đổi màu khi xem tương lai (Ngày mai) */
-        .date-navigator.future-view {
-            background: #f1f5f9 !important;
-        }
-        .date-navigator.future-view .date-banner {
-            background: #cbd5e1 !important; color: #475569 !important;
-        }
-        .date-navigator.future-view .nav-arrow-btn {
-            background: #e2e8f0 !important;
-        }
+        .date-navigator.future-view { background: #f1f5f9 !important; }
+        .date-navigator.future-view .date-banner { background: #cbd5e1 !important; color: #475569 !important; }
+        .date-navigator.future-view .nav-arrow-btn { background: #e2e8f0 !important; }
 
-        /* Giao diện đổi màu khi xem quá khứ (Hôm qua) */
-        .date-navigator.past-view {
-            background: #fdf4ff !important;
-        }
-        .date-navigator.past-view .date-banner {
-            background: #f3e8ff !important; color: #6b21a8 !important;
-        }
-        .date-navigator.past-view .nav-arrow-btn {
-            background: #fae8ff !important;
-        }
+        .date-navigator.past-view { background: #fdf4ff !important; }
+        .date-navigator.past-view .date-banner { background: #f3e8ff !important; color: #6b21a8 !important; }
+        .date-navigator.past-view .nav-arrow-btn { background: #fae8ff !important; }
 
-        /* Hộp thông tin Tiện ích (Đồng hồ + Thời tiết) */
+        /* Hộp thông tin Tiện ích */
         .widget-box {
             background: #fff; border: 2px solid #000; border-radius: 15px;
             padding: 10px; margin-bottom: 20px; box-shadow: 0 3px 0 #000;
@@ -117,6 +103,7 @@
         }
         .live-clock-box { font-size: 0.9rem; font-weight: bold; color: #333; display: flex; align-items: center; gap: 5px; }
         .weather-box { font-size: 0.9rem; font-weight: bold; color: #d63384; display: flex; align-items: center; gap: 5px; }
+        .location-box { font-size: 0.9rem; font-weight: bold; color: #0068FF; display: flex; align-items: center; gap: 5px; }
 
         /* --- THANH TIẾN ĐỘ --- */
         .progress-container {
@@ -147,11 +134,15 @@
             padding: 15px; margin-bottom: 25px; box-shadow: 0 4px 0 #000; display: none;
         }
         .calendar-header { text-align: center; font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
-        .grid-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+        .grid-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; }
         .grid-months { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .cal-btn { padding: 10px 5px; background: #fff; border: 2px solid #000; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 0.9rem; text-align: center; }
+        .cal-btn { padding: 10px 5px; background: #fff; border: 2px solid #000; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 0.9rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;}
         .cal-btn.active { background: var(--sakura-pink); }
         .cal-btn.has-data { border: 2px dashed var(--sakura-dark); background: #FFF0F0; }
+        .cal-btn span.day-name { font-size: 0.8rem; color: #d63384; }
+        .cal-btn span.lunar-date { font-size: 0.75rem; color: #666; font-style: italic; }
+        
+        .weekday-header { font-weight: bold; font-size: 0.85rem; color: #333; padding-bottom: 5px; border-bottom: 1px dashed #ccc; }
 
         /* --- CÁC HỘP CHECKLIST --- */
         .card {
@@ -183,6 +174,7 @@
         .inline-task-box.completed { background: #e2fcd4; color: #666; text-decoration: line-through; border-color: #777; }
          
         .future-disabled { opacity: 0.65; cursor: not-allowed !important; pointer-events: none; }
+        .past-disabled { opacity: 0.7; cursor: not-allowed !important; pointer-events: none; background: #f1f5f9; }
 
         .prep-text-desc { font-size: 0.8rem; color: #d63384; font-style: italic; display: block; margin-top: 2px; font-weight: normal; text-decoration: none !important; }
 
@@ -209,21 +201,25 @@
         .resource-body { display: none; margin-top: 12px; }
         .resource-section.open .resource-body { display: block; }
 
-        .res-input-group { display: flex; gap: 8px; margin-bottom: 15px; }
-        .res-input-group input { flex: 1; padding: 10px; border: 2px solid #000; border-radius: 12px; font-weight: bold; }
-        .res-btn { background: var(--sakura-pink); border: 2px solid #000; border-radius: 12px; padding: 0 15px; font-weight: bold; cursor: pointer; }
+        .res-input-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+        .res-input-group input, .res-input-group select { flex: 1; padding: 10px; border: 2px solid #000; border-radius: 12px; font-weight: bold; min-width: 150px;}
+        .res-btn { background: var(--sakura-pink); border: 2px solid #000; border-radius: 12px; padding: 10px 15px; font-weight: bold; cursor: pointer; }
         .res-list { list-style: none; padding: 0; margin: 0; }
         .res-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px dashed #ccc; font-weight: 600; }
         .res-item a { color: var(--zalo-color); text-decoration: none; word-break: break-all; }
         .res-item a:hover { text-decoration: underline; }
 
-        /* Bảng REMOTE */
-        .remote-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .remote-table th, .remote-table td { border: 2px solid #000; padding: 8px; text-align: left; font-weight: bold; font-size: 0.85rem; }
+        /* Bảng Tài Nguyên Mới */
+        .remote-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem;}
+        .remote-table th, .remote-table td { border: 2px solid #000; padding: 8px; text-align: left; font-weight: bold; }
         .remote-table th { background: var(--sakura-pink); }
         .remote-table tr.completed td { background: #e2fcd4; text-decoration: line-through; color: #666; }
         .remote-table tr.completed td a { color: #666; text-decoration: line-through; }
         .remote-table input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: #2ecc71; }
+        
+        .idea-form-box { background: #FFF0F0; border: 2px dashed var(--sakura-dark); border-radius: 10px; padding: 10px; margin-bottom: 15px;}
+        .idea-form-row { display: flex; gap: 8px; margin-bottom: 8px;}
+        .idea-form-row input, .idea-form-row select { flex: 1; padding: 8px; border: 1px solid #000; border-radius: 6px; font-weight: bold;}
          
         .btn-copy-mini {
             background: #ffe066; border: 1px solid #000; border-radius: 6px;
@@ -267,8 +263,9 @@
         </div>
 
         <div class="widget-box" id="widget-box-container">
-            <div class="live-clock-box">🕒 Giờ hiện tại: <span id="live-clock">00:00:00</span></div>
-            <div class="weather-box">🌤️ Trạng thái: <span id="live-weather">31°C • Nắng nhẹ 🌸</span></div>
+            <div class="location-box">📍 Vị trí: Lộc Thuận, Vĩnh Long</div>
+            <div class="live-clock-box">🕒 Giờ: <span id="live-clock">00:00:00</span></div>
+            <div class="weather-box">🌤️ <span id="live-weather">31°C • Nắng đẹp</span></div>
         </div>
 
         <button class="btn-undo-delete" id="btn-undo-box" onclick="undoDeleteData()">↩️ Bấm vào đây để QUAY LẠI (Khôi phục dữ liệu vừa xóa)</button>
@@ -296,13 +293,62 @@
         </div>
 
         <div class="resources-box" id="resources-box">
+            
+            <div class="resource-section" id="res-sec-ideas">
+                <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-ideas')">
+                    <h3>📌 Bài Lưu Chuẩn Bị Dịch (Link tự chia cột)</h3><span>▼</span>
+                </div>
+                <div class="resource-body">
+                    <div class="idea-form-box">
+                        <div style="font-size: 0.8rem; color: #d63384; margin-bottom: 10px; font-weight: bold;">✨ BƯỚC 1: Dán link vào đây, hệ thống sẽ tự phân tích Nền tảng & Ngôn ngữ:</div>
+                        <input type="text" id="idea-input-link" placeholder="Dán đường link vào đây..." style="width: 100%; padding: 8px; border: 2px solid #000; border-radius: 8px; font-weight:bold; margin-bottom:10px;" oninput="autoParseLink()">
+                        
+                        <div class="idea-form-row">
+                            <input type="text" id="idea-input-title" placeholder="Tiêu đề bài viết (Em tự gõ nhé)...">
+                            <input type="text" id="idea-input-topic" placeholder="Chủ đề (Tự phân bổ)...">
+                        </div>
+                        <div class="idea-form-row">
+                            <select id="idea-input-lang">
+                                <option value="JP">JP (Nhật)</option>
+                                <option value="EN">EN (Anh)</option>
+                                <option value="CN">CN (Trung)</option>
+                                <option value="TH">TH (Thái)</option>
+                                <option value="ES">ES (Tây Ban Nha)</option>
+                                <option value="VN">VN (Việt)</option>
+                            </select>
+                            <input type="text" id="idea-input-platform" placeholder="Nền tảng (Hệ thống tự điền)">
+                            <input type="text" id="idea-input-author" placeholder="Tên tác giả / Báo...">
+                        </div>
+                        <button class="res-btn" style="width: 100%;" onclick="saveIdeaResource()">Lưu Bảng</button>
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table class="remote-table" style="min-width: 700px;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30px; text-align: center;">Tick</th>
+                                    <th>Link</th>
+                                    <th>Tiêu đề</th>
+                                    <th style="width: 50px;">Ngôn ngữ</th>
+                                    <th>Nền tảng</th>
+                                    <th>Chủ đề</th>
+                                    <th style="width: 180px;">Cre (Bấm Copy)</th>
+                                    <th style="width: 30px; text-align: center;">Xóa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="list-ideas"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <div class="resource-section" id="res-sec-remote">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-remote')">
                     <h3>🇨🇳 REMOTE (Xiaohongshu Link & ID)</h3><span>▼</span>
                 </div>
                 <div class="resource-body">
                     <div class="res-input-group">
-                        <input type="text" id="input-remote" placeholder="Dán chuỗi sao chép từ XHS (Có khoảng cách giữa link và mã)...">
+                        <input type="text" id="input-remote" placeholder="Dán chuỗi sao chép từ XHS...">
                         <button class="res-btn" onclick="addRemoteResource()">Lưu</button>
                     </div>
                     <table class="remote-table" id="table-remote-container">
@@ -311,19 +357,6 @@
                         </thead>
                         <tbody id="list-remotes"></tbody>
                     </table>
-                </div>
-            </div>
-
-            <div class="resource-section" id="res-sec-ideas">
-                <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-ideas')">
-                    <h3>📌 Bài Lưu Chuẩn Bị Dịch (Ý tưởng)</h3><span>▼</span>
-                </div>
-                <div class="resource-body">
-                    <div class="res-input-group">
-                        <input type="text" id="input-idea" placeholder="Nhập tiêu đề / nội dung cần lưu để dịch...">
-                        <button class="res-btn" onclick="addResource('ideas', 'input-idea')">Lưu</button>
-                    </div>
-                    <ul class="res-list" id="list-ideas"></ul>
                 </div>
             </div>
 
@@ -342,7 +375,6 @@
         </div>
 
         <div id="checklist-container">
-             
             <div class="card tiktok" id="card-tiktok">
                 <div class="card-header-toggle" onclick="toggleCard('card-tiktok')">
                     <div class="card-title">🎵 TikTok</div><span class="toggle-icon" id="icon-card-tiktok">▼</span>
@@ -463,7 +495,6 @@
                     <div class="popup-selection" id="popup-prep-zalo"><button class="popup-btn" onclick="addCustomToApp('zalo', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('zalo', 'Bài dịch', 'prep')">+ Chuẩn bị Bài dịch</button></div>
                 </div>
             </div>
-
         </div>
 
         <button class="btn-clear-all" onclick="clearEverything()">Xóa Hết Dữ Liệu Lưu Trữ</button>
@@ -475,26 +506,29 @@
     let selectedDate = new Date();
     if(selectedDate.getFullYear() !== YEAR) { selectedDate = new Date(YEAR, 5, 5); }
 
-    let db = JSON.parse(localStorage.getItem('hy_sakura_v9_db')) || {};
-    let resources = JSON.parse(localStorage.getItem('hy_resources_v9_db')) || { ideas: [], links: [], remotes: [] };
+    let db = JSON.parse(localStorage.getItem('hy_sakura_v9.1_db')) || {};
+    let resources = JSON.parse(localStorage.getItem('hy_resources_v9.1_db')) || { ideas: [], links: [], remotes: [] };
     let backupBeforeClear = null;
 
     const segmentMapping = {
-        'tiktok': [1, 2, 10],
-        'instagram': [3],
-        'fb-hyhy': [4, 5],
-        'fb-hyblog': [6, 7],
-        'fb-shokaimono': [8, 11],
-        'zalo': [12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+        'tiktok': [1, 2, 10], 'instagram': [3], 'fb-hyhy': [4, 5],
+        'fb-hyblog': [6, 7], 'fb-shokaimono': [8, 11], 'zalo': [12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
     };
      
     const appMapping = {
-        tiktok: [1, 2, 10],
-        instagram: [3],
-        facebook: [4, 5, 6, 7, 8, 11],
+        tiktok: [1, 2, 10], instagram: [3], facebook: [4, 5, 6, 7, 8, 11],
         zalo: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
     };
     const TOTAL_FIXED_TASKS = 20;
+
+    // Hỗ trợ dịch ra Lịch Âm bằng API có sẵn của trình duyệt
+    function getLunarString(dateObj) {
+        try {
+            return new Intl.DateTimeFormat('vi-VN-u-ca-chinese', {day: 'numeric', month: 'numeric'}).format(dateObj);
+        } catch(e) {
+            return ""; // Nếu trình duyệt cũ không hỗ trợ
+        }
+    }
 
     // CHẠY ĐỒNG HỒ THEO THỜI GIAN THỰC
     function updateLiveClock() {
@@ -503,13 +537,6 @@
     }
     setInterval(updateLiveClock, 1000);
     updateLiveClock();
-
-    // CHẠY GIẢ LẬP ĐỔI THỜI TIẾT
-    function updateWeatherWidget() {
-        const temp = [30, 31, 32, 33][Math.floor(Math.random() * 4)];
-        document.getElementById('live-weather').innerText = `${temp}°C • Nắng đẹp lành mạnh 🌸`;
-    }
-    setInterval(updateWeatherWidget, 60000);
 
     function toggleSidebar() {
         document.getElementById('sidebar').classList.toggle('open');
@@ -530,9 +557,7 @@
         icon.innerText = card.classList.contains('collapsed') ? '▲' : '▼';
     }
 
-    function toggleResourceSec(id) {
-        document.getElementById(id).classList.toggle('open');
-    }
+    function toggleResourceSec(id) { document.getElementById(id).classList.toggle('open'); }
 
     window.showPopupSelection = function(segment, mode) {
         const targetPopup = document.getElementById(`popup-${mode}-${segment}`);
@@ -553,15 +578,12 @@
         }
     }
 
-    // Hàm bấm vào giữa Banner để quay lại ngày hôm nay lập tức
     window.backToToday = function() {
         selectedDate = new Date();
         if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5);
         renderCalendarSection();
         renderChecklistValues();
-        if(currentView !== 'resources') {
-            calculateDashboard();
-        }
+        if(currentView !== 'resources') { calculateDashboard(); }
     }
 
     function switchView(view) {
@@ -582,7 +604,6 @@
             document.querySelector('.date-navigator').style.display = 'none';
             document.getElementById('widget-box-container').style.display = 'none';
             document.getElementById('resources-box').style.display = 'block';
-            // Đổi tên tiêu đề thành KHO TÀI NGUYÊN
             document.getElementById('main-title').innerText = "🌸 KHO TÀI NGUYÊN 🌸";
             renderResources();
         } else {
@@ -608,27 +629,43 @@
 
         if (currentView === 'today') { container.style.display = 'none'; return; }
         container.style.display = 'block';
-        grid.className = 'grid-days';
         grid.innerHTML = '';
 
+        const dayNames = ["CN", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
+
         if (currentView === 'week') {
+            grid.className = 'grid-days';
             header.innerText = "Các ngày trong tuần này";
             let currentDayIdx = selectedDate.getDay();
             let distanceToMon = currentDayIdx === 0 ? -6 : 1 - currentDayIdx;
             let monday = new Date(selectedDate);
             monday.setDate(selectedDate.getDate() + distanceToMon);
+            
             for(let i=0; i<7; i++) {
                 let d = new Date(monday); d.setDate(monday.getDate() + i);
-                createCalButton(d, d.getDate() + "/" + (d.getMonth()+1), grid);
+                createCalButton(d, d.getDate() + "/" + (d.getMonth()+1), grid, dayNames[d.getDay()]);
             }
         } 
         else if (currentView === 'month') {
+            grid.className = 'grid-days';
             let m = selectedDate.getMonth();
             header.innerText = `Tháng ${m + 1} / ${YEAR}`;
+            
+            // Vẽ Header các ngày trong tuần
+            ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'].forEach(dn => {
+                let div = document.createElement('div'); div.className = 'weekday-header'; div.innerText = dn;
+                grid.appendChild(div);
+            });
+
+            let firstDay = new Date(YEAR, m, 1).getDay();
+            let emptyCells = firstDay === 0 ? 6 : firstDay - 1; // Điều chỉnh để Thứ 2 là cột đầu
+            
+            for(let i=0; i<emptyCells; i++) { grid.appendChild(document.createElement('div')); }
+            
             let totalDays = new Date(YEAR, m + 1, 0).getDate();
             for(let i=1; i<=totalDays; i++) {
                 let d = new Date(YEAR, m, i);
-                createCalButton(d, i, grid);
+                createCalButton(d, i, grid, null); // Không hiển thị thứ trong ô vì đã có header
             }
         } 
         else if (currentView === 'year') {
@@ -648,22 +685,31 @@
         }
     }
 
-    function createCalButton(dateObj, text, targetGrid) {
+    function createCalButton(dateObj, mainText, targetGrid, dayNameText) {
         let btn = document.createElement('button'); btn.className = 'cal-btn';
         let key = formatDateKey(dateObj);
         let hasData = false;
+        
         if(db[key]) {
             if(Object.keys(db[key].tasks || {}).length > 0) hasData = true;
             let c = db[key].customs || {};
             for(let k in c) { if((c[k]||[]).length > 0) hasData = true; }
         }
+        
         if(hasData) btn.classList.add('has-data');
         if(formatDateKey(selectedDate) === key) btn.classList.add('active');
-        btn.innerText = text;
+        
+        let lunarStr = getLunarString(dateObj);
+        
+        let htmlStr = '';
+        if(dayNameText) htmlStr += `<span class="day-name">${dayNameText}</span>`;
+        htmlStr += `<span>${mainText}</span>`;
+        if(lunarStr) htmlStr += `<span class="lunar-date">(Âm: ${lunarStr})</span>`;
+        
+        btn.innerHTML = htmlStr;
         btn.onclick = () => {
             selectedDate = dateObj;
-            document.querySelectorAll('.cal-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            renderCalendarSection(); 
             renderChecklistValues();
         };
         targetGrid.appendChild(btn);
@@ -671,22 +717,18 @@
 
     function renderChecklistValues() {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('date-banner').innerText = selectedDate.toLocaleDateString('vi-VN', options);
+        document.getElementById('date-banner').innerText = selectedDate.toLocaleDateString('vi-VN', options) + " (Âm: " + getLunarString(selectedDate) + ")";
 
         let realToday = new Date(); realToday.setHours(0,0,0,0);
         let checkDate = new Date(selectedDate); checkDate.setHours(0,0,0,0);
         
         let isFuture = checkDate > realToday;
-        let isPast = checkDate < realToday;
+        let isPast = checkDate < realToday; // Khóa nếu là quá khứ
+        
         const navBox = document.querySelector('.date-navigator');
-         
-        // Reset class trước khi gán mới
         navBox.classList.remove('future-view', 'past-view');
-        if(isFuture) {
-            navBox.classList.add('future-view');
-        } else if(isPast) {
-            navBox.classList.add('past-view'); // Giao diện riêng cho hôm qua / quá khứ
-        }
+        if(isFuture) navBox.classList.add('future-view');
+        else if(isPast) navBox.classList.add('past-view');
 
         let key = formatDateKey(selectedDate);
         let dayData = db[key] || { tasks: {}, customs: {} };
@@ -707,8 +749,14 @@
                  
                 if(cb) {
                     cb.checked = tData.checked;
-                    if(isFuture) { cb.disabled = true; lbl.classList.add('future-disabled'); } 
-                    else { cb.disabled = false; lbl.classList.remove('future-disabled'); }
+                    // Disable nếu ở quá khứ HOẶC tương lai
+                    if(isFuture || isPast) { 
+                        cb.disabled = true; 
+                        lbl.classList.add(isFuture ? 'future-disabled' : 'past-disabled'); 
+                    } else { 
+                        cb.disabled = false; 
+                        lbl.classList.remove('future-disabled', 'past-disabled'); 
+                    }
                 }
                 if(tData.checked) { if(lbl) lbl.classList.add('completed'); totalCheckedGlobal++; }
                 else { if(lbl) lbl.classList.remove('completed'); }
@@ -720,15 +768,17 @@
             segCustomsList.forEach(cTask => {
                 if(cTask.checked) { totalCheckedGlobal++; }
                 let lbl = document.createElement('label');
-                lbl.className = `inline-task-box ${cTask.checked ? 'completed' : ''} ${isFuture ? 'future-disabled' : ''}`;
+                let disableClass = isFuture ? 'future-disabled' : (isPast ? 'past-disabled' : '');
+                
+                lbl.className = `inline-task-box ${cTask.checked ? 'completed' : ''} ${disableClass}`;
                  
                 lbl.innerHTML = `
-                    <input type="checkbox" ${cTask.checked ? 'checked' : ''} ${isFuture ? 'disabled' : ''} onchange="toggleCustomTask('${segment}', ${cTask.id})">
+                    <input type="checkbox" ${cTask.checked ? 'checked' : ''} ${(isFuture || isPast) ? 'disabled' : ''} onchange="toggleCustomTask('${segment}', ${cTask.id})">
                     <div>
                         <span>${cTask.text}</span>
                         ${cTask.note ? `<span class="prep-text-desc">✏️ Ghi chú: ${cTask.note}</span>` : ''}
                     </div>
-                    <button class="delete-custom-btn" onclick="deleteCustomTask('${segment}', ${cTask.id}); event.preventDefault();">×</button>
+                    ${!(isFuture || isPast) ? `<button class="delete-custom-btn" onclick="deleteCustomTask('${segment}', ${cTask.id}); event.preventDefault();">×</button>` : ''}
                 `;
                 if(customContainer) customContainer.appendChild(lbl);
             });
@@ -793,13 +843,7 @@
         let nextNumber = count + 1;
         let finalLabel = mode === 'prep' ? `${nextNumber}. ${type} cần chuần bị` : `${type} ${nextNumber}`;
 
-        db[key].customs[segment].push({
-            id: Date.now(),
-            text: finalLabel,
-            note: noteText.trim(),
-            checked: false
-        });
-
+        db[key].customs[segment].push({ id: Date.now(), text: finalLabel, note: noteText.trim(), checked: false });
         document.getElementById(`popup-${mode}-${segment}`).style.display = 'none';
         saveAndReload();
     }
@@ -827,12 +871,80 @@
     }
 
     /* --- QUẢN LÝ KHO TÀI NGUYÊN CHUYÊN SÂU --- */
+    
+    // Tự động phân tích Link Ý tưởng
+    window.autoParseLink = function() {
+        let url = document.getElementById('idea-input-link').value.toLowerCase();
+        let lang = 'EN', platform = '';
+        
+        if(url.includes('yahoo.co.jp')) { lang = 'JP'; platform = 'Yahoo Japan News'; }
+        else if(url.includes('xiaohongshu.com') || url.includes('xhslink')) { lang = 'CN'; platform = 'Xiaohongshu'; }
+        else if(url.includes('tiktok.com')) { lang = 'VN'; platform = 'TikTok'; }
+        else if(url.includes('weibo.com')) { lang = 'CN'; platform = 'Weibo'; }
+        else if(url.includes('instagram.com')) { lang = 'EN'; platform = 'Instagram'; }
+        else if(url.includes('facebook.com')) { lang = 'VN'; platform = 'Facebook'; }
+        else if(url.includes('youtube.com') || url.includes('youtu.be')) { platform = 'YouTube'; }
+        else if(url.includes('nhk.or.jp')) { lang = 'JP'; platform = 'NHK News'; }
+        else if(url.includes('thairath') || url.includes('sanook')) { lang = 'TH'; platform = 'Báo Thái Lan'; }
+        
+        if(platform) document.getElementById('idea-input-platform').value = platform;
+        document.getElementById('idea-input-lang').value = lang;
+    }
+
+    // Lưu Bảng Ý tưởng
+    window.saveIdeaResource = function() {
+        let link = document.getElementById('idea-input-link').value.trim();
+        let title = document.getElementById('idea-input-title').value.trim();
+        let lang = document.getElementById('idea-input-lang').value;
+        let platform = document.getElementById('idea-input-platform').value.trim();
+        let topic = document.getElementById('idea-input-topic').value.trim();
+        let author = document.getElementById('idea-input-author').value.trim();
+        
+        if(!link || !title) { alert("Phải có Link và Tiêu đề nhé!"); return; }
+        
+        // Cấu hình Cre tự động
+        let cre = "";
+        let pCheck = platform.toLowerCase();
+        if(pCheck.includes('báo') || pCheck.includes('news') || pCheck.includes('yahoo')) {
+            cre = `Cre: ${platform}, ${title} - ${platform}`;
+        } else {
+            cre = `Cre: ${platform}, ${author || 'Nguồn gốc'}`;
+        }
+
+        if(!resources.ideas_table) resources.ideas_table = [];
+        resources.ideas_table.push({ id: Date.now(), checked: false, link, title, lang, platform, topic, cre });
+        
+        localStorage.setItem('hy_resources_v9.1_db', JSON.stringify(resources));
+        
+        // Reset form
+        document.getElementById('idea-input-link').value = '';
+        document.getElementById('idea-input-title').value = '';
+        document.getElementById('idea-input-platform').value = '';
+        document.getElementById('idea-input-topic').value = '';
+        document.getElementById('idea-input-author').value = '';
+        
+        renderResources();
+    }
+
+    window.toggleIdeaCheck = function(id) {
+        let target = resources.ideas_table.find(r => r.id === id);
+        if(target) target.checked = !target.checked;
+        localStorage.setItem('hy_resources_v9.1_db', JSON.stringify(resources));
+        renderResources();
+    }
+
+    window.copyTextToClipboard = function(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert(`📋 Đã copy thành công: "${text}"`);
+        }).catch(err => { alert('Lỗi trình duyệt không cho copy!'); });
+    }
+
     window.addResource = function(type, inputId) {
         let input = document.getElementById(inputId);
         let val = input.value.trim();
         if(!val) return;
         resources[type].push({ id: Date.now(), content: val });
-        localStorage.setItem('hy_resources_v9_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v9.1_db', JSON.stringify(resources));
         input.value = '';
         renderResources();
     }
@@ -854,33 +966,48 @@
 
         if(!resources.remotes) resources.remotes = [];
         resources.remotes.push({ id: Date.now(), link: linkPart, idCode: idPart, checked: false });
-        localStorage.setItem('hy_resources_v9_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v9.1_db', JSON.stringify(resources));
         input.value = '';
         renderResources();
-    }
-
-    window.copyRemoteIdToClipboard = function(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert(`📋 Đã copy thành công mã: "${text}"`);
-        }).catch(err => {
-            alert('Lỗi hệ thống không cho phép tự sao chép!');
-        });
     }
 
     window.toggleRemoteCheck = function(id) {
         let target = resources.remotes.find(r => r.id === id);
         if(target) target.checked = !target.checked;
-        localStorage.setItem('hy_resources_v9_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v9.1_db', JSON.stringify(resources));
         renderResources();
     }
 
     window.deleteResource = function(type, id) {
         resources[type] = resources[type].filter(item => item.id !== id);
-        localStorage.setItem('hy_resources_v9_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v9.1_db', JSON.stringify(resources));
         renderResources();
     }
 
     function renderResources() {
+        // Render Bảng Ý Tưởng
+        let tbodyIdeas = document.getElementById('list-ideas');
+        tbodyIdeas.innerHTML = '';
+        (resources.ideas_table || []).forEach(item => {
+            let tr = document.createElement('tr');
+            if(item.checked) tr.className = 'completed';
+            tr.innerHTML = `
+                <td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleIdeaCheck(${item.id})"></td>
+                <td><a href="${item.link}" target="_blank" style="color:var(--zalo-color);">Link</a></td>
+                <td>${item.title}</td>
+                <td style="text-align: center; color: #d63384; font-weight: bold;">${item.lang}</td>
+                <td>${item.platform}</td>
+                <td>${item.topic}</td>
+                <td>
+                    <span style="font-size:0.75rem;">${item.cre}</span><br/>
+                    <button class="btn-copy-mini" style="margin-top:4px;" onclick="copyTextToClipboard('${item.cre.replace(/'/g, "\\'")}')">📋 Copy Cre</button>
+                </td>
+                <td style="text-align: center;"><button class="delete-custom-btn" onclick="deleteResource('ideas_table', ${item.id})">×</button></td>
+            `;
+            tbodyIdeas.appendChild(tr);
+        });
+
+        // Render Remote
         let tbodyRemote = document.getElementById('list-remotes');
         tbodyRemote.innerHTML = '';
         (resources.remotes || []).forEach(item => {
@@ -891,23 +1018,22 @@
                 <td><a href="${item.link}" target="_blank">${item.link}</a></td>
                 <td>
                     <span style="color:#e1306c; font-weight:bold;">${item.idCode}</span>
-                    <button class="btn-copy-mini" onclick="copyRemoteIdToClipboard('${item.idCode}')">📋 Copy</button>
+                    <button class="btn-copy-mini" onclick="copyTextToClipboard('${item.idCode}')">📋 Copy</button>
                 </td>
                 <td style="text-align: center;"><button class="delete-custom-btn" onclick="deleteResource('remotes', ${item.id})">×</button></td>
             `;
             tbodyRemote.appendChild(tr);
         });
 
-        ['ideas', 'links'].forEach(type => {
-            let ul = document.getElementById(`list-${type}`); ul.innerHTML = '';
-            resources[type].forEach(item => {
-                let li = document.createElement('li'); li.className = 'res-item';
-                if(type === 'links' && (item.content.startsWith('http://') || item.content.startsWith('https://'))) {
-                    li.innerHTML = `<a href="${item.content}" target="_blank">${item.content}</a>`;
-                } else { li.innerHTML = `<span>${item.content}</span>`; }
-                li.innerHTML += `<button class="delete-custom-btn" onclick="deleteResource('${type}', ${item.id})">×</button>`;
-                ul.appendChild(li);
-            });
+        // Render Links
+        let ulLinks = document.getElementById('list-links'); ulLinks.innerHTML = '';
+        (resources.links || []).forEach(item => {
+            let li = document.createElement('li'); li.className = 'res-item';
+            if(item.content.startsWith('http://') || item.content.startsWith('https://')) {
+                li.innerHTML = `<a href="${item.content}" target="_blank">${item.content}</a>`;
+            } else { li.innerHTML = `<span>${item.content}</span>`; }
+            li.innerHTML += `<button class="delete-custom-btn" onclick="deleteResource('links', ${item.id})">×</button>`;
+            ulLinks.appendChild(li);
         });
     }
 
@@ -935,7 +1061,7 @@
     }
 
     function saveAndReload() {
-        localStorage.setItem('hy_sakura_v9_db', JSON.stringify(db));
+        localStorage.setItem('hy_sakura_v9.1_db', JSON.stringify(db));
         renderChecklistValues();
         calculateDashboard();
     }
@@ -944,12 +1070,9 @@
         if(confirm("Bạn có chắc chắn muốn xóa toàn bộ tiến độ lịch sử tích chọn công việc?")) {
             backupBeforeClear = JSON.stringify(db);
             db = {}; 
-            localStorage.removeItem('hy_sakura_v9_db');
-            
-            // Hiển thị nút khôi phục khẩn cấp
+            localStorage.removeItem('hy_sakura_v9.1_db');
             document.getElementById('btn-undo-box').style.display = 'block';
             
-            // Sửa logic: Giữ nguyên view hiện tại, không tự động nhảy về 'today'
             if(currentView !== 'resources') {
                 renderChecklistValues();
                 calculateDashboard();
@@ -962,11 +1085,10 @@
     window.undoDeleteData = function() {
         if(backupBeforeClear) {
             db = JSON.parse(backupBeforeClear);
-            localStorage.setItem('hy_sakura_v9_db', backupBeforeClear);
+            localStorage.setItem('hy_sakura_v9.1_db', backupBeforeClear);
             backupBeforeClear = null; 
             document.getElementById('btn-undo-box').style.display = 'none';
             
-            // Cập nhật lại giao diện đúng theo chế độ đang xem hiện tại
             if(currentView !== 'resources') {
                 renderChecklistValues();
                 calculateDashboard();
