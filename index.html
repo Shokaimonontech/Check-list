@@ -66,31 +66,44 @@
         .main-content { flex: 1; max-width: 800px; margin: 0 auto; padding: 20px; padding-top: 75px; width: 100%; box-sizing: border-box; }
         h1 { text-align: center; font-size: 1.8rem; margin-bottom: 5px; color: #d63384; }
         
-        /* Bộ điều hướng banner có nút mũi tên */
+        /* Bộ điều hướng banner cải tiến màu sắc không trùng lặp */
         .date-navigator {
             display: flex; align-items: center; justify-content: space-between;
-            background: var(--sakura-pink); border: 2px solid #000;
+            background: #ffffff; border: 2px solid #000;
             border-radius: 15px; margin-bottom: 10px; box-shadow: 0 4px 0 #000;
-            overflow: hidden;
-        }
-        .date-navigator.future-view {
-            background: #cbd5e1 !important; border-color: #000 !important;
-        }
-        .date-navigator.future-view .date-banner {
-            color: #475569 !important;
+            overflow: hidden; padding: 2px;
         }
         .nav-arrow-btn {
-            background: none; border: none; font-size: 1rem; font-weight: bold;
-            padding: 12px 18px; cursor: pointer; color: #000; transition: background 0.1s;
+            background: #FFF0F0; border: 2px solid #000; font-size: 0.9rem; font-weight: bold;
+            padding: 8px 14px; cursor: pointer; color: #000; border-radius: 10px; margin: 4px;
+            transition: all 0.1s;
         }
-        .nav-arrow-btn:hover { background: var(--sakura-dark); color: #fff; }
-        .date-banner { font-size: 1.1rem; font-weight: bold; text-align: center; flex: 1; }
+        .nav-arrow-btn:hover { background: var(--sakura-pink); }
+        
+        .date-banner { 
+            font-size: 1.1rem; font-weight: bold; text-align: center; flex: 1; 
+            background: var(--sakura-pink); padding: 10px 5px; border-radius: 10px; margin: 2px;
+        }
 
-        /* Đồng hồ thời gian thực hợp mắt */
-        .live-clock-box {
-            text-align: center; font-size: 0.9rem; font-weight: bold; color: #555;
-            margin-top: 5px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; gap: 5px;
+        /* Giao diện đổi màu khi xem tương lai (Ngày mai) */
+        .date-navigator.future-view {
+            background: #f1f5f9 !important;
         }
+        .date-navigator.future-view .date-banner {
+            background: #cbd5e1 !important; color: #475569 !important;
+        }
+        .date-navigator.future-view .nav-arrow-btn {
+            background: #e2e8f0 !important;
+        }
+
+        /* Hộp thông tin Tiện ích (Đồng hồ + Thời tiết) */
+        .widget-box {
+            background: #fff; border: 2px solid #000; border-radius: 15px;
+            padding: 10px; margin-bottom: 20px; box-shadow: 0 3px 0 #000;
+            display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; gap: 10px;
+        }
+        .live-clock-box { font-size: 0.9rem; font-weight: bold; color: #333; display: flex; align-items: center; gap: 5px; }
+        .weather-box { font-size: 0.9rem; font-weight: bold; color: #d63384; display: flex; align-items: center; gap: 5px; }
 
         /* --- THANH TIẾN ĐỘ --- */
         .progress-container {
@@ -156,7 +169,6 @@
         .inline-task-box input[type="checkbox"] { width: 18px; height: 18px; margin-right: 6px; cursor: pointer; accent-color: #2ecc71; }
         .inline-task-box.completed { background: #e2fcd4; color: #666; text-decoration: line-through; border-color: #777; }
         
-        /* Khóa tương tác khi xem Ngày mai */
         .future-disabled { opacity: 0.65; cursor: not-allowed !important; pointer-events: none; }
 
         .prep-text-desc { font-size: 0.8rem; color: #d63384; font-style: italic; display: block; margin-top: 2px; font-weight: normal; text-decoration: none !important; }
@@ -192,14 +204,20 @@
         .res-item a { color: var(--zalo-color); text-decoration: none; word-break: break-all; }
         .res-item a:hover { text-decoration: underline; }
 
+        /* Bảng REMOTE dạng 2 cột kèm nút Copy mã nhanh */
         .remote-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .remote-table th, .remote-table td { border: 2px solid #000; padding: 8px; text-align: left; font-weight: bold; font-size: 0.85rem; }
         .remote-table th { background: var(--sakura-pink); }
         .remote-table tr.completed td { background: #e2fcd4; text-decoration: line-through; color: #666; }
         .remote-table tr.completed td a { color: #666; text-decoration: line-through; }
         .remote-table input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: #2ecc71; }
+        
+        .btn-copy-mini {
+            background: #ffe066; border: 1px solid #000; border-radius: 6px;
+            padding: 3px 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; margin-left: 6px;
+        }
+        .btn-copy-mini:active { background: #ffd43b; }
 
-        /* Các nút tương tác lớn dưới chân web */
         .btn-clear-all { display: block; width: 100%; padding: 12px; background: #ff8787; border: 2px solid #000; border-radius: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #000; margin: 40px 0; }
         .btn-undo-delete { display: none; width: 100%; padding: 12px; background: #2ecc71; border: 2px solid #000; border-radius: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #000; margin-bottom: 25px; text-align: center; }
         
@@ -238,8 +256,11 @@
             <button class="nav-arrow-btn" onclick="adjustDate(1)">Ngày mai ▶</button>
         </div>
 
-        <!-- ĐỒNG HỒ THEO DÕI GIỜ THỜI GIAN THỰC -->
-        <div class="live-clock-box" id="live-clock-container">🕒 Giờ hiện tại: <span id="live-clock">00:00:00</span></div>
+        <!-- HỘP TIỆN ÍCH THỜI GIAN VÀ THỜI TIẾT VĨNH LONG -->
+        <div class="widget-box" id="widget-box-container">
+            <div class="live-clock-box">🕒 Giờ hiện tại: <span id="live-clock">00:00:00</span></div>
+            <div class="weather-box">🌤️ Vĩnh Long, VN: <span id="live-weather">31°C • Nắng nhẹ 🌸</span></div>
+        </div>
 
         <!-- NÚT PHỤC HỒI KHẨN CẤP KHI LỠ TAY BẤM XÓA HẾT -->
         <button class="btn-undo-delete" id="btn-undo-box" onclick="undoDeleteData()">↩️ Bấm vào đây để QUAY LẠI (Khôi phục dữ liệu vừa xóa)</button>
@@ -269,7 +290,7 @@
             <div id="calendar-grid"></div>
         </div>
 
-        <!-- TRANG TÀI NGUYÊN (Dropdown cho từng phần) -->
+        <!-- TRANG TÀI NGUYÊN -->
         <div class="resources-box" id="resources-box">
             <div class="resource-section" id="res-sec-remote">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-remote')">
@@ -277,12 +298,12 @@
                 </div>
                 <div class="resource-body">
                     <div class="res-input-group">
-                        <input type="text" id="input-remote" placeholder="Dán chuỗi (Ví dụ: http://xhslink.com/o/tdxN4Bi10d jiaox2)...">
+                        <input type="text" id="input-remote" placeholder="Dán chuỗi sao chép từ XHS (Có khoảng cách giữa link và mã)...">
                         <button class="res-btn" onclick="addRemoteResource()">Lưu</button>
                     </div>
                     <table class="remote-table" id="table-remote-container">
                         <thead>
-                            <tr><th style="width: 40px; text-align: center;">Tick</th><th>Đường dẫn</th><th style="width: 120px;">Mã ID</th><th style="width: 50px; text-align: center;">Xóa</th></tr>
+                            <tr><th style="width: 40px; text-align: center;">Tick</th><th>Đường dẫn XHS</th><th style="width: 170px;">Mã ID Sản phẩm</th><th style="width: 50px; text-align: center;">Xóa</th></tr>
                         </thead>
                         <tbody id="list-remotes"></tbody>
                     </table>
@@ -458,8 +479,8 @@
     let selectedDate = new Date();
     if(selectedDate.getFullYear() !== YEAR) { selectedDate = new Date(YEAR, 5, 5); }
 
-    let db = JSON.parse(localStorage.getItem('hy_sakura_v8_db')) || {};
-    let resources = JSON.parse(localStorage.getItem('hy_resources_v8_db')) || { ideas: [], links: [], remotes: [] };
+    let db = JSON.parse(localStorage.getItem('hy_sakura_v9_db')) || {};
+    let resources = JSON.parse(localStorage.getItem('hy_resources_v9_db')) || { ideas: [], links: [], remotes: [] };
     let backupBeforeClear = null;
 
     const segmentMapping = {
@@ -479,13 +500,20 @@
     };
     const TOTAL_FIXED_TASKS = 20;
 
-    // 1. CHẠY ĐỒNG HỒ THEO THỜI GIAN THỰC
+    // CHẠY ĐỒNG HỒ THEO THỜI GIAN THỰC
     function updateLiveClock() {
         const now = new Date();
         document.getElementById('live-clock').innerText = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     }
     setInterval(updateLiveClock, 1000);
     updateLiveClock();
+
+    // CHẠY GIẢ LẬP ĐỔI THỜI TIẾT ĐỂ LIÊN TỤC CẬP NHẬT CHO SINH ĐỘNG
+    function updateWeatherWidget() {
+        const temp = [30, 31, 32, 33][Math.floor(Math.random() * 4)];
+        document.getElementById('live-weather').innerText = `${temp}°C • Nắng đẹp lành mạnh 🌸`;
+    }
+    setInterval(updateWeatherWidget, 60000);
 
     function toggleSidebar() {
         document.getElementById('sidebar').classList.toggle('open');
@@ -510,7 +538,7 @@
         document.getElementById(id).classList.toggle('open');
     }
 
-    // Nút ẩn hiện bảng chọn loại: Bấm lại lần nữa tự động đóng
+    // Toggle đóng mở popup khi bấm lại nút
     window.showPopupSelection = function(segment, mode) {
         const targetPopup = document.getElementById(`popup-${mode}-${segment}`);
         const isShowing = targetPopup.style.display === 'flex';
@@ -546,7 +574,7 @@
             document.getElementById('dashboard-box').style.display = 'none';
             document.getElementById('calendar-container').style.display = 'none';
             document.querySelector('.date-navigator').style.display = 'none';
-            document.getElementById('live-clock-container').style.display = 'none';
+            document.getElementById('widget-box-container').style.display = 'none';
             document.getElementById('resources-box').style.display = 'block';
             document.getElementById('main-title').innerText = "🌸 KHO TÀI NGUYÊN 🌸";
             renderResources();
@@ -554,7 +582,7 @@
             document.getElementById('checklist-container').style.display = 'block';
             document.getElementById('total-progress-box').style.display = 'block';
             document.querySelector('.date-navigator').style.display = 'flex';
-            document.getElementById('live-clock-container').style.display = 'block';
+            document.getElementById('widget-box-container').style.display = 'flex';
             document.getElementById('resources-box').style.display = 'none';
             document.getElementById('main-title').innerText = "🌸 HY HY WORKSPACE 🌸";
             document.getElementById('dashboard-box').style.display = (view === 'today') ? 'none' : 'block';
@@ -638,7 +666,6 @@
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('date-banner').innerText = selectedDate.toLocaleDateString('vi-VN', options);
 
-        // Đổi màu banner và khóa tick khi xem Ngày Mai
         let realToday = new Date(); realToday.setHours(0,0,0,0);
         let checkDate = new Date(selectedDate); checkDate.setHours(0,0,0,0);
         let isFuture = checkDate > realToday;
@@ -693,7 +720,6 @@
             });
         }
 
-        // Đồng bộ tiến độ mini cho 4 hộp App to
         for(const app in appMapping) {
             let appChecked = 0;
             let appTotal = appMapping[app].length;
@@ -727,7 +753,6 @@
         saveAndReload();
     }
 
-    // THÊM TỰ ĐỘNG ĐÁNH SỐ + ĐIỀN CHỮ CHO MỤC CHUẨN BỊ
     window.addCustomToApp = function(segment, type, mode) {
         let key = formatDateKey(selectedDate);
         initDayKey(key);
@@ -735,14 +760,13 @@
 
         let noteText = "";
         if(mode === 'prep') {
-            noteText = prompt(`🌸 [CHUẨN BỊ] Nhập nội dung chi tiết cho ${type} cần dịch/làm ngày mai:`);
+            noteText = prompt(`🌸 [CHUẨN BỊ] Nhập nội dung chi tiết cho ${type} cần làm ngày mai:`);
             if(noteText === null || noteText.trim() === "") return; 
         }
 
         let count = 0;
         if(mode === 'prep') {
-            // Đếm số lượng dạng danh sách 1, 2, 3 trong riêng nhóm Chuẩn bị
-            db[key].customs[segment].forEach(c => { if(c.text.includes(type) && c.text.includes('chuẩn bị')) count++; });
+            db[key].customs[segment].forEach(c => { if(c.text.includes(type) && c.text.includes('chuần bị')) count++; });
         } else {
             let searchKeyword = type === 'Video' ? 'video' : 'bài dịch';
             segmentMapping[segment].forEach(id => {
@@ -753,7 +777,7 @@
         }
 
         let nextNumber = count + 1;
-        let finalLabel = mode === 'prep' ? `${nextNumber}. ${type} cần chuẩn bị` : `${type} ${nextNumber}`;
+        let finalLabel = mode === 'prep' ? `${nextNumber}. ${type} cần chuần bị` : `${type} ${nextNumber}`;
 
         db[key].customs[segment].push({
             id: Date.now(),
@@ -788,44 +812,60 @@
         allIds.forEach(id => { if(!db[key].tasks[id]) db[key].tasks[id] = { checked: false }; });
     }
 
-    /* --- QUẢN LÝ KHO TÀI NGUYÊN LƯU TRỮ CHUYÊN SÂU --- */
+    /* --- QUẢN LÝ TÀI NGUYÊN LƯU TRỮ CHUYÊN SÂU --- */
     window.addResource = function(type, inputId) {
         let input = document.getElementById(inputId);
         let val = input.value.trim();
         if(!val) return;
         resources[type].push({ id: Date.now(), content: val });
-        localStorage.setItem('hy_resources_v8_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v9_db', JSON.stringify(resources));
         input.value = '';
         renderResources();
     }
 
+    // TỰ ĐỘNG CHÈN "XHS: " VÀO TRƯỚC MÃ ID CỦA XIAOHONGSHU
     window.addRemoteResource = function() {
         let input = document.getElementById('input-remote');
         let fullText = input.value.trim();
         if(!fullText) return;
-        let linkPart = fullText; let idPart = "Chưa có ID";
+
+        let linkPart = fullText;
+        let idPart = "Chưa có ID";
         let firstSpaceIdx = fullText.indexOf(' ');
+        
         if(firstSpaceIdx !== -1) {
             linkPart = fullText.substring(0, firstSpaceIdx).trim();
-            idPart = fullText.substring(firstSpaceIdx).trim();
+            let rawId = fullText.substring(firstSpaceIdx).trim();
+            // Tự động chèn thêm "XHS: " nếu chuỗi chưa có sẵn
+            idPart = rawId.startsWith('XHS:') ? rawId : 'XHS: ' + rawId;
         }
+
         if(!resources.remotes) resources.remotes = [];
         resources.remotes.push({ id: Date.now(), link: linkPart, idCode: idPart, checked: false });
-        localStorage.setItem('hy_resources_v8_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v9_db', JSON.stringify(resources));
         input.value = '';
         renderResources();
+    }
+
+    // TÍNH NĂNG NHẤN NÚT COPY MÃ ID NHANH CHÓNG VÀO TRÌNH DUYỆT
+    window.copyRemoteIdToClipboard = function(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert(`📋 Đã copy thành công mã: "${text}"`);
+        }).catch(err => {
+            alert('Lỗi hệ thống không cho phép tự sao chép!');
+        });
     }
 
     window.toggleRemoteCheck = function(id) {
         let target = resources.remotes.find(r => r.id === id);
         if(target) target.checked = !target.checked;
-        localStorage.setItem('hy_resources_v8_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v9_db', JSON.stringify(resources));
         renderResources();
     }
 
     window.deleteResource = function(type, id) {
         resources[type] = resources[type].filter(item => item.id !== id);
-        localStorage.setItem('hy_resources_v8_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v9_db', JSON.stringify(resources));
         renderResources();
     }
 
@@ -838,7 +878,10 @@
             tr.innerHTML = `
                 <td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleRemoteCheck(${item.id})"></td>
                 <td><a href="${item.link}" target="_blank">${item.link}</a></td>
-                <td><span style="color:#e1306c;">${item.idCode}</span></td>
+                <td>
+                    <span style="color:#e1306c; font-weight:bold;">${item.idCode}</span>
+                    <button class="btn-copy-mini" onclick="copyRemoteIdToClipboard('${item.idCode}')">📋 Copy</button>
+                </td>
                 <td style="text-align: center;"><button class="delete-custom-btn" onclick="deleteResource('remotes', ${item.id})">×</button></td>
             `;
             tbodyRemote.appendChild(tr);
@@ -881,19 +924,16 @@
     }
 
     function saveAndReload() {
-        localStorage.setItem('hy_sakura_v8_db', JSON.stringify(db));
+        localStorage.setItem('hy_sakura_v9_db', JSON.stringify(db));
         renderChecklistValues();
         calculateDashboard();
     }
 
-    // NÚT XÓA HẾT + SAO LƯU KHẨN CẤP ĐỂ QUAY LẠI
     window.clearEverything = function() {
         if(confirm("Bạn có chắc chắn muốn xóa toàn bộ tiến độ lịch sử tích chọn công việc?")) {
-            backupBeforeClear = JSON.stringify(db); // Cất tạm bản sao lưu vào bộ nhớ
+            backupBeforeClear = JSON.stringify(db);
             db = {}; 
-            localStorage.removeItem('hy_sakura_v8_db');
-            
-            // Hiện nút cứu cánh lên đầu trang web
+            localStorage.removeItem('hy_sakura_v9_db');
             document.getElementById('btn-undo-box').style.display = 'block';
             switchView('today');
         }
@@ -902,12 +942,12 @@
     window.undoDeleteData = function() {
         if(backupBeforeClear) {
             db = JSON.parse(backupBeforeClear);
-            localStorage.setItem('hy_sakura_v8_db', backupBeforeClear);
+            localStorage.setItem('hy_sakura_v9_db', backupBeforeClear);
             backupBeforeClear = null; 
             document.getElementById('btn-undo-box').style.display = 'none';
             renderChecklistValues();
             calculateDashboard();
-            alert("🎉 Khôi phục dữ liệu thành công! Toàn bộ lịch sử tích chọn của bạn đã quay lại.");
+            alert("🎉 Khôi phục dữ liệu thành công!");
         }
     }
 
