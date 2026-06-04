@@ -105,6 +105,14 @@
         .live-clock-box { font-size: 0.9rem; font-weight: bold; color: #333; display: flex; align-items: center; gap: 5px; }
         .weather-box { font-size: 0.9rem; font-weight: bold; color: #d63384; display: flex; align-items: center; gap: 5px; }
 
+        /* --- CLOUD SYNC WIDGET --- */
+        .sync-indicator {
+            background: #eef1f6; border: 2px solid #000; border-radius: 12px;
+            padding: 8px 12px; margin-bottom: 15px; display: flex; align-items: center;
+            justify-content: space-between; font-size: 0.85rem; font-weight: bold;
+        }
+        .sync-btn { background: #2ecc71; border: 2px solid #000; border-radius: 8px; color: #fff; padding: 4px 10px; cursor: pointer; }
+
         /* --- GHI CHÚ NGÀY --- */
         .note-container {
             background: #fff; border: 2px solid #000; border-radius: 15px;
@@ -156,19 +164,11 @@
             position: relative;
         }
         
-        /* Hiệu ứng màu lịch */
         .cal-btn.has-data { border: 2px dashed var(--sakura-dark); background: #FFF0F0; }
         .cal-btn.today-highlight { border: 3px solid #d63384; color: #d63384; background: #fff0f5; box-shadow: inset 0 0 5px rgba(214,51,132,0.3); }
         .cal-btn.active { background: var(--sakura-dark); color: #fff; border-color: #000; }
         
-        /* Chấm nhỏ báo hiệu ngày đó có điền Sổ tay ghi chú */
-        .cal-btn.has-note::after {
-            content: '📌';
-            position: absolute;
-            top: 2px; right: 2px;
-            font-size: 0.7rem;
-        }
-
+        .cal-btn.has-note::after { content: '📌'; position: absolute; top: 2px; right: 2px; font-size: 0.7rem; }
         .cal-btn span.day-name { font-size: 0.8rem; color: inherit; opacity: 0.8;}
         .cal-btn span.lunar-date { font-size: 0.75rem; color: inherit; opacity: 0.7; font-style: italic; }
         
@@ -292,6 +292,11 @@
             <button class="nav-arrow-btn" onclick="adjustDate(-1)">◀ Hôm qua</button>
             <div class="date-banner" id="date-banner" onclick="backToToday()" title="Bấm để quay nhanh về Hôm nay">---</div>
             <button class="nav-arrow-btn" onclick="adjustDate(1)">Ngày mai ▶</button>
+        </div>
+
+        <div class="sync-indicator">
+            <span id="sync-status">☁️ Trạng thái: Sẵn sàng trực tuyến</span>
+            <button class="sync-btn" onclick="fetchFromCloud()">🔄 Tải Dữ Liệu Từ Sheet Về Máy</button>
         </div>
 
         <div class="widget-box" id="widget-box-container">
@@ -523,13 +528,16 @@
     </div>
 
 <script>
+    // --- ⚠️ DÁN ĐƯỜNG LINK GOOGLE APPS SCRIPT CỦA EM VÀO ĐÂY VÀO GIỮA HAI DẤU NGOẶC KÉP ⚠️ ---
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyO79d-JvrCJhpc3ckGkT4heZpsSOgiYRE-V1F0cVRQWcHm_8a9scN1vXWpBpdlR7_Q/exec";
+
     const YEAR = 2026;
     let currentView = 'today';
     let selectedDate = new Date();
     if(selectedDate.getFullYear() !== YEAR) { selectedDate = new Date(YEAR, 5, 5); }
 
-    let db = JSON.parse(localStorage.getItem('hy_sakura_v10.2_db')) || {};
-    let resources = JSON.parse(localStorage.getItem('hy_resources_v10.2_db')) || { ideas_table: [], links: [], remotes: [] };
+    let db = JSON.parse(localStorage.getItem('hy_sakura_v11_db')) || {};
+    let resources = JSON.parse(localStorage.getItem('hy_resources_v11_db')) || { ideas_table: [], links: [], remotes: [] };
     let backupBeforeClear = null;
 
     const segmentMapping = {
@@ -542,6 +550,72 @@
         zalo: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
     };
     const TOTAL_FIXED_TASKS = 20;
+
+    // HÀM TỰ ĐỘNG BẮN DỮ LIỆU LÊN GOOGLE SHEET (CHẠY NGẦM)
+    function saveToCloud(type, dataObj) {
+        if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("DÁN_CÁI_LINK")) return;
+        
+        document.getElementById('sync-status').innerText = "⏳ Đang tự động đồng bộ lên Sheet...";
+        
+        var payload = {
+            action: "save",
+            type: type, // 'db' hoặc 'resources'
+            data: JSON.stringify(dataObj)
+        };
+        
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors", // Tránh lỗi CORS chặn bảo mật trình duyệt
+            cache: "no-cache",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        }).then(() => {
+            document.getElementById('sync-status').innerText = "☁️ Đã đồng bộ lên đám mây 100% ✨";
+        }).catch(err => {
+            document.getElementById('sync-status').innerText = "❌ Lỗi đồng bộ đám mây!";
+            console.error(err);
+        });
+    }
+
+    // HÀM TẢI DỮ LIỆU TỪ CLOUD SHEET VỀ LẠI MÁY
+    window.fetchFromCloud = function() {
+        if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("DÁN_CÁI_LINK")) {
+            alert("Em chưa dán đường link kết nối Google Script ở dòng code số 523 nhé!");
+            return;
+        }
+        
+        document.getElementById('sync-status').innerText = "⏳ Đang tải dữ liệu từ Google Sheet...";
+        
+        // Tải bảng Lịch & Tiến độ trước
+        fetch(GOOGLE_SCRIPT_URL + "?type=db")
+        .then(res => res.json())
+        .then(cloudDb => {
+            if(cloudDb && cloudDb.status !== "empty") {
+                db = cloudDb;
+                localStorage.setItem('hy_sakura_v11_db', JSON.stringify(db));
+            }
+            
+            // Tải tiếp Kho tài nguyên ý tưởng bài dịch
+            return fetch(GOOGLE_SCRIPT_URL + "?type=resources");
+        })
+        .then(res => res.json())
+        .then(cloudRes => {
+            if(cloudRes && cloudRes.status !== "empty") {
+                resources = cloudRes;
+                localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
+            }
+            
+            document.getElementById('sync-status').innerText = "🎉 Đã kéo toàn bộ dữ liệu đám mây về máy thành công!";
+            renderCalendarSection();
+            renderChecklistValues();
+            calculateDashboard();
+            if(currentView === 'resources') renderResources();
+        })
+        .catch(err => {
+            document.getElementById('sync-status').innerText = "❌ Lỗi không tải được dữ liệu!";
+            alert("Không thể kết nối tới Google Sheet. Em hãy kiểm tra lại cấu hình Web App!");
+        });
+    }
 
     function getLunarString(dateObj) {
         try { return new Intl.DateTimeFormat('vi-VN-u-ca-chinese', {day: 'numeric', month: 'numeric'}).format(dateObj); } 
@@ -716,7 +790,7 @@
         }
         
         if(hasData) btn.classList.add('has-data');
-        if(db[key] && db[key].note && db[key].note.trim() !== "") btn.classList.add('has-note'); // Đánh dấu ngày có Note
+        if(db[key] && db[key].note && db[key].note.trim() !== "") btn.classList.add('has-note');
         if(key === todayKey) btn.classList.add('today-highlight');
         if(formatDateKey(selectedDate) === key) btn.classList.add('active');
         
@@ -740,8 +814,9 @@
         let key = formatDateKey(selectedDate);
         initDayKey(key);
         db[key].note = document.getElementById('daily-note').value;
-        localStorage.setItem('hy_sakura_v10.2_db', JSON.stringify(db));
-        renderCalendarSection(); // Vẽ lại lịch để cập nhật icon ghim 📌
+        localStorage.setItem('hy_sakura_v11_db', JSON.stringify(db));
+        renderCalendarSection();
+        saveToCloud('db', db); // Đồng bộ lên Sheet ngầm
     }
 
     function renderChecklistValues() {
@@ -960,9 +1035,10 @@
         if(!resources.ideas_table) resources.ideas_table = [];
         resources.ideas_table.push(newIdea);
         
-        localStorage.setItem('hy_resources_v10.2_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
         document.getElementById('idea-raw-input').value = '';
         renderResources();
+        saveToCloud('resources', resources); // Đồng bộ lên Sheet ngầm
     }
 
     function generateCreString(item) {
@@ -981,16 +1057,18 @@
         if(target) {
             target[field] = val;
             target.cre = generateCreString(target);
-            localStorage.setItem('hy_resources_v10.2_db', JSON.stringify(resources));
+            localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
             renderResources();
+            saveToCloud('resources', resources); // Đồng bộ lên Sheet ngầm
         }
     }
 
     window.toggleIdeaCheck = function(id) {
         let target = resources.ideas_table.find(r => r.id === id);
         if(target) target.checked = !target.checked;
-        localStorage.setItem('hy_resources_v10.2_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
         renderResources();
+        saveToCloud('resources', resources);
     }
 
     window.copyTextToClipboard = function(text) {
@@ -1004,9 +1082,10 @@
         let val = input.value.trim();
         if(!val) return;
         resources[type].push({ id: Date.now(), content: val });
-        localStorage.setItem('hy_resources_v10.2_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
         input.value = '';
         renderResources();
+        saveToCloud('resources', resources);
     }
 
     window.addRemoteResource = function() {
@@ -1026,22 +1105,25 @@
 
         if(!resources.remotes) resources.remotes = [];
         resources.remotes.push({ id: Date.now(), link: linkPart, idCode: idPart, checked: false });
-        localStorage.setItem('hy_resources_v10.2_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
         input.value = '';
         renderResources();
+        saveToCloud('resources', resources);
     }
 
     window.toggleRemoteCheck = function(id) {
         let target = resources.remotes.find(r => r.id === id);
         if(target) target.checked = !target.checked;
-        localStorage.setItem('hy_resources_v10.2_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
         renderResources();
+        saveToCloud('resources', resources);
     }
 
     window.deleteResource = function(type, id) {
         resources[type] = resources[type].filter(item => item.id !== id);
-        localStorage.setItem('hy_resources_v10.2_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
         renderResources();
+        saveToCloud('resources', resources);
     }
 
     function renderResources() {
@@ -1118,16 +1200,17 @@
     }
 
     function saveAndReload() {
-        localStorage.setItem('hy_sakura_v10.2_db', JSON.stringify(db));
+        localStorage.setItem('hy_sakura_v11_db', JSON.stringify(db));
         renderChecklistValues();
         calculateDashboard();
+        saveToCloud('db', db); // Đồng bộ lên Sheet ngầm
     }
 
     window.clearEverything = function() {
         if(confirm("Bạn có chắc chắn muốn xóa toàn bộ tiến độ lịch sử tích chọn công việc?")) {
             backupBeforeClear = JSON.stringify(db);
             db = {}; 
-            localStorage.removeItem('hy_sakura_v10.2_db');
+            localStorage.removeItem('hy_sakura_v11_db');
             document.getElementById('btn-undo-box').style.display = 'block';
             
             if(currentView !== 'resources') {
@@ -1136,13 +1219,14 @@
             } else {
                 renderResources();
             }
+            saveToCloud('db', db);
         }
     }
 
     window.undoDeleteData = function() {
         if(backupBeforeClear) {
             db = JSON.parse(backupBeforeClear);
-            localStorage.setItem('hy_sakura_v10.2_db', backupBeforeClear);
+            localStorage.setItem('hy_sakura_v11_db', backupBeforeClear);
             backupBeforeClear = null; 
             document.getElementById('btn-undo-box').style.display = 'none';
             
@@ -1152,6 +1236,7 @@
             } else {
                 renderResources();
             }
+            saveToCloud('db', db);
             alert("🎉 Khôi phục dữ liệu lịch sử thành công!");
         }
     }
