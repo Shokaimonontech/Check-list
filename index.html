@@ -300,12 +300,12 @@
                 </div>
                 <div class="resource-body">
                     <div class="idea-form-box">
-                        <div style="font-size: 0.8rem; color: #d63384; margin-bottom: 10px; font-weight: bold;">✨ BƯỚC 1: Dán link vào đây, hệ thống sẽ tự phân tích Nền tảng & Ngôn ngữ:</div>
+                        <div style="font-size: 0.8rem; color: #d63384; margin-bottom: 10px; font-weight: bold;">✨ BƯỚC 1: Dán link vào đây, hệ thống sẽ tự phân tích Nền tảng, Ngôn ngữ & Tác giả (Nếu có):</div>
                         <input type="text" id="idea-input-link" placeholder="Dán đường link vào đây..." style="width: 100%; padding: 8px; border: 2px solid #000; border-radius: 8px; font-weight:bold; margin-bottom:10px;" oninput="autoParseLink()">
                         
                         <div class="idea-form-row">
-                            <input type="text" id="idea-input-title" placeholder="Tiêu đề bài viết (Em tự gõ nhé)...">
-                            <input type="text" id="idea-input-topic" placeholder="Chủ đề (Tự phân bổ)...">
+                            <input type="text" id="idea-input-title" placeholder="Tiêu đề bài viết (Bắt buộc nhập tự động không lấy được)...">
+                            <input type="text" id="idea-input-topic" placeholder="Chủ đề...">
                         </div>
                         <div class="idea-form-row">
                             <select id="idea-input-lang">
@@ -872,23 +872,61 @@
 
     /* --- QUẢN LÝ KHO TÀI NGUYÊN CHUYÊN SÂU --- */
     
-    // Tự động phân tích Link Ý tưởng
+    // HÀM TỰ ĐỘNG PHÂN TÍCH LINK ĐƯỢC NÂNG CẤP
     window.autoParseLink = function() {
-        let url = document.getElementById('idea-input-link').value.toLowerCase();
-        let lang = 'EN', platform = '';
+        let url = document.getElementById('idea-input-link').value.trim();
+        if(!url) return;
         
-        if(url.includes('yahoo.co.jp')) { lang = 'JP'; platform = 'Yahoo Japan News'; }
-        else if(url.includes('xiaohongshu.com') || url.includes('xhslink')) { lang = 'CN'; platform = 'Xiaohongshu'; }
-        else if(url.includes('tiktok.com')) { lang = 'VN'; platform = 'TikTok'; }
-        else if(url.includes('weibo.com')) { lang = 'CN'; platform = 'Weibo'; }
-        else if(url.includes('instagram.com')) { lang = 'EN'; platform = 'Instagram'; }
-        else if(url.includes('facebook.com')) { lang = 'VN'; platform = 'Facebook'; }
-        else if(url.includes('youtube.com') || url.includes('youtu.be')) { platform = 'YouTube'; }
-        else if(url.includes('nhk.or.jp')) { lang = 'JP'; platform = 'NHK News'; }
-        else if(url.includes('thairath') || url.includes('sanook')) { lang = 'TH'; platform = 'Báo Thái Lan'; }
+        let urlLower = url.toLowerCase();
+        let lang = 'VN', platform = 'Khác', author = '';
         
-        if(platform) document.getElementById('idea-input-platform').value = platform;
-        document.getElementById('idea-input-lang').value = lang;
+        try {
+            // Phân tách link để lấy domain và thư mục
+            let urlObj = new URL(url);
+            let hostname = urlObj.hostname;
+            let pathname = urlObj.pathname;
+            
+            if(hostname.includes('yahoo.co.jp')) { 
+                lang = 'JP'; platform = 'Yahoo Japan News'; 
+            }
+            else if(hostname.includes('xiaohongshu.com') || hostname.includes('xhslink')) { 
+                lang = 'CN'; platform = 'Xiaohongshu'; 
+            }
+            else if(hostname.includes('tiktok.com')) { 
+                lang = 'VN'; platform = 'TikTok';
+                // Tự trích xuất tên tài khoản trên TikTok (ví dụ: tiktok.com/@hyhy/video/...)
+                let match = pathname.match(/@([^\/]+)/);
+                if(match) author = match[1];
+            }
+            else if(hostname.includes('weibo.com')) { 
+                lang = 'CN'; platform = 'Weibo'; 
+            }
+            else if(hostname.includes('instagram.com')) { 
+                lang = 'EN'; platform = 'Instagram'; 
+            }
+            else if(hostname.includes('facebook.com')) { 
+                lang = 'VN'; platform = 'Facebook'; 
+            }
+            else if(hostname.includes('youtube.com') || hostname.includes('youtu.be')) { 
+                lang = 'EN'; platform = 'YouTube'; 
+                let match = pathname.match(/@([^\/]+)/);
+                if(match) author = match[1];
+            }
+            else if(hostname.includes('nhk.or.jp')) { 
+                lang = 'JP'; platform = 'NHK News'; 
+            }
+            else if(hostname.includes('thairath') || hostname.includes('sanook') || hostname.includes('mgronline')) { 
+                lang = 'TH'; platform = 'Báo Thái Lan'; 
+            }
+            
+            document.getElementById('idea-input-platform').value = platform;
+            document.getElementById('idea-input-lang').value = lang;
+            if(author) document.getElementById('idea-input-author').value = author;
+            
+        } catch (e) {
+            // Nếu link người dùng dán vào bị sai định dạng HTTP
+            console.log("Hệ thống không nhận dạng được cấu trúc URL này.");
+        }
     }
 
     // Lưu Bảng Ý tưởng
