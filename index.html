@@ -110,9 +110,7 @@
             display: flex; justify-content: space-between; align-items: center;
             cursor: pointer; user-select: none; margin-bottom: 10px;
         }
-        .card-body-content {
-            transition: all 0.3s ease;
-        }
+        .card-body-content { transition: all 0.3s ease; }
         .card.collapsed .card-body-content { display: none; }
         .toggle-icon { font-size: 1.2rem; font-weight: bold; }
 
@@ -174,7 +172,7 @@
         <button class="menu-item" id="btn-view-month" onclick="switchView('month')">📅 Theo Tháng</button>
         <button class="menu-item" id="btn-view-year" onclick="switchView('year')">📊 Cả Năm 2026</button>
 
-        <div class="sidebar-title">📂 LƯU TRỮ TRỮ</div>
+        <div class="sidebar-title">📂 LƯU TRỮ CHUYÊN SÂU</div>
         <button class="menu-item" id="btn-view-resources" onclick="switchView('resources')">💡 Tài Nguyên dịch/Link</button>
     </div>
 
@@ -219,7 +217,7 @@
             <div id="calendar-grid"></div>
         </div>
 
-        <!-- TRANG TÀI NGUYÊN (CHỈ HIỆN KHI BẤM XEM TÀI NGUYÊN) -->
+        <!-- TRANG TÀI NGUYÊN -->
         <div class="resources-box" id="resources-box">
             <div class="resource-section">
                 <h3>📌 Bài Lưu Chuẩn Bị Dịch (Ý tưởng)</h3>
@@ -243,7 +241,7 @@
         <!-- KHU VỰC CÁC HỘP CHECKLIST CÔNG VIỆC -->
         <div id="checklist-container">
             
-            <!-- TIKTOK -->
+            <!-- TIKTOK (Tổng cộng 3 việc cố định đã tách nhỏ) -->
             <div class="card tiktok" id="card-tiktok">
                 <div class="card-header-toggle" onclick="toggleCard('card-tiktok')">
                     <div class="card-title">🎵 TikTok</div>
@@ -263,15 +261,20 @@
                     <div class="task-row" id="row-2">
                         <div class="task-left">
                             <input type="checkbox" id="check-2" onchange="updateTask(2)">
-                            <span class="task-text">2 video tin tức / Threads / lồng tiếng</span>
-                        </div>
-                        <div class="bonus-control">
-                            <button class="bonus-btn" onclick="changeBonus(2, -1)">-</button>
-                            <span class="bonus-value" id="bonus-2">0</span>
-                            <button class="bonus-btn" onclick="changeBonus(2, 1)">+</button>
+                            <span class="task-text">Video tin tức / Threads / lồng tiếng - Video số 1</span>
                         </div>
                     </div>
-                    <!-- Phát sinh cụ thể từng App -->
+                    <div class="task-row" id="row-10">
+                        <div class="task-left">
+                            <input type="checkbox" id="check-10" onchange="updateTask(10)">
+                            <span class="task-text">Video tin tức / Threads / lồng tiếng - Video số 2</span>
+                        </div>
+                        <div class="bonus-control">
+                            <button class="bonus-btn" onclick="changeBonus(10, -1)">-</button>
+                            <span class="bonus-value" id="bonus-10">0</span>
+                            <button class="bonus-btn" onclick="changeBonus(10, 1)">+</button>
+                        </div>
+                    </div>
                     <div id="custom-container-tiktok"></div>
                     <button class="btn-add-mini" onclick="addCustomToApp('tiktok')">🌸 Thêm việc làm dư TikTok</button>
                 </div>
@@ -339,16 +342,22 @@
                         </div>
                     </div>
 
-                    <div class="sub-group-title">Trang Shokaimono</div>
+                    <div class="sub-group-title">Trang Shokaimono (Đã tách làm 2 bài riêng)</div>
                     <div class="task-row" id="row-8">
                         <div class="task-left">
                             <input type="checkbox" id="check-8" onchange="updateTask(8)">
-                            <span class="task-text">2 bài dịch SNS về sản phẩm để gắn link</span>
+                            <span class="task-text">Bài dịch SNS về sản phẩm để gắn link - Bài 1</span>
+                        </div>
+                    </div>
+                    <div class="task-row" id="row-11">
+                        <div class="task-left">
+                            <input type="checkbox" id="check-11" onchange="updateTask(11)">
+                            <span class="task-text">Bài dịch SNS về sản phẩm để gắn link - Bài 2</span>
                         </div>
                         <div class="bonus-control">
-                            <button class="bonus-btn" onclick="changeBonus(8, -1)">-</button>
-                            <span class="bonus-value" id="bonus-8">0</span>
-                            <button class="bonus-btn" onclick="changeBonus(8, 1)">+</button>
+                            <button class="bonus-btn" onclick="changeBonus(11, -1)">-</button>
+                            <span class="bonus-value" id="bonus-11">0</span>
+                            <button class="bonus-btn" onclick="changeBonus(11, 1)">+</button>
                         </div>
                     </div>
                     <div id="custom-container-facebook"></div>
@@ -356,7 +365,7 @@
                 </div>
             </div>
 
-            <!-- ZALO VIDEO -->
+            <!-- ZALO VIDEO (Đã tách thành 10 dòng check độc lập từ dòng 12 tới 21) -->
             <div class="card zalo" id="card-zalo">
                 <div class="card-header-toggle" onclick="toggleCard('card-zalo')">
                     <div class="card-title">📱 Zalo Video</div>
@@ -367,17 +376,30 @@
                         <div class="progress-label"><span style="font-size:0.8rem; color:#666;">Tiến độ Zalo</span><span id="text-mini-zalo" style="font-size:0.8rem; color:#666;">0%</span></div>
                         <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-zalo"></div></div>
                     </div>
-                    <div class="task-row" id="row-9">
+                    
+                    <!-- Vòng lặp giả lập bằng tay 10 video -->
+                    <div class="task-row" id="row-12"><div class="task-left"><input type="checkbox" id="check-12" onchange="updateTask(12)"><span class="task-text">Video gắn link sản phẩm - Số 1</span></div></div>
+                    <div class="task-row" id="row-13"><div class="task-left"><input type="checkbox" id="check-13" onchange="updateTask(13)"><span class="task-text">Video gắn link sản phẩm - Số 2</span></div></div>
+                    <div class="task-row" id="row-14"><div class="task-left"><input type="checkbox" id="check-14" onchange="updateTask(14)"><span class="task-text">Video gắn link sản phẩm - Số 3</span></div></div>
+                    <div class="task-row" id="row-15"><div class="task-left"><input type="checkbox" id="check-15" onchange="updateTask(15)"><span class="task-text">Video gắn link sản phẩm - Số 4</span></div></div>
+                    <div class="task-row" id="row-16"><div class="task-left"><input type="checkbox" id="check-16" onchange="updateTask(16)"><span class="task-text">Video gắn link sản phẩm - Số 5</span></div></div>
+                    <div class="task-row" id="row-17"><div class="task-left"><input type="checkbox" id="check-17" onchange="updateTask(17)"><span class="task-text">Video gắn link sản phẩm - Số 6</span></div></div>
+                    <div class="task-row" id="row-18"><div class="task-left"><input type="checkbox" id="check-18" onchange="updateTask(18)"><span class="task-text">Video gắn link sản phẩm - Số 7</span></div></div>
+                    <div class="task-row" id="row-19"><div class="task-left"><input type="checkbox" id="check-19" onchange="updateTask(19)"><span class="task-text">Video gắn link sản phẩm - Số 8</span></div></div>
+                    <div class="task-row" id="row-20"><div class="task-left"><input type="checkbox" id="check-20" onchange="updateTask(20)"><span class="task-text">Video gắn link sản phẩm - Số 9</span></div></div>
+                    
+                    <div class="task-row" id="row-21">
                         <div class="task-left">
-                            <input type="checkbox" id="check-9" onchange="updateTask(9)">
-                            <span class="task-text">10 video gắn link sản phẩm</span>
+                            <input type="checkbox" id="check-21" onchange="updateTask(21)">
+                            <span class="task-text">Video gắn link sản phẩm - Số 10</span>
                         </div>
                         <div class="bonus-control">
-                            <button class="bonus-btn" onclick="changeBonus(9, -1)">-</button>
-                            <span class="bonus-value" id="bonus-9">0</span>
-                            <button class="bonus-btn" onclick="changeBonus(9, 1)">+</button>
+                            <button class="bonus-btn" onclick="changeBonus(21, -1)">-</button>
+                            <span class="bonus-value" id="bonus-21">0</span>
+                            <button class="bonus-btn" onclick="changeBonus(21, 1)">+</button>
                         </div>
                     </div>
+
                     <div id="custom-container-zalo"></div>
                     <button class="btn-add-mini" onclick="addCustomToApp('zalo')">🌸 Thêm việc làm dư Zalo</button>
                 </div>
@@ -394,21 +416,22 @@
     let selectedDate = new Date();
     
     if(selectedDate.getFullYear() !== YEAR) {
-        selectedDate = new Date(YEAR, 5, 5); // 05/06/2026 mặc định[cite: 1]
+        selectedDate = new Date(YEAR, 5, 5); // 05/06/2026 mặc định
     }
 
-    // DB cấu trúc: db[key] = { tasks: {}, customs: { tiktok: [], instagram: [], facebook: [], zalo: [] } }
-    let db = JSON.parse(localStorage.getItem('hy_sakura_v3_db')) || {};
-    // Bộ lưu trữ tài nguyên độc lập: resources = { ideas: [], links: [] }
+    let db = JSON.parse(localStorage.getItem('hy_sakura_v4_db')) || {};
     let resources = JSON.parse(localStorage.getItem('hy_resources_db')) || { ideas: [], links: [] };
 
-    // Bản đồ map ID việc cố định vào từng App để tính tiến độ mini
+    // Định nghĩa lại các ID sau khi đã phân tách nhỏ
     const appMapping = {
-        tiktok: [1, 2],
+        tiktok: [1, 2, 10],
         instagram: [3],
-        facebook: [4, 5, 6, 7, 8],
-        zalo: [9]
+        facebook: [4, 5, 6, 7, 8, 11],
+        zalo: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
     };
+
+    // Tổng số đầu việc cố định sau khi tách = 3 + 1 + 6 + 10 = 20 đầu việc
+    const TOTAL_FIXED_TASKS = 20; 
 
     function toggleSidebar() {
         document.getElementById('sidebar').classList.toggle('open');
@@ -429,10 +452,9 @@
         
         if(view === 'today') {
             selectedDate = new Date();
-            if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5);[cite: 1]
+            if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5);
         }
         
-        // Điều hướng giao diện ẩn hiện
         if (view === 'resources') {
             document.getElementById('checklist-container').style.display = 'none';
             document.getElementById('total-progress-box').style.display = 'none';
@@ -540,28 +562,25 @@
         let customsData = dayData.customs || {};
 
         let totalCheckedGlobal = 0;
-        let totalCountGlobal = 9;
+        let totalCountGlobal = TOTAL_FIXED_TASKS;
 
-        // Tiến trình render cho từng App
         for (const app in appMapping) {
             let appChecked = 0;
             let appTotal = appMapping[app].length;
 
-            // Render phần việc cố định
             appMapping[app].forEach(id => {
                 let tData = tasksData[id] || { checked: false, bonus: 0 };
                 let cb = document.getElementById(`check-${id}`);
-                cb.checked = tData.checked;
+                if(cb) cb.checked = tData.checked;
                 
                 let row = document.getElementById(`row-${id}`);
-                if(tData.checked) { row.classList.add('completed'); appChecked++; totalCheckedGlobal++; }
-                else row.classList.remove('completed');
+                if(tData.checked) { if(row) row.classList.add('completed'); appChecked++; totalCheckedGlobal++; }
+                else { if(row) row.classList.remove('completed'); }
 
                 let bVal = document.getElementById(`bonus-${id}`);
                 if(bVal) bVal.innerText = tData.bonus;
             });
 
-            // Render phần việc phát sinh riêng của App này
             let customContainer = document.getElementById(`custom-container-${app}`);
             customContainer.innerHTML = '';
             let appCustomsList = customsData[app] || [];
@@ -583,13 +602,11 @@
                 customContainer.appendChild(row);
             });
 
-            // Cập nhật thanh tiến độ mini của App
             let miniPct = appTotal > 0 ? Math.round((appChecked / appTotal) * 100) : 0;
             document.getElementById(`fill-mini-${app}`).style.width = miniPct + '%';
             document.getElementById(`text-mini-${app}`).innerText = `${miniPct}% (${appChecked}/${appTotal})`;
         }
 
-        // Cập nhật Thanh Tiến Độ Tổng
         let pctGlobal = totalCountGlobal > 0 ? Math.round((totalCheckedGlobal / totalCountGlobal) * 100) : 0;
         document.getElementById('progress-bar-fill').style.width = pctGlobal + '%';
         document.getElementById('progress-text').innerText = `${pctGlobal}% (${totalCheckedGlobal}/${totalCountGlobal})`;
@@ -611,7 +628,6 @@
         saveAndReload();
     }
 
-    // Thêm việc làm dư vào thẳng App được chọn
     window.addCustomToApp = function(app) {
         let text = prompt(`🌸 Thêm việc làm dư / phát sinh cho ${app.toUpperCase()} ngày này:`);
         if(!text || text.trim() === "") return;
@@ -645,12 +661,14 @@
         if(!db[key]) db[key] = { tasks: {}, customs: {} };
         if(!db[key].tasks) db[key].tasks = {};
         if(!db[key].customs) db[key].customs = { tiktok: [], instagram: [], facebook: [], zalo: [] };
-        for(let id=1; id<=9; id++) {
+        
+        // Khởi tạo trạng thái cho tất cả ID hợp lệ
+        const allIds = [1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21];
+        allIds.forEach(id => {
             if(!db[key].tasks[id]) db[key].tasks[id] = { checked: false, bonus: 0 };
-        }
+        });
     }
 
-    /* --- QUẢN LÝ PHẦN TÀI NGUYÊN LƯU TRỮ --- */
     window.addResource = function(type, inputId) {
         let input = document.getElementById(inputId);
         let val = input.value.trim();
@@ -675,14 +693,11 @@
             resources[type].forEach(item => {
                 let li = document.createElement('li');
                 li.className = 'res-item';
-                
-                // Check xem có phải đường link không để gắn thẻ <a> href
                 if(type === 'links' && (item.content.startsWith('http://') || item.content.startsWith('https://'))) {
                     li.innerHTML = `<a href="${item.content}" target="_blank">${item.content}</a>`;
                 } else {
                     li.innerHTML = `<span>${item.content}</span>`;
                 }
-                
                 li.innerHTML += `<button class="delete-custom-btn" onclick="deleteResource('${type}', ${item.id})">×</button>`;
                 ul.appendChild(li);
             });
@@ -714,14 +729,14 @@
     }
 
     function saveAndReload() {
-        localStorage.setItem('hy_sakura_v3_db', JSON.stringify(db));
+        localStorage.setItem('hy_sakura_v4_db', JSON.stringify(db));
         renderChecklistValues();
         calculateDashboard();
     }
 
     window.clearEverything = function() {
-        if(confirm("Xóa toàn bộ tiến độ checklist và bảng tổng kết? (Phần Tài Nguyên dịch vẫn sẽ giữ nguyên)")) {
-            db = {}; localStorage.removeItem('hy_sakura_v3_db');
+        if(confirm("Xóa toàn bộ tiến độ checklist và bảng tổng kết?")) {
+            db = {}; localStorage.removeItem('hy_sakura_v4_db');
             switchView('today');
         }
     }
