@@ -252,9 +252,6 @@
         .remote-table tr.completed td a { color: #666; text-decoration: line-through; }
         .remote-table input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: #2ecc71; }
         
-        .editable-cell { background: #fffdfd; border: 1px dashed var(--sakura-dark); cursor: text; transition: 0.2s; }
-        .editable-cell:focus { outline: 2px solid var(--zalo-color); background: #fff; }
-         
         .btn-copy-mini {
             background: #ffe066; border: 1px solid #000; border-radius: 6px;
             padding: 3px 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; margin-left: 6px;
@@ -340,11 +337,11 @@
             
             <div class="resource-section" id="res-sec-ideas">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-ideas')">
-                    <h3>📌 Bài Lưu Chuẩn Bị Dịch (Hút Nguồn Từ Sheet)</h3><span>▼</span>
+                    <h3>📌 Bài Lưu Chuẩn Bị Dịch (Hút Dữ Liệu Tự Động Từ Sheet)</h3><span>▼</span>
                 </div>
                 <div class="resource-body">
                     <div style="font-size: 0.85rem; color: #d63384; margin-bottom: 10px; font-weight: bold;">
-                        💡 DANH SÁCH BÀI DỊCH ĐƯỢC ĐỒNG BỘ TỪ FILE SHEET TAB 'ideas'. Cần làm bài nào chỉ cần bấm nút Copy Cre đúng 1 lần thôi nhé!
+                        💡 DANH SÁCH BÀI DỊCH ĐÃ ĐỔI THEO CƠ CHẾ CLOUD TỰ ĐỘNG. Ô Cre chỉ cần bấm 1 lần để Copy siêu tốc!
                     </div>
                     <div style="overflow-x: auto;">
                         <table class="remote-table" style="min-width: 700px;">
@@ -355,7 +352,7 @@
                                     <th>Tiêu đề bài viết</th>
                                     <th style="width: 50px;">N.Ngữ</th>
                                     <th>Nền tảng</th>
-                                    <th>Chủ đề</th>
+                                    <th style="color:#0068FF;">Mã ID nguồn 🔑</th>
                                     <th style="width: 180px;">Cre (Bấm 1 Lần Để Copy)</th>
                                 </tr>
                             </thead>
@@ -406,6 +403,7 @@
         </div>
 
         <div id="checklist-container">
+            <!-- Hộp check mạng xã hội cố định cũ -->
             <div class="card tiktok" id="card-tiktok">
                 <div class="card-header-toggle" onclick="toggleCard('card-tiktok')">
                     <div class="card-title">🎵 TikTok</div><span class="toggle-icon" id="icon-card-tiktok">▼</span>
@@ -532,16 +530,16 @@
     </div>
 
 <script>
-    // --- ⚠️ DÁN ĐƯỜNG LINK GOOGLE APPS SCRIPT CỦA EM VÀO ĐÂY ⚠️ ---
-    const GOOGLE_SCRIPT_URL = "DÁN_LINK_WEB_APP_MỚI_VÀO_ĐÂY";
+    // --- ⚠️ DÁN ĐƯỜNG LINK WEB APP GOOGLE SCRIPT MỚI CỦA EM VÀO ĐÂY ⚠️ ---
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzObXNAcFhJIirIAfgqfWttWA9oBKPjhSd2agIAX2HzupnjNW465BGE6Yskf2glWgSc/exec";
 
     const YEAR = 2026;
     let currentView = 'today';
     let selectedDate = new Date();
     if(selectedDate.getFullYear() !== YEAR) { selectedDate = new Date(YEAR, 5, 5); }
 
-    let db = JSON.parse(localStorage.getItem('hy_sakura_v12_db')) || {};
-    let resources = JSON.parse(localStorage.getItem('hy_resources_v12_db')) || { ideas_table: [], links: [], remotes: [] };
+    let db = JSON.parse(localStorage.getItem('hy_sakura_v13_db')) || {};
+    let resources = JSON.parse(localStorage.getItem('hy_resources_v13_db')) || { ideas_table: [], links: [], remotes: [] };
     let backupBeforeClear = null;
 
     const segmentMapping = {
@@ -555,10 +553,9 @@
     };
     const TOTAL_FIXED_TASKS = 20;
 
-    // HÀM 1: TỰ ĐỘNG HÚT DỮ LIỆU BÀI DỊCH TỪ TAB 'ideas' TRÊN SHEET VỀ WEB
     window.fetchIdeasFromCloud = function() {
         if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("DÁN_LINK")) {
-            alert("Em hãy dán đường link kết nối Web App vào dòng số 506 nhé!"); return;
+            alert("Em hãy dán đường link kết nối Web App vào dòng số 459 nhé!"); return;
         }
         document.getElementById('sync-status').innerText = "⏳ Đang kết nối lấy bài dịch...";
         
@@ -567,8 +564,8 @@
         .then(cloudIdeas => {
             if(Array.isArray(cloudIdeas)) {
                 resources.ideas_table = cloudIdeas;
-                localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
-                document.getElementById('sync-status').innerText = "☁️ Đã đồng bộ Bài dịch từ Sheet về Web thành công!";
+                localStorage.setItem('hy_resources_v13_db', JSON.stringify(resources));
+                document.getElementById('sync-status').innerText = "☁️ Đã đồng bộ Bài dịch thông minh từ Sheet về Web!";
                 if(currentView === 'resources') renderResources();
             }
         })
@@ -578,36 +575,22 @@
         });
     }
 
-    // HÀM 2: TỰ ĐỘNG BẮN DỮ LIỆU REMOTE XHS LÊN TAB 'remotes' TRÊN SHEET
     function sendRemotesToCloud() {
         if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("DÁN_LINK")) return;
         document.getElementById('sync-status').innerText = "⏳ Đang bắn dữ liệu XHS lên Sheet...";
-        
-        var payload = {
-            type: "remotes",
-            data: JSON.stringify(resources.remotes || [])
-        };
-        
+        var payload = { type: "remotes", data: JSON.stringify(resources.remotes || []) };
         fetch(GOOGLE_SCRIPT_URL, {
-            method: "POST",
-            mode: "no-cors",
-            cache: "no-cache",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
+            method: "POST", mode: "no-cors", cache: "no-cache",
+            headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
         }).then(() => {
-            document.getElementById('sync-status').innerText = "☁️ Đã lưu kho XHS lên Google Sheet trực tuyến! ✨";
-        }).catch(err => {
-            document.getElementById('sync-status').innerText = "❌ Lỗi lưu dữ liệu lên Sheet!";
-        });
+            document.getElementById('sync-status').innerText = "☁️ Đã lưu kho XHS lên Google Sheet! ✨";
+        }).catch(err => { document.getElementById('sync-status').innerText = "❌ Lỗi lưu dữ liệu!"; });
     }
 
-    // Tự động sao lưu Tiến độ Lịch và Ghi chú ngầm lên Sheet tab 'db'
     function saveCalendarDbToCloud() {
         if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("DÁN_LINK")) return;
         fetch(GOOGLE_SCRIPT_URL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
+            method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ type: "db", data: JSON.stringify(db) })
         });
     }
@@ -632,15 +615,12 @@
     function toggleSidebarDropdown() {
         const drop = document.getElementById('sidebar-view-dropdown');
         const icon = document.getElementById('sidebar-drop-icon');
-        drop.classList.toggle('collapsed');
-        icon.innerText = drop.classList.contains('collapsed') ? '▼' : '▲';
+        drop.classList.toggle('collapsed'); icon.innerText = drop.classList.contains('collapsed') ? '▼' : '▲';
     }
 
     function toggleCard(cardId) {
-        const card = document.getElementById(cardId);
-        const icon = document.getElementById('icon-' + cardId);
-        card.classList.toggle('collapsed');
-        icon.innerText = card.classList.contains('collapsed') ? '▲' : '▼';
+        const card = document.getElementById(cardId); const icon = document.getElementById('icon-' + cardId);
+        card.classList.toggle('collapsed'); icon.innerText = card.classList.contains('collapsed') ? '▲' : '▼';
     }
 
     function toggleResourceSec(id) { document.getElementById(id).classList.toggle('open'); }
@@ -653,20 +633,15 @@
     }
 
     window.adjustDate = function(days) {
-        let target = new Date(selectedDate);
-        target.setDate(selectedDate.getDate() + days);
+        let target = new Date(selectedDate); target.setDate(selectedDate.getDate() + days);
         if(target.getFullYear() === YEAR) {
-            selectedDate = target;
-            renderCalendarSection();
-            renderChecklistValues();
+            selectedDate = target; renderCalendarSection(); renderChecklistValues();
         } else { alert("Hệ thống chỉ hỗ trợ xem lịch trong năm 2026!"); }
     }
 
     window.backToToday = function() {
-        selectedDate = new Date();
-        if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5);
-        renderCalendarSection();
-        renderChecklistValues();
+        selectedDate = new Date(); if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5);
+        renderCalendarSection(); renderChecklistValues();
         if(currentView !== 'resources') { calculateDashboard(); }
     }
 
@@ -674,11 +649,7 @@
         currentView = view;
         document.querySelectorAll('.menu-item').forEach(btn => btn.classList.remove('active'));
         if(document.getElementById(`btn-view-${view}`)) document.getElementById(`btn-view-${view}`).classList.add('active');
-         
-        if(view === 'today') {
-            selectedDate = new Date();
-            if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5);
-        }
+        if(view === 'today') { selectedDate = new Date(); if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5); }
          
         if (view === 'resources') {
             document.getElementById('checklist-container').style.display = 'none';
@@ -700,71 +671,45 @@
             document.getElementById('resources-box').style.display = 'none';
             document.getElementById('main-title').innerText = "🌸 HY HY WORKSPACE 🌸";
             document.getElementById('dashboard-box').style.display = (view === 'today') ? 'none' : 'block';
-             
-            renderCalendarSection();
-            renderChecklistValues();
-            calculateDashboard();
+            renderCalendarSection(); renderChecklistValues(); calculateDashboard();
         }
         toggleSidebar();
     }
 
     function renderCalendarSection() {
         const container = document.getElementById('calendar-container');
-        const grid = document.getElementById('calendar-grid');
-        const header = document.getElementById('calendar-header');
-
+        const grid = document.getElementById('calendar-grid'); const header = document.getElementById('calendar-header');
         if (currentView === 'today') { container.style.display = 'none'; return; }
-        container.style.display = 'block';
-        grid.innerHTML = '';
-
+        container.style.display = 'block'; grid.innerHTML = '';
         const dayNames = ["CN", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
 
         if (currentView === 'week') {
-            grid.className = 'grid-days';
-            header.innerText = "Các ngày trong tuần này";
+            grid.className = 'grid-days'; header.innerText = "Các ngày trong tuần này";
             let currentDayIdx = selectedDate.getDay();
             let distanceToMon = currentDayIdx === 0 ? -6 : 1 - currentDayIdx;
-            let monday = new Date(selectedDate);
-            monday.setDate(selectedDate.getDate() + distanceToMon);
-            
+            let monday = new Date(selectedDate); monday.setDate(selectedDate.getDate() + distanceToMon);
             for(let i=0; i<7; i++) {
                 let d = new Date(monday); d.setDate(monday.getDate() + i);
                 createCalButton(d, d.getDate() + "/" + (d.getMonth()+1), grid, dayNames[d.getDay()]);
             }
         } 
         else if (currentView === 'month') {
-            grid.className = 'grid-days';
-            let m = selectedDate.getMonth();
-            header.innerText = `Tháng ${m + 1} / ${YEAR}`;
-            
+            grid.className = 'grid-days'; let m = selectedDate.getMonth(); header.innerText = `Tháng ${m + 1} / ${YEAR}`;
             ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'].forEach(dn => {
-                let div = document.createElement('div'); div.className = 'weekday-header'; div.innerText = dn;
-                grid.appendChild(div);
+                let div = document.createElement('div'); div.className = 'weekday-header'; div.innerText = dn; grid.appendChild(div);
             });
-
-            let firstDay = new Date(YEAR, m, 1).getDay();
-            let emptyCells = firstDay === 0 ? 6 : firstDay - 1;
-            
+            let firstDay = new Date(YEAR, m, 1).getDay(); let emptyCells = firstDay === 0 ? 6 : firstDay - 1;
             for(let i=0; i<emptyCells; i++) { grid.appendChild(document.createElement('div')); }
-            
             let totalDays = new Date(YEAR, m + 1, 0).getDate();
-            for(let i=1; i<=totalDays; i++) {
-                let d = new Date(YEAR, m, i);
-                createCalButton(d, i, grid, null);
-            }
+            for(let i=1; i<=totalDays; i++) { let d = new Date(YEAR, m, i); createCalButton(d, i, grid, null); }
         } 
         else if (currentView === 'year') {
-            header.innerText = `Toàn bộ các tháng năm ${YEAR}`;
-            grid.className = 'grid-months';
+            header.innerText = `Toàn bộ các tháng năm ${YEAR}`; grid.className = 'grid-months';
             const monthNames = ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"];
             for(let i=0; i<12; i++) {
                 let btn = document.createElement('button'); btn.className = 'cal-btn';
-                if(selectedDate.getMonth() === i) btn.classList.add('active');
-                btn.innerText = monthNames[i];
-                btn.onclick = () => {
-                    selectedDate = new Date(YEAR, i, 1); currentView = 'month';
-                    renderCalendarSection(); renderChecklistValues();
-                };
+                if(selectedDate.getMonth() === i) btn.classList.add('active'); btn.innerText = monthNames[i];
+                btn.onclick = () => { selectedDate = new Date(YEAR, i, 1); currentView = 'month'; renderCalendarSection(); renderChecklistValues(); };
                 grid.appendChild(btn);
             }
         }
@@ -772,386 +717,232 @@
 
     function createCalButton(dateObj, mainText, targetGrid, dayNameText) {
         let btn = document.createElement('button'); btn.className = 'cal-btn';
-        let key = formatDateKey(dateObj);
-        let todayKey = formatDateKey(new Date());
-        let hasData = false;
-        
+        let key = formatDateKey(dateObj); let todayKey = formatDateKey(new Date()); let hasData = false;
         if(db[key]) {
             if(Object.keys(db[key].tasks || {}).length > 0) hasData = true;
-            let c = db[key].customs || {};
-            for(let k in c) { if((c[k]||[]).length > 0) hasData = true; }
+            let c = db[key].customs || {}; for(let k in c) { if((c[k]||[]).length > 0) hasData = true; }
         }
-        
         if(hasData) btn.classList.add('has-data');
         if(db[key] && db[key].note && db[key].note.trim() !== "") btn.classList.add('has-note');
         if(key === todayKey) btn.classList.add('today-highlight');
         if(formatDateKey(selectedDate) === key) btn.classList.add('active');
-        
         let lunarStr = getLunarString(dateObj);
-        
-        let htmlStr = '';
-        if(dayNameText) htmlStr += `<span class="day-name">${dayNameText}</span>`;
-        htmlStr += `<span>${mainText}</span>`;
-        if(lunarStr) htmlStr += `<span class="lunar-date">(Âm: ${lunarStr})</span>`;
-        
-        btn.innerHTML = htmlStr;
-        btn.onclick = () => {
-            selectedDate = dateObj;
-            renderCalendarSection(); 
-            renderChecklistValues();
-        };
+        let htmlStr = ''; if(dayNameText) htmlStr += `<span class="day-name">${dayNameText}</span>`;
+        htmlStr += `<span>${mainText}</span>`; if(lunarStr) htmlStr += `<span class="lunar-date">(Âm: ${lunarStr})</span>`;
+        btn.innerHTML = htmlStr; btn.onclick = () => { selectedDate = dateObj; renderCalendarSection(); renderChecklistValues(); };
         targetGrid.appendChild(btn);
     }
 
     window.saveDailyNote = function() {
-        let key = formatDateKey(selectedDate);
-        initDayKey(key);
+        let key = formatDateKey(selectedDate); initDayKey(key);
         db[key].note = document.getElementById('daily-note').value;
-        localStorage.setItem('hy_sakura_v12_db', JSON.stringify(db));
-        renderCalendarSection();
-        saveCalendarDbToCloud();
+        localStorage.setItem('hy_sakura_v13_db', JSON.stringify(db)); renderCalendarSection(); saveCalendarDbToCloud();
     }
 
     function renderChecklistValues() {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('date-banner').innerText = selectedDate.toLocaleDateString('vi-VN', options) + " (Âm: " + getLunarString(selectedDate) + ")";
         document.getElementById('note-date-text').innerText = selectedDate.toLocaleDateString('vi-VN');
+        let realToday = new Date(); realToday.setHours(0,0,0,0); let checkDate = new Date(selectedDate); checkDate.setHours(0,0,0,0);
+        let isFuture = checkDate > realToday; let isPast = checkDate < realToday;
+        const navBox = document.querySelector('.date-navigator'); navBox.classList.remove('future-view', 'past-view');
+        if(isFuture) navBox.classList.add('future-view'); else if(isPast) navBox.classList.add('past-view');
 
-        let realToday = new Date(); realToday.setHours(0,0,0,0);
-        let checkDate = new Date(selectedDate); checkDate.setHours(0,0,0,0);
-        
-        let isFuture = checkDate > realToday;
-        let isPast = checkDate < realToday;
-        
-        const navBox = document.querySelector('.date-navigator');
-        navBox.classList.remove('future-view', 'past-view');
-        if(isFuture) navBox.classList.add('future-view');
-        else if(isPast) navBox.classList.add('past-view');
-
-        let key = formatDateKey(selectedDate);
-        let dayData = db[key] || { tasks: {}, customs: {} };
-        let tasksData = dayData.tasks || {};
-        let customsData = dayData.customs || {};
+        let key = formatDateKey(selectedDate); let dayData = db[key] || { tasks: {}, customs: {} };
+        let tasksData = dayData.tasks || {}; let customsData = dayData.customs || {};
 
         let noteElem = document.getElementById('daily-note');
-        if(isPast) {
-            noteElem.disabled = true;
-            noteElem.style.background = "#f1f5f9";
-            noteElem.style.borderColor = "#ccc";
-        } else {
-            noteElem.disabled = false;
-            noteElem.style.background = "#fff";
-            noteElem.style.borderColor = "var(--sakura-pink)";
-        }
+        if(isPast) { noteElem.disabled = true; noteElem.style.background = "#f1f5f9"; noteElem.style.borderColor = "#ccc"; } 
+        else { noteElem.disabled = false; noteElem.style.background = "#fff"; noteElem.style.borderColor = "var(--sakura-pink)"; }
         noteElem.value = dayData.note || '';
 
-        let totalCheckedGlobal = 0;
-        let totalCountGlobal = TOTAL_FIXED_TASKS;
+        let totalCheckedGlobal = 0; let totalCountGlobal = TOTAL_FIXED_TASKS;
 
         for (const segment in segmentMapping) {
-            let customContainer = document.getElementById(`custom-container-${segment}`);
-            if(customContainer) customContainer.innerHTML = '';
-
+            let customContainer = document.getElementById(`custom-container-${segment}`); if(customContainer) customContainer.innerHTML = '';
             segmentMapping[segment].forEach(id => {
-                let tData = tasksData[id] || { checked: false };
-                let cb = document.getElementById(`check-${id}`);
-                let lbl = document.getElementById(`lbl-${id}`);
-                 
+                let tData = tasksData[id] || { checked: false }; let cb = document.getElementById(`check-${id}`); let lbl = document.getElementById(`lbl-${id}`);
                 if(cb) {
                     cb.checked = tData.checked;
-                    if(isFuture || isPast) { 
-                        cb.disabled = true; 
-                        lbl.classList.add(isFuture ? 'future-disabled' : 'past-disabled'); 
-                    } else { 
-                        cb.disabled = false; 
-                        lbl.classList.remove('future-disabled', 'past-disabled'); 
-                    }
+                    if(isFuture || isPast) { cb.disabled = true; lbl.classList.add(isFuture ? 'future-disabled' : 'past-disabled'); } 
+                    else { cb.disabled = false; lbl.classList.remove('future-disabled', 'past-disabled'); }
                 }
-                if(tData.checked) { if(lbl) lbl.classList.add('completed'); totalCheckedGlobal++; }
-                else { if(lbl) lbl.classList.remove('completed'); }
+                if(tData.checked) { if(lbl) lbl.classList.add('completed'); totalCheckedGlobal++; } else { if(lbl) lbl.classList.remove('completed'); }
             });
 
-            let segCustomsList = customsData[segment] || [];
-            totalCountGlobal += segCustomsList.length;
-
+            let segCustomsList = customsData[segment] || []; totalCountGlobal += segCustomsList.length;
             segCustomsList.forEach(cTask => {
                 if(cTask.checked) { totalCheckedGlobal++; }
-                let lbl = document.createElement('label');
-                let disableClass = isFuture ? 'future-disabled' : (isPast ? 'past-disabled' : '');
-                
+                let lbl = document.createElement('label'); let disableClass = isFuture ? 'future-disabled' : (isPast ? 'past-disabled' : '');
                 lbl.className = `inline-task-box ${cTask.checked ? 'completed' : ''} ${disableClass}`;
-                 
-                lbl.innerHTML = `
-                    <input type="checkbox" ${cTask.checked ? 'checked' : ''} ${(isFuture || isPast) ? 'disabled' : ''} onchange="toggleCustomTask('${segment}', ${cTask.id})">
-                    <div>
-                        <span>${cTask.text}</span>
-                        ${cTask.note ? `<span class="prep-text-desc">✏️ Ghi chú: ${cTask.note}</span>` : ''}
-                    </div>
-                    ${!(isFuture || isPast) ? `<button class="delete-custom-btn" onclick="deleteCustomTask('${segment}', ${cTask.id}); event.preventDefault();">×</button>` : ''}
-                `;
+                lbl.innerHTML = `<input type="checkbox" ${cTask.checked ? 'checked' : ''} ${(isFuture || isPast) ? 'disabled' : ''} onchange="toggleCustomTask('${segment}', ${cTask.id})"><div><span>${cTask.text}</span>${cTask.note ? `<span class="prep-text-desc">✏️ Ghi chú: ${cTask.note}</span>` : ''}</div>${!(isFuture || isPast) ? `<button class="delete-custom-btn" onclick="deleteCustomTask('${segment}', ${cTask.id}); event.preventDefault();">×</button>` : ''}`;
                 if(customContainer) customContainer.appendChild(lbl);
             });
         }
 
         for(const app in appMapping) {
-            let appChecked = 0;
-            let appTotal = appMapping[app].length;
-
+            let appChecked = 0; let appTotal = appMapping[app].length;
             appMapping[app].forEach(id => { if(tasksData[id] && tasksData[id].checked) appChecked++; });
-
-            if(app === 'facebook') {
-                ['fb-hyhy', 'fb-hyblog', 'fb-shokaimono'].forEach(seg => {
-                    let list = customsData[seg] || []; appTotal += list.length;
-                    list.forEach(c => { if(c.checked) appChecked++; });
-                });
-            } else {
-                let list = customsData[app] || []; appTotal += list.length;
-                list.forEach(c => { if(c.checked) appChecked++; });
-            }
-
+            if(app === 'facebook') { ['fb-hyhy', 'fb-hyblog', 'fb-shokaimono'].forEach(seg => { let list = customsData[seg] || []; appTotal += list.length; list.forEach(c => { if(c.checked) appChecked++; }); }); } 
+            else { let list = customsData[app] || []; appTotal += list.length; list.forEach(c => { if(c.checked) appChecked++; }); }
             let miniPct = appTotal > 0 ? Math.round((appChecked / appTotal) * 100) : 0;
-            document.getElementById(`fill-mini-${app}`).style.width = miniPct + '%';
-            document.getElementById(`text-mini-${app}`).innerText = `${miniPct}% (${appChecked}/${appTotal})`;
+            document.getElementById(`fill-mini-${app}`).style.width = miniPct + '%'; document.getElementById(`text-mini-${app}`).innerText = `${miniPct}% (${appChecked}/${appTotal})`;
         }
 
         let pctGlobal = totalCountGlobal > 0 ? Math.round((totalCheckedGlobal / totalCountGlobal) * 100) : 0;
-        document.getElementById('progress-bar-fill').style.width = pctGlobal + '%';
-        document.getElementById('progress-text').innerText = `${pctGlobal}% (${totalCheckedGlobal}/${totalCountGlobal})`;
+        document.getElementById('progress-bar-fill').style.width = pctGlobal + '%'; document.getElementById('progress-text').innerText = `${pctGlobal}% (${totalCheckedGlobal}/${totalCountGlobal})`;
     }
 
     window.updateTask = function(id) {
-        let key = formatDateKey(selectedDate);
-        initDayKey(key);
-        db[key].tasks[id].checked = document.getElementById(`check-${id}`).checked;
-        saveAndReload();
+        let key = formatDateKey(selectedDate); initDayKey(key);
+        db[key].tasks[id].checked = document.getElementById(`check-${id}`).checked; saveAndReload();
     }
 
     window.addCustomToApp = function(segment, type, mode) {
-        let key = formatDateKey(selectedDate);
-        initDayKey(key);
+        let key = formatDateKey(selectedDate); initDayKey(key);
         if(!db[key].customs[segment]) db[key].customs[segment] = [];
-
         let noteText = "";
-        if(mode === 'prep') {
-            noteText = prompt(`🌸 [CHUẨN BỊ] Nhập nội dung chi tiết cho ${type} cần làm ngày mai:`);
-            if(noteText === null || noteText.trim() === "") return; 
-        }
-
+        if(mode === 'prep') { noteText = prompt(`🌸 [CHUẨN BỊ] Nhập nội dung chi tiết cho ${type} cần làm ngày mai:`); if(noteText === null || noteText.trim() === "") return; }
         let count = 0;
-        if(mode === 'prep') {
-            db[key].customs[segment].forEach(c => { if(c.text.includes(type) && c.text.includes('chuần bị')) count++; });
-        } else {
+        if(mode === 'prep') { db[key].customs[segment].forEach(c => { if(c.text.includes(type) && c.text.includes('chuần bị')) count++; }); } 
+        else {
             let searchKeyword = type === 'Video' ? 'video' : 'bài dịch';
-            segmentMapping[segment].forEach(id => {
-                let rowText = document.getElementById(`lbl-${id}`).innerText.toLowerCase();
-                if(rowText.includes(searchKeyword)) count++;
-            });
+            segmentMapping[segment].forEach(id => { let rowText = document.getElementById(`lbl-${id}`).innerText.toLowerCase(); if(rowText.includes(searchKeyword)) count++; });
             db[key].customs[segment].forEach(c => { if(c.text.startsWith(type)) count++; });
         }
-
-        let nextNumber = count + 1;
-        let finalLabel = mode === 'prep' ? `${nextNumber}. ${type} cần chuần bị` : `${type} ${nextNumber}`;
-
+        let nextNumber = count + 1; let finalLabel = mode === 'prep' ? `${nextNumber}. ${type} cần chuần bị` : `${type} ${nextNumber}`;
         db[key].customs[segment].push({ id: Date.now(), text: finalLabel, note: noteText.trim(), checked: false });
-        document.getElementById(`popup-${mode}-${segment}`).style.display = 'none';
-        saveAndReload();
+        document.getElementById(`popup-${mode}-${segment}`).style.display = 'none'; saveAndReload();
     }
 
     window.toggleCustomTask = function(segment, customId) {
-        let key = formatDateKey(selectedDate);
-        let target = db[key].customs[segment].find(c => c.id === customId);
-        if(target) target.checked = !target.checked;
-        saveAndReload();
+        let key = formatDateKey(selectedDate); let target = db[key].customs[segment].find(c => c.id === customId);
+        if(target) target.checked = !target.checked; saveAndReload();
     }
 
     window.deleteCustomTask = function(segment, customId) {
-        let key = formatDateKey(selectedDate);
-        db[key].customs[segment] = db[key].customs[segment].filter(c => c.id !== customId);
-        saveAndReload();
+        let key = formatDateKey(selectedDate); db[key].customs[segment] = db[key].customs[segment].filter(c => c.id !== customId); saveAndReload();
     }
 
     function toggleIdeaCheck(id) {
-        let target = resources.ideas_table.find(r => r.id === id);
-        if(target) target.checked = !target.checked;
-        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
-        renderResources();
+        let target = resources.ideas_table.find(r => r.id === id); if(target) target.checked = !target.checked;
+        localStorage.setItem('hy_resources_v13_db', JSON.stringify(resources)); renderResources();
     }
 
-    /* --- BỘ PHÂN TÍCH THÔNG MINH REMOTE XHS THEO DẤU CÁCH --- */
+    /* --- BỘ BÓC TÁCH REMOTE XHS --- */
     window.parseAndSaveSmartIdea = function() {
         let rawText = document.getElementById('idea-raw-input').value.trim();
         if(!rawText) { alert("Hãy dán chuỗi sao chép XHS vào đây nhé!"); return; }
-        
-        let linkPart = "";
-        let idPart = "Chưa có ID";
-
-        // Cắt chuỗi theo dấu cách đầu tiên
+        let linkPart = ""; let idPart = "Chưa có ID";
         let firstSpaceIdx = rawText.indexOf(' ');
-        
         if (firstSpaceIdx !== -1) {
-            // Phần trước dấu cách là Link gốc
             linkPart = rawText.substring(0, firstSpaceIdx).trim();
-            // Toàn bộ phần phía sau dấu cách bốc làm ID luôn
             let rawId = rawText.substring(firstSpaceIdx).trim();
-            
-            if(rawId !== "") {
-                idPart = rawId.toUpperCase().startsWith('XHS:') ? rawId : 'XHS: ' + rawId;
-            }
-        } else {
-            // Nếu không tìm thấy dấu cách nào, coi cả chuỗi là link và không có ID
-            linkPart = rawText;
-        }
+            if(rawId !== "") idPart = rawId.toUpperCase().startsWith('XHS:') ? rawId : 'XHS: ' + rawId;
+        } else { linkPart = rawText; }
 
         if(!resources.remotes) resources.remotes = [];
         resources.remotes.push({ id: Date.now(), link: linkPart, idCode: idPart, checked: false });
-        
-        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
-        document.getElementById('idea-raw-input').value = '';
-        renderResources();
-        sendRemotesToCloud(); // Đồng bộ ngay lên Sheet
+        localStorage.setItem('hy_resources_v13_db', JSON.stringify(resources));
+        document.getElementById('idea-raw-input').value = ''; renderResources(); sendRemotesToCloud();
     }
 
     window.copyTextToClipboard = function(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert(`📋 Đã copy thành công: "${text}"`);
-        }).catch(err => { alert('Lỗi không cho copy!'); });
+        navigator.clipboard.writeText(text).then(() => { alert(`📋 Đã copy thành công: "${text}"`); }).catch(err => { alert('Lỗi không cho copy!'); });
     }
 
     window.addResource = function(type, inputId) {
-        let input = document.getElementById(inputId);
-        let val = input.value.trim();
-        if(!val) return;
+        let input = document.getElementById(inputId); let val = input.value.trim(); if(!val) return;
         resources[type].push({ id: Date.now(), content: val });
-        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
-        input.value = '';
-        renderResources();
-        saveToCloud('resources', resources);
+        localStorage.setItem('hy_resources_v13_db', JSON.stringify(resources));
+        input.value = ''; renderResources(); saveToCloud('resources', resources);
     }
 
     window.toggleRemoteCheck = function(id) {
-        let target = resources.remotes.find(r => r.id === id);
-        if(target) target.checked = !target.checked;
-        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
-        renderResources();
-        sendRemotesToCloud();
+        let target = resources.remotes.find(r => r.id === id); if(target) target.checked = !target.checked;
+        localStorage.setItem('hy_resources_v13_db', JSON.stringify(resources)); renderResources(); sendRemotesToCloud();
     }
 
     window.deleteResource = function(type, id) {
         resources[type] = resources[type].filter(item => item.id !== id);
-        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
-        renderResources();
+        localStorage.setItem('hy_resources_v13_db', JSON.stringify(resources)); renderResources();
         if(type === 'remotes') sendRemotesToCloud();
     }
 
     function renderResources() {
-        let tbodyIdeas = document.getElementById('list-ideas');
-        tbodyIdeas.innerHTML = '';
+        let tbodyIdeas = document.getElementById('list-ideas'); tbodyIdeas.innerHTML = '';
         (resources.ideas_table || []).forEach(item => {
-            let tr = document.createElement('tr');
-            if(item.checked) tr.className = 'completed';
+            let tr = document.createElement('tr'); if(item.checked) tr.className = 'completed';
             tr.innerHTML = `
                 <td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleIdeaCheck(${item.id})"></td>
                 <td><a href="${item.link}" target="_blank" style="color:var(--zalo-color); font-weight:bold;">Link</a></td>
                 <td>${item.title}</td>
                 <td style="text-align: center; color: #d63384; font-weight: bold;">${item.lang}</td>
                 <td>${item.platform}</td>
-                <td>${item.topic}</td>
+                <td style="color:#0068FF; font-weight:bold;">${item.idCode}</td>
                 <td>
-                    <span style="font-size:0.75rem;">${item.cre}</span><br/>
+                    <span style="font-size:0.75rem; font-weight:bold;">${item.cre}</span><br/>
                     <button class="btn-copy-mini" style="margin-top:4px;" onclick="copyTextToClipboard('${item.cre.replace(/'/g, "\\'")}')">📋 Copy Cre</button>
                 </td>
             `;
             tbodyIdeas.appendChild(tr);
         });
 
-        let tbodyRemote = document.getElementById('list-remotes');
-        tbodyRemote.innerHTML = '';
+        let tbodyRemote = document.getElementById('list-remotes'); tbodyRemote.innerHTML = '';
         (resources.remotes || []).forEach(item => {
-            let tr = document.createElement('tr');
-            if(item.checked) tr.className = 'completed';
-            tr.innerHTML = `
-                <td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleRemoteCheck(${item.id})"></td>
-                <td><a href="${item.link}" target="_blank">${item.link}</a></td>
-                <td>
-                    <span style="color:#e1306c; font-weight:bold;">${item.idCode}</span>
-                    <button class="btn-copy-mini" onclick="copyTextToClipboard('${item.idCode}')">📋 Copy</button>
-                </td>
-                <td style="text-align: center;"><button class="delete-custom-btn" onclick="deleteResource('remotes', ${item.id})">×</button></td>
-            `;
+            let tr = document.createElement('tr'); if(item.checked) tr.className = 'completed';
+            tr.innerHTML = `<td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleRemoteCheck(${item.id})"></td><td><a href="${item.link}" target="_blank">${item.link}</a></td><td><span style="color:#e1306c; font-weight:bold;">${item.idCode}</span><button class="btn-copy-mini" onclick="copyTextToClipboard('${item.idCode}')">📋 Copy</button></td><td style="text-align: center;"><button class="delete-custom-btn" onclick="deleteResource('remotes', ${item.id})">×</button></td>`;
             tbodyRemote.appendChild(tr);
         });
 
         let ulLinks = document.getElementById('list-links'); ulLinks.innerHTML = '';
         (resources.links || []).forEach(item => {
             let li = document.createElement('li'); li.className = 'res-item';
-            if(item.content.startsWith('http://') || item.content.startsWith('https://')) {
-                li.innerHTML = `<a href="${item.content}" target="_blank">${item.content}</a>`;
-            } else { li.innerHTML = `<span>${item.content}</span>`; }
-            li.innerHTML += `<button class="delete-custom-btn" onclick="deleteResource('links', ${item.id})">×</button>`;
-            ulLinks.appendChild(li);
+            if(item.content.startsWith('http://') || item.content.startsWith('https://')) { li.innerHTML = `<a href="${item.content}" target="_blank">${item.content}</a>`; } 
+            else { li.innerHTML = `<span>${item.content}</span>`; }
+            li.innerHTML += `<button class="delete-custom-btn" onclick="deleteResource('links', ${item.id})">×</button>`; ulLinks.appendChild(li);
         });
     }
 
     function calculateDashboard() {
-        let keyToday = formatDateKey(new Date());
-        let mSelected = selectedDate.getMonth();
-        let todayChecked = 0, monthTotalChecked = 0, totalBonusCount = 0;
-
+        let keyToday = formatDateKey(new Date()); let mSelected = selectedDate.getMonth(); let todayChecked = 0, monthTotalChecked = 0, totalBonusCount = 0;
         if(db[keyToday]) {
             for(let id in db[keyToday].tasks || {}) { if(db[keyToday].tasks[id].checked) todayChecked++; }
             for(let seg in db[keyToday].customs || {}) { db[keyToday].customs[seg].forEach(c => { if(c.checked) todayChecked++; }); }
         }
-
         for(let k in db) {
-            let datePart = new Date(k);
-            for(let seg in db[k].customs || {}) { db[k].customs[seg].forEach(c => { if(c.checked) totalBonusCount++; }); }
+            let datePart = new Date(k); for(let seg in db[k].customs || {}) { db[k].customs[seg].forEach(c => { if(c.checked) totalBonusCount++; }); }
             if(datePart.getFullYear() === YEAR && datePart.getMonth() === mSelected) {
                 for(let id in db[k].tasks || {}) { if(db[k].tasks[id].checked) monthTotalChecked++; }
                 for(let seg in db[k].customs || {}) { db[k].customs[seg].forEach(c => { if(c.checked) monthTotalChecked++; }); }
             }
         }
-        document.getElementById('db-today-count').innerText = todayChecked;
-        document.getElementById('db-month-count').innerText = monthTotalChecked;
-        document.getElementById('db-year-bonus').innerText = totalBonusCount;
+        document.getElementById('db-today-count').innerText = todayChecked; document.getElementById('db-month-count').innerText = monthTotalChecked; document.getElementById('db-year-bonus').innerText = totalBonusCount;
     }
 
     function saveAndReload() {
-        localStorage.setItem('hy_sakura_v12_db', JSON.stringify(db));
-        renderChecklistValues();
-        calculateDashboard();
-        saveCalendarDbToCloud();
+        localStorage.setItem('hy_sakura_v13_db', JSON.stringify(db)); renderChecklistValues(); calculateDashboard(); saveCalendarDbToCloud();
     }
 
     window.clearEverything = function() {
         if(confirm("Bạn có chắc chắn muốn xóa toàn bộ tiến độ lịch sử tích chọn công việc?")) {
-            backupBeforeClear = JSON.stringify(db); db = {}; 
-            localStorage.removeItem('hy_sakura_v12_db');
+            backupBeforeClear = JSON.stringify(db); db = {}; localStorage.removeItem('hy_sakura_v13_db');
             document.getElementById('btn-undo-box').style.display = 'block';
-            if(currentView !== 'resources') { renderChecklistValues(); calculateDashboard(); } 
-            else { renderResources(); }
+            if(currentView !== 'resources') { renderChecklistValues(); calculateDashboard(); } else { renderResources(); }
             saveCalendarDbToCloud();
         }
     }
 
     window.undoDeleteData = function() {
         if(backupBeforeClear) {
-            db = JSON.parse(backupBeforeClear);
-            localStorage.setItem('hy_sakura_v12_db', backupBeforeClear);
-            backupBeforeClear = null; 
+            db = JSON.parse(backupBeforeClear); localStorage.setItem('hy_sakura_v13_db', backupBeforeClear); backupBeforeClear = null; 
             document.getElementById('btn-undo-box').style.display = 'none';
-            if(currentView !== 'resources') { renderChecklistValues(); calculateDashboard(); } 
-            else { renderResources(); }
-            saveCalendarDbToCloud();
-            alert("🎉 Khôi phục dữ liệu lịch sử thành công!");
+            if(currentView !== 'resources') { renderChecklistValues(); calculateDashboard(); } else { renderResources(); }
+            saveCalendarDbToCloud(); alert("🎉 Khôi phục dữ liệu lịch sử thành công!");
         }
     }
 
-    function formatDateKey(d) {
-        let mm = String(d.getMonth() + 1).padStart(2, '0');
-        let dd = String(d.getDate()).padStart(2, '0');
-        return `${d.getFullYear()}-${mm}-${dd}`;
-    }
-
+    function formatDateKey(d) { let mm = String(d.getMonth() + 1).padStart(2, '0'); let dd = String(d.getDate()).padStart(2, '0'); return `${d.getFullYear()}-${mm}-${dd}`; }
     switchView('today');
 </script>
 </body>
