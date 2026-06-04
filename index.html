@@ -3,224 +3,623 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Checklist Công Việc Hàng Ngày</title>
+    <title>🌸 Lịch & Checklist Công Việc 2026 🌸</title>
     <style>
+        :root {
+            --bg-color: #FAF8F5;
+            --text-color: #000000;
+            --tiktok-color: #010101;
+            --instagram-color: #E1306C;
+            --facebook-color: #1877F2;
+            --zalo-color: #0068FF;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            display: flex;
         }
-        .container {
-            max-width: 700px;
+
+        /* --- MENU 3 SỌC (SIDEBAR) --- */
+        .menu-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            font-size: 24px;
+            background: #ffffff;
+            border: 2px solid #000;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .menu-btn:hover { transform: scale(1.1); }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -260px;
+            width: 220px;
+            height: 100%;
+            background: #ffffff;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+            transition: left 0.3s ease;
+            padding: 80px 20px 20px 20px;
+            z-index: 90;
+            border-right: 3px dashed #cbd5e1;
+        }
+        .sidebar.open { left: 0; }
+
+        .sidebar-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #555;
+            text-align: center;
+        }
+
+        .menu-item {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #f1f5f9;
+            border: 2px solid #000;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        .menu-item:hover { background: #e2e8f0; transform: translateY(-2px); }
+        .menu-item.active { background: #ffe066; color: #000; }
+
+        /* --- KHU VỰC CHÍNH --- */
+        .main-content {
+            flex: 1;
+            max-width: 800px;
             margin: 0 auto;
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 20px;
+            padding-top: 75px;
+            width: 100%;
+            box-sizing: border-box;
         }
+
         h1 {
             text-align: center;
-            color: #2c3e50;
+            font-size: 1.8rem;
             margin-bottom: 5px;
         }
-        .date-title {
+
+        .date-banner {
             text-align: center;
-            color: #7f8c8d;
-            font-size: 1.1em;
-            margin-bottom: 25px;
-        }
-        .platform-group {
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: #ffe066;
+            padding: 10px;
+            border: 2px solid #000;
+            border-radius: 15px;
             margin-bottom: 20px;
-            border-left: 4px solid #3498db;
-            padding-left: 15px;
+            box-shadow: 0 4px 0 #000;
         }
-        .platform-group.tiktok { border-color: #000000; }
-        .platform-group.instagram { border-color: #e1306c; }
-        .platform-group.facebook { border-color: #1877f2; }
-        .platform-group.zalo { border-color: #0068ff; }
+
+        /* --- CẤU TRÚC LỊCH --- */
+        .calendar-container {
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 0 #000;
+            display: none; /* Hiện động bằng JS */
+        }
+        .calendar-header {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        .grid-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+        .grid-months {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .cal-btn {
+            padding: 10px 5px;
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: all 0.1s;
+        }
+        .cal-btn:hover { background: #f8fafc; }
+        .cal-btn.active { background: #ffe066; transform: scale(0.95); }
+        .cal-btn.has-data { border-style: dashed; background: #e2fcd4; }
+
+        /* --- CÁC HỘP CHECKLIST NỀN TẢNG --- */
+        .card {
+            background: #fff;
+            border: 3px solid #000;
+            border-radius: 22px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 5px 5px 0 #000;
+            position: relative;
+            overflow: hidden;
+        }
         
-        h3 {
-            margin: 0 0 10px 0;
-            color: #2c3e50;
+        /* Màu sắc ruy-băng thương hiệu của từng hộp */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 12px;
         }
-        .task-item {
+        .card.tiktok::before { background: var(--tiktok-color); }
+        .card.instagram::before { background: var(--instagram-color); }
+        .card.facebook::before { background: var(--facebook-color); }
+        .card.zalo::before { background: var(--zalo-color); }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card.tiktok .card-title { color: var(--tiktok-color); }
+        .card.instagram .card-title { color: var(--instagram-color); }
+        .card.facebook .card-title { color: var(--facebook-color); }
+        .card.zalo .card-title { color: var(--zalo-color); }
+
+        .sub-group-title {
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: #555;
+            margin: 10px 0 5px 0;
+            padding-bottom: 3px;
+            border-bottom: 1px dotted #ccc;
+        }
+
+        .task-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 10px 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px dashed #eee;
         }
+        .task-row:last-child { border-bottom: none; }
+
         .task-left {
             display: flex;
             align-items: center;
             flex: 1;
+            padding-right: 10px;
         }
-        .task-item input[type="checkbox"] {
+
+        /* Checkbox dễ thương */
+        .task-left input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
             margin-right: 12px;
-            transform: scale(1.2);
             cursor: pointer;
+            accent-color: #2ecc71;
         }
+
         .task-text {
-            font-size: 0.95em;
+            font-size: 1rem;
+            font-weight: 600;
             line-height: 1.4;
         }
+
         .completed .task-text {
             text-decoration: line-through;
-            color: #95a5a6;
+            color: #888888;
         }
-        .bonus-section {
+
+        /* Bộ tăng giảm số lượng (Bonus) kẹo ngọt */
+        .bonus-control {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
+            background: #f1f5f9;
+            padding: 4px 8px;
+            border: 2px solid #000;
+            border-radius: 12px;
         }
-        .bonus-section span {
-            font-size: 0.85em;
-            color: #7f8c8d;
+        .bonus-btn {
+            width: 26px;
+            height: 26px;
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
         }
-        .bonus-input {
-            width: 45px;
-            padding: 4px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        .bonus-btn:active { background: #ffe066; }
+        .bonus-value {
+            font-weight: bold;
+            min-width: 20px;
             text-align: center;
+            font-size: 1rem;
         }
-        .btn-reset {
+
+        /* Nút xóa dữ liệu dưới chân */
+        .btn-clear-all {
             display: block;
             width: 100%;
             padding: 12px;
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
+            background: #ff8787;
+            border: 2px solid #000;
+            border-radius: 15px;
+            font-weight: bold;
             cursor: pointer;
-            margin-top: 25px;
-            transition: background 0.2s;
+            box-shadow: 0 4px 0 #000;
+            margin-top: 40px;
+            margin-bottom: 40px;
         }
-        .btn-reset:hover {
-            background-color: #c0392b;
+        .btn-clear-all:active { transform: translateY(4px); box-shadow: none; }
+
+        /* Màn hình nền mờ khi mở menu trên điện thoại */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.2);
+            z-index: 85;
         }
+        .overlay.show { display: block; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>DAILY CHECKLIST</h1>
-    <div id="current-date" class="date-title"></div>
+    <!-- Nút 3 Thanh Ngang -->
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-    <div id="checklist-container">
-        <!-- Dữ liệu nhiệm vụ sẽ được tự động render ở đây bằng JavaScript -->
+    <!-- Thanh Menu Bên Cạnh -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-title">📅 CHẾ ĐỘ XEM</div>
+        <button class="menu-item active" id="btn-view-today" onclick="switchView('today')">✨ Hôm Nay</button>
+        <button class="menu-item" id="btn-view-week" onclick="switchView('week')">🗓️ Xem Theo Tuần</button>
+        <button class="menu-item" id="btn-view-month" onclick="switchView('month')">📅 Xem Theo Tháng</button>
+        <button class="menu-item" id="btn-view-year" onclick="switchView('year')">📊 Xem Cả Năm 2026</button>
     </div>
 
-    <button class="btn-reset" onclick="resetDay()">Reset Cho Ngày Mới</button>
-</div>
+    <!-- Khu Vực Hiển Thị Nội Dung -->
+    <div class="main-content">
+        <h1>DAILY CHECKLIST</h1>
+        <div class="date-banner" id="date-banner">---</div>
+
+        <!-- Thanh Hiển Thị Lịch Lưới (Thay đổi động theo menu) -->
+        <div class="calendar-container" id="calendar-container">
+            <div class="calendar-header" id="calendar-header">Chọn Ngày</div>
+            <div id="calendar-grid"></div>
+        </div>
+
+        <!-- KHU VỰC CÁC HỘP NHIỆM VỤ -->
+        <div id="checklist-container">
+            
+            <!-- HỘP TIKTOK -->
+            <div class="card tiktok">
+                <div class="card-title">🎵 TikTok</div>
+                <div class="task-row" id="row-1">
+                    <div class="task-left">
+                        <input type="checkbox" id="check-1" onchange="updateTask(1)">
+                        <span class="task-text">1 video Kanji: 1 chữ hôm qua + 1 chữ ngày mới (Capcut)</span>
+                    </div>
+                </div>
+                <div class="task-row" id="row-2">
+                    <div class="task-left">
+                        <input type="checkbox" id="check-2" onchange="updateTask(2)">
+                        <span class="task-text">2 video tin tức / Threads / lồng tiếng</span>
+                    </div>
+                    <div class="bonus-control">
+                        <button class="bonus-btn" onclick="changeBonus(2, -1)">-</button>
+                        <span class="bonus-value" id="bonus-2">0</span>
+                        <button class="bonus-btn" onclick="changeBonus(2, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HỘP INSTAGRAM -->
+            <div class="card instagram">
+                <div class="card-title">📸 Instagram</div>
+                <div class="task-row" id="row-3">
+                    <div class="task-left">
+                        <input type="checkbox" id="check-3" onchange="updateTask(3)">
+                        <span class="task-text">Video Kanji đã edit up Tiktok</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HỘP FACEBOOK -->
+            <div class="card facebook">
+                <div class="card-title">📘 Facebook</div>
+                
+                <div class="sub-group-title">Trang HY HY</div>
+                <div class="task-row" id="row-4">
+                    <div class="task-left">
+                        <input type="checkbox" id="check-4" onchange="updateTask(4)">
+                        <span class="task-text">1 bài dịch tiếng Nhật từ SNS</span>
+                    </div>
+                </div>
+                <div class="task-row" id="row-5">
+                    <div class="task-left">
+                        <input type="checkbox" id="check-5" onchange="updateTask(5)">
+                        <span class="task-text">1 video cùng Tiktok hoặc edit video tiếng Nhật</span>
+                    </div>
+                </div>
+
+                <div class="sub-group-title">Trang HY Blog</div>
+                <div class="task-row" id="row-6">
+                    <div class="task-left">
+                        <input type="checkbox" id="check-6" onchange="updateTask(6)">
+                        <span class="task-text">1 bài dịch tiếng Anh từ SNS</span>
+                    </div>
+                </div>
+                <div class="task-row" id="row-7">
+                    <div class="task-left">
+                        <input type="checkbox" id="check-7" onchange="updateTask(7)">
+                        <span class="task-text">1 video có tiếng Anh</span>
+                    </div>
+                </div>
+
+                <div class="sub-group-title">Trang Shokaimono</div>
+                <div class="task-row" id="row-8">
+                    <div class="task-left">
+                        <input type="checkbox" id="check-8" onchange="updateTask(8)">
+                        <span class="task-text">2 bài dịch SNS về sản phẩm để gắn link</span>
+                    </div>
+                    <div class="bonus-control">
+                        <button class="bonus-btn" onclick="changeBonus(8, -1)">-</button>
+                        <span class="bonus-value" id="bonus-8">0</span>
+                        <button class="bonus-btn" onclick="changeBonus(8, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HỘP ZALO VIDEO -->
+            <div class="card zalo">
+                <div class="card-title">📱 Zalo Video</div>
+                <div class="task-row" id="row-9">
+                    <div class="task-left">
+                        <input type="checkbox" id="check-9" onchange="updateTask(9)">
+                        <span class="task-text">10 video gắn link sản phẩm</span>
+                    </div>
+                    <div class="bonus-control">
+                        <button class="bonus-btn" onclick="changeBonus(9, -1)">-</button>
+                        <span class="bonus-value" id="bonus-9">0</span>
+                        <button class="bonus-btn" onclick="changeBonus(9, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <button class="btn-clear-all" onclick="clearEverything()">Xóa Hết Dữ Liệu Lưu Trữ</button>
+    </div>
 
 <script>
-    // Khởi tạo danh sách công việc dựa trên yêu cầu của bạn
-    const tasksData = [
-        { id: 1, platform: 'Tiktok', groupClass: 'tiktok', desc: '1 video Kanji (1 chữ cũ + 1 chữ mới, edit Capcut)' },
-        { id: 2, platform: 'Tiktok', groupClass: 'tiktok', desc: '2 video tin tức / Threads / lồng tiếng (hoặc hơn)' },
-        { id: 3, platform: 'Instagram', groupClass: 'instagram', desc: 'Video Kanji đã edit up Tiktok' },
-        { id: 4, platform: 'Facebook (Trang HY HY)', groupClass: 'facebook', desc: '1 bài dịch tiếng Nhật từ SNS' },
-        { id: 5, platform: 'Facebook (Trang HY HY)', groupClass: 'facebook', desc: '1 video cùng với Tiktok hoặc edit video tiếng Nhật' },
-        { id: 6, platform: 'Facebook (Trang Blog HY)', groupClass: 'facebook', desc: '1 bài dịch tiếng Anh từ SNS' },
-        { id: 7, platform: 'Facebook (Trang Blog HY)', groupClass: 'facebook', desc: '1 video có tiếng Anh' },
-        { id: 8, platform: 'Facebook (Trang Shokaimono)', groupClass: 'facebook', desc: '2 bài dịch SNS về sản phẩm gắn link' },
-        { id: 9, platform: 'Zalo Video', groupClass: 'zalo', desc: '10 video gắn link sản phẩm' }
-    ];
-
-    // Hiển thị ngày hôm nay
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById('current-date').innerText = new Date().toLocaleDateString('vi-VN', options);
-
-    // Tải dữ liệu đã lưu từ LocalStorage nếu có
-    let userProgress = JSON.parse(localStorage.getItem('userProgress')) || {};
-
-    function renderChecklist() {
-        const container = document.getElementById('checklist-container');
-        container.innerHTML = '';
-
-        // Nhóm các nhiệm vụ theo nền tảng
-        const groups = {};
-        tasksData.forEach(task => {
-            if (!groups[task.platform]) {
-                groups[task.platform] = { class: task.groupClass, list: [] };
-            }
-            groups[task.platform].list.push(task);
-        });
-
-        // Render cấu trúc giao diện HTML
-        for (const platform in groups) {
-            const groupDiv = document.createElement('div');
-            groupDiv.className = `platform-group ${groups[platform].class}`;
-            
-            const title = document.createElement('h3');
-            title.innerText = platform;
-            groupDiv.appendChild(title);
-
-            groups[platform].list.forEach(task => {
-                const status = userProgress[task.id] || { checked: false, bonus: 0 };
-                
-                const itemDiv = document.createElement('div');
-                itemDiv.className = `task-item ${status.checked ? 'completed' : ''}`;
-                itemDiv.id = `item-${task.id}`;
-
-                itemDiv.innerHTML = `
-                    <div class="task-left">
-                        <input type="checkbox" id="check-${task.id}" ${status.checked ? 'checked' : ''} onchange="toggleTask(${task.id})">
-                        <span class="task-text">${task.desc}</span>
-                    </div>
-                    <div class="bonus-section">
-                        <span>Số lượng:</span>
-                        <input type="number" class="bonus-input" id="bonus-${task.id}" value="${status.bonus}" min="0" onchange="updateBonus(${task.id})">
-                    </div>
-                `;
-                groupDiv.appendChild(itemDiv);
-            });
-
-            container.appendChild(groupDiv);
-        }
+    const YEAR = 2026;
+    let currentView = 'today'; // today, week, month, year
+    let selectedDate = new Date(); // Ngày đang chọn xem
+    
+    // Ép năm luôn là 2026 cho đồng bộ
+    if(selectedDate.getFullYear() !== YEAR) {
+        selectedDate = new Date(YEAR, 5, 5); // Tháng 6 năm 2026 làm gốc nếu lệch năm
     }
 
-    // Xử lý khi tích chọn hoàn thành
-    window.toggleTask = function(id) {
-        if (!userProgress[id]) userProgress[id] = { checked: false, bonus: 0 };
-        userProgress[id].checked = document.getElementById(`check-${id}`).checked;
+    // Cơ sở dữ liệu lưu trong máy: { "2026-06-05": { "1": {checked: true, bonus: 0}} }
+    let db = JSON.parse(localStorage.getItem('hy_checklist_db')) || {};
+
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+        document.getElementById('overlay').classList.toggle('show');
+    }
+
+    function switchView(view) {
+        currentView = view;
+        document.querySelectorAll('.menu-item').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`btn-view-${view}`).classList.add('active');
         
-        const item = document.getElementById(`item-${id}`);
-        if (userProgress[id].checked) {
-            item.classList.add('completed');
-        } else {
-            item.classList.remove('completed');
+        if(view === 'today') {
+            selectedDate = new Date();
+            if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5);
         }
-        saveProgress();
+        
+        renderCalendarSection();
+        renderChecklistValues();
+        toggleSidebar();
     }
 
-    // Xử lý khi cập nhật số lượng bonus
-    window.updateBonus = function(id) {
-        if (!userProgress[id]) userProgress[id] = { checked: false, bonus: 0 };
-        userProgress[id].bonus = parseInt(document.getElementById(`bonus-${id}`).value) || 0;
-        saveProgress();
-    }
+    function renderCalendarSection() {
+        const container = document.getElementById('calendar-container');
+        const grid = document.getElementById('calendar-grid');
+        const header = document.getElementById('calendar-header');
 
-    function saveProgress() {
-        localStorage.setItem('userProgress', JSON.stringify(userProgress));
-    }
+        if (currentView === 'today') {
+            container.style.display = 'none';
+            return;
+        }
 
-    // Reset lại trạng thái để chuẩn bị cho ngày làm việc mới
-    window.resetDay = function() {
-        if (confirm('Bạn có chắc chắn muốn reset toàn bộ checklist để bắt đầu ngày mới không?')) {
-            userProgress = {};
-            saveProgress();
-            renderChecklist();
+        container.style.display = 'block';
+        grid.className = 'grid-days';
+        grid.innerHTML = '';
+
+        if (currentView === 'week') {
+            header.innerText = "Các ngày trong tuần này";
+            // Lấy ngày Thứ 2 của tuần hiện tại
+            let currentDayIdx = selectedDate.getDay();
+            let distanceToMon = currentDayIdx === 0 ? -6 : 1 - currentDayIdx;
+            let monday = new Date(selectedDate);
+            monday.setDate(selectedDate.getDate() + distanceToMon);
+
+            for(let i=0; i<7; i++) {
+                let d = new Date(monday);
+                d.setDate(monday.getDate() + i);
+                createCalButton(d, d.getDate() + "/" + (d.getMonth()+1), grid);
+            }
+        } 
+        else if (currentView === 'month') {
+            let m = selectedDate.getMonth();
+            header.innerText = `Tháng ${m + 1} / ${YEAR}`;
+            let totalDays = new Date(YEAR, m + 1, 0).getDate();
+            for(let i=1; i<=totalDays; i++) {
+                let d = new Date(YEAR, m, i);
+                createCalButton(d, i, grid);
+            }
+        } 
+        else if (currentView === 'year') {
+            header.innerText = `Toàn bộ các tháng năm ${YEAR}`;
+            grid.className = 'grid-months';
+            const monthNames = ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"];
+            for(let i=0; i<12; i++) {
+                let btn = document.createElement('button');
+                btn.className = 'cal-btn';
+                if(selectedDate.getMonth() === i) btn.classList.add('active');
+                btn.innerText = monthNames[i];
+                btn.onclick = () => {
+                    selectedDate = new Date(YEAR, i, 1);
+                    currentView = 'month'; // Nhấn vào tháng tự động bung view tháng đó ra
+                    document.querySelectorAll('.menu-item').forEach(b => b.classList.remove('active'));
+                    document.getElementById('btn-view-month').classList.add('active');
+                    renderCalendarSection();
+                    renderChecklistValues();
+                };
+                grid.appendChild(btn);
+            }
         }
     }
 
-    // Khởi chạy ứng dụng web khi tải trang
-    renderChecklist();
+    function createCalButton(dateObj, text, targetGrid) {
+        let btn = document.createElement('button');
+        btn.className = 'cal-btn';
+        let key = formatDateKey(dateObj);
+        
+        if(db[key] && Object.keys(db[key]).length > 0) btn.classList.add('has-data');
+        if(formatDateKey(selectedDate) === key) btn.classList.add('active');
+        
+        btn.innerText = text;
+        btn.onclick = () => {
+            selectedDate = dateObj;
+            document.querySelectorAll('.cal-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderChecklistValues();
+        };
+        targetGrid.appendChild(btn);
+    }
+
+    function renderChecklistValues() {
+        // Cập nhật Banner Ngày tháng
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('date-banner').innerText = selectedDate.toLocaleDateString('vi-VN', options);
+
+        let key = formatDateKey(selectedDate);
+        let dayData = db[key] || {};
+
+        // Loop qua 9 đầu việc để điền dữ liệu đã lưu
+        for(let id=1; id<=9; id++) {
+            let tData = dayData[id] || { checked: false, bonus: 0 };
+            
+            // Checkbox
+            let cb = document.getElementById(`check-${id}`);
+            cb.checked = tData.checked;
+            
+            let row = document.getElementById(`row-${id}`);
+            if(tData.checked) row.classList.add('completed');
+            else row.classList.remove('completed');
+
+            // Nút bonus nếu có
+            let bVal = document.getElementById(`bonus-${id}`);
+            if(bVal) bVal.innerText = tData.bonus;
+        }
+    }
+
+    window.updateTask = function(id) {
+        let key = formatDateKey(selectedDate);
+        if(!db[key]) db[key] = {};
+        if(!db[key][id]) db[key][id] = { checked: false, bonus: 0 };
+
+        let isChecked = document.getElementById(`check-${id}`).checked;
+        db[key][id].checked = isChecked;
+
+        let row = document.getElementById(`row-${id}`);
+        if(isChecked) row.classList.add('completed');
+        else row.classList.remove('completed');
+
+        saveToLocalStorage();
+    }
+
+    window.changeBonus = function(id, val) {
+        let key = formatDateKey(selectedDate);
+        if(!db[key]) db[key] = {};
+        if(!db[key][id]) db[key][id] = { checked: false, bonus: 0 };
+
+        let currentBonus = db[key][id].bonus || 0;
+        let newBonus = currentBonus + val;
+        if(newBonus < 0) newBonus = 0;
+
+        db[key][id].bonus = newBonus;
+        document.getElementById(`bonus-${id}`).innerText = newBonus;
+
+        saveToLocalStorage();
+    }
+
+    function saveToLocalStorage() {
+        // Dọn dẹp data rỗng trước khi lưu cho nhẹ máy
+        let key = formatDateKey(selectedDate);
+        if(db[key]) {
+            let empty = true;
+            for(let id in db[key]) {
+                if(db[key][id].checked || db[key][id].bonus > 0) empty = false;
+                else delete db[key][id];
+            }
+            if(empty) delete db[key];
+        }
+        localStorage.setItem('hy_checklist_db', JSON.stringify(db));
+    }
+
+    window.clearEverything = function() {
+        if(confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử tích chọn của cả năm không?")) {
+            db = {};
+            localStorage.removeItem('hy_checklist_db');
+            switchView('today');
+        }
+    }
+
+    function formatDateKey(d) {
+        let mm = String(d.getMonth() + 1).padStart(2, '0');
+        let dd = String(d.getDate()).padStart(2, '0');
+        return `${d.getFullYear()}-${mm}-${dd}`;
+    }
+
+    // Chạy lần đầu tiên khi mở web
+    switchView('today');
 </script>
-
 </body>
 </html>
