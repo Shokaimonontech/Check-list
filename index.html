@@ -371,10 +371,10 @@
                 </div>
                 <div class="resource-body">
                     <div style="font-size: 0.85rem; color: #0068FF; margin-bottom: 10px; font-weight: bold;">
-                        ✨ Dán đoạn sao chép có chứa link từ XHS vào ô dưới. Hệ thống tự bóc tách mã sản phẩm và bắn thẳng lên Sheet tab 'remotes' chạy ngầm!
+                        ✨ QUY TẮC CHUẨN: Dán nguyên chuỗi thô sao chép từ XHS vào ô dưới (Cơ chế sẽ bốc link trước dấu cách đầu tiên, và lấy toàn bộ cụm phía sau dấu cách làm mã ID sản phẩm). Bắn trực tiếp lên Sheet ngầm!
                     </div>
                     <div class="res-input-group">
-                        <textarea id="idea-raw-input" class="res-textarea" placeholder="Dán văn bản sao chép từ XHS vào đây..."></textarea>
+                        <textarea id="idea-raw-input" class="res-textarea" placeholder="Ví dụ dán: http://xhslink.com/abcxyz MãID9999"></textarea>
                         <button class="res-btn" onclick="parseAndSaveSmartIdea()">🚀 Tự Động Bóc Tách & Bắn Lên Google Sheet</button>
                     </div>
 
@@ -406,7 +406,6 @@
         </div>
 
         <div id="checklist-container">
-            <!-- Giữ nguyên các Card mạng xã hội cũ để xài -->
             <div class="card tiktok" id="card-tiktok">
                 <div class="card-header-toggle" onclick="toggleCard('card-tiktok')">
                     <div class="card-title">🎵 TikTok</div><span class="toggle-icon" id="icon-card-tiktok">▼</span>
@@ -534,7 +533,7 @@
 
 <script>
     // --- ⚠️ DÁN ĐƯỜNG LINK GOOGLE APPS SCRIPT CỦA EM VÀO ĐÂY ⚠️ ---
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzpYl53oyTD7J4d03FOcGPXSeUze94KSrDYwgQpYKrRa-HfkDGIg5RSQnO-V9Xozrin/exec";
+    const GOOGLE_SCRIPT_URL = "DÁN_LINK_WEB_APP_MỚI_VÀO_ĐÂY";
 
     const YEAR = 2026;
     let currentView = 'today';
@@ -978,28 +977,29 @@
         renderResources();
     }
 
-    /* --- BỘ PHÂN TÍCH THÔNG MINH REMOTE XHS --- */
-    
+    /* --- BỘ PHÂN TÍCH THÔNG MINH REMOTE XHS THEO DẤU CÁCH --- */
     window.parseAndSaveSmartIdea = function() {
         let rawText = document.getElementById('idea-raw-input').value.trim();
-        if(!rawText) { alert("Hãy dán nội dung bài viết chứa link vào đây nhé!"); return; }
+        if(!rawText) { alert("Hãy dán chuỗi sao chép XHS vào đây nhé!"); return; }
         
-        let urlRegex = /(https?:\/\/[^\s]+)/gi;
-        let matches = rawText.match(urlRegex);
-        
-        let link = "";
-        if(matches && matches.length > 0) link = matches[0];
-        else { alert("⚠️ Không tìm thấy đường link Xiaohongshu nào!"); return; }
-
-        let linkPart = link;
+        let linkPart = "";
         let idPart = "Chưa có ID";
+
+        // Cắt chuỗi theo dấu cách đầu tiên
         let firstSpaceIdx = rawText.indexOf(' ');
-         
-        // Nhận diện mã sản phẩm/ID đi kèm khoảng cách
-        let findIdMatch = rawText.match(/(XHS:\s*[a-zA-Z0-9]+|[a-zA-Z0-9]{5,20})/i);
-        if(findIdMatch) {
-            let matchedStr = findIdMatch[0];
-            idPart = matchedStr.toUpperCase().startsWith('XHS:') ? matchedStr : 'XHS: ' + matchedStr;
+        
+        if (firstSpaceIdx !== -1) {
+            // Phần trước dấu cách là Link gốc
+            linkPart = rawText.substring(0, firstSpaceIdx).trim();
+            // Toàn bộ phần phía sau dấu cách bốc làm ID luôn
+            let rawId = rawText.substring(firstSpaceIdx).trim();
+            
+            if(rawId !== "") {
+                idPart = rawId.toUpperCase().startsWith('XHS:') ? rawId : 'XHS: ' + rawId;
+            }
+        } else {
+            // Nếu không tìm thấy dấu cách nào, coi cả chuỗi là link và không có ID
+            linkPart = rawText;
         }
 
         if(!resources.remotes) resources.remotes = [];
@@ -1008,7 +1008,7 @@
         localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
         document.getElementById('idea-raw-input').value = '';
         renderResources();
-        sendRemotesToCloud(); // Bắn trực tiếp dữ liệu Remote XHS lên Sheet tab 'remotes'
+        sendRemotesToCloud(); // Đồng bộ ngay lên Sheet
     }
 
     window.copyTextToClipboard = function(text) {
@@ -1025,6 +1025,7 @@
         localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
         input.value = '';
         renderResources();
+        saveToCloud('resources', resources);
     }
 
     window.toggleRemoteCheck = function(id) {
@@ -1043,7 +1044,6 @@
     }
 
     function renderResources() {
-        // Render Bảng Bài dịch (Hút từ Sheet về máy)
         let tbodyIdeas = document.getElementById('list-ideas');
         tbodyIdeas.innerHTML = '';
         (resources.ideas_table || []).forEach(item => {
@@ -1064,7 +1064,6 @@
             tbodyIdeas.appendChild(tr);
         });
 
-        // Render Bảng Remote XHS
         let tbodyRemote = document.getElementById('list-remotes');
         tbodyRemote.innerHTML = '';
         (resources.remotes || []).forEach(item => {
@@ -1082,7 +1081,6 @@
             tbodyRemote.appendChild(tr);
         });
 
-        // Render Bảng Links video đã đăng
         let ulLinks = document.getElementById('list-links'); ulLinks.innerHTML = '';
         (resources.links || []).forEach(item => {
             let li = document.createElement('li'); li.className = 'res-item';
