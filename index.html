@@ -155,7 +155,6 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
         
-        /* Hiệu ứng màu lịch */
         .cal-btn.has-data { border: 2px dashed var(--sakura-dark); background: #FFF0F0; }
         .cal-btn.today-highlight { border: 3px solid #d63384; color: #d63384; background: #fff0f5; box-shadow: inset 0 0 5px rgba(214,51,132,0.3); }
         .cal-btn.active { background: var(--sakura-dark); color: #fff; border-color: #000; }
@@ -222,9 +221,12 @@
         .resource-body { display: none; margin-top: 12px; }
         .resource-section.open .resource-body { display: block; }
 
-        .res-input-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
-        .res-input-group input { flex: 1; padding: 12px; border: 2px solid #000; border-radius: 12px; font-weight: bold; font-size:0.95rem; }
-        .res-btn { background: var(--sakura-pink); border: 2px solid #000; border-radius: 12px; padding: 10px 20px; font-weight: bold; cursor: pointer; }
+        .res-input-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
+        .res-textarea { 
+            width: 100%; height: 80px; padding: 12px; border: 2px solid #000; border-radius: 12px; 
+            font-weight: bold; font-size:0.9rem; font-family: inherit; box-sizing: border-box; resize: none;
+        }
+        .res-btn { background: var(--sakura-pink); border: 2px solid #000; border-radius: 12px; padding: 12px 20px; font-weight: bold; cursor: pointer; }
         .res-list { list-style: none; padding: 0; margin: 0; }
         .res-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px dashed #ccc; font-weight: 600; }
         .res-item a { color: var(--zalo-color); text-decoration: none; word-break: break-all; }
@@ -321,16 +323,15 @@
             
             <div class="resource-section" id="res-sec-ideas">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-ideas')">
-                    <h3>📌 Bài Lưu Chuẩn Bị Dịch (Tự động + Sửa trực tiếp)</h3><span>▼</span>
+                    <h3>📌 Bài Lưu Chuẩn Bị Dịch (Hộp quét AI - Tự Động Chia Cột)</h3><span>▼</span>
                 </div>
                 <div class="resource-body">
                     <div style="font-size: 0.85rem; color: #d63384; margin-bottom: 10px; font-weight: bold;">
-                        ✨ BƯỚC 1: Dán link vào đây rồi bấm Thêm. Hệ thống sẽ tự tạo bảng & Phân tích ngôn ngữ.<br>
-                        ✨ BƯỚC 2: Bấm trực tiếp vào cột "Tiêu đề" / "Chủ đề" trong bảng dưới để nhập chữ (Cột Cre sẽ tự động update)!
+                        ✨ MẸO SIÊU NHANH: Em copy bài đăng từ app (thường app tự kèm cả tiêu đề + link), dán HẾT vào đây rồi bấm nút là xong!
                     </div>
                     <div class="res-input-group">
-                        <input type="text" id="idea-input-link" placeholder="Dán đường link vào đây...">
-                        <button class="res-btn" onclick="saveIdeaResource()">+ Thêm Nhanh</button>
+                        <textarea id="idea-raw-input" class="res-textarea" placeholder="Dán văn bản có chứa đường link bài viết vào đây..."></textarea>
+                        <button class="res-btn" onclick="parseAndSaveSmartIdea()">🚀 Tự Động Bóc Tách & Thêm Vào Bảng</button>
                     </div>
 
                     <div style="overflow-x: auto;">
@@ -339,10 +340,10 @@
                                 <tr>
                                     <th style="width: 30px; text-align: center;">Tick</th>
                                     <th>Link</th>
-                                    <th style="color:#d63384;">Tiêu đề (Sửa được ✏️)</th>
+                                    <th style="color:#d63384;">Tiêu đề (Chỉnh sửa trực tiếp ✏️)</th>
                                     <th style="width: 50px;">Ngôn ngữ</th>
                                     <th>Nền tảng</th>
-                                    <th style="color:#d63384;">Chủ đề (Sửa được ✏️)</th>
+                                    <th style="color:#d63384;">Chủ đề (Chỉnh sửa trực tiếp ✏️)</th>
                                     <th style="width: 180px;">Cre (Bấm Copy)</th>
                                     <th style="width: 30px; text-align: center;">Xóa</th>
                                 </tr>
@@ -517,8 +518,8 @@
     let selectedDate = new Date();
     if(selectedDate.getFullYear() !== YEAR) { selectedDate = new Date(YEAR, 5, 5); }
 
-    let db = JSON.parse(localStorage.getItem('hy_sakura_v10_db')) || {};
-    let resources = JSON.parse(localStorage.getItem('hy_resources_v10_db')) || { ideas_table: [], links: [], remotes: [] };
+    let db = JSON.parse(localStorage.getItem('hy_sakura_v10.1_db')) || {};
+    let resources = JSON.parse(localStorage.getItem('hy_resources_v10.1_db')) || { ideas_table: [], links: [], remotes: [] };
     let backupBeforeClear = null;
 
     const segmentMapping = {
@@ -706,7 +707,7 @@
         
         if(hasData) btn.classList.add('has-data');
         if(key === todayKey) btn.classList.add('today-highlight');
-        if(formatDateKey(selectedDate) === key) btn.classList.add('active'); // active đè lên today-highlight
+        if(formatDateKey(selectedDate) === key) btn.classList.add('active');
         
         let lunarStr = getLunarString(dateObj);
         
@@ -728,7 +729,7 @@
         let key = formatDateKey(selectedDate);
         initDayKey(key);
         db[key].note = document.getElementById('daily-note').value;
-        localStorage.setItem('hy_sakura_v10_db', JSON.stringify(db));
+        localStorage.setItem('hy_sakura_v10.1_db', JSON.stringify(db));
     }
 
     function renderChecklistValues() {
@@ -752,7 +753,6 @@
         let tasksData = dayData.tasks || {};
         let customsData = dayData.customs || {};
 
-        // Xử lý Ghi Chú
         let noteElem = document.getElementById('daily-note');
         if(isPast) {
             noteElem.disabled = true;
@@ -899,47 +899,65 @@
         allIds.forEach(id => { if(!db[key].tasks[id]) db[key].tasks[id] = { checked: false }; });
     }
 
-    /* --- QUẢN LÝ Ý TƯỞNG THÔNG MINH --- */
+    /* --- BỘ PHÂN TÍCH THÔNG MINH Ý TƯỞNG --- */
     
-    window.saveIdeaResource = function() {
-        let url = document.getElementById('idea-input-link').value.trim();
-        if(!url) { alert("Nhập link vào ô bạn nhé!"); return; }
+    window.parseAndSaveSmartIdea = function() {
+        let rawText = document.getElementById('idea-raw-input').value.trim();
+        if(!rawText) { alert("Hãy dán nội dung bài viết chứa link vào đây nhé!"); return; }
         
-        let urlLower = url.toLowerCase();
-        let lang = 'VN', platform = 'Khác', author = '';
+        // 1. Dùng Regex quét tìm đường link đầu tiên xuất hiện trong đống text
+        let urlRegex = /(https?:\/\/[^\s]+)/gi;
+        let matches = rawText.match(urlRegex);
         
-        try {
-            let urlObj = new URL(url);
-            let hostname = urlObj.hostname;
-            let pathname = urlObj.pathname;
-            
-            if(hostname.includes('yahoo.co.jp')) { lang = 'JP'; platform = 'Yahoo Japan News'; }
-            else if(hostname.includes('xiaohongshu.com') || hostname.includes('xhslink')) { lang = 'CN'; platform = 'Xiaohongshu'; }
-            else if(hostname.includes('tiktok.com')) { 
-                lang = 'VN'; platform = 'TikTok';
-                let match = pathname.match(/@([^\/]+)/);
-                if(match) author = match[1];
-            }
-            else if(hostname.includes('weibo.com')) { lang = 'CN'; platform = 'Weibo'; }
-            else if(hostname.includes('instagram.com')) { lang = 'EN'; platform = 'Instagram'; }
-            else if(hostname.includes('facebook.com')) { lang = 'VN'; platform = 'Facebook'; }
-            else if(hostname.includes('youtube.com') || hostname.includes('youtu.be')) { 
-                lang = 'EN'; platform = 'YouTube'; 
-                let match = pathname.match(/@([^\/]+)/);
-                if(match) author = match[1];
-            }
-            else if(hostname.includes('nhk.or.jp')) { lang = 'JP'; platform = 'NHK News'; }
-            else if(hostname.includes('thairath') || hostname.includes('sanook') || hostname.includes('mgronline')) { lang = 'TH'; platform = 'Báo Thái Lan'; }
-        } catch (e) { console.log("Link chưa đúng chuẩn URL."); }
+        let link = "";
+        if(matches && matches.length > 0) {
+            link = matches[0];
+        } else {
+            alert("⚠️ Không tìm thấy đường link nào trong đoạn văn bản em vừa dán!");
+            return;
+        }
 
+        // 2. Trích xuất Tiêu đề: Bỏ link ra khỏi đống text thô để lấy phần chữ còn lại làm tiêu đề bài
+        let cleanTitle = rawText.replace(link, "").replace(/[\r\n]+/g, " ").trim();
+        
+        // Cắt bớt nếu tiêu đề quá dài, dọn dẹp các ký tự thừa
+        if(cleanTitle.length > 80) {
+            cleanTitle = cleanTitle.substring(0, 80) + "...";
+        }
+        if(!cleanTitle) {
+            cleanTitle = "✏️ Nhấp để nhập tiêu đề...";
+        }
+
+        // 3. Tự động nhận diện Ngôn ngữ & Nền tảng & Tác giả dựa theo cấu trúc link
+        let urlLower = link.toLowerCase();
+        let lang = 'VN', platform = 'Khác', author = '';
+
+        if(urlLower.includes('yahoo.co.jp')) { lang = 'JP'; platform = 'Yahoo Japan News'; }
+        else if(urlLower.includes('xiaohongshu.com') || urlLower.includes('xhslink')) { lang = 'CN'; platform = 'Xiaohongshu'; }
+        else if(urlLower.includes('tiktok.com')) { 
+            lang = 'VN'; platform = 'TikTok';
+            let pathParts = link.split('/');
+            let userPart = pathParts.find(p => p.startsWith('@'));
+            if(userPart) author = userPart;
+        }
+        else if(urlLower.includes('weibo.com')) { lang = 'CN'; platform = 'Weibo'; }
+        else if(urlLower.includes('instagram.com')) { lang = 'EN'; platform = 'Instagram'; }
+        else if(urlLower.includes('facebook.com')) { lang = 'VN'; platform = 'Facebook'; }
+        else if(urlLower.includes('youtube.com') || urlLower.includes('youtu.be')) { 
+            lang = 'EN'; platform = 'YouTube'; 
+        }
+        else if(urlLower.includes('nhk.or.jp')) { lang = 'JP'; platform = 'NHK News'; }
+        else if(urlLower.includes('thairath') || urlLower.includes('sanook')) { lang = 'TH'; platform = 'Báo Thái Lan'; }
+
+        // 4. Đóng gói dữ liệu bài mới
         let newIdea = {
             id: Date.now(),
             checked: false,
-            link: url,
-            title: '✏️ Bấm để nhập...',
+            link: link,
+            title: cleanTitle,
             lang: lang,
             platform: platform,
-            topic: '✏️ ...',
+            topic: '✏️ Gõ chủ đề...',
             author: author,
             cre: ''
         };
@@ -948,44 +966,45 @@
         if(!resources.ideas_table) resources.ideas_table = [];
         resources.ideas_table.push(newIdea);
         
-        localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources));
-        document.getElementById('idea-input-link').value = '';
+        localStorage.setItem('hy_resources_v10.1_db', JSON.stringify(resources));
+        
+        // Xóa hộp text sau khi nạp xong
+        document.getElementById('idea-raw-input').value = '';
         renderResources();
     }
 
     function generateCreString(item) {
         let pCheck = item.platform.toLowerCase();
-        let safeTitle = (item.title === '✏️ Bấm để nhập...' || item.title === '') ? 'Tiêu đề bài viết' : item.title;
+        let safeTitle = (item.title.startsWith('✏️')) ? 'Bài dịch' : item.title;
         if(pCheck.includes('báo') || pCheck.includes('news') || pCheck.includes('yahoo')) {
             return `Cre: ${item.platform}, ${safeTitle} - ${item.platform}`;
         } else {
-            return `Cre: ${item.platform}, ${item.author || 'Nguồn gốc'}`;
+            return `Cre: ${item.platform}, ${item.author || 'SNS'}`;
         }
     }
 
-    // Hàm cập nhật từ sửa trực tiếp trên bảng
     window.updateIdeaField = function(id, field, elem) {
         let val = elem.innerText.trim();
         let target = resources.ideas_table.find(r => r.id === id);
         if(target) {
             target[field] = val;
             target.cre = generateCreString(target);
-            localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources));
-            renderResources(); // Cập nhật lại cột Cre ngay lập tức
+            localStorage.setItem('hy_resources_v10.1_db', JSON.stringify(resources));
+            renderResources();
         }
     }
 
     window.toggleIdeaCheck = function(id) {
         let target = resources.ideas_table.find(r => r.id === id);
         if(target) target.checked = !target.checked;
-        localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v10.1_db', JSON.stringify(resources));
         renderResources();
     }
 
     window.copyTextToClipboard = function(text) {
         navigator.clipboard.writeText(text).then(() => {
             alert(`📋 Đã copy: "${text}"`);
-        }).catch(err => { alert('Lỗi trình duyệt không cho copy!'); });
+        }).catch(err => { alert('Lỗi không cho copy!'); });
     }
 
     window.addResource = function(type, inputId) {
@@ -993,7 +1012,7 @@
         let val = input.value.trim();
         if(!val) return;
         resources[type].push({ id: Date.now(), content: val });
-        localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v10.1_db', JSON.stringify(resources));
         input.value = '';
         renderResources();
     }
@@ -1015,7 +1034,7 @@
 
         if(!resources.remotes) resources.remotes = [];
         resources.remotes.push({ id: Date.now(), link: linkPart, idCode: idPart, checked: false });
-        localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v10.1_db', JSON.stringify(resources));
         input.value = '';
         renderResources();
     }
@@ -1023,18 +1042,17 @@
     window.toggleRemoteCheck = function(id) {
         let target = resources.remotes.find(r => r.id === id);
         if(target) target.checked = !target.checked;
-        localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v10.1_db', JSON.stringify(resources));
         renderResources();
     }
 
     window.deleteResource = function(type, id) {
         resources[type] = resources[type].filter(item => item.id !== id);
-        localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v10.1_db', JSON.stringify(resources));
         renderResources();
     }
 
     function renderResources() {
-        // Render Bảng Ý Tưởng
         let tbodyIdeas = document.getElementById('list-ideas');
         tbodyIdeas.innerHTML = '';
         (resources.ideas_table || []).forEach(item => {
@@ -1042,7 +1060,7 @@
             if(item.checked) tr.className = 'completed';
             tr.innerHTML = `
                 <td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleIdeaCheck(${item.id})"></td>
-                <td><a href="${item.link}" target="_blank" style="color:var(--zalo-color);">Link</a></td>
+                <td><a href="${item.link}" target="_blank" style="color:var(--zalo-color); font-weight:bold;">Link</a></td>
                 <td class="editable-cell" contenteditable="true" onblur="updateIdeaField(${item.id}, 'title', this)">${item.title}</td>
                 <td style="text-align: center; color: #d63384; font-weight: bold;">${item.lang}</td>
                 <td>${item.platform}</td>
@@ -1056,7 +1074,6 @@
             tbodyIdeas.appendChild(tr);
         });
 
-        // Render Remote
         let tbodyRemote = document.getElementById('list-remotes');
         tbodyRemote.innerHTML = '';
         (resources.remotes || []).forEach(item => {
@@ -1074,7 +1091,6 @@
             tbodyRemote.appendChild(tr);
         });
 
-        // Render Links
         let ulLinks = document.getElementById('list-links'); ulLinks.innerHTML = '';
         (resources.links || []).forEach(item => {
             let li = document.createElement('li'); li.className = 'res-item';
@@ -1110,7 +1126,7 @@
     }
 
     function saveAndReload() {
-        localStorage.setItem('hy_sakura_v10_db', JSON.stringify(db));
+        localStorage.setItem('hy_sakura_v10.1_db', JSON.stringify(db));
         renderChecklistValues();
         calculateDashboard();
     }
@@ -1119,7 +1135,7 @@
         if(confirm("Bạn có chắc chắn muốn xóa toàn bộ tiến độ lịch sử tích chọn công việc?")) {
             backupBeforeClear = JSON.stringify(db);
             db = {}; 
-            localStorage.removeItem('hy_sakura_v10_db');
+            localStorage.removeItem('hy_sakura_v10.1_db');
             document.getElementById('btn-undo-box').style.display = 'block';
             
             if(currentView !== 'resources') {
@@ -1134,7 +1150,7 @@
     window.undoDeleteData = function() {
         if(backupBeforeClear) {
             db = JSON.parse(backupBeforeClear);
-            localStorage.setItem('hy_sakura_v10_db', backupBeforeClear);
+            localStorage.setItem('hy_sakura_v10.1_db', backupBeforeClear);
             backupBeforeClear = null; 
             document.getElementById('btn-undo-box').style.display = 'none';
             
