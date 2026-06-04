@@ -2,17 +2,20 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌸 HY HY WORKSPACE 2026 🌸</title>
+    <!-- CSS nguyên bản của em -->
     <style>
-        :root { --bg-color: #FFF5F5; --sakura-pink: #FFB7B2; --sakura-dark: #FF8B94; --zalo-color: #0068FF; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); margin: 0; padding: 20px; }
-        .main-content { max-width: 900px; margin: 0 auto; }
-        .note-container { background: #fff; border: 3px solid #000; border-radius: 15px; padding: 15px; margin-bottom: 20px; }
-        #daily-note { width: 100%; height: 80px; border: 2px dashed var(--sakura-pink); border-radius: 8px; padding: 10px; box-sizing: border-box; }
+        :root { --bg-color: #FFF5F5; --text-color: #000000; --sakura-pink: #FFB7B2; --sakura-dark: #FF8B94; --zalo-color: #0068FF; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; display: flex; }
+        .main-content { flex: 1; max-width: 900px; margin: 0 auto; padding: 20px; padding-top: 75px; }
+        .card { background: #fff; border: 3px solid #000; border-radius: 22px; padding: 15px; margin-bottom: 20px; box-shadow: 4px 4px 0 #000; }
+        .note-container { background: #fff; border: 2px solid #000; border-radius: 15px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 0 #000; }
+        #daily-note { width: 100%; height: 70px; border: 2px dashed var(--sakura-pink); border-radius: 8px; padding: 10px; font-family: inherit; }
         .cal-btn { padding: 10px; background: #fff; border: 2px solid #ccc; border-radius: 10px; cursor: pointer; position: relative; }
         .cal-btn.has-note::after { content: '📌'; position: absolute; top: 2px; right: 2px; font-size: 0.7rem; }
         .cal-btn.active { background: var(--sakura-dark); color: #fff; }
-        .custom-tooltip { display: none; position: absolute; background: #333; color: #fff; padding: 8px; border-radius: 5px; font-size: 0.8rem; z-index: 1000; pointer-events: none; }
+        .custom-tooltip { display: none; position: absolute; background: #333; color: #fff; padding: 8px; border-radius: 5px; font-size: 0.8rem; z-index: 9999; pointer-events: none; }
         .remote-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .remote-table th, .remote-table td { border: 2px solid #000; padding: 8px; font-size: 0.85rem; }
         .btn-copy-mini { background: #ffe066; border: 1px solid #000; cursor: pointer; padding: 3px 6px; }
@@ -21,17 +24,23 @@
 <body>
     <div id="sakura-tooltip" class="custom-tooltip"></div>
     <div class="main-content">
-        <h1>🌸 HY HY WORKSPACE 🌸</h1>
+        <h1>🌸 HY HY WORKSPACE 2026 🌸</h1>
+        
+        <!-- Sổ tay ghi chú -->
         <div class="note-container">
             <div style="font-weight:bold; color:#d63384;">📝 Sổ tay ngày: <span id="note-date-text"></span></div>
-            <textarea id="daily-note" onblur="saveDailyNote()"></textarea>
+            <textarea id="daily-note" placeholder="Nhập ghi chú..." onblur="saveDailyNote()"></textarea>
         </div>
-        <div id="calendar-grid" style="display:grid; grid-template-columns: repeat(7, 1fr); gap: 5px;"></div>
-        <div class="resources-box" id="resources-box">
-            <h3>📌 Bài Dịch (Hút từ tab Queue)</h3>
+
+        <!-- Lịch -->
+        <div id="calendar-grid" style="display:grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 20px;"></div>
+
+        <!-- Bảng Bài Dịch (Hút từ Sheet) -->
+        <div class="card">
+            <h3>📌 Bài Lưu Chuẩn Bị Dịch (Hút từ Tab 'Queue' trên Sheet)</h3>
             <button onclick="fetchIdeasFromCloud()">📥 HÚT DỮ LIỆU TỪ SHEET</button>
             <table class="remote-table">
-                <thead><tr><th>Link</th><th>Tiêu đề</th><th>Ngôn ngữ</th><th>Cre</th></tr></thead>
+                <thead><tr><th>Link</th><th>Tiêu đề</th><th>N.Ngữ</th><th>Cre</th></tr></thead>
                 <tbody id="list-ideas"></tbody>
             </table>
         </div>
@@ -39,16 +48,16 @@
 
 <script>
     // --- DÁN LINK VÀO ĐÂY ---
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwYU2rIFUsEQ9bHVW4kp5X9bAn2pS-pdk4ijPvhxxLqCZp4i8lYyPA53wc5I-BBfloC/exec";
+    const GOOGLE_SCRIPT_URL = "DÁN_LINK_WEB_APP_MỚI_VÀO_ĐÂY";
 
-    // Khóa tên biến dữ liệu cố định (Không bao giờ bị mất dữ liệu nữa)
+    // Dữ liệu dùng kho lưu trữ HY_WORKSPACE_DB và HY_RESOURCES_DB cố định
     let db = JSON.parse(localStorage.getItem('HY_WORKSPACE_DB')) || {};
     let resources = JSON.parse(localStorage.getItem('HY_RESOURCES_DB')) || { ideas_table: [] };
     let selectedDate = new Date();
 
     function saveDailyNote() {
         let key = formatDateKey(selectedDate);
-        if(!db[key]) db[key] = { tasks: {}, note: '' };
+        if(!db[key]) db[key] = { note: '' };
         db[key].note = document.getElementById('daily-note').value;
         localStorage.setItem('HY_WORKSPACE_DB', JSON.stringify(db));
         renderCalendar();
@@ -65,10 +74,10 @@
             if(db[key] && db[key].note) {
                 btn.classList.add('has-note');
                 btn.onmouseover = (e) => { 
-                    let t = document.getElementById('sakura-tooltip'); t.innerText = db[key].note; t.style.display='block'; 
-                    t.style.left = (e.pageX+10)+'px'; t.style.top = (e.pageY+10)+'px';
+                    let t = document.getElementById('sakura-tooltip'); t.innerText = `📝 ${db[key].note}`; 
+                    t.style.display='block'; t.style.left = (e.pageX+10)+'px'; t.style.top = (e.pageY+10)+'px';
                 };
-                btn.onmouseout = () => { document.getElementById('sakura-tooltip').style.display='none'; };
+                btn.onmouseout = () => document.getElementById('sakura-tooltip').style.display='none';
             }
             if(formatDateKey(selectedDate) === key) btn.classList.add('active');
             btn.innerHTML = `<span>${i}</span>`;
@@ -80,7 +89,7 @@
     function loadNote() {
         let key = formatDateKey(selectedDate);
         document.getElementById('daily-note').value = db[key] ? (db[key].note || '') : '';
-        document.getElementById('note-date-text').innerText = formatDateKey(selectedDate);
+        document.getElementById('note-date-text').innerText = key;
     }
 
     function formatDateKey(d) { return d.toISOString().split('T')[0]; }
@@ -105,6 +114,7 @@
     }
 
     function saveToCloud(type, data) {
+        if(GOOGLE_SCRIPT_URL.includes("DÁN_LINK")) return;
         fetch(GOOGLE_SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify({ type: type, data: JSON.stringify(data) }) });
     }
 
