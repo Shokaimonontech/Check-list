@@ -49,7 +49,7 @@
             padding-bottom: 5px; cursor: pointer; user-select: none;
             display: flex; justify-content: center; align-items: center; gap: 5px;
         }
-        
+         
         .sidebar-dropdown-content { transition: max-height 0.3s ease; overflow: hidden; }
         .sidebar-dropdown-content.collapsed { display: none; }
 
@@ -65,8 +65,8 @@
         /* --- KHU VỰC CHÍNH --- */
         .main-content { flex: 1; max-width: 800px; margin: 0 auto; padding: 20px; padding-top: 75px; width: 100%; box-sizing: border-box; }
         h1 { text-align: center; font-size: 1.8rem; margin-bottom: 5px; color: #d63384; }
-        
-        /* Bộ điều hướng banner cải tiến màu sắc không trùng lặp */
+         
+        /* Bộ điều hướng banner cải tiến */
         .date-navigator {
             display: flex; align-items: center; justify-content: space-between;
             background: #ffffff; border: 2px solid #000;
@@ -79,11 +79,13 @@
             transition: all 0.1s;
         }
         .nav-arrow-btn:hover { background: var(--sakura-pink); }
-        
+         
         .date-banner { 
             font-size: 1.1rem; font-weight: bold; text-align: center; flex: 1; 
             background: var(--sakura-pink); padding: 10px 5px; border-radius: 10px; margin: 2px;
+            cursor: pointer; transition: transform 0.1s; user-select: none;
         }
+        .date-banner:active { transform: scale(0.98); }
 
         /* Giao diện đổi màu khi xem tương lai (Ngày mai) */
         .date-navigator.future-view {
@@ -94,6 +96,17 @@
         }
         .date-navigator.future-view .nav-arrow-btn {
             background: #e2e8f0 !important;
+        }
+
+        /* Giao diện đổi màu khi xem quá khứ (Hôm qua) */
+        .date-navigator.past-view {
+            background: #fdf4ff !important;
+        }
+        .date-navigator.past-view .date-banner {
+            background: #f3e8ff !important; color: #6b21a8 !important;
+        }
+        .date-navigator.past-view .nav-arrow-btn {
+            background: #fae8ff !important;
         }
 
         /* Hộp thông tin Tiện ích (Đồng hồ + Thời tiết) */
@@ -157,9 +170,9 @@
         .card.zalo .card-title { color: var(--zalo-color); }
 
         .sub-group-title { font-weight: bold; font-size: 0.9rem; color: #333; margin: 10px 0 5px 0; padding-bottom: 2px; border-bottom: 1px dotted #ccc; }
-        
+         
         .task-grid-horizontal { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; padding: 5px 0; }
-        
+         
         .inline-task-box {
             display: inline-flex; align-items: center; background: #fff;
             border: 2px solid #000; border-radius: 10px; padding: 6px 10px;
@@ -168,7 +181,7 @@
         }
         .inline-task-box input[type="checkbox"] { width: 18px; height: 18px; margin-right: 6px; cursor: pointer; accent-color: #2ecc71; }
         .inline-task-box.completed { background: #e2fcd4; color: #666; text-decoration: line-through; border-color: #777; }
-        
+         
         .future-disabled { opacity: 0.65; cursor: not-allowed !important; pointer-events: none; }
 
         .prep-text-desc { font-size: 0.8rem; color: #d63384; font-style: italic; display: block; margin-top: 2px; font-weight: normal; text-decoration: none !important; }
@@ -189,7 +202,7 @@
 
         /* --- TRANG TÀI NGUYÊN --- */
         .resources-box { background: #fff; border: 3px solid #000; border-radius: 22px; padding: 20px; box-shadow: 5px 5px 0 #000; display: none; }
-        
+         
         .resource-section { margin-bottom: 15px; border: 2px solid #000; border-radius: 15px; background: #fff; padding: 12px; }
         .resource-header-toggle { display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
         .resource-header-toggle h3 { margin: 0; font-size: 1rem; color: #d63384; }
@@ -204,14 +217,14 @@
         .res-item a { color: var(--zalo-color); text-decoration: none; word-break: break-all; }
         .res-item a:hover { text-decoration: underline; }
 
-        /* Bảng REMOTE dạng 2 cột kèm nút Copy mã nhanh */
+        /* Bảng REMOTE */
         .remote-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .remote-table th, .remote-table td { border: 2px solid #000; padding: 8px; text-align: left; font-weight: bold; font-size: 0.85rem; }
         .remote-table th { background: var(--sakura-pink); }
         .remote-table tr.completed td { background: #e2fcd4; text-decoration: line-through; color: #666; }
         .remote-table tr.completed td a { color: #666; text-decoration: line-through; }
         .remote-table input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: #2ecc71; }
-        
+         
         .btn-copy-mini {
             background: #ffe066; border: 1px solid #000; border-radius: 6px;
             padding: 3px 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; margin-left: 6px;
@@ -220,7 +233,7 @@
 
         .btn-clear-all { display: block; width: 100%; padding: 12px; background: #ff8787; border: 2px solid #000; border-radius: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #000; margin: 40px 0; }
         .btn-undo-delete { display: none; width: 100%; padding: 12px; background: #2ecc71; border: 2px solid #000; border-radius: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #000; margin-bottom: 25px; text-align: center; }
-        
+         
         .delete-custom-btn { background: none; border: none; color: #ff4d4d; font-weight: bold; cursor: pointer; margin-left: 5px; font-size: 1rem; }
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.1); z-index: 85; }
         .overlay.show { display: block; }
@@ -231,7 +244,6 @@
     <button class="menu-btn" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-    <!-- Menu bên cạnh -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-title" onclick="toggleSidebarDropdown()">🌸 CHẾ ĐỘ XEM <span id="sidebar-drop-icon">▼</span></div>
         <div class="sidebar-dropdown-content" id="sidebar-view-dropdown">
@@ -242,30 +254,25 @@
         </div>
 
         <div class="sidebar-title">📂 LƯU TRỮ CHUYÊN SÂU</div>
-        <button class="menu-item" id="btn-view-resources" onclick="switchView('resources')">💡 Tài Nguyên dịch/Link</button>
+        <button class="menu-item" id="btn-view-resources" onclick="switchView('resources')">💡 KHO TÀI NGUYÊN</button>
     </div>
 
-    <!-- Khu vực chính -->
     <div class="main-content">
         <h1 id="main-title">🌸 HY HY WORKSPACE 🌸</h1>
-        
-        <!-- THANH ĐIỀU HƯỚNG BANNER NGÀY THÁNG -->
+         
         <div class="date-navigator">
             <button class="nav-arrow-btn" onclick="adjustDate(-1)">◀ Hôm qua</button>
-            <div class="date-banner" id="date-banner">---</div>
+            <div class="date-banner" id="date-banner" onclick="backToToday()" title="Bấm để quay nhanh về Hôm nay">---</div>
             <button class="nav-arrow-btn" onclick="adjustDate(1)">Ngày mai ▶</button>
         </div>
 
-        <!-- HỘP TIỆN ÍCH THỜI GIAN VÀ THỜI TIẾT VĨNH LONG -->
         <div class="widget-box" id="widget-box-container">
             <div class="live-clock-box">🕒 Giờ hiện tại: <span id="live-clock">00:00:00</span></div>
-            <div class="weather-box">🌤️ Vĩnh Long, VN: <span id="live-weather">31°C • Nắng nhẹ 🌸</span></div>
+            <div class="weather-box">🌤️ Trạng thái: <span id="live-weather">31°C • Nắng nhẹ 🌸</span></div>
         </div>
 
-        <!-- NÚT PHỤC HỒI KHẨN CẤP KHI LỠ TAY BẤM XÓA HẾT -->
         <button class="btn-undo-delete" id="btn-undo-box" onclick="undoDeleteData()">↩️ Bấm vào đây để QUAY LẠI (Khôi phục dữ liệu vừa xóa)</button>
 
-        <!-- TIẾN ĐỘ TỔNG -->
         <div class="progress-container" id="total-progress-box">
             <div class="progress-label">
                 <span>Tiến độ tổng ngày hôm nay 🌸</span>
@@ -274,7 +281,6 @@
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar-fill"></div></div>
         </div>
 
-        <!-- DASHBOARD TỔNG KẾT -->
         <div class="dashboard-box" id="dashboard-box">
             <div class="dashboard-title">📊 DASHBOARD TỔNG KẾT</div>
             <div class="db-grid">
@@ -284,13 +290,11 @@
             </div>
         </div>
 
-        <!-- Lịch Lưới -->
         <div class="calendar-container" id="calendar-container">
             <div class="calendar-header" id="calendar-header">Chọn Ngày</div>
             <div id="calendar-grid"></div>
         </div>
 
-        <!-- TRANG TÀI NGUYÊN -->
         <div class="resources-box" id="resources-box">
             <div class="resource-section" id="res-sec-remote">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-remote')">
@@ -337,10 +341,8 @@
             </div>
         </div>
 
-        <!-- KHU VỰC CÁC HỘP CHECKLIST CÔNG VIỆC -->
         <div id="checklist-container">
-            
-            <!-- TIKTOK -->
+             
             <div class="card tiktok" id="card-tiktok">
                 <div class="card-header-toggle" onclick="toggleCard('card-tiktok')">
                     <div class="card-title">🎵 TikTok</div><span class="toggle-icon" id="icon-card-tiktok">▼</span>
@@ -365,7 +367,6 @@
                 </div>
             </div>
 
-            <!-- INSTAGRAM -->
             <div class="card instagram" id="card-instagram">
                 <div class="card-header-toggle" onclick="toggleCard('card-instagram')">
                     <div class="card-title">📸 Instagram</div><span class="toggle-icon" id="icon-card-instagram">▼</span>
@@ -387,7 +388,6 @@
                 </div>
             </div>
 
-            <!-- FACEBOOK -->
             <div class="card facebook" id="card-facebook">
                 <div class="card-header-toggle" onclick="toggleCard('card-facebook')">
                     <div class="card-title">📘 Facebook</div><span class="toggle-icon" id="icon-card-facebook">▼</span>
@@ -397,8 +397,7 @@
                         <div class="progress-label"><span style="font-size:0.75rem; color:#666;">Tiến độ Facebook</span><span id="text-mini-facebook" style="font-size:0.75rem; color:#666;">0%</span></div>
                         <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-facebook"></div></div>
                     </div>
-                    
-                    <!-- TRANG HY HY -->
+                     
                     <div class="sub-group-title" style="color:var(--facebook-color); border-bottom: 2px solid #000;">Trang HY HY</div>
                     <div class="task-grid-horizontal" id="grid-tasks-fb-hyhy">
                         <label class="inline-task-box" id="lbl-4"><input type="checkbox" id="check-4" onchange="updateTask(4)"> Bài dịch 1</label>
@@ -410,7 +409,6 @@
                     <div class="popup-selection" id="popup-add-fb-hyhy"><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Bài dịch', 'add')">+ Bài dịch</button></div>
                     <div class="popup-selection" id="popup-prep-fb-hyhy"><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Bài dịch', 'prep')">+ Chuẩn bị Bài dịch</button></div>
 
-                    <!-- TRANG HY ĐANG LÀM BLOG -->
                     <div class="sub-group-title" style="color:var(--facebook-color); border-bottom: 2px solid #000; margin-top:20px;">Trang HY đang làm Blog</div>
                     <div class="task-grid-horizontal" id="grid-tasks-fb-hyblog">
                         <label class="inline-task-box" id="lbl-6"><input type="checkbox" id="check-6" onchange="updateTask(6)"> Bài dịch 1</label>
@@ -422,7 +420,6 @@
                     <div class="popup-selection" id="popup-add-fb-hyblog"><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Bài dịch', 'add')">+ Bài dịch</button></div>
                     <div class="popup-selection" id="popup-prep-fb-hyblog"><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Bài dịch', 'prep')">+ Chuẩn bị Bài dịch</button></div>
 
-                    <!-- TRANG SHOKAIMONO -->
                     <div class="sub-group-title" style="color:var(--facebook-color); border-bottom: 2px solid #000; margin-top:20px;">Trang Shokaimono</div>
                     <div class="task-grid-horizontal" id="grid-tasks-fb-shokaimono">
                         <label class="inline-task-box" id="lbl-8"><input type="checkbox" id="check-8" onchange="updateTask(8)"> Bài dịch 1</label>
@@ -436,7 +433,6 @@
                 </div>
             </div>
 
-            <!-- ZALO VIDEO -->
             <div class="card zalo" id="card-zalo">
                 <div class="card-header-toggle" onclick="toggleCard('card-zalo')">
                     <div class="card-title">📱 Zalo Video</div><span class="toggle-icon" id="icon-card-zalo">▼</span>
@@ -491,7 +487,7 @@
         'fb-shokaimono': [8, 11],
         'zalo': [12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
     };
-    
+     
     const appMapping = {
         tiktok: [1, 2, 10],
         instagram: [3],
@@ -508,7 +504,7 @@
     setInterval(updateLiveClock, 1000);
     updateLiveClock();
 
-    // CHẠY GIẢ LẬP ĐỔI THỜI TIẾT ĐỂ LIÊN TỤC CẬP NHẬT CHO SINH ĐỘNG
+    // CHẠY GIẢ LẬP ĐỔI THỜI TIẾT
     function updateWeatherWidget() {
         const temp = [30, 31, 32, 33][Math.floor(Math.random() * 4)];
         document.getElementById('live-weather').innerText = `${temp}°C • Nắng đẹp lành mạnh 🌸`;
@@ -538,7 +534,6 @@
         document.getElementById(id).classList.toggle('open');
     }
 
-    // Toggle đóng mở popup khi bấm lại nút
     window.showPopupSelection = function(segment, mode) {
         const targetPopup = document.getElementById(`popup-${mode}-${segment}`);
         const isShowing = targetPopup.style.display === 'flex';
@@ -558,16 +553,27 @@
         }
     }
 
+    // Hàm bấm vào giữa Banner để quay lại ngày hôm nay lập tức
+    window.backToToday = function() {
+        selectedDate = new Date();
+        if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5);
+        renderCalendarSection();
+        renderChecklistValues();
+        if(currentView !== 'resources') {
+            calculateDashboard();
+        }
+    }
+
     function switchView(view) {
         currentView = view;
         document.querySelectorAll('.menu-item').forEach(btn => btn.classList.remove('active'));
         if(document.getElementById(`btn-view-${view}`)) document.getElementById(`btn-view-${view}`).classList.add('active');
-        
+         
         if(view === 'today') {
             selectedDate = new Date();
             if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5);
         }
-        
+         
         if (view === 'resources') {
             document.getElementById('checklist-container').style.display = 'none';
             document.getElementById('total-progress-box').style.display = 'none';
@@ -576,6 +582,7 @@
             document.querySelector('.date-navigator').style.display = 'none';
             document.getElementById('widget-box-container').style.display = 'none';
             document.getElementById('resources-box').style.display = 'block';
+            // Đổi tên tiêu đề thành KHO TÀI NGUYÊN
             document.getElementById('main-title').innerText = "🌸 KHO TÀI NGUYÊN 🌸";
             renderResources();
         } else {
@@ -586,7 +593,7 @@
             document.getElementById('resources-box').style.display = 'none';
             document.getElementById('main-title').innerText = "🌸 HY HY WORKSPACE 🌸";
             document.getElementById('dashboard-box').style.display = (view === 'today') ? 'none' : 'block';
-            
+             
             renderCalendarSection();
             renderChecklistValues();
             calculateDashboard();
@@ -668,11 +675,18 @@
 
         let realToday = new Date(); realToday.setHours(0,0,0,0);
         let checkDate = new Date(selectedDate); checkDate.setHours(0,0,0,0);
-        let isFuture = checkDate > realToday;
-        const navBox = document.querySelector('.date-navigator');
         
-        if(isFuture) navBox.classList.add('future-view');
-        else navBox.classList.remove('future-view');
+        let isFuture = checkDate > realToday;
+        let isPast = checkDate < realToday;
+        const navBox = document.querySelector('.date-navigator');
+         
+        // Reset class trước khi gán mới
+        navBox.classList.remove('future-view', 'past-view');
+        if(isFuture) {
+            navBox.classList.add('future-view');
+        } else if(isPast) {
+            navBox.classList.add('past-view'); // Giao diện riêng cho hôm qua / quá khứ
+        }
 
         let key = formatDateKey(selectedDate);
         let dayData = db[key] || { tasks: {}, customs: {} };
@@ -690,7 +704,7 @@
                 let tData = tasksData[id] || { checked: false };
                 let cb = document.getElementById(`check-${id}`);
                 let lbl = document.getElementById(`lbl-${id}`);
-                
+                 
                 if(cb) {
                     cb.checked = tData.checked;
                     if(isFuture) { cb.disabled = true; lbl.classList.add('future-disabled'); } 
@@ -707,7 +721,7 @@
                 if(cTask.checked) { totalCheckedGlobal++; }
                 let lbl = document.createElement('label');
                 lbl.className = `inline-task-box ${cTask.checked ? 'completed' : ''} ${isFuture ? 'future-disabled' : ''}`;
-                
+                 
                 lbl.innerHTML = `
                     <input type="checkbox" ${cTask.checked ? 'checked' : ''} ${isFuture ? 'disabled' : ''} onchange="toggleCustomTask('${segment}', ${cTask.id})">
                     <div>
@@ -812,7 +826,7 @@
         allIds.forEach(id => { if(!db[key].tasks[id]) db[key].tasks[id] = { checked: false }; });
     }
 
-    /* --- QUẢN LÝ TÀI NGUYÊN LƯU TRỮ CHUYÊN SÂU --- */
+    /* --- QUẢN LÝ KHO TÀI NGUYÊN CHUYÊN SÂU --- */
     window.addResource = function(type, inputId) {
         let input = document.getElementById(inputId);
         let val = input.value.trim();
@@ -823,7 +837,6 @@
         renderResources();
     }
 
-    // TỰ ĐỘNG CHÈN "XHS: " VÀO TRƯỚC MÃ ID CỦA XIAOHONGSHU
     window.addRemoteResource = function() {
         let input = document.getElementById('input-remote');
         let fullText = input.value.trim();
@@ -832,11 +845,10 @@
         let linkPart = fullText;
         let idPart = "Chưa có ID";
         let firstSpaceIdx = fullText.indexOf(' ');
-        
+         
         if(firstSpaceIdx !== -1) {
             linkPart = fullText.substring(0, firstSpaceIdx).trim();
             let rawId = fullText.substring(firstSpaceIdx).trim();
-            // Tự động chèn thêm "XHS: " nếu chuỗi chưa có sẵn
             idPart = rawId.startsWith('XHS:') ? rawId : 'XHS: ' + rawId;
         }
 
@@ -847,7 +859,6 @@
         renderResources();
     }
 
-    // TÍNH NĂNG NHẤN NÚT COPY MÃ ID NHANH CHÓNG VÀO TRÌNH DUYỆT
     window.copyRemoteIdToClipboard = function(text) {
         navigator.clipboard.writeText(text).then(() => {
             alert(`📋 Đã copy thành công mã: "${text}"`);
@@ -934,8 +945,17 @@
             backupBeforeClear = JSON.stringify(db);
             db = {}; 
             localStorage.removeItem('hy_sakura_v9_db');
+            
+            // Hiển thị nút khôi phục khẩn cấp
             document.getElementById('btn-undo-box').style.display = 'block';
-            switchView('today');
+            
+            // Sửa logic: Giữ nguyên view hiện tại, không tự động nhảy về 'today'
+            if(currentView !== 'resources') {
+                renderChecklistValues();
+                calculateDashboard();
+            } else {
+                renderResources();
+            }
         }
     }
 
@@ -945,9 +965,15 @@
             localStorage.setItem('hy_sakura_v9_db', backupBeforeClear);
             backupBeforeClear = null; 
             document.getElementById('btn-undo-box').style.display = 'none';
-            renderChecklistValues();
-            calculateDashboard();
-            alert("🎉 Khôi phục dữ liệu thành công!");
+            
+            // Cập nhật lại giao diện đúng theo chế độ đang xem hiện tại
+            if(currentView !== 'resources') {
+                renderChecklistValues();
+                calculateDashboard();
+            } else {
+                renderResources();
+            }
+            alert("🎉 Khôi phục dữ liệu lịch sử thành công!");
         }
     }
 
