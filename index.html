@@ -111,7 +111,7 @@
             padding: 8px 12px; margin-bottom: 15px; display: flex; align-items: center;
             justify-content: space-between; font-size: 0.85rem; font-weight: bold;
         }
-        .sync-btn { background: #2ecc71; border: 2px solid #000; border-radius: 8px; color: #fff; padding: 4px 10px; cursor: pointer; }
+        .sync-btn { background: #2ecc71; border: 2px solid #000; border-radius: 8px; color: #fff; padding: 4px 10px; cursor: pointer; font-weight: bold;}
 
         /* --- GHI CHÚ NGÀY --- */
         .note-container {
@@ -236,6 +236,8 @@
             width: 100%; height: 80px; padding: 12px; border: 2px solid #000; border-radius: 12px; 
             font-weight: bold; font-size:0.9rem; font-family: inherit; box-sizing: border-box; resize: none;
         }
+        .res-input-horizontal { display: flex; gap: 8px; }
+        .res-input-horizontal input { flex:1; padding: 12px; border: 2px solid #000; border-radius: 12px; font-weight: bold; }
         .res-btn { background: var(--sakura-pink); border: 2px solid #000; border-radius: 12px; padding: 12px 20px; font-weight: bold; cursor: pointer; }
         .res-list { list-style: none; padding: 0; margin: 0; }
         .res-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px dashed #ccc; font-weight: 600; }
@@ -295,8 +297,8 @@
         </div>
 
         <div class="sync-indicator">
-            <span id="sync-status">☁️ Trạng thái: Sẵn sàng trực tuyến</span>
-            <button class="sync-btn" onclick="fetchFromCloud()">🔄 Tải Dữ Liệu Từ Sheet Về Máy</button>
+            <span id="sync-status">☁️ Hệ thống Cloud: Sẵn sàng</span>
+            <button class="sync-btn" onclick="fetchIdeasFromCloud()">📥 HÚT BÀI DỊCH TỪ SHEET VỀ WEB</button>
         </div>
 
         <div class="widget-box" id="widget-box-container">
@@ -338,29 +340,23 @@
             
             <div class="resource-section" id="res-sec-ideas">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-ideas')">
-                    <h3>📌 Bài Lưu Chuẩn Bị Dịch (Hộp quét AI - Tự Động Chia Cột)</h3><span>▼</span>
+                    <h3>📌 Bài Lưu Chuẩn Bị Dịch (Hút Nguồn Từ Sheet)</h3><span>▼</span>
                 </div>
                 <div class="resource-body">
                     <div style="font-size: 0.85rem; color: #d63384; margin-bottom: 10px; font-weight: bold;">
-                        ✨ MẸO SIÊU NHANH: Em copy bài đăng từ app (thường app tự kèm cả tiêu đề + link), dán HẾT vào đây rồi bấm nút là xong!
+                        💡 DANH SÁCH BÀI DỊCH ĐƯỢC ĐỒNG BỘ TỪ FILE SHEET TAB 'ideas'. Cần làm bài nào chỉ cần bấm nút Copy Cre đúng 1 lần thôi nhé!
                     </div>
-                    <div class="res-input-group">
-                        <textarea id="idea-raw-input" class="res-textarea" placeholder="Dán văn bản có chứa đường link bài viết vào đây..."></textarea>
-                        <button class="res-btn" onclick="parseAndSaveSmartIdea()">🚀 Tự Động Bóc Tách & Thêm Vào Bảng</button>
-                    </div>
-
                     <div style="overflow-x: auto;">
                         <table class="remote-table" style="min-width: 700px;">
                             <thead>
                                 <tr>
                                     <th style="width: 30px; text-align: center;">Tick</th>
-                                    <th>Link</th>
-                                    <th style="color:#d63384;">Tiêu đề (Chỉnh sửa trực tiếp ✏️)</th>
-                                    <th style="width: 50px;">Ngôn ngữ</th>
+                                    <th>Link gốc</th>
+                                    <th>Tiêu đề bài viết</th>
+                                    <th style="width: 50px;">N.Ngữ</th>
                                     <th>Nền tảng</th>
-                                    <th style="color:#d63384;">Chủ đề (Chỉnh sửa trực tiếp ✏️)</th>
-                                    <th style="width: 180px;">Cre (Bấm Copy)</th>
-                                    <th style="width: 30px; text-align: center;">Xóa</th>
+                                    <th>Chủ đề</th>
+                                    <th style="width: 180px;">Cre (Bấm 1 Lần Để Copy)</th>
                                 </tr>
                             </thead>
                             <tbody id="list-ideas"></tbody>
@@ -371,19 +367,25 @@
 
             <div class="resource-section" id="res-sec-remote">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-remote')">
-                    <h3>🇨🇳 REMOTE (Xiaohongshu Link & ID)</h3><span>▼</span>
+                    <h3>🇨🇳 REMOTE (Xiaohongshu Link & ID - Tự Động Bắn Lên Sheet)</h3><span>▼</span>
                 </div>
                 <div class="resource-body">
-                    <div class="res-input-group">
-                        <input type="text" id="input-remote" placeholder="Dán chuỗi sao chép từ XHS...">
-                        <button class="res-btn" onclick="addRemoteResource()">Lưu</button>
+                    <div style="font-size: 0.85rem; color: #0068FF; margin-bottom: 10px; font-weight: bold;">
+                        ✨ Dán đoạn sao chép có chứa link từ XHS vào ô dưới. Hệ thống tự bóc tách mã sản phẩm và bắn thẳng lên Sheet tab 'remotes' chạy ngầm!
                     </div>
-                    <table class="remote-table" id="table-remote-container">
-                        <thead>
-                            <tr><th style="width: 40px; text-align: center;">Tick</th><th>Đường dẫn XHS</th><th style="width: 170px;">Mã ID Sản phẩm</th><th style="width: 50px; text-align: center;">Xóa</th></tr>
-                        </thead>
-                        <tbody id="list-remotes"></tbody>
-                    </table>
+                    <div class="res-input-group">
+                        <textarea id="idea-raw-input" class="res-textarea" placeholder="Dán văn bản sao chép từ XHS vào đây..."></textarea>
+                        <button class="res-btn" onclick="parseAndSaveSmartIdea()">🚀 Tự Động Bóc Tách & Bắn Lên Google Sheet</button>
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table class="remote-table" id="table-remote-container">
+                            <thead>
+                                <tr><th style="width: 40px; text-align: center;">Tick</th><th>Đường dẫn XHS</th><th style="width: 170px;">Mã ID Sản phẩm</th><th style="width: 50px; text-align: center;">Xóa</th></tr>
+                            </thead>
+                            <tbody id="list-remotes"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -393,8 +395,10 @@
                 </div>
                 <div class="resource-body">
                     <div class="res-input-group">
-                        <input type="text" id="input-link" placeholder="Dán đường link video/bài viết đã đăng vào đây...">
-                        <button class="res-btn" onclick="addResource('links', 'input-link')">Lưu Link</button>
+                        <div class="res-input-horizontal">
+                            <input type="text" id="input-link" placeholder="Dán đường link video/bài viết đã đăng vào đây...">
+                            <button class="res-btn" onclick="addResource('links', 'input-link')">Lưu Link</button>
+                        </div>
                     </div>
                     <ul class="res-list" id="list-links"></ul>
                 </div>
@@ -402,6 +406,7 @@
         </div>
 
         <div id="checklist-container">
+            <!-- Giữ nguyên các Card mạng xã hội cũ để xài -->
             <div class="card tiktok" id="card-tiktok">
                 <div class="card-header-toggle" onclick="toggleCard('card-tiktok')">
                     <div class="card-title">🎵 TikTok</div><span class="toggle-icon" id="icon-card-tiktok">▼</span>
@@ -528,16 +533,16 @@
     </div>
 
 <script>
-    // --- ⚠️ DÁN ĐƯỜNG LINK GOOGLE APPS SCRIPT CỦA EM VÀO ĐÂY VÀO GIỮA HAI DẤU NGOẶC KÉP ⚠️ ---
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyO79d-JvrCJhpc3ckGkT4heZpsSOgiYRE-V1F0cVRQWcHm_8a9scN1vXWpBpdlR7_Q/exec";
+    // --- ⚠️ DÁN ĐƯỜNG LINK GOOGLE APPS SCRIPT CỦA EM VÀO ĐÂY ⚠️ ---
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx0xvo39kq0slT1pfMgCJsPPb60qrEojuKat3CLTW4KvT4QqvKzybQat02GTcutvhs/exec";
 
     const YEAR = 2026;
     let currentView = 'today';
     let selectedDate = new Date();
     if(selectedDate.getFullYear() !== YEAR) { selectedDate = new Date(YEAR, 5, 5); }
 
-    let db = JSON.parse(localStorage.getItem('hy_sakura_v11_db')) || {};
-    let resources = JSON.parse(localStorage.getItem('hy_resources_v11_db')) || { ideas_table: [], links: [], remotes: [] };
+    let db = JSON.parse(localStorage.getItem('hy_sakura_v12_db')) || {};
+    let resources = JSON.parse(localStorage.getItem('hy_resources_v12_db')) || { ideas_table: [], links: [], remotes: [] };
     let backupBeforeClear = null;
 
     const segmentMapping = {
@@ -551,69 +556,60 @@
     };
     const TOTAL_FIXED_TASKS = 20;
 
-    // HÀM TỰ ĐỘNG BẮN DỮ LIỆU LÊN GOOGLE SHEET (CHẠY NGẦM)
-    function saveToCloud(type, dataObj) {
-        if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("DÁN_CÁI_LINK")) return;
+    // HÀM 1: TỰ ĐỘNG HÚT DỮ LIỆU BÀI DỊCH TỪ TAB 'ideas' TRÊN SHEET VỀ WEB
+    window.fetchIdeasFromCloud = function() {
+        if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("DÁN_LINK")) {
+            alert("Em hãy dán đường link kết nối Web App vào dòng số 506 nhé!"); return;
+        }
+        document.getElementById('sync-status').innerText = "⏳ Đang kết nối lấy bài dịch...";
         
-        document.getElementById('sync-status').innerText = "⏳ Đang tự động đồng bộ lên Sheet...";
-        
-        var payload = {
-            action: "save",
-            type: type, // 'db' hoặc 'resources'
-            data: JSON.stringify(dataObj)
-        };
-        
-        fetch(GOOGLE_SCRIPT_URL, {
-            method: "POST",
-            mode: "no-cors", // Tránh lỗi CORS chặn bảo mật trình duyệt
-            cache: "no-cache",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        }).then(() => {
-            document.getElementById('sync-status').innerText = "☁️ Đã đồng bộ lên đám mây 100% ✨";
-        }).catch(err => {
-            document.getElementById('sync-status').innerText = "❌ Lỗi đồng bộ đám mây!";
+        fetch(GOOGLE_SCRIPT_URL + "?type=ideas")
+        .then(res => res.json())
+        .then(cloudIdeas => {
+            if(Array.isArray(cloudIdeas)) {
+                resources.ideas_table = cloudIdeas;
+                localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
+                document.getElementById('sync-status').innerText = "☁️ Đã đồng bộ Bài dịch từ Sheet về Web thành công!";
+                if(currentView === 'resources') renderResources();
+            }
+        })
+        .catch(err => {
+            document.getElementById('sync-status').innerText = "❌ Lỗi không hút được dữ liệu!";
             console.error(err);
         });
     }
 
-    // HÀM TẢI DỮ LIỆU TỪ CLOUD SHEET VỀ LẠI MÁY
-    window.fetchFromCloud = function() {
-        if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("DÁN_CÁI_LINK")) {
-            alert("Em chưa dán đường link kết nối Google Script ở dòng code số 523 nhé!");
-            return;
-        }
+    // HÀM 2: TỰ ĐỘNG BẮN DỮ LIỆU REMOTE XHS LÊN TAB 'remotes' TRÊN SHEET
+    function sendRemotesToCloud() {
+        if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("DÁN_LINK")) return;
+        document.getElementById('sync-status').innerText = "⏳ Đang bắn dữ liệu XHS lên Sheet...";
         
-        document.getElementById('sync-status').innerText = "⏳ Đang tải dữ liệu từ Google Sheet...";
+        var payload = {
+            type: "remotes",
+            data: JSON.stringify(resources.remotes || [])
+        };
         
-        // Tải bảng Lịch & Tiến độ trước
-        fetch(GOOGLE_SCRIPT_URL + "?type=db")
-        .then(res => res.json())
-        .then(cloudDb => {
-            if(cloudDb && cloudDb.status !== "empty") {
-                db = cloudDb;
-                localStorage.setItem('hy_sakura_v11_db', JSON.stringify(db));
-            }
-            
-            // Tải tiếp Kho tài nguyên ý tưởng bài dịch
-            return fetch(GOOGLE_SCRIPT_URL + "?type=resources");
-        })
-        .then(res => res.json())
-        .then(cloudRes => {
-            if(cloudRes && cloudRes.status !== "empty") {
-                resources = cloudRes;
-                localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
-            }
-            
-            document.getElementById('sync-status').innerText = "🎉 Đã kéo toàn bộ dữ liệu đám mây về máy thành công!";
-            renderCalendarSection();
-            renderChecklistValues();
-            calculateDashboard();
-            if(currentView === 'resources') renderResources();
-        })
-        .catch(err => {
-            document.getElementById('sync-status').innerText = "❌ Lỗi không tải được dữ liệu!";
-            alert("Không thể kết nối tới Google Sheet. Em hãy kiểm tra lại cấu hình Web App!");
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            cache: "no-cache",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        }).then(() => {
+            document.getElementById('sync-status').innerText = "☁️ Đã lưu kho XHS lên Google Sheet trực tuyến! ✨";
+        }).catch(err => {
+            document.getElementById('sync-status').innerText = "❌ Lỗi lưu dữ liệu lên Sheet!";
+        });
+    }
+
+    // Tự động sao lưu Tiến độ Lịch và Ghi chú ngầm lên Sheet tab 'db'
+    function saveCalendarDbToCloud() {
+        if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("DÁN_LINK")) return;
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type: "db", data: JSON.stringify(db) })
         });
     }
 
@@ -664,9 +660,7 @@
             selectedDate = target;
             renderCalendarSection();
             renderChecklistValues();
-        } else {
-            alert("Hệ thống chỉ hỗ trợ xem lịch trong năm 2026!");
-        }
+        } else { alert("Hệ thống chỉ hỗ trợ xem lịch trong năm 2026!"); }
     }
 
     window.backToToday = function() {
@@ -814,9 +808,9 @@
         let key = formatDateKey(selectedDate);
         initDayKey(key);
         db[key].note = document.getElementById('daily-note').value;
-        localStorage.setItem('hy_sakura_v11_db', JSON.stringify(db));
+        localStorage.setItem('hy_sakura_v12_db', JSON.stringify(db));
         renderCalendarSection();
-        saveToCloud('db', db); // Đồng bộ lên Sheet ngầm
+        saveCalendarDbToCloud();
     }
 
     function renderChecklistValues() {
@@ -977,16 +971,14 @@
         saveAndReload();
     }
 
-    function initDayKey(key) {
-        if(!db[key]) db[key] = { tasks: {}, customs: {}, note: '' };
-        if(!db[key].tasks) db[key].tasks = {};
-        if(!db[key].customs) db[key].customs = {};
-        for(let seg in segmentMapping) { if(!db[key].customs[seg]) db[key].customs[seg] = []; }
-        const allIds = [1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21];
-        allIds.forEach(id => { if(!db[key].tasks[id]) db[key].tasks[id] = { checked: false }; });
+    function toggleIdeaCheck(id) {
+        let target = resources.ideas_table.find(r => r.id === id);
+        if(target) target.checked = !target.checked;
+        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
+        renderResources();
     }
 
-    /* --- BỘ PHÂN TÍCH THÔNG MINH Ý TƯỞNG --- */
+    /* --- BỘ PHÂN TÍCH THÔNG MINH REMOTE XHS --- */
     
     window.parseAndSaveSmartIdea = function() {
         let rawText = document.getElementById('idea-raw-input').value.trim();
@@ -996,84 +988,32 @@
         let matches = rawText.match(urlRegex);
         
         let link = "";
-        if(matches && matches.length > 0) {
-            link = matches[0];
-        } else {
-            alert("⚠️ Không tìm thấy đường link nào trong đoạn văn bản em vừa dán!");
-            return;
+        if(matches && matches.length > 0) link = matches[0];
+        else { alert("⚠️ Không tìm thấy đường link Xiaohongshu nào!"); return; }
+
+        let linkPart = link;
+        let idPart = "Chưa có ID";
+        let firstSpaceIdx = rawText.indexOf(' ');
+         
+        // Nhận diện mã sản phẩm/ID đi kèm khoảng cách
+        let findIdMatch = rawText.match(/(XHS:\s*[a-zA-Z0-9]+|[a-zA-Z0-9]{5,20})/i);
+        if(findIdMatch) {
+            let matchedStr = findIdMatch[0];
+            idPart = matchedStr.toUpperCase().startsWith('XHS:') ? matchedStr : 'XHS: ' + matchedStr;
         }
 
-        let cleanTitle = rawText.replace(link, "").replace(/[\r\n]+/g, " ").trim();
+        if(!resources.remotes) resources.remotes = [];
+        resources.remotes.push({ id: Date.now(), link: linkPart, idCode: idPart, checked: false });
         
-        if(cleanTitle.length > 80) { cleanTitle = cleanTitle.substring(0, 80) + "..."; }
-        if(!cleanTitle) { cleanTitle = "✏️ Nhấp để nhập tiêu đề..."; }
-
-        let urlLower = link.toLowerCase();
-        let lang = 'VN', platform = 'Khác', author = '';
-
-        if(urlLower.includes('yahoo.co.jp')) { lang = 'JP'; platform = 'Yahoo Japan News'; }
-        else if(urlLower.includes('xiaohongshu.com') || urlLower.includes('xhslink')) { lang = 'CN'; platform = 'Xiaohongshu'; }
-        else if(urlLower.includes('tiktok.com')) { 
-            lang = 'VN'; platform = 'TikTok';
-            let pathParts = link.split('/');
-            let userPart = pathParts.find(p => p.startsWith('@'));
-            if(userPart) author = userPart;
-        }
-        else if(urlLower.includes('weibo.com')) { lang = 'CN'; platform = 'Weibo'; }
-        else if(urlLower.includes('instagram.com')) { lang = 'EN'; platform = 'Instagram'; }
-        else if(urlLower.includes('facebook.com')) { lang = 'VN'; platform = 'Facebook'; }
-        else if(urlLower.includes('youtube.com') || urlLower.includes('youtu.be')) { lang = 'EN'; platform = 'YouTube'; }
-        else if(urlLower.includes('nhk.or.jp')) { lang = 'JP'; platform = 'NHK News'; }
-        else if(urlLower.includes('thairath') || urlLower.includes('sanook')) { lang = 'TH'; platform = 'Báo Thái Lan'; }
-
-        let newIdea = {
-            id: Date.now(), checked: false, link: link, title: cleanTitle,
-            lang: lang, platform: platform, topic: '✏️ Gõ chủ đề...', author: author, cre: ''
-        };
-        newIdea.cre = generateCreString(newIdea);
-
-        if(!resources.ideas_table) resources.ideas_table = [];
-        resources.ideas_table.push(newIdea);
-        
-        localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
         document.getElementById('idea-raw-input').value = '';
         renderResources();
-        saveToCloud('resources', resources); // Đồng bộ lên Sheet ngầm
-    }
-
-    function generateCreString(item) {
-        let pCheck = item.platform.toLowerCase();
-        let safeTitle = (item.title.startsWith('✏️')) ? 'Bài dịch' : item.title;
-        if(pCheck.includes('báo') || pCheck.includes('news') || pCheck.includes('yahoo')) {
-            return `Cre: ${item.platform}, ${safeTitle} - ${item.platform}`;
-        } else {
-            return `Cre: ${item.platform}, ${item.author || 'SNS'}`;
-        }
-    }
-
-    window.updateIdeaField = function(id, field, elem) {
-        let val = elem.innerText.trim();
-        let target = resources.ideas_table.find(r => r.id === id);
-        if(target) {
-            target[field] = val;
-            target.cre = generateCreString(target);
-            localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
-            renderResources();
-            saveToCloud('resources', resources); // Đồng bộ lên Sheet ngầm
-        }
-    }
-
-    window.toggleIdeaCheck = function(id) {
-        let target = resources.ideas_table.find(r => r.id === id);
-        if(target) target.checked = !target.checked;
-        localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
-        renderResources();
-        saveToCloud('resources', resources);
+        sendRemotesToCloud(); // Bắn trực tiếp dữ liệu Remote XHS lên Sheet tab 'remotes'
     }
 
     window.copyTextToClipboard = function(text) {
         navigator.clipboard.writeText(text).then(() => {
-            alert(`📋 Đã copy: "${text}"`);
+            alert(`📋 Đã copy thành công: "${text}"`);
         }).catch(err => { alert('Lỗi không cho copy!'); });
     }
 
@@ -1082,51 +1022,28 @@
         let val = input.value.trim();
         if(!val) return;
         resources[type].push({ id: Date.now(), content: val });
-        localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
         input.value = '';
         renderResources();
-        saveToCloud('resources', resources);
-    }
-
-    window.addRemoteResource = function() {
-        let input = document.getElementById('input-remote');
-        let fullText = input.value.trim();
-        if(!fullText) return;
-
-        let linkPart = fullText;
-        let idPart = "Chưa có ID";
-        let firstSpaceIdx = fullText.indexOf(' ');
-         
-        if(firstSpaceIdx !== -1) {
-            linkPart = fullText.substring(0, firstSpaceIdx).trim();
-            let rawId = fullText.substring(firstSpaceIdx).trim();
-            idPart = rawId.startsWith('XHS:') ? rawId : 'XHS: ' + rawId;
-        }
-
-        if(!resources.remotes) resources.remotes = [];
-        resources.remotes.push({ id: Date.now(), link: linkPart, idCode: idPart, checked: false });
-        localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
-        input.value = '';
-        renderResources();
-        saveToCloud('resources', resources);
     }
 
     window.toggleRemoteCheck = function(id) {
         let target = resources.remotes.find(r => r.id === id);
         if(target) target.checked = !target.checked;
-        localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
         renderResources();
-        saveToCloud('resources', resources);
+        sendRemotesToCloud();
     }
 
     window.deleteResource = function(type, id) {
         resources[type] = resources[type].filter(item => item.id !== id);
-        localStorage.setItem('hy_resources_v11_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
         renderResources();
-        saveToCloud('resources', resources);
+        if(type === 'remotes') sendRemotesToCloud();
     }
 
     function renderResources() {
+        // Render Bảng Bài dịch (Hút từ Sheet về máy)
         let tbodyIdeas = document.getElementById('list-ideas');
         tbodyIdeas.innerHTML = '';
         (resources.ideas_table || []).forEach(item => {
@@ -1135,19 +1052,19 @@
             tr.innerHTML = `
                 <td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleIdeaCheck(${item.id})"></td>
                 <td><a href="${item.link}" target="_blank" style="color:var(--zalo-color); font-weight:bold;">Link</a></td>
-                <td class="editable-cell" contenteditable="true" onblur="updateIdeaField(${item.id}, 'title', this)">${item.title}</td>
+                <td>${item.title}</td>
                 <td style="text-align: center; color: #d63384; font-weight: bold;">${item.lang}</td>
                 <td>${item.platform}</td>
-                <td class="editable-cell" contenteditable="true" onblur="updateIdeaField(${item.id}, 'topic', this)">${item.topic}</td>
+                <td>${item.topic}</td>
                 <td>
                     <span style="font-size:0.75rem;">${item.cre}</span><br/>
                     <button class="btn-copy-mini" style="margin-top:4px;" onclick="copyTextToClipboard('${item.cre.replace(/'/g, "\\'")}')">📋 Copy Cre</button>
                 </td>
-                <td style="text-align: center;"><button class="delete-custom-btn" onclick="deleteResource('ideas_table', ${item.id})">×</button></td>
             `;
             tbodyIdeas.appendChild(tr);
         });
 
+        // Render Bảng Remote XHS
         let tbodyRemote = document.getElementById('list-remotes');
         tbodyRemote.innerHTML = '';
         (resources.remotes || []).forEach(item => {
@@ -1165,6 +1082,7 @@
             tbodyRemote.appendChild(tr);
         });
 
+        // Render Bảng Links video đã đăng
         let ulLinks = document.getElementById('list-links'); ulLinks.innerHTML = '';
         (resources.links || []).forEach(item => {
             let li = document.createElement('li'); li.className = 'res-item';
@@ -1200,43 +1118,32 @@
     }
 
     function saveAndReload() {
-        localStorage.setItem('hy_sakura_v11_db', JSON.stringify(db));
+        localStorage.setItem('hy_sakura_v12_db', JSON.stringify(db));
         renderChecklistValues();
         calculateDashboard();
-        saveToCloud('db', db); // Đồng bộ lên Sheet ngầm
+        saveCalendarDbToCloud();
     }
 
     window.clearEverything = function() {
         if(confirm("Bạn có chắc chắn muốn xóa toàn bộ tiến độ lịch sử tích chọn công việc?")) {
-            backupBeforeClear = JSON.stringify(db);
-            db = {}; 
-            localStorage.removeItem('hy_sakura_v11_db');
+            backupBeforeClear = JSON.stringify(db); db = {}; 
+            localStorage.removeItem('hy_sakura_v12_db');
             document.getElementById('btn-undo-box').style.display = 'block';
-            
-            if(currentView !== 'resources') {
-                renderChecklistValues();
-                calculateDashboard();
-            } else {
-                renderResources();
-            }
-            saveToCloud('db', db);
+            if(currentView !== 'resources') { renderChecklistValues(); calculateDashboard(); } 
+            else { renderResources(); }
+            saveCalendarDbToCloud();
         }
     }
 
     window.undoDeleteData = function() {
         if(backupBeforeClear) {
             db = JSON.parse(backupBeforeClear);
-            localStorage.setItem('hy_sakura_v11_db', backupBeforeClear);
+            localStorage.setItem('hy_sakura_v12_db', backupBeforeClear);
             backupBeforeClear = null; 
             document.getElementById('btn-undo-box').style.display = 'none';
-            
-            if(currentView !== 'resources') {
-                renderChecklistValues();
-                calculateDashboard();
-            } else {
-                renderResources();
-            }
-            saveToCloud('db', db);
+            if(currentView !== 'resources') { renderChecklistValues(); calculateDashboard(); } 
+            else { renderResources(); }
+            saveCalendarDbToCloud();
             alert("🎉 Khôi phục dữ liệu lịch sử thành công!");
         }
     }
