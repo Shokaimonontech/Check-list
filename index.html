@@ -295,7 +295,7 @@
 
         <div class="sync-indicator">
             <span id="sync-status">☁️ Hệ thống Cloud: Sẵn sàng</span>
-            <button class="sync-btn" onclick="fetchIdeasFromCloud()">📥 HÚT BÀI DỊCH TỪ SHEET VỀ WEB</button>
+            <button class="sync-btn" onclick="fetchIdeasFromCloud()">📥 HÚT BÀI DỊCH TỪ TAB 'QUEUE' VỀ WEB</button>
         </div>
 
         <div class="widget-box" id="widget-box-container">
@@ -337,11 +337,11 @@
             
             <div class="resource-section" id="res-sec-ideas">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-ideas')">
-                    <h3>📌 Bài Lưu Chuẩn Bị Dịch (Hút Dữ Liệu Tự Động Từ Sheet)</h3><span>▼</span>
+                    <h3>📌 Bài Lưu Chuẩn Bị Dịch (Hút Nguồn Từ Tab Queue)</h3><span>▼</span>
                 </div>
                 <div class="resource-body">
                     <div style="font-size: 0.85rem; color: #d63384; margin-bottom: 10px; font-weight: bold;">
-                        💡 DANH SÁCH BÀI DỊCH ĐÃ ĐỔI THEO CƠ CHẾ CLOUD TỰ ĐỘNG. Ô Cre chỉ cần bấm 1 lần để Copy siêu tốc!
+                        💡 DANH SÁCH BÀI DỊCH ĐƯỢC ĐỒNG BỘ TỪ TAB 'Queue' TRÊN GOOGLE SHEET. Bấm nút Copy Cre để lấy định dạng siêu nhanh!
                     </div>
                     <div style="overflow-x: auto;">
                         <table class="remote-table" style="min-width: 700px;">
@@ -352,7 +352,7 @@
                                     <th>Tiêu đề bài viết</th>
                                     <th style="width: 50px;">N.Ngữ</th>
                                     <th>Nền tảng</th>
-                                    <th style="color:#0068FF;">Mã ID nguồn 🔑</th>
+                                    <th style="color:#0068FF;">ID Tài Khoản 🔑</th>
                                     <th style="width: 180px;">Cre (Bấm 1 Lần Để Copy)</th>
                                 </tr>
                             </thead>
@@ -403,7 +403,6 @@
         </div>
 
         <div id="checklist-container">
-            <!-- Hộp check mạng xã hội cố định cũ -->
             <div class="card tiktok" id="card-tiktok">
                 <div class="card-header-toggle" onclick="toggleCard('card-tiktok')">
                     <div class="card-title">🎵 TikTok</div><span class="toggle-icon" id="icon-card-tiktok">▼</span>
@@ -530,16 +529,16 @@
     </div>
 
 <script>
-    // --- ⚠️ DÁN ĐƯỜNG LINK WEB APP GOOGLE SCRIPT MỚI CỦA EM VÀO ĐÂY ⚠️ ---
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzObXNAcFhJIirIAfgqfWttWA9oBKPjhSd2agIAX2HzupnjNW465BGE6Yskf2glWgSc/exec";
+    // --- ⚠️ DÁN ĐƯỜNG LINK WEB APP GOOGLE SCRIPT MỚI CỦA EM VÀO ĐÂY VÀO GIỮA HAI DẤU NGOẶC KÉP ⚠️ ---
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbztV82Nhdv9KKxWyUigbhap_yyQUu6ZjmHa46IpCyc2fWLTGFxxejUhZ-GeQGBg8S1n/exec";
 
     const YEAR = 2026;
     let currentView = 'today';
     let selectedDate = new Date();
     if(selectedDate.getFullYear() !== YEAR) { selectedDate = new Date(YEAR, 5, 5); }
 
-    let db = JSON.parse(localStorage.getItem('hy_sakura_v13_db')) || {};
-    let resources = JSON.parse(localStorage.getItem('hy_resources_v13_db')) || { ideas_table: [], links: [], remotes: [] };
+    let db = JSON.parse(localStorage.getItem('hy_sakura_v14_db')) || {};
+    let resources = JSON.parse(localStorage.getItem('hy_resources_v14_db')) || { ideas_table: [], links: [], remotes: [] };
     let backupBeforeClear = null;
 
     const segmentMapping = {
@@ -553,9 +552,10 @@
     };
     const TOTAL_FIXED_TASKS = 20;
 
+    // HÚT BÀI DỊCH TỪ TAB 'Queue' VỀ WEB
     window.fetchIdeasFromCloud = function() {
         if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("DÁN_LINK")) {
-            alert("Em hãy dán đường link kết nối Web App vào dòng số 459 nhé!"); return;
+            alert("Em hãy dán đường link kết nối Web App nhé!"); return;
         }
         document.getElementById('sync-status').innerText = "⏳ Đang kết nối lấy bài dịch...";
         
@@ -564,8 +564,8 @@
         .then(cloudIdeas => {
             if(Array.isArray(cloudIdeas)) {
                 resources.ideas_table = cloudIdeas;
-                localStorage.setItem('hy_resources_v13_db', JSON.stringify(resources));
-                document.getElementById('sync-status').innerText = "☁️ Đã đồng bộ Bài dịch thông minh từ Sheet về Web!";
+                localStorage.setItem('hy_resources_v14_db', JSON.stringify(resources));
+                document.getElementById('sync-status').innerText = "☁️ Đã đồng bộ Bài dịch từ tab 'Queue' về Web!";
                 if(currentView === 'resources') renderResources();
             }
         })
@@ -575,6 +575,7 @@
         });
     }
 
+    // TỰ ĐỘNG BẮN DỮ LIỆU REMOTE XHS LÊN TAB 'remotes' TRÊN SHEET
     function sendRemotesToCloud() {
         if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("DÁN_LINK")) return;
         document.getElementById('sync-status').innerText = "⏳ Đang bắn dữ liệu XHS lên Sheet...";
@@ -587,6 +588,7 @@
         }).catch(err => { document.getElementById('sync-status').innerText = "❌ Lỗi lưu dữ liệu!"; });
     }
 
+    // Tự động sao lưu Tiến độ Lịch và Ghi chú ngầm lên Sheet tab 'db'
     function saveCalendarDbToCloud() {
         if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("DÁN_LINK")) return;
         fetch(GOOGLE_SCRIPT_URL, {
@@ -736,7 +738,7 @@
     window.saveDailyNote = function() {
         let key = formatDateKey(selectedDate); initDayKey(key);
         db[key].note = document.getElementById('daily-note').value;
-        localStorage.setItem('hy_sakura_v13_db', JSON.stringify(db)); renderCalendarSection(); saveCalendarDbToCloud();
+        localStorage.setItem('hy_sakura_v14_db', JSON.stringify(db)); renderCalendarSection(); saveCalendarDbToCloud();
     }
 
     function renderChecklistValues() {
@@ -826,7 +828,7 @@
 
     function toggleIdeaCheck(id) {
         let target = resources.ideas_table.find(r => r.id === id); if(target) target.checked = !target.checked;
-        localStorage.setItem('hy_resources_v13_db', JSON.stringify(resources)); renderResources();
+        localStorage.setItem('hy_resources_v14_db', JSON.stringify(resources)); renderResources();
     }
 
     /* --- BỘ BÓC TÁCH REMOTE XHS --- */
@@ -843,7 +845,7 @@
 
         if(!resources.remotes) resources.remotes = [];
         resources.remotes.push({ id: Date.now(), link: linkPart, idCode: idPart, checked: false });
-        localStorage.setItem('hy_resources_v13_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v14_db', JSON.stringify(resources));
         document.getElementById('idea-raw-input').value = ''; renderResources(); sendRemotesToCloud();
     }
 
@@ -854,18 +856,18 @@
     window.addResource = function(type, inputId) {
         let input = document.getElementById(inputId); let val = input.value.trim(); if(!val) return;
         resources[type].push({ id: Date.now(), content: val });
-        localStorage.setItem('hy_resources_v13_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v14_db', JSON.stringify(resources));
         input.value = ''; renderResources(); saveToCloud('resources', resources);
     }
 
     window.toggleRemoteCheck = function(id) {
         let target = resources.remotes.find(r => r.id === id); if(target) target.checked = !target.checked;
-        localStorage.setItem('hy_resources_v13_db', JSON.stringify(resources)); renderResources(); sendRemotesToCloud();
+        localStorage.setItem('hy_resources_v14_db', JSON.stringify(resources)); renderResources(); sendRemotesToCloud();
     }
 
     window.deleteResource = function(type, id) {
         resources[type] = resources[type].filter(item => item.id !== id);
-        localStorage.setItem('hy_resources_v13_db', JSON.stringify(resources)); renderResources();
+        localStorage.setItem('hy_resources_v14_db', JSON.stringify(resources)); renderResources();
         if(type === 'remotes') sendRemotesToCloud();
     }
 
@@ -921,12 +923,12 @@
     }
 
     function saveAndReload() {
-        localStorage.setItem('hy_sakura_v13_db', JSON.stringify(db)); renderChecklistValues(); calculateDashboard(); saveCalendarDbToCloud();
+        localStorage.setItem('hy_sakura_v14_db', JSON.stringify(db)); renderChecklistValues(); calculateDashboard(); saveCalendarDbToCloud();
     }
 
     window.clearEverything = function() {
         if(confirm("Bạn có chắc chắn muốn xóa toàn bộ tiến độ lịch sử tích chọn công việc?")) {
-            backupBeforeClear = JSON.stringify(db); db = {}; localStorage.removeItem('hy_sakura_v13_db');
+            backupBeforeClear = JSON.stringify(db); db = {}; localStorage.removeItem('hy_sakura_v14_db');
             document.getElementById('btn-undo-box').style.display = 'block';
             if(currentView !== 'resources') { renderChecklistValues(); calculateDashboard(); } else { renderResources(); }
             saveCalendarDbToCloud();
@@ -935,7 +937,7 @@
 
     window.undoDeleteData = function() {
         if(backupBeforeClear) {
-            db = JSON.parse(backupBeforeClear); localStorage.setItem('hy_sakura_v13_db', backupBeforeClear); backupBeforeClear = null; 
+            db = JSON.parse(backupBeforeClear); localStorage.setItem('hy_sakura_v14_db', backupBeforeClear); backupBeforeClear = null; 
             document.getElementById('btn-undo-box').style.display = 'none';
             if(currentView !== 'resources') { renderChecklistValues(); calculateDashboard(); } else { renderResources(); }
             saveCalendarDbToCloud(); alert("🎉 Khôi phục dữ liệu lịch sử thành công!");
