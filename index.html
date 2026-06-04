@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Checklist Công Việc Hàng Ngày</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .date-title {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 25px;
+        }
+        .platform-group {
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        .platform-group.tiktok { border-color: #000000; }
+        .platform-group.instagram { border-color: #e1306c; }
+        .platform-group.facebook { border-color: #1877f2; }
+        .platform-group.zalo { border-color: #0068ff; }
+        
+        h3 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .task-left {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        .task-item input[type="checkbox"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        .task-text {
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+        .completed .task-text {
+            text-decoration: line-through;
+            color: #95a5a6;
+        }
+        .bonus-section {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .bonus-section span {
+            font-size: 0.85em;
+            color: #7f8c8d;
+        }
+        .bonus-input {
+            width: 45px;
+            padding: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .btn-reset {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background 0.2s;
+        }
+        .btn-reset:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>DAILY CHECKLIST</h1>
+    <div id="current-date" class="date-title"></div>
+
+    <div id="checklist-container">
+        <!-- Dữ liệu nhiệm vụ sẽ được tự động render ở đây bằng JavaScript -->
+    </div>
+
+    <button class="btn-reset" onclick="resetDay()">Reset Cho Ngày Mới</button>
+</div>
+
+<script>
+    // Khởi tạo danh sách công việc dựa trên yêu cầu của bạn
+    const tasksData = [
+        { id: 1, platform: 'Tiktok', groupClass: 'tiktok', desc: '1 video Kanji (1 chữ cũ + 1 chữ mới, edit Capcut)' },
+        { id: 2, platform: 'Tiktok', groupClass: 'tiktok', desc: '2 video tin tức / Threads / lồng tiếng (hoặc hơn)' },
+        { id: 3, platform: 'Instagram', groupClass: 'instagram', desc: 'Video Kanji đã edit up Tiktok' },
+        { id: 4, platform: 'Facebook (Trang HY HY)', groupClass: 'facebook', desc: '1 bài dịch tiếng Nhật từ SNS' },
+        { id: 5, platform: 'Facebook (Trang HY HY)', groupClass: 'facebook', desc: '1 video cùng với Tiktok hoặc edit video tiếng Nhật' },
+        { id: 6, platform: 'Facebook (Trang Blog HY)', groupClass: 'facebook', desc: '1 bài dịch tiếng Anh từ SNS' },
+        { id: 7, platform: 'Facebook (Trang Blog HY)', groupClass: 'facebook', desc: '1 video có tiếng Anh' },
+        { id: 8, platform: 'Facebook (Trang Shokaimono)', groupClass: 'facebook', desc: '2 bài dịch SNS về sản phẩm gắn link' },
+        { id: 9, platform: 'Zalo Video', groupClass: 'zalo', desc: '10 video gắn link sản phẩm' }
+    ];
+
+    // Hiển thị ngày hôm nay
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('current-date').innerText = new Date().toLocaleDateString('vi-VN', options);
+
+    // Tải dữ liệu đã lưu từ LocalStorage nếu có
+    let userProgress = JSON.parse(localStorage.getItem('userProgress')) || {};
+
+    function renderChecklist() {
+        const container = document.getElementById('checklist-container');
+        container.innerHTML = '';
+
+        // Nhóm các nhiệm vụ theo nền tảng
+        const groups = {};
+        tasksData.forEach(task => {
+            if (!groups[task.platform]) {
+                groups[task.platform] = { class: task.groupClass, list: [] };
+            }
+            groups[task.platform].list.push(task);
+        });
+
+        // Render cấu trúc giao diện HTML
+        for (const platform in groups) {
+            const groupDiv = document.createElement('div');
+            groupDiv.className = `platform-group ${groups[platform].class}`;
+            
+            const title = document.createElement('h3');
+            title.innerText = platform;
+            groupDiv.appendChild(title);
+
+            groups[platform].list.forEach(task => {
+                const status = userProgress[task.id] || { checked: false, bonus: 0 };
+                
+                const itemDiv = document.createElement('div');
+                itemDiv.className = `task-item ${status.checked ? 'completed' : ''}`;
+                itemDiv.id = `item-${task.id}`;
+
+                itemDiv.innerHTML = `
+                    <div class="task-left">
+                        <input type="checkbox" id="check-${task.id}" ${status.checked ? 'checked' : ''} onchange="toggleTask(${task.id})">
+                        <span class="task-text">${task.desc}</span>
+                    </div>
+                    <div class="bonus-section">
+                        <span>Số lượng:</span>
+                        <input type="number" class="bonus-input" id="bonus-${task.id}" value="${status.bonus}" min="0" onchange="updateBonus(${task.id})">
+                    </div>
+                `;
+                groupDiv.appendChild(itemDiv);
+            });
+
+            container.appendChild(groupDiv);
+        }
+    }
+
+    // Xử lý khi tích chọn hoàn thành
+    window.toggleTask = function(id) {
+        if (!userProgress[id]) userProgress[id] = { checked: false, bonus: 0 };
+        userProgress[id].checked = document.getElementById(`check-${id}`).checked;
+        
+        const item = document.getElementById(`item-${id}`);
+        if (userProgress[id].checked) {
+            item.classList.add('completed');
+        } else {
+            item.classList.remove('completed');
+        }
+        saveProgress();
+    }
+
+    // Xử lý khi cập nhật số lượng bonus
+    window.updateBonus = function(id) {
+        if (!userProgress[id]) userProgress[id] = { checked: false, bonus: 0 };
+        userProgress[id].bonus = parseInt(document.getElementById(`bonus-${id}`).value) || 0;
+        saveProgress();
+    }
+
+    function saveProgress() {
+        localStorage.setItem('userProgress', JSON.stringify(userProgress));
+    }
+
+    // Reset lại trạng thái để chuẩn bị cho ngày làm việc mới
+    window.resetDay = function() {
+        if (confirm('Bạn có chắc chắn muốn reset toàn bộ checklist để bắt đầu ngày mới không?')) {
+            userProgress = {};
+            saveProgress();
+            renderChecklist();
+        }
+    }
+
+    // Khởi chạy ứng dụng web khi tải trang
+    renderChecklist();
+</script>
+
+</body>
+</html>
