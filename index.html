@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌸 Sakura Workspace & Dashboard 2026 🌸</title>
+    <title>🌸 HY HY WORKSPACE 2026 🌸</title>
     <style>
         :root {
             --bg-color: #FFF5F5;
@@ -43,7 +43,17 @@
         }
         .sidebar.open { left: 0; }
 
-        .sidebar-title { font-weight: bold; font-size: 1.1rem; margin-top: 20px; margin-bottom: 10px; color: #555; text-align: center; border-bottom: 2px dotted var(--sakura-pink); padding-bottom: 5px; }
+        .sidebar-title { 
+            font-weight: bold; font-size: 1.1rem; margin-top: 20px; margin-bottom: 10px; 
+            color: #555; text-align: center; border-bottom: 2px dotted var(--sakura-pink); 
+            padding-bottom: 5px; cursor: pointer; user-select: none;
+            display: flex; justify-content: center; align-items: center; gap: 5px;
+        }
+        
+        /* Dropdown Chế độ xem trong Sidebar */
+        .sidebar-dropdown-content { transition: max-height 0.3s ease; overflow: hidden; }
+        .sidebar-dropdown-content.collapsed { display: none; }
+
         .menu-item {
             display: block; width: 100%; padding: 12px; margin-bottom: 10px;
             background: #FFF0F0; border: 2px solid #000; border-radius: 15px;
@@ -72,15 +82,13 @@
         .progress-bar-bg { background: #f1f5f9; border: 2px solid #000; height: 18px; border-radius: 10px; overflow: hidden; }
         .progress-bar-fill { height: 100%; width: 0%; background: #2ecc71; transition: width 0.3s ease; }
 
-        /* Mini progress bar trong từng app */
-        .mini-progress { margin-bottom: 15px; }
-        .mini-progress .progress-bar-bg { height: 10px; border: 1px solid #000; }
+        .mini-progress { margin-bottom: 10px; }
+        .mini-progress .progress-bar-bg { height: 8px; border: 1px solid #000; }
 
         /* --- DASHBOARD TỔNG KẾT --- */
         .dashboard-box {
             background: #fff; border: 2px solid #000; border-radius: 20px;
-            padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 0 #000;
-            display: none;
+            padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 0 #000; display: none;
         }
         .dashboard-title { font-weight: bold; text-align: center; font-size: 1.1rem; margin-bottom: 12px; color: #d63384; }
         .db-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; }
@@ -100,48 +108,59 @@
         .cal-btn.active { background: var(--sakura-pink); }
         .cal-btn.has-data { border: 2px dashed var(--sakura-dark); background: #FFF0F0; }
 
-        /* --- CÁC HỘP CHECKLIST (ACCORDION CHỨA BOX THẢ XUỐNG) --- */
+        /* --- CÁC HỘP CHECKLIST (ACCORDION THẢ XUỐNG) --- */
         .card {
             background: #fff; border: 3px solid #000; border-radius: 22px;
-            padding: 20px; margin-bottom: 25px; box-shadow: 5px 5px 0 #000;
-            position: relative;
+            padding: 15px; margin-bottom: 20px; box-shadow: 4px 4px 0 #000;
         }
-        .card-header-toggle {
-            display: flex; justify-content: space-between; align-items: center;
-            cursor: pointer; user-select: none; margin-bottom: 10px;
-        }
-        .card-body-content { transition: all 0.3s ease; }
+        .card-header-toggle { display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+        .card-body-content { transition: all 0.3s ease; margin-top: 10px; }
         .card.collapsed .card-body-content { display: none; }
-        .toggle-icon { font-size: 1.2rem; font-weight: bold; }
+        .toggle-icon { font-size: 1.1rem; font-weight: bold; }
 
-        .card-title { font-size: 1.3rem; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 8px; }
+        .card-title { font-size: 1.2rem; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 6px; }
         .card.tiktok .card-title { color: var(--tiktok-color); }
         .card.instagram .card-title { color: var(--instagram-color); }
         .card.facebook .card-title { color: var(--facebook-color); }
         .card.zalo .card-title { color: var(--zalo-color); }
 
-        .sub-group-title { font-weight: bold; font-size: 0.95rem; color: #555; margin: 15px 0 5px 0; padding-bottom: 3px; border-bottom: 1px dotted #ccc; }
-        .task-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #eee; }
-        .task-row:last-child { border-bottom: none; }
-        .task-left { display: flex; align-items: center; flex: 1; padding-right: 10px; }
-        .task-left input[type="checkbox"] { width: 22px; height: 22px; margin-right: 12px; cursor: pointer; accent-color: #2ecc71; }
-        .task-text { font-size: 1rem; font-weight: 600; line-height: 1.4; }
-        .completed .task-text { text-decoration: line-through; color: #888888; }
+        .sub-group-title { font-weight: bold; font-size: 0.9rem; color: #333; margin: 10px 0 5px 0; padding-bottom: 2px; border-bottom: 1px dotted #ccc; }
+        
+        /* --- DÀN HÀNG NGANG CHO CÁC Ô TICK --- */
+        .task-grid-horizontal {
+            display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; padding: 5px 0;
+        }
+        
+        .inline-task-box {
+            display: inline-flex; align-items: center; background: #fff;
+            border: 2px solid #000; border-radius: 10px; padding: 6px 10px;
+            font-size: 0.9rem; font-weight: bold; cursor: pointer; user-select: none;
+            transition: all 0.1s;
+        }
+        .inline-task-box input[type="checkbox"] {
+            width: 18px; height: 18px; margin-right: 6px; cursor: pointer; accent-color: #2ecc71;
+        }
+        .inline-task-box.completed {
+            background: #e2fcd4; color: #666; text-decoration: line-through; border-color: #777;
+        }
 
-        /* Bộ tăng giảm Bonus kẹo ngọt */
-        .bonus-control { display: flex; align-items: center; gap: 6px; background: #FFF5F5; padding: 4px 8px; border: 2px solid #000; border-radius: 12px; }
-        .bonus-btn { width: 26px; height: 26px; background: #fff; border: 2px solid #000; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .bonus-value { font-weight: bold; min-width: 20px; text-align: center; }
-
-        /* Nút thêm việc phát sinh mini */
+        /* Nút thêm việc kẹo ngọt */
         .btn-add-mini {
-            background: #fff; border: 2px solid #000; padding: 6px 12px;
-            border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.85rem;
-            margin-top: 15px; display: inline-flex; align-items: center; gap: 4px;
+            background: #fff; border: 2px solid #000; padding: 5px 12px;
+            border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.8rem;
+            margin-top: 8px; display: inline-flex; align-items: center; gap: 4px;
         }
         .btn-add-mini:active { transform: scale(0.95); }
 
-        /* --- TRANG TÀI NGUYÊN (RESOURCES BOX) --- */
+        /* Pop-up chọn loại khi bấm Thêm */
+        .popup-selection {
+            display: none; gap: 5px; margin-top: 5px; background: #fff;
+            padding: 5px; border: 2px dashed #000; border-radius: 10px;
+        }
+        .popup-btn { padding: 4px 8px; border: 1px solid #000; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; background: #fff; }
+        .popup-btn:hover { background: var(--sakura-pink); }
+
+        /* --- TRANG TÀI NGUYÊN --- */
         .resources-box { background: #fff; border: 3px solid #000; border-radius: 22px; padding: 20px; box-shadow: 5px 5px 0 #000; display: none; }
         .resource-section { margin-bottom: 25px; }
         .resource-section h3 { margin-bottom: 10px; border-bottom: 2px dashed #000; padding-bottom: 5px; }
@@ -154,7 +173,7 @@
         .res-item a:hover { text-decoration: underline; }
 
         .btn-clear-all { display: block; width: 100%; padding: 12px; background: #ff8787; border: 2px solid #000; border-radius: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #000; margin: 40px 0; }
-        .delete-custom-btn { background: none; border: none; color: #ff4d4d; font-weight: bold; cursor: pointer; margin-left: 10px; font-size: 1.1rem; }
+        .delete-custom-btn { background: none; border: none; color: #ff4d4d; font-weight: bold; cursor: pointer; margin-left: 5px; font-size: 1rem; }
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.1); z-index: 85; }
         .overlay.show { display: block; }
     </style>
@@ -164,60 +183,45 @@
     <button class="menu-btn" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-    <!-- Menu bên cạnh -->
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-title">🌸 CHẾ ĐỘ XEM</div>
-        <button class="menu-item active" id="btn-view-today" onclick="switchView('today')">✨ Hôm Nay</button>
-        <button class="menu-item" id="btn-view-week" onclick="switchView('week')">🗓️ Theo Tuần</button>
-        <button class="menu-item" id="btn-view-month" onclick="switchView('month')">📅 Theo Tháng</button>
-        <button class="menu-item" id="btn-view-year" onclick="switchView('year')">📊 Cả Năm 2026</button>
+        <div class="sidebar-title" onclick="toggleSidebarDropdown()">🌸 CHẾ ĐỘ XEM <span id="sidebar-drop-icon">▼</span></div>
+        <div class="sidebar-dropdown-content" id="sidebar-view-dropdown">
+            <button class="menu-item active" id="btn-view-today" onclick="switchView('today')">✨ Hôm Nay</button>
+            <button class="menu-item" id="btn-view-week" onclick="switchView('week')">🗓️ Theo Tuần</button>
+            <button class="menu-item" id="btn-view-month" onclick="switchView('month')">📅 Theo Tháng</button>
+            <button class="menu-item" id="btn-view-year" onclick="switchView('year')">📊 Cả Năm 2026</button>
+        </div>
 
         <div class="sidebar-title">📂 LƯU TRỮ CHUYÊN SÂU</div>
         <button class="menu-item" id="btn-view-resources" onclick="switchView('resources')">💡 Tài Nguyên dịch/Link</button>
     </div>
 
-    <!-- Khu vực chính -->
     <div class="main-content">
-        <h1 id="main-title">🌸 SAKURA WORKSPACE 🌸</h1>
+        <h1 id="main-title">🌸 HY HY WORKSPACE 🌸</h1>
         <div class="date-banner" id="date-banner">---</div>
 
-        <!-- TIẾN ĐỘ TỔNG -->
         <div class="progress-container" id="total-progress-box">
             <div class="progress-label">
                 <span>Tiến độ tổng ngày hôm nay 🌸</span>
                 <span id="progress-text">0% (0/0)</span>
             </div>
-            <div class="progress-bar-bg">
-                <div class="progress-bar-fill" id="progress-bar-fill"></div>
-            </div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar-fill"></div></div>
         </div>
 
-        <!-- DASHBOARD TỔNG KẾT -->
         <div class="dashboard-box" id="dashboard-box">
             <div class="dashboard-title">📊 DASHBOARD TỔNG KẾT</div>
             <div class="db-grid">
-                <div class="db-card">
-                    <div class="db-lbl">Đã Check Hôm Nay</div>
-                    <div class="db-num" id="db-today-count">0</div>
-                </div>
-                <div class="db-card">
-                    <div class="db-lbl">Tổng Việc Tháng Này</div>
-                    <div class="db-num" id="db-month-count">0</div>
-                </div>
-                <div class="db-card">
-                    <div class="db-lbl">Tổng Sản Phẩm Làm Dư</div>
-                    <div class="db-num" id="db-year-bonus">0</div>
-                </div>
+                <div class="db-card"><div class="db-lbl">Đã Check Hôm Nay</div><div class="db-num" id="db-today-count">0</div></div>
+                <div class="db-card"><div class="db-lbl">Tổng Việc Tháng Này</div><div class="db-num" id="db-month-count">0</div></div>
+                <div class="db-card"><div class="db-lbl">Tổng Làm Thêm (Bonus)</div><div class="db-num" id="db-year-bonus">0</div></div>
             </div>
         </div>
 
-        <!-- Lịch Lưới -->
         <div class="calendar-container" id="calendar-container">
             <div class="calendar-header" id="calendar-header">Chọn Ngày</div>
             <div id="calendar-grid"></div>
         </div>
 
-        <!-- TRANG TÀI NGUYÊN -->
         <div class="resources-box" id="resources-box">
             <div class="resource-section">
                 <h3>📌 Bài Lưu Chuẩn Bị Dịch (Ý tưởng)</h3>
@@ -227,7 +231,6 @@
                 </div>
                 <ul class="res-list" id="list-ideas"></ul>
             </div>
-
             <div class="resource-section">
                 <h3>🔗 Link Các Bài/Video Đã Đăng</h3>
                 <div class="res-input-group">
@@ -238,170 +241,127 @@
             </div>
         </div>
 
-        <!-- KHU VỰC CÁC HỘP CHECKLIST CÔNG VIỆC -->
         <div id="checklist-container">
             
-            <!-- TIKTOK (Tổng cộng 3 việc cố định đã tách nhỏ) -->
             <div class="card tiktok" id="card-tiktok">
                 <div class="card-header-toggle" onclick="toggleCard('card-tiktok')">
-                    <div class="card-title">🎵 TikTok</div>
-                    <span class="toggle-icon" id="icon-card-tiktok">▼</span>
+                    <div class="card-title">🎵 TikTok</div><span class="toggle-icon" id="icon-card-tiktok">▼</span>
                 </div>
                 <div class="card-body-content">
                     <div class="mini-progress">
-                        <div class="progress-label"><span style="font-size:0.8rem; color:#666;">Tiến độ TikTok</span><span id="text-mini-tiktok" style="font-size:0.8rem; color:#666;">0%</span></div>
+                        <div class="progress-label"><span style="font-size:0.75rem; color:#666;">Tiến độ TikTok</span><span id="text-mini-tiktok" style="font-size:0.75rem; color:#666;">0%</span></div>
                         <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-tiktok"></div></div>
                     </div>
-                    <div class="task-row" id="row-1">
-                        <div class="task-left">
-                            <input type="checkbox" id="check-1" onchange="updateTask(1)">
-                            <span class="task-text">1 video Kanji: 1 chữ hôm qua + 1 chữ ngày mới (Capcut)</span>
-                        </div>
+                    
+                    <div class="sub-group-title">Nhiệm vụ cố định</div>
+                    <div class="task-grid-horizontal">
+                        <label class="inline-task-box" id="lbl-1"><input type="checkbox" id="check-1" onchange="updateTask(1)"> Video Kanji (1 chữ cũ + 1 chữ mới)</label>
+                        <label class="inline-task-box" id="lbl-2"><input type="checkbox" id="check-2" onchange="updateTask(2)"> Video 1 (Tin tức/Threads)</label>
+                        <label class="inline-task-box" id="lbl-10"><input type="checkbox" id="check-10" onchange="updateTask(10)"> Video 2 (Tin tức/Threads)</label>
                     </div>
-                    <div class="task-row" id="row-2">
-                        <div class="task-left">
-                            <input type="checkbox" id="check-2" onchange="updateTask(2)">
-                            <span class="task-text">Video tin tức / Threads / lồng tiếng - Video số 1</span>
-                        </div>
+
+                    <div class="sub-group-title">Làm thêm (Bonus)</div>
+                    <div class="task-grid-horizontal" id="custom-container-tiktok"></div>
+                    <button class="btn-add-mini" onclick="showPopupSelection('tiktok')">✨ Thêm</button>
+                    <div class="popup-selection" id="popup-tiktok">
+                        <button class="popup-btn" onclick="addCustomToApp('tiktok', 'Video')">+ Thêm Video</button>
+                        <button class="popup-btn" onclick="addCustomToApp('tiktok', 'Bài dịch')">+ Thêm Bài dịch</button>
                     </div>
-                    <div class="task-row" id="row-10">
-                        <div class="task-left">
-                            <input type="checkbox" id="check-10" onchange="updateTask(10)">
-                            <span class="task-text">Video tin tức / Threads / lồng tiếng - Video số 2</span>
-                        </div>
-                        <div class="bonus-control">
-                            <button class="bonus-btn" onclick="changeBonus(10, -1)">-</button>
-                            <span class="bonus-value" id="bonus-10">0</span>
-                            <button class="bonus-btn" onclick="changeBonus(10, 1)">+</button>
-                        </div>
-                    </div>
-                    <div id="custom-container-tiktok"></div>
-                    <button class="btn-add-mini" onclick="addCustomToApp('tiktok')">🌸 Thêm việc làm dư TikTok</button>
                 </div>
             </div>
 
-            <!-- INSTAGRAM -->
             <div class="card instagram" id="card-instagram">
                 <div class="card-header-toggle" onclick="toggleCard('card-instagram')">
-                    <div class="card-title">📸 Instagram</div>
-                    <span class="toggle-icon" id="icon-card-instagram">▼</span>
+                    <div class="card-title">📸 Instagram</div><span class="toggle-icon" id="icon-card-instagram">▼</span>
                 </div>
                 <div class="card-body-content">
                     <div class="mini-progress">
-                        <div class="progress-label"><span style="font-size:0.8rem; color:#666;">Tiến độ Instagram</span><span id="text-mini-instagram" style="font-size:0.8rem; color:#666;">0%</span></div>
+                        <div class="progress-label"><span style="font-size:0.75rem; color:#666;">Tiến độ Instagram</span><span id="text-mini-instagram" style="font-size:0.75rem; color:#666;">0%</span></div>
                         <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-instagram"></div></div>
                     </div>
-                    <div class="task-row" id="row-3">
-                        <div class="task-left">
-                            <input type="checkbox" id="check-3" onchange="updateTask(3)">
-                            <span class="task-text">Video Kanji đã edit up Tiktok</span>
-                        </div>
+                    <div class="task-grid-horizontal">
+                        <label class="inline-task-box" id="lbl-3"><input type="checkbox" id="check-3" onchange="updateTask(3)"> Video Kanji (Up từ TikTok)</label>
                     </div>
-                    <div id="custom-container-instagram"></div>
-                    <button class="btn-add-mini" onclick="addCustomToApp('instagram')">🌸 Thêm việc làm dư Instagram</button>
+
+                    <div class="sub-group-title">Làm thêm (Bonus)</div>
+                    <div class="task-grid-horizontal" id="custom-container-instagram"></div>
+                    <button class="btn-add-mini" onclick="showPopupSelection('instagram')">✨ Thêm</button>
+                    <div class="popup-selection" id="popup-instagram">
+                        <button class="popup-btn" onclick="addCustomToApp('instagram', 'Video')">+ Thêm Video</button>
+                        <button class="popup-btn" onclick="addCustomToApp('instagram', 'Bài dịch')">+ Thêm Bài dịch</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- FACEBOOK -->
             <div class="card facebook" id="card-facebook">
                 <div class="card-header-toggle" onclick="toggleCard('card-facebook')">
-                    <div class="card-title">📘 Facebook</div>
-                    <span class="toggle-icon" id="icon-card-facebook">▼</span>
+                    <div class="card-title">📘 Facebook</div><span class="toggle-icon" id="icon-card-facebook">▼</span>
                 </div>
                 <div class="card-body-content">
                     <div class="mini-progress">
-                        <div class="progress-label"><span style="font-size:0.8rem; color:#666;">Tiến độ Facebook</span><span id="text-mini-facebook" style="font-size:0.8rem; color:#666;">0%</span></div>
+                        <div class="progress-label"><span style="font-size:0.75rem; color:#666;">Tiến độ Facebook</span><span id="text-mini-facebook" style="font-size:0.75rem; color:#666;">0%</span></div>
                         <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-facebook"></div></div>
                     </div>
                     
                     <div class="sub-group-title">Trang HY HY</div>
-                    <div class="task-row" id="row-4">
-                        <div class="task-left">
-                            <input type="checkbox" id="check-4" onchange="updateTask(4)">
-                            <span class="task-text">1 bài dịch tiếng Nhật từ SNS</span>
-                        </div>
-                    </div>
-                    <div class="task-row" id="row-5">
-                        <div class="task-left">
-                            <input type="checkbox" id="check-5" onchange="updateTask(5)">
-                            <span class="task-text">1 video cùng Tiktok hoặc edit video tiếng Nhật</span>
-                        </div>
+                    <div class="task-grid-horizontal">
+                        <label class="inline-task-box" id="lbl-4"><input type="checkbox" id="check-4" onchange="updateTask(4)"> Bài dịch 1 (Tiếng Nhật)</label>
+                        <label class="inline-task-box" id="lbl-5"><input type="checkbox" id="check-5" onchange="updateTask(5)"> Video 1 (Tiếng Nhật)</label>
                     </div>
 
                     <div class="sub-group-title">Trang HY Blog</div>
-                    <div class="task-row" id="row-6">
-                        <div class="task-left">
-                            <input type="checkbox" id="check-6" onchange="updateTask(6)">
-                            <span class="task-text">1 bài dịch tiếng Anh từ SNS</span>
-                        </div>
-                    </div>
-                    <div class="task-row" id="row-7">
-                        <div class="task-left">
-                            <input type="checkbox" id="check-7" onchange="updateTask(7)">
-                            <span class="task-text">1 video có tiếng Anh</span>
-                        </div>
+                    <div class="task-grid-horizontal">
+                        <label class="inline-task-box" id="lbl-6"><input type="checkbox" id="check-6" onchange="updateTask(6)"> Bài dịch 1 (Tiếng Anh)</label>
+                        <label class="inline-task-box" id="lbl-7"><input type="checkbox" id="check-7" onchange="updateTask(7)"> Video 1 (Tiếng Anh)</label>
                     </div>
 
-                    <div class="sub-group-title">Trang Shokaimono (Đã tách làm 2 bài riêng)</div>
-                    <div class="task-row" id="row-8">
-                        <div class="task-left">
-                            <input type="checkbox" id="check-8" onchange="updateTask(8)">
-                            <span class="task-text">Bài dịch SNS về sản phẩm để gắn link - Bài 1</span>
-                        </div>
+                    <div class="sub-group-title">Trang Shokaimono</div>
+                    <div class="task-grid-horizontal">
+                        <label class="inline-task-box" id="lbl-8"><input type="checkbox" id="check-8" onchange="updateTask(8)"> Bài dịch 1 (Gắn link SP)</label>
+                        <label class="inline-task-box" id="lbl-11"><input type="checkbox" id="check-11" onchange="updateTask(11)"> Bài dịch 2 (Gắn link SP)</label>
                     </div>
-                    <div class="task-row" id="row-11">
-                        <div class="task-left">
-                            <input type="checkbox" id="check-11" onchange="updateTask(11)">
-                            <span class="task-text">Bài dịch SNS về sản phẩm để gắn link - Bài 2</span>
-                        </div>
-                        <div class="bonus-control">
-                            <button class="bonus-btn" onclick="changeBonus(11, -1)">-</button>
-                            <span class="bonus-value" id="bonus-11">0</span>
-                            <button class="bonus-btn" onclick="changeBonus(11, 1)">+</button>
-                        </div>
+
+                    <div class="sub-group-title">Làm thêm (Bonus)</div>
+                    <div class="task-grid-horizontal" id="custom-container-facebook"></div>
+                    <button class="btn-add-mini" onclick="showPopupSelection('facebook')">✨ Thêm</button>
+                    <div class="popup-selection" id="popup-facebook">
+                        <button class="popup-btn" onclick="addCustomToApp('facebook', 'Video')">+ Thêm Video</button>
+                        <button class="popup-btn" onclick="addCustomToApp('facebook', 'Bài dịch')">+ Thêm Bài dịch</button>
                     </div>
-                    <div id="custom-container-facebook"></div>
-                    <button class="btn-add-mini" onclick="addCustomToApp('facebook')">🌸 Thêm việc làm dư Facebook</button>
                 </div>
             </div>
 
-            <!-- ZALO VIDEO (Đã tách thành 10 dòng check độc lập từ dòng 12 tới 21) -->
             <div class="card zalo" id="card-zalo">
                 <div class="card-header-toggle" onclick="toggleCard('card-zalo')">
-                    <div class="card-title">📱 Zalo Video</div>
-                    <span class="toggle-icon" id="icon-card-zalo">▼</span>
+                    <div class="card-title">📱 Zalo Video</div><span class="toggle-icon" id="icon-card-zalo">▼</span>
                 </div>
                 <div class="card-body-content">
                     <div class="mini-progress">
-                        <div class="progress-label"><span style="font-size:0.8rem; color:#666;">Tiến độ Zalo</span><span id="text-mini-zalo" style="font-size:0.8rem; color:#666;">0%</span></div>
+                        <div class="progress-label"><span style="font-size:0.75rem; color:#666;">Tiến độ Zalo</span><span id="text-mini-zalo" style="font-size:0.75rem; color:#666;">0%</span></div>
                         <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-zalo"></div></div>
                     </div>
                     
-                    <!-- Vòng lặp giả lập bằng tay 10 video -->
-                    <div class="task-row" id="row-12"><div class="task-left"><input type="checkbox" id="check-12" onchange="updateTask(12)"><span class="task-text">Video gắn link sản phẩm - Số 1</span></div></div>
-                    <div class="task-row" id="row-13"><div class="task-left"><input type="checkbox" id="check-13" onchange="updateTask(13)"><span class="task-text">Video gắn link sản phẩm - Số 2</span></div></div>
-                    <div class="task-row" id="row-14"><div class="task-left"><input type="checkbox" id="check-14" onchange="updateTask(14)"><span class="task-text">Video gắn link sản phẩm - Số 3</span></div></div>
-                    <div class="task-row" id="row-15"><div class="task-left"><input type="checkbox" id="check-15" onchange="updateTask(15)"><span class="task-text">Video gắn link sản phẩm - Số 4</span></div></div>
-                    <div class="task-row" id="row-16"><div class="task-left"><input type="checkbox" id="check-16" onchange="updateTask(16)"><span class="task-text">Video gắn link sản phẩm - Số 5</span></div></div>
-                    <div class="task-row" id="row-17"><div class="task-left"><input type="checkbox" id="check-17" onchange="updateTask(17)"><span class="task-text">Video gắn link sản phẩm - Số 6</span></div></div>
-                    <div class="task-row" id="row-18"><div class="task-left"><input type="checkbox" id="check-18" onchange="updateTask(18)"><span class="task-text">Video gắn link sản phẩm - Số 7</span></div></div>
-                    <div class="task-row" id="row-19"><div class="task-left"><input type="checkbox" id="check-19" onchange="updateTask(19)"><span class="task-text">Video gắn link sản phẩm - Số 8</span></div></div>
-                    <div class="task-row" id="row-20"><div class="task-left"><input type="checkbox" id="check-20" onchange="updateTask(20)"><span class="task-text">Video gắn link sản phẩm - Số 9</span></div></div>
-                    
-                    <div class="task-row" id="row-21">
-                        <div class="task-left">
-                            <input type="checkbox" id="check-21" onchange="updateTask(21)">
-                            <span class="task-text">Video gắn link sản phẩm - Số 10</span>
-                        </div>
-                        <div class="bonus-control">
-                            <button class="bonus-btn" onclick="changeBonus(21, -1)">-</button>
-                            <span class="bonus-value" id="bonus-21">0</span>
-                            <button class="bonus-btn" onclick="changeBonus(21, 1)">+</button>
-                        </div>
+                    <div class="sub-group-title">Nhiệm vụ cố định (10 Video gắn link)</div>
+                    <div class="task-grid-horizontal">
+                        <label class="inline-task-box" id="lbl-12"><input type="checkbox" id="check-12" onchange="updateTask(12)"> Video 1</label>
+                        <label class="inline-task-box" id="lbl-13"><input type="checkbox" id="check-13" onchange="updateTask(13)"> Video 2</label>
+                        <label class="inline-task-box" id="lbl-14"><input type="checkbox" id="check-14" onchange="updateTask(14)"> Video 3</label>
+                        <label class="inline-task-box" id="lbl-15"><input type="checkbox" id="check-15" onchange="updateTask(15)"> Video 4</label>
+                        <label class="inline-task-box" id="lbl-16"><input type="checkbox" id="check-16" onchange="updateTask(16)"> Video 5</label>
+                        <label class="inline-task-box" id="lbl-17"><input type="checkbox" id="check-17" onchange="updateTask(17)"> Video 6</label>
+                        <label class="inline-task-box" id="lbl-18"><input type="checkbox" id="check-18" onchange="updateTask(18)"> Video 7</label>
+                        <label class="inline-task-box" id="lbl-19"><input type="checkbox" id="check-19" onchange="updateTask(19)"> Video 8</label>
+                        <label class="inline-task-box" id="lbl-20"><input type="checkbox" id="check-20" onchange="updateTask(20)"> Video 9</label>
+                        <label class="inline-task-box" id="lbl-21"><input type="checkbox" id="check-21" onchange="updateTask(21)"> Video 10</label>
                     </div>
 
-                    <div id="custom-container-zalo"></div>
-                    <button class="btn-add-mini" onclick="addCustomToApp('zalo')">🌸 Thêm việc làm dư Zalo</button>
+                    <div class="sub-group-title">Làm thêm (Bonus)</div>
+                    <div class="task-grid-horizontal" id="custom-container-zalo"></div>
+                    <button class="btn-add-mini" onclick="showPopupSelection('zalo')">✨ Thêm</button>
+                    <div class="popup-selection" id="popup-zalo">
+                        <button class="popup-btn" onclick="addCustomToApp('zalo', 'Video')">+ Thêm Video</button>
+                        <button class="popup-btn" onclick="addCustomToApp('zalo', 'Bài dịch')">+ Thêm Bài dịch</button>
+                    </div>
                 </div>
             </div>
 
@@ -415,27 +375,30 @@
     let currentView = 'today';
     let selectedDate = new Date();
     
-    if(selectedDate.getFullYear() !== YEAR) {
-        selectedDate = new Date(YEAR, 5, 5); // 05/06/2026 mặc định
-    }
+    if(selectedDate.getFullYear() !== YEAR) { selectedDate = new Date(YEAR, 5, 5); }
 
-    let db = JSON.parse(localStorage.getItem('hy_sakura_v4_db')) || {};
-    let resources = JSON.parse(localStorage.getItem('hy_resources_db')) || { ideas: [], links: [] };
+    let db = JSON.parse(localStorage.getItem('hy_sakura_v5_db')) || {};
+    let resources = JSON.parse(localStorage.getItem('hy_resources_v5_db')) || { ideas: [], links: [] };
 
-    // Định nghĩa lại các ID sau khi đã phân tách nhỏ
+    // Bản đồ map ID việc cố định vào từng App
     const appMapping = {
         tiktok: [1, 2, 10],
         instagram: [3],
         facebook: [4, 5, 6, 7, 8, 11],
         zalo: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
     };
-
-    // Tổng số đầu việc cố định sau khi tách = 3 + 1 + 6 + 10 = 20 đầu việc
-    const TOTAL_FIXED_TASKS = 20; 
+    const TOTAL_FIXED_TASKS = 20;
 
     function toggleSidebar() {
         document.getElementById('sidebar').classList.toggle('open');
         document.getElementById('overlay').classList.toggle('show');
+    }
+
+    function toggleSidebarDropdown() {
+        const drop = document.getElementById('sidebar-view-dropdown');
+        const icon = document.getElementById('sidebar-drop-icon');
+        drop.classList.toggle('collapsed');
+        icon.innerText = drop.classList.contains('collapsed') ? '▼' : '▲';
     }
 
     function toggleCard(cardId) {
@@ -445,10 +408,16 @@
         icon.innerText = card.classList.contains('collapsed') ? '▲' : '▼';
     }
 
+    function showPopupSelection(app) {
+        // Ẩn tất cả popup khác trước
+        document.querySelectorAll('.popup-selection').forEach(p => p.style.display = 'none');
+        document.getElementById(`popup-${app}`).style.display = 'flex';
+    }
+
     function switchView(view) {
         currentView = view;
         document.querySelectorAll('.menu-item').forEach(btn => btn.classList.remove('active'));
-        document.getElementById(`btn-view-${view}`).classList.add('active');
+        if(document.getElementById(`btn-view-${view}`)) document.getElementById(`btn-view-${view}`).classList.add('active');
         
         if(view === 'today') {
             selectedDate = new Date();
@@ -469,7 +438,7 @@
             document.getElementById('total-progress-box').style.display = 'block';
             document.getElementById('date-banner').style.display = 'block';
             document.getElementById('resources-box').style.display = 'none';
-            document.getElementById('main-title').innerText = "🌸 SAKURA WORKSPACE 🌸";
+            document.getElementById('main-title').innerText = "🌸 HY HY WORKSPACE 🌸";
             document.getElementById('dashboard-box').style.display = (view === 'today') ? 'none' : 'block';
             
             renderCalendarSection();
@@ -485,7 +454,6 @@
         const header = document.getElementById('calendar-header');
 
         if (currentView === 'today') { container.style.display = 'none'; return; }
-
         container.style.display = 'block';
         grid.className = 'grid-days';
         grid.innerHTML = '';
@@ -520,8 +488,6 @@
                 btn.innerText = monthNames[i];
                 btn.onclick = () => {
                     selectedDate = new Date(YEAR, i, 1); currentView = 'month';
-                    document.querySelectorAll('.menu-item').forEach(b => b.classList.remove('active'));
-                    document.getElementById('btn-view-month').classList.add('active');
                     renderCalendarSection(); renderChecklistValues();
                 };
                 grid.appendChild(btn);
@@ -532,7 +498,6 @@
     function createCalButton(dateObj, text, targetGrid) {
         let btn = document.createElement('button'); btn.className = 'cal-btn';
         let key = formatDateKey(dateObj);
-        
         let hasData = false;
         if(db[key]) {
             if(Object.keys(db[key].tasks || {}).length > 0) hasData = true;
@@ -541,7 +506,6 @@
         }
         if(hasData) btn.classList.add('has-data');
         if(formatDateKey(selectedDate) === key) btn.classList.add('active');
-        
         btn.innerText = text;
         btn.onclick = () => {
             selectedDate = dateObj;
@@ -569,18 +533,16 @@
             let appTotal = appMapping[app].length;
 
             appMapping[app].forEach(id => {
-                let tData = tasksData[id] || { checked: false, bonus: 0 };
+                let tData = tasksData[id] || { checked: false };
                 let cb = document.getElementById(`check-${id}`);
+                let lbl = document.getElementById(`lbl-${id}`);
                 if(cb) cb.checked = tData.checked;
                 
-                let row = document.getElementById(`row-${id}`);
-                if(tData.checked) { if(row) row.classList.add('completed'); appChecked++; totalCheckedGlobal++; }
-                else { if(row) row.classList.remove('completed'); }
-
-                let bVal = document.getElementById(`bonus-${id}`);
-                if(bVal) bVal.innerText = tData.bonus;
+                if(tData.checked) { if(lbl) lbl.classList.add('completed'); appChecked++; totalCheckedGlobal++; }
+                else { if(lbl) lbl.classList.remove('completed'); }
             });
 
+            // Render phần việc làm thêm được đánh số tự động
             let customContainer = document.getElementById(`custom-container-${app}`);
             customContainer.innerHTML = '';
             let appCustomsList = customsData[app] || [];
@@ -590,16 +552,15 @@
 
             appCustomsList.forEach(cTask => {
                 if(cTask.checked) { appChecked++; totalCheckedGlobal++; }
-                let row = document.createElement('div');
-                row.className = `task-row ${cTask.checked ? 'completed' : ''}`;
-                row.innerHTML = `
-                    <div class="task-left">
-                        <input type="checkbox" ${cTask.checked ? 'checked' : ''} onchange="toggleCustomTask('${app}', ${cTask.id})">
-                        <span class="task-text">${cTask.text} (Làm dư)</span>
-                    </div>
-                    <button class="delete-custom-btn" onclick="deleteCustomTask('${app}', ${cTask.id})">×</button>
+                
+                let lbl = document.createElement('label');
+                lbl.className = `inline-task-box ${cTask.checked ? 'completed' : ''}`;
+                lbl.innerHTML = `
+                    <input type="checkbox" ${cTask.checked ? 'checked' : ''} onchange="toggleCustomTask('${app}', ${cTask.id})">
+                    <span>${cTask.text}</span>
+                    <button class="delete-custom-btn" onclick="deleteCustomTask('${app}', ${cTask.id}); event.preventDefault();">×</button>
                 `;
-                customContainer.appendChild(row);
+                customContainer.appendChild(lbl);
             });
 
             let miniPct = appTotal > 0 ? Math.round((appChecked / appTotal) * 100) : 0;
@@ -619,28 +580,42 @@
         saveAndReload();
     }
 
-    window.changeBonus = function(id, val) {
-        let key = formatDateKey(selectedDate);
-        initDayKey(key);
-        let currentBonus = db[key].tasks[id].bonus || 0;
-        let newBonus = currentBonus + val;
-        db[key].tasks[id].bonus = newBonus < 0 ? 0 : newBonus;
-        saveAndReload();
-    }
-
-    window.addCustomToApp = function(app) {
-        let text = prompt(`🌸 Thêm việc làm dư / phát sinh cho ${app.toUpperCase()} ngày này:`);
-        if(!text || text.trim() === "") return;
-
+    // Hàm THÊM TỰ ĐỘNG ĐÁNH SỐ
+    window.addCustomToApp = function(app, type) {
         let key = formatDateKey(selectedDate);
         initDayKey(key);
         if(!db[key].customs[app]) db[key].customs[app] = [];
 
+        // Đếm xem trong app hiện tại đã có bao nhiêu cái thuộc loại này
+        let count = 0;
+
+        // 1. Đếm trong list việc cố định của App đó bằng cách quét text HTML
+        let searchKeyword = type === 'Video' ? 'video' : 'bài dịch';
+        appMapping[app].forEach(id => {
+            let rowText = document.getElementById(`lbl-${id}`).innerText.toLowerCase();
+            if(rowText.includes(searchKeyword)) {
+                count++;
+            }
+        });
+
+        // 2. Đếm trong list làm thêm đã có sẵn của ngày hôm nay
+        db[key].customs[app].forEach(c => {
+            if(c.text.startsWith(type)) count++;
+        });
+
+        // Tự động gán số tiếp theo
+        let nextNumber = count + 1;
+        let finalLabel = `${type} ${nextNumber}`;
+
         db[key].customs[app].push({
             id: Date.now(),
-            text: text.trim(),
-            checked: false
+            text: finalLabel,
+            checked: false,
+            isBonusType: true // Để nhận diện tính điểm bonus dồn tổng
         });
+
+        // Ẩn bảng chọn sau khi click
+        document.getElementById(`popup-${app}`).style.display = 'none';
         saveAndReload();
     }
 
@@ -662,10 +637,9 @@
         if(!db[key].tasks) db[key].tasks = {};
         if(!db[key].customs) db[key].customs = { tiktok: [], instagram: [], facebook: [], zalo: [] };
         
-        // Khởi tạo trạng thái cho tất cả ID hợp lệ
         const allIds = [1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21];
         allIds.forEach(id => {
-            if(!db[key].tasks[id]) db[key].tasks[id] = { checked: false, bonus: 0 };
+            if(!db[key].tasks[id]) db[key].tasks[id] = { checked: false };
         });
     }
 
@@ -673,16 +647,15 @@
         let input = document.getElementById(inputId);
         let val = input.value.trim();
         if(!val) return;
-
         resources[type].push({ id: Date.now(), content: val });
-        localStorage.setItem('hy_resources_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v5_db', JSON.stringify(resources));
         input.value = '';
         renderResources();
     }
 
     window.deleteResource = function(type, id) {
         resources[type] = resources[type].filter(item => item.id !== id);
-        localStorage.setItem('hy_resources_db', JSON.stringify(resources));
+        localStorage.setItem('hy_resources_v5_db', JSON.stringify(resources));
         renderResources();
     }
 
@@ -716,7 +689,10 @@
 
         for(let k in db) {
             let datePart = new Date(k);
-            for(let id in db[k].tasks || {}) { totalBonusCount += (db[k].tasks[id].bonus || 0); }
+            // Tổng bonus làm thêm = tổng các nút custom được bấm check dồn lại cả năm
+            for(let app in db[k].customs || {}) {
+                db[k].customs[app].forEach(c => { if(c.checked) totalBonusCount++; });
+            }
 
             if(datePart.getFullYear() === YEAR && datePart.getMonth() === mSelected) {
                 for(let id in db[k].tasks || {}) { if(db[k].tasks[id].checked) monthTotalChecked++; }
@@ -729,14 +705,14 @@
     }
 
     function saveAndReload() {
-        localStorage.setItem('hy_sakura_v4_db', JSON.stringify(db));
+        localStorage.setItem('hy_sakura_v5_db', JSON.stringify(db));
         renderChecklistValues();
         calculateDashboard();
     }
 
     window.clearEverything = function() {
-        if(confirm("Xóa toàn bộ tiến độ checklist và bảng tổng kết?")) {
-            db = {}; localStorage.removeItem('hy_sakura_v4_db');
+        if(confirm("Xóa toàn bộ tiến độ lịch sử tích chọn công việc?")) {
+            db = {}; localStorage.removeItem('hy_sakura_v5_db');
             switchView('today');
         }
     }
