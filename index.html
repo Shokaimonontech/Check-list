@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌸 Lịch & Checklist Công Việc 2026 🌸</title>
+    <title>🌸 Sakura Checklist & Dashboard 2026 🌸</title>
     <style>
         :root {
-            --bg-color: #FAF8F5;
+            --bg-color: #FFF5F5; /* Nền hồng anh đào siêu nhạt */
             --text-color: #000000;
+            --sakura-pink: #FFB7B2; /* Hồng hoa anh đào chính */
+            --sakura-dark: #FF8B94;
             --tiktok-color: #010101;
             --instagram-color: #E1306C;
             --facebook-color: #1877F2;
@@ -18,313 +20,179 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             display: flex;
         }
 
         /* --- MENU 3 SỌC (SIDEBAR) --- */
         .menu-btn {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            font-size: 24px;
-            background: #ffffff;
-            border: 2px solid #000;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            cursor: pointer;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
+            position: fixed; top: 15px; left: 15px; font-size: 24px;
+            background: #ffffff; border: 2px solid #000; border-radius: 50%;
+            width: 45px; height: 45px; cursor: pointer; z-index: 100;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 0 #000; transition: transform 0.2s;
         }
         .menu-btn:hover { transform: scale(1.1); }
 
         .sidebar {
-            position: fixed;
-            top: 0;
-            left: -260px;
-            width: 220px;
-            height: 100%;
-            background: #ffffff;
-            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
-            transition: left 0.3s ease;
-            padding: 80px 20px 20px 20px;
-            z-index: 90;
-            border-right: 3px dashed #cbd5e1;
+            position: fixed; top: 0; left: -260px; width: 220px; height: 100%;
+            background: #ffffff; box-shadow: 4px 0 15px rgba(0,0,0,0.05);
+            transition: left 0.3s ease; padding: 80px 20px 20px 20px; z-index: 90;
+            border-right: 3px dashed var(--sakura-pink);
         }
         .sidebar.open { left: 0; }
 
-        .sidebar-title {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            color: #555;
-            text-align: center;
-        }
-
+        .sidebar-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; color: #555; text-align: center; }
         .menu-item {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 10px;
-            background: #f1f5f9;
-            border: 2px solid #000;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-align: left;
+            display: block; width: 100%; padding: 12px; margin-bottom: 10px;
+            background: #FFF0F0; border: 2px solid #000; border-radius: 15px;
+            font-size: 0.95rem; font-weight: bold; cursor: pointer; text-align: left;
             transition: all 0.2s;
         }
-        .menu-item:hover { background: #e2e8f0; transform: translateY(-2px); }
-        .menu-item.active { background: #ffe066; color: #000; }
+        .menu-item:hover { background: var(--sakura-pink); }
+        .menu-item.active { background: var(--sakura-dark); color: #fff; }
 
         /* --- KHU VỰC CHÍNH --- */
-        .main-content {
-            flex: 1;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            padding-top: 75px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        h1 {
-            text-align: center;
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
-
-        .date-banner {
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            background: #ffe066;
-            padding: 10px;
-            border: 2px solid #000;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 0 #000;
-        }
-
-        /* --- CẤU TRÚC LỊCH --- */
-        .calendar-container {
-            background: #fff;
-            border: 2px solid #000;
-            border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 0 #000;
-            display: none; /* Hiện động bằng JS */
-        }
-        .calendar-header {
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-        .grid-days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-        }
-        .grid-months {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-        .cal-btn {
-            padding: 10px 5px;
-            background: #fff;
-            border: 2px solid #000;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.9rem;
-            text-align: center;
-            transition: all 0.1s;
-        }
-        .cal-btn:hover { background: #f8fafc; }
-        .cal-btn.active { background: #ffe066; transform: scale(0.95); }
-        .cal-btn.has-data { border-style: dashed; background: #e2fcd4; }
-
-        /* --- CÁC HỘP CHECKLIST NỀN TẢNG --- */
-        .card {
-            background: #fff;
-            border: 3px solid #000;
-            border-radius: 22px;
-            padding: 20px;
-            margin-bottom: 25px;
-            box-shadow: 5px 5px 0 #000;
-            position: relative;
-            overflow: hidden;
-        }
+        .main-content { flex: 1; max-width: 800px; margin: 0 auto; padding: 20px; padding-top: 75px; width: 100%; box-sizing: border-box; }
+        h1 { text-align: center; font-size: 1.8rem; margin-bottom: 5px; color: #d63384; text-shadow: 1px 1px 0 #fff; }
         
-        /* Màu sắc ruy-băng thương hiệu của từng hộp */
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 12px;
+        .date-banner {
+            text-align: center; font-size: 1.2rem; font-weight: bold;
+            background: var(--sakura-pink); padding: 10px; border: 2px solid #000;
+            border-radius: 15px; margin-bottom: 15px; box-shadow: 0 4px 0 #000;
         }
-        .card.tiktok::before { background: var(--tiktok-color); }
-        .card.instagram::before { background: var(--instagram-color); }
-        .card.facebook::before { background: var(--facebook-color); }
-        .card.zalo::before { background: var(--zalo-color); }
 
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        /* --- THANH TIẾN ĐỘ --- */
+        .progress-container {
+            background: #fff; border: 2px solid #000; border-radius: 15px;
+            padding: 12px; margin-bottom: 20px; box-shadow: 0 4px 0 #000;
         }
+        .progress-label { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 6px; font-size: 0.95rem; }
+        .progress-bar-bg { background: #f1f5f9; border: 2px solid #000; height: 18px; border-radius: 10px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; width: 0%; background: #2ecc71; transition: width 0.3s ease; }
+
+        /* --- DASHBOARD TỔNG KẾT --- */
+        .dashboard-box {
+            background: #fff; border: 2px solid #000; border-radius: 20px;
+            padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 0 #000;
+            display: none;
+        }
+        .dashboard-title { font-weight: bold; text-align: center; font-size: 1.1rem; margin-bottom: 12px; color: #d63384; }
+        .db-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; }
+        .db-card { background: #FFF5F5; border: 2px solid #000; padding: 10px; border-radius: 12px; }
+        .db-num { font-size: 1.4rem; font-weight: 800; color: #000; margin-top: 4px; }
+        .db-lbl { font-size: 0.8rem; font-weight: bold; color: #555; }
+
+        /* --- LỊCH TRỰC QUAN --- */
+        .calendar-container {
+            background: #fff; border: 2px solid #000; border-radius: 20px;
+            padding: 15px; margin-bottom: 25px; box-shadow: 0 4px 0 #000; display: none;
+        }
+        .calendar-header { text-align: center; font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
+        .grid-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+        .grid-months { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .cal-btn { padding: 10px 5px; background: #fff; border: 2px solid #000; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 0.9rem; text-align: center; }
+        .cal-btn.active { background: var(--sakura-pink); }
+        .cal-btn.has-data { border: 2px dashed var(--sakura-dark); background: #FFF0F0; }
+
+        /* --- CÁC HỘP CHECKLIST --- */
+        .card {
+            background: #fff; border: 3px solid #000; border-radius: 22px;
+            padding: 20px; margin-bottom: 25px; box-shadow: 5px 5px 0 #000;
+            position: relative; overflow: hidden;
+        }
+        .card::before { content: '🌸'; position: absolute; top: 5px; right: 10px; font-size: 1.2rem; opacity: 0.3; }
+        
+        .card-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
         .card.tiktok .card-title { color: var(--tiktok-color); }
         .card.instagram .card-title { color: var(--instagram-color); }
         .card.facebook .card-title { color: var(--facebook-color); }
         .card.zalo .card-title { color: var(--zalo-color); }
+        .card.custom .card-title { color: #d63384; }
 
-        .sub-group-title {
-            font-weight: bold;
-            font-size: 0.95rem;
-            color: #555;
-            margin: 10px 0 5px 0;
-            padding-bottom: 3px;
-            border-bottom: 1px dotted #ccc;
-        }
-
-        .task-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px dashed #eee;
-        }
+        .sub-group-title { font-weight: bold; font-size: 0.95rem; color: #555; margin: 10px 0 5px 0; padding-bottom: 3px; border-bottom: 1px dotted #ccc; }
+        .task-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #eee; }
         .task-row:last-child { border-bottom: none; }
+        .task-left { display: flex; align-items: center; flex: 1; padding-right: 10px; }
+        .task-left input[type="checkbox"] { width: 22px; height: 22px; margin-right: 12px; cursor: pointer; accent-color: #2ecc71; }
+        .task-text { font-size: 1rem; font-weight: 600; line-height: 1.4; }
+        .completed .task-text { text-decoration: line-through; color: #888888; }
 
-        .task-left {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            padding-right: 10px;
-        }
+        /* Bộ tăng giảm Bonus kẹo ngọt */
+        .bonus-control { display: flex; align-items: center; gap: 6px; background: #FFF5F5; padding: 4px 8px; border: 2px solid #000; border-radius: 12px; }
+        .bonus-btn { width: 26px; height: 26px; background: #fff; border: 2px solid #000; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .bonus-value { font-weight: bold; min-width: 20px; text-align: center; }
 
-        /* Checkbox dễ thương */
-        .task-left input[type="checkbox"] {
-            width: 22px;
-            height: 22px;
-            margin-right: 12px;
-            cursor: pointer;
-            accent-color: #2ecc71;
+        /* Nút thêm việc phát sinh */
+        .btn-add-custom {
+            background: #fff; border: 2px solid #000; padding: 10px 15px;
+            border-radius: 15px; font-weight: bold; cursor: pointer; display: block;
+            margin: 0 auto 25px auto; box-shadow: 0 4px 0 #000; font-size: 0.95rem;
         }
+        .btn-add-custom:active { transform: translateY(2px); box-shadow: 0 2px 0 #000; }
 
-        .task-text {
-            font-size: 1rem;
-            font-weight: 600;
-            line-height: 1.4;
-        }
-
-        .completed .task-text {
-            text-decoration: line-through;
-            color: #888888;
-        }
-
-        /* Bộ tăng giảm số lượng (Bonus) kẹo ngọt */
-        .bonus-control {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: #f1f5f9;
-            padding: 4px 8px;
-            border: 2px solid #000;
-            border-radius: 12px;
-        }
-        .bonus-btn {
-            width: 26px;
-            height: 26px;
-            background: #fff;
-            border: 2px solid #000;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-        }
-        .bonus-btn:active { background: #ffe066; }
-        .bonus-value {
-            font-weight: bold;
-            min-width: 20px;
-            text-align: center;
-            font-size: 1rem;
-        }
-
-        /* Nút xóa dữ liệu dưới chân */
-        .btn-clear-all {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background: #ff8787;
-            border: 2px solid #000;
-            border-radius: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 0 #000;
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
+        .btn-clear-all { display: block; width: 100%; padding: 12px; background: #ff8787; border: 2px solid #000; border-radius: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #000; margin: 40px 0; }
         .btn-clear-all:active { transform: translateY(4px); box-shadow: none; }
-
-        /* Màn hình nền mờ khi mở menu trên điện thoại */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.2);
-            z-index: 85;
-        }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.1); z-index: 85; }
         .overlay.show { display: block; }
+        
+        .delete-custom-btn { background: none; border: none; color: #ff4d4d; font-weight: bold; cursor: pointer; margin-left: 10px; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
-    <!-- Nút 3 Thanh Ngang -->
     <button class="menu-btn" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-    <!-- Thanh Menu Bên Cạnh -->
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-title">📅 CHẾ ĐỘ XEM</div>
+        <div class="sidebar-title">🌸 CHẾ ĐỘ XEM</div>
         <button class="menu-item active" id="btn-view-today" onclick="switchView('today')">✨ Hôm Nay</button>
-        <button class="menu-item" id="btn-view-week" onclick="switchView('week')">🗓️ Xem Theo Tuần</button>
-        <button class="menu-item" id="btn-view-month" onclick="switchView('month')">📅 Xem Theo Tháng</button>
-        <button class="menu-item" id="btn-view-year" onclick="switchView('year')">📊 Xem Cả Năm 2026</button>
+        <button class="menu-item" id="btn-view-week" onclick="switchView('week')">🗓️ Theo Tuần</button>
+        <button class="menu-item" id="btn-view-month" onclick="switchView('month')">📅 Theo Tháng</button>
+        <button class="menu-item" id="btn-view-year" onclick="switchView('year')">📊 Cả Năm 2026</button>
     </div>
 
-    <!-- Khu Vực Hiển Thị Nội Dung -->
     <div class="main-content">
-        <h1>DAILY CHECKLIST</h1>
+        <h1>🌸 SAKURA CHECKLIST 🌸</h1>
         <div class="date-banner" id="date-banner">---</div>
 
-        <!-- Thanh Hiển Thị Lịch Lưới (Thay đổi động theo menu) -->
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>Tiến độ ngày hôm nay 🌸</span>
+                <span id="progress-text">0% (0/0)</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-bar-fill"></div>
+            </div>
+        </div>
+
+        <div class="dashboard-box" id="dashboard-box">
+            <div class="dashboard-title">📊 DASHBOARD TỔNG KẾT</div>
+            <div class="db-grid">
+                <div class="db-card">
+                    <div class="db-lbl">Đã Check Hôm Nay</div>
+                    <div class="db-num" id="db-today-count">0</div>
+                </div>
+                <div class="db-card">
+                    <div class="db-lbl">Tổng Việc Tháng Này</div>
+                    <div class="db-num" id="db-month-count">0</div>
+                </div>
+                <div class="db-card">
+                    <div class="db-lbl">Tổng Sản Phẩm Làm Dư</div>
+                    <div class="db-num" id="db-year-bonus">0</div>
+                </div>
+            </div>
+        </div>
+
         <div class="calendar-container" id="calendar-container">
             <div class="calendar-header" id="calendar-header">Chọn Ngày</div>
             <div id="calendar-grid"></div>
         </div>
 
-        <!-- KHU VỰC CÁC HỘP NHIỆM VỤ -->
+        <button class="btn-add-custom" onclick="addNewCustomTask()">✨ 🌸 Thêm việc phát sinh riêng ngày này</button>
+
         <div id="checklist-container">
             
-            <!-- HỘP TIKTOK -->
             <div class="card tiktok">
                 <div class="card-title">🎵 TikTok</div>
                 <div class="task-row" id="row-1">
@@ -346,7 +214,6 @@
                 </div>
             </div>
 
-            <!-- HỘP INSTAGRAM -->
             <div class="card instagram">
                 <div class="card-title">📸 Instagram</div>
                 <div class="task-row" id="row-3">
@@ -357,7 +224,6 @@
                 </div>
             </div>
 
-            <!-- HỘP FACEBOOK -->
             <div class="card facebook">
                 <div class="card-title">📘 Facebook</div>
                 
@@ -403,7 +269,6 @@
                 </div>
             </div>
 
-            <!-- HỘP ZALO VIDEO -->
             <div class="card zalo">
                 <div class="card-title">📱 Zalo Video</div>
                 <div class="task-row" id="row-9">
@@ -419,6 +284,11 @@
                 </div>
             </div>
 
+            <div class="card custom" id="custom-card" style="display: none;">
+                <div class="card-title">✨ Việc Phát Sinh Ngày Này</div>
+                <div id="custom-tasks-container"></div>
+            </div>
+
         </div>
 
         <button class="btn-clear-all" onclick="clearEverything()">Xóa Hết Dữ Liệu Lưu Trữ</button>
@@ -426,16 +296,15 @@
 
 <script>
     const YEAR = 2026;
-    let currentView = 'today'; // today, week, month, year
-    let selectedDate = new Date(); // Ngày đang chọn xem
+    let currentView = 'today';
+    let selectedDate = new Date();
     
-    // Ép năm luôn là 2026 cho đồng bộ
     if(selectedDate.getFullYear() !== YEAR) {
-        selectedDate = new Date(YEAR, 5, 5); // Tháng 6 năm 2026 làm gốc nếu lệch năm
+        selectedDate = new Date(YEAR, 5, 5); // Ngày 05/06/2026 mặc định
     }
 
-    // Cơ sở dữ liệu lưu trong máy: { "2026-06-05": { "1": {checked: true, bonus: 0}} }
-    let db = JSON.parse(localStorage.getItem('hy_checklist_db')) || {};
+    // Cơ sở dữ liệu: db = { "2026-06-05": { tasks: { "1": {checked: true, bonus: 0} }, customs: [ {id: 123, text: "abc", checked: false} ] } }
+    let db = JSON.parse(localStorage.getItem('hy_sakura_db')) || {};
 
     function toggleSidebar() {
         document.getElementById('sidebar').classList.toggle('open');
@@ -452,8 +321,12 @@
             if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5);
         }
         
+        // Hiện/Ẩn dashboard dựa vào chế độ xem (Chỉ ẩn khi ở view Today cho gọn)
+        document.getElementById('dashboard-box').style.display = (view === 'today') ? 'none' : 'block';
+
         renderCalendarSection();
         renderChecklistValues();
+        calculateDashboard();
         toggleSidebar();
     }
 
@@ -473,7 +346,6 @@
 
         if (currentView === 'week') {
             header.innerText = "Các ngày trong tuần này";
-            // Lấy ngày Thứ 2 của tuần hiện tại
             let currentDayIdx = selectedDate.getDay();
             let distanceToMon = currentDayIdx === 0 ? -6 : 1 - currentDayIdx;
             let monday = new Date(selectedDate);
@@ -505,7 +377,7 @@
                 btn.innerText = monthNames[i];
                 btn.onclick = () => {
                     selectedDate = new Date(YEAR, i, 1);
-                    currentView = 'month'; // Nhấn vào tháng tự động bung view tháng đó ra
+                    currentView = 'month';
                     document.querySelectorAll('.menu-item').forEach(b => b.classList.remove('active'));
                     document.getElementById('btn-view-month').classList.add('active');
                     renderCalendarSection();
@@ -521,7 +393,9 @@
         btn.className = 'cal-btn';
         let key = formatDateKey(dateObj);
         
-        if(db[key] && Object.keys(db[key]).length > 0) btn.classList.add('has-data');
+        if(db[key] && (Object.keys(db[key].tasks || {}).length > 0 || (db[key].customs || []).length > 0)) {
+            btn.classList.add('has-data');
+        }
         if(formatDateKey(selectedDate) === key) btn.classList.add('active');
         
         btn.innerText = text;
@@ -535,79 +409,174 @@
     }
 
     function renderChecklistValues() {
-        // Cập nhật Banner Ngày tháng
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('date-banner').innerText = selectedDate.toLocaleDateString('vi-VN', options);
 
         let key = formatDateKey(selectedDate);
-        let dayData = db[key] || {};
+        let dayData = db[key] || { tasks: {}, customs: [] };
+        let tasksData = dayData.tasks || {};
 
-        // Loop qua 9 đầu việc để điền dữ liệu đã lưu
+        let checkedCount = 0;
+        let totalCount = 9; // 9 việc mặc định ban đầu
+
+        // Render 9 việc cố định
         for(let id=1; id<=9; id++) {
-            let tData = dayData[id] || { checked: false, bonus: 0 };
-            
-            // Checkbox
+            let tData = tasksData[id] || { checked: false, bonus: 0 };
             let cb = document.getElementById(`check-${id}`);
             cb.checked = tData.checked;
             
             let row = document.getElementById(`row-${id}`);
-            if(tData.checked) row.classList.add('completed');
+            if(tData.checked) { row.classList.add('completed'); checkedCount++; }
             else row.classList.remove('completed');
 
-            // Nút bonus nếu có
             let bVal = document.getElementById(`bonus-${id}`);
             if(bVal) bVal.innerText = tData.bonus;
         }
+
+        // Render việc phát sinh tự thêm (Làm dư)
+        let customContainer = document.getElementById('custom-tasks-container');
+        customContainer.innerHTML = '';
+        let customsList = dayData.customs || [];
+
+        if(customsList.length > 0) {
+            document.getElementById('custom-card').style.display = 'block';
+            totalCount += customsList.length;
+            
+            customsList.forEach(cTask => {
+                if(cTask.checked) checkedCount++;
+                let row = document.createElement('div');
+                row.className = `task-row ${cTask.checked ? 'completed' : ''}`;
+                row.innerHTML = `
+                    <div class="task-left">
+                        <input type="checkbox" ${cTask.checked ? 'checked' : ''} onchange="toggleCustomTask(${cTask.id})">
+                        <span class="task-text">${cTask.text} (Việc phát sinh)</span>
+                    </div>
+                    <button class="delete-custom-btn" onclick="deleteCustomTask(${cTask.id})">×</button>
+                `;
+                customContainer.appendChild(row);
+            });
+        } else {
+            document.getElementById('custom-card').style.display = 'none';
+        }
+
+        // Cập nhật Thanh Tiến Độ
+        let pct = totalCount > 0 ? Math.round((checkedCount / totalCount) * 100) : 0;
+        document.getElementById('progress-bar-fill').style.width = pct + '%';
+        document.getElementById('progress-text').innerText = `${pct}% (${checkedCount}/${totalCount})`;
     }
 
     window.updateTask = function(id) {
         let key = formatDateKey(selectedDate);
-        if(!db[key]) db[key] = {};
-        if(!db[key][id]) db[key][id] = { checked: false, bonus: 0 };
+        if(!db[key]) db[key] = { tasks: {}, customs: [] };
+        if(!db[key].tasks) db[key].tasks = {};
+        if(!db[key].tasks[id]) db[key].tasks[id] = { checked: false, bonus: 0 };
 
-        let isChecked = document.getElementById(`check-${id}`).checked;
-        db[key][id].checked = isChecked;
-
-        let row = document.getElementById(`row-${id}`);
-        if(isChecked) row.classList.add('completed');
-        else row.classList.remove('completed');
-
-        saveToLocalStorage();
+        db[key].tasks[id].checked = document.getElementById(`check-${id}`).checked;
+        saveAndReload();
     }
 
     window.changeBonus = function(id, val) {
         let key = formatDateKey(selectedDate);
-        if(!db[key]) db[key] = {};
-        if(!db[key][id]) db[key][id] = { checked: false, bonus: 0 };
+        if(!db[key]) db[key] = { tasks: {}, customs: [] };
+        if(!db[key].tasks) db[key].tasks = {};
+        if(!db[key].tasks[id]) db[key].tasks[id] = { checked: false, bonus: 0 };
 
-        let currentBonus = db[key][id].bonus || 0;
+        let currentBonus = db[key].tasks[id].bonus || 0;
         let newBonus = currentBonus + val;
         if(newBonus < 0) newBonus = 0;
 
-        db[key][id].bonus = newBonus;
-        document.getElementById(`bonus-${id}`).innerText = newBonus;
-
-        saveToLocalStorage();
+        db[key].tasks[id].bonus = newBonus;
+        saveAndReload();
     }
 
-    function saveToLocalStorage() {
-        // Dọn dẹp data rỗng trước khi lưu cho nhẹ máy
+    // Hàm thêm việc phát sinh làm dư cho riêng ngày đang xem
+    window.addNewCustomTask = function() {
+        let taskText = prompt("🌸 Nhập tên công việc làm dư / phát sinh ngày hôm nay:");
+        if(!taskText || taskText.trim() === "") return;
+
         let key = formatDateKey(selectedDate);
-        if(db[key]) {
-            let empty = true;
-            for(let id in db[key]) {
-                if(db[key][id].checked || db[key][id].bonus > 0) empty = false;
-                else delete db[key][id];
-            }
-            if(empty) delete db[key];
+        if(!db[key]) db[key] = { tasks: {}, customs: [] };
+        if(!db[key].customs) db[key].customs = [];
+
+        db[key].customs.push({
+            id: Date.now(),
+            text: taskText.trim(),
+            checked: false
+        });
+
+        saveAndReload();
+    }
+
+    window.toggleCustomTask = function(customId) {
+        let key = formatDateKey(selectedDate);
+        let customs = db[key].customs || [];
+        let target = customs.find(c => c.id === customId);
+        if(target) target.checked = !target.checked;
+        saveAndReload();
+    }
+
+    window.deleteCustomTask = function(customId) {
+        let key = formatDateKey(selectedDate);
+        db[key].customs = (db[key].customs || []).filter(c => c.id !== customId);
+        saveAndReload();
+    }
+
+    // Tính toán số liệu Dashboard
+    function calculateDashboard() {
+        let keyToday = formatDateKey(new Date());
+        let mSelected = selectedDate.getMonth();
+
+        let todayChecked = 0;
+        let monthTotalChecked = 0;
+        let totalBonusCount = 0;
+
+        // Tính ngày hôm nay
+        if(db[keyToday]) {
+            for(let id in db[keyToday].tasks || {}) { if(db[keyToday].tasks[id].checked) todayChecked++; }
+            (db[keyToday].customs || []).forEach(c => { if(c.checked) todayChecked++; });
         }
-        localStorage.setItem('hy_checklist_db', JSON.stringify(db));
+
+        // Quét toàn bộ DB để tính cho Tháng và tổng Bonus làm dư
+        for(let k in db) {
+            let datePart = new Date(k);
+            // Tính tổng số lượng Bonus tăng thêm (ví dụ làm vượt chỉ tiêu video) của cả năm
+            for(let id in db[k].tasks || {}) {
+                totalBonusCount += (db[k].tasks[id].bonus || 0);
+            }
+
+            // Tính số việc đã hoàn thành của tháng đang chọn xem
+            if(datePart.getFullYear() === YEAR && datePart.getMonth() === mSelected) {
+                for(let id in db[k].tasks || {}) { if(db[k].tasks[id].checked) monthTotalChecked++; }
+                (db[k].customs || []).forEach(c => { if(c.checked) monthTotalChecked++; });
+            }
+        }
+
+        document.getElementById('db-today-count').innerText = todayChecked;
+        document.getElementById('db-month-count').innerText = monthTotalChecked;
+        document.getElementById('db-year-bonus').innerText = totalBonusCount;
+    }
+
+    function saveAndReload() {
+        let key = formatDateKey(selectedDate);
+        // Dọn dẹp dữ liệu rỗng
+        if(db[key]) {
+            let hasData = false;
+            for(let id in db[key].tasks || {}) {
+                if(db[key].tasks[id].checked || db[key].tasks[id].bonus > 0) hasData = true;
+            }
+            if((db[key].customs || []).length > 0) hasData = true;
+            if(!hasData) delete db[key];
+        }
+
+        localStorage.setItem('hy_sakura_db', JSON.stringify(db));
+        renderChecklistValues();
+        calculateDashboard();
     }
 
     window.clearEverything = function() {
-        if(confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử tích chọn của cả năm không?")) {
-            db = {};
-            localStorage.removeItem('hy_checklist_db');
+        if(confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử tích chọn và thống kê không?")) {
+            db = {}; localStorage.removeItem('hy_checklist_db');
+            localStorage.removeItem('hy_sakura_db');
             switchView('today');
         }
     }
@@ -618,7 +587,6 @@
         return `${d.getFullYear()}-${mm}-${dd}`;
     }
 
-    // Chạy lần đầu tiên khi mở web
     switchView('today');
 </script>
 </body>
