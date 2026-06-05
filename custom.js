@@ -1,70 +1,62 @@
 /**
- * FILE: custom.js (Tất cả logic tự chèn)
+ * FILE: custom.js (Bản Dashboard Tab)
  */
 
 window.addEventListener('load', function() {
     
-    // 1. DASHBOARD: Tự động chèn nút Dashboard vào sidebar (đè lên menu cũ)
+    // 1. TẠO NÚT DASHBOARD TRONG SIDEBAR
     const sidebar = document.getElementById('sidebar-view-dropdown');
     if (sidebar) {
-        sidebar.innerHTML = `
-            <button class="menu-item" onclick="switchView('today')">✨ Hôm Nay</button>
-            <div style="border-top: 2px solid #000; margin: 10px 0;"></div>
-            <div style="font-weight:bold; text-align:center; margin-bottom:5px;">📊 DASHBOARD</div>
-            <button class="menu-item" onclick="renderDashBar('week')">🗓️ Tuần</button>
-            <button class="menu-item" onclick="renderDashBar('month')">📅 Tháng</button>
-            <button class="menu-item" onclick="renderDashBar('year')">📊 Năm</button>
-        `;
+        // Chèn nút Dashboard vào sidebar
+        let dashBtn = document.createElement('button');
+        dashBtn.className = 'menu-item';
+        dashBtn.innerHTML = '📊 DASHBOARD';
+        dashBtn.onclick = showDashboardView;
+        sidebar.appendChild(dashBtn);
     }
 
-    // 2. HÀM TẠO THÀNH NGANG (Tự chèn vào phần main)
-    window.renderDashBar = function(type) {
-        let bar = document.getElementById('dash-filter-bar');
-        if (!bar) {
-            bar = document.createElement('div');
-            bar.id = 'dash-filter-bar';
-            bar.style.cssText = "display:flex; flex-wrap:wrap; gap:5px; margin-bottom:15px; justify-content:center;";
-            document.querySelector('.main-content').insertBefore(bar, document.getElementById('checklist-container'));
+    // 2. LOGIC CHUYỂN ĐỔI GIAO DIỆN
+    window.showDashboardView = function() {
+        // Ẩn nội dung cũ
+        document.getElementById('checklist-container').style.display = 'none';
+        
+        // Tạo hoặc lấy Dashboard View
+        let dashView = document.getElementById('my-custom-dash');
+        if (!dashView) {
+            dashView = document.createElement('div');
+            dashView.id = 'my-custom-dash';
+            dashView.style.cssText = "padding:20px; text-align:center;";
+            document.querySelector('.main-content').appendChild(dashView);
         }
-        bar.innerHTML = '';
-        let items = (type === 'week') ? Array.from({length: 5}, (_,i)=>i+1) : (type === 'month') ? Array.from({length: 12}, (_,i)=>i+1) : [2026];
-        items.forEach(i => {
+        dashView.style.display = 'block';
+
+        // Vẽ menu Tuần/Tháng/Năm ngang hàng
+        dashView.innerHTML = `
+            <div style="display:flex; justify-content:center; gap:10px; margin-bottom:20px;">
+                <button onclick="renderDashItems('week')" style="padding:10px 20px; border:2px solid #000; border-radius:15px; cursor:pointer;">Tuần</button>
+                <button onclick="renderDashItems('month')" style="padding:10px 20px; border:2px solid #000; border-radius:15px; cursor:pointer;">Tháng</button>
+                <button onclick="renderDashItems('year')" style="padding:10px 20px; border:2px solid #000; border-radius:15px; cursor:pointer;">Năm</button>
+            </div>
+            <div id="dash-data-area" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center;"></div>
+        `;
+    };
+
+    // 3. VẼ CÁC Ô ĐỂ CHỌN (Ví dụ bấm Tháng -> hiện T1...T12)
+    window.renderDashItems = function(type) {
+        let area = document.getElementById('dash-data-area');
+        area.innerHTML = '';
+        let count = (type === 'week') ? 52 : (type === 'month' ? 12 : 1);
+        
+        for(let i=1; i<=count; i++) {
             let btn = document.createElement('button');
-            btn.innerHTML = (type==='week'?'W':'') + i;
-            btn.style.cssText = "padding:5px 10px; border:2px solid #000; border-radius:8px; cursor:pointer;";
-            btn.onclick = () => alert("Đang lọc: " + type + " " + i);
-            bar.appendChild(btn);
-        });
-    };
-
-    // 3. COPY "Cre:"
-    window.copyToClipboard = function(text) {
-        let finalStr = text.startsWith("Cre:") ? text : "Cre: " + text;
-        navigator.clipboard.writeText(finalStr).then(() => alert(`📋 Đã copy: "${finalStr}"`));
-    };
-
-    // 4. GHI CHÚ LỊCH (Bấm ô lịch)
-    document.addEventListener('click', function(e) {
-        let btn = e.target.closest('.cal-btn');
-        if (btn) {
-            let day = btn.innerText.split('\n')[0];
-            let note = prompt("Ghi chú cho ngày " + day + ":", localStorage.getItem('note_'+day) || "");
-            if (note !== null) {
-                localStorage.setItem('note_'+day, note);
-                btn.setAttribute("title", note);
-                btn.style.border = "2px dashed #FF8B94";
-            }
+            btn.innerHTML = (type === 'week' ? 'W' : (type === 'month' ? 'T' : '2026')) + i;
+            btn.style.cssText = "padding:15px; border:2px solid #000; border-radius:10px; cursor:pointer; background:#FFF5F5;";
+            btn.onclick = () => alert("Đang hiện dữ liệu: " + type + " " + i);
+            area.appendChild(btn);
         }
-    });
+    };
 
-    // 5. SỬA TÊN TÀI KHOẢN (Tự động mở khóa bảng)
-    setInterval(function() {
-        document.querySelectorAll('#list-ideas td').forEach((td, index) => {
-            if (index % 5 === 3 && !td.hasAttribute('contenteditable')) {
-                td.setAttribute('contenteditable', 'true');
-                td.style.backgroundColor = "#FFF9F9";
-                td.style.border = "1px solid #FFB7B2";
-            }
-        });
-    }, 1000);
+    // 4. CÁC TÍNH NĂNG CŨ (Copy Cre, Sửa tên, Ghi chú lịch)
+    // Giữ nguyên các hàm Copy, Ghi chú, Sửa tên như đoạn code trước tôi đã gửi.
+    // ... (bạn copy thêm các hàm đó vào dưới đây) ...
 });
