@@ -753,41 +753,58 @@
         [1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21].forEach(i => { if(!db[key].tasks[i]) db[key].tasks[i] = { checked: false }; });
     }
 
-    /* --- QUẢN LÝ BÀI CHUẨN BỊ DỊCH (TỰ ĐỘNG PHÂN TÍCH LINK) --- */
+    /* --- QUẢN LÝ BÀI CHUẨN BỊ DỊCH (ĐÃ NÂNG CẤP) --- */
     window.addSmartIdea = function() {
         let input = document.getElementById('input-idea');
         let url = input.value.trim();
         if(!url) return;
 
-        let domain = url.toLowerCase();
-        let plat = "Khác", lang = "VN", cre = "Cre: Tên nền tảng, [Tên TK/Báo]";
-        
-        if(domain.includes('yahoo.co')) { plat = "Yahoo Japan"; lang = "JP"; cre = "Cre: Yahoo Japan News, [Nhập Tiêu đề] - Yahoo!ニュース"; }
-        else if(domain.includes('xiaohongshu')) { plat = "Xiaohongshu"; lang = "CN"; cre = "Cre: Xiaohongshu, [Nhập tên TK]"; }
-        else if(domain.includes('weibo')) { plat = "Weibo"; lang = "CN"; cre = "Cre: Weibo, [Nhập tên TK]"; }
-        else if(domain.includes('douyin')) { plat = "Douyin"; lang = "CN"; cre = "Cre: Douyin, [Nhập tên TK]"; }
-        else if(domain.includes('tiktok')) { plat = "TikTok"; lang = "VN"; cre = "Cre: TikTok, [Nhập tên TK]"; }
-        else if(domain.includes('instagram')) { plat = "Instagram"; lang = "EN"; cre = "Cre: Instagram, [Nhập tên TK]"; }
-        else if(domain.includes('facebook')) { plat = "Facebook"; lang = "VN"; cre = "Cre: Facebook, [Nhập tên TK]"; }
-        else if(domain.includes('x.com') || domain.includes('twitter')) { plat = "X/Twitter"; lang = "EN"; cre = "Cre: X, [Nhập tên TK]"; }
-        else if(domain.includes('youtube')) { plat = "YouTube"; lang = "EN"; cre = "Cre: YouTube, [Nhập tên TK]"; }
-        
+        let platform = "Khác", username = "Chưa rõ", lang = "VN";
+        try {
+            let u = new URL(url);
+            let host = u.hostname.toLowerCase();
+            let path = u.pathname.split('/');
+
+            // Tự động phân tích nền tảng và tài khoản
+            if (host.includes('x.com') || host.includes('twitter.com')) {
+                platform = "X (Twitter)";
+                username = path[1] || "user";
+                lang = "EN";
+            } else if (host.includes('threads.net')) {
+                platform = "Threads";
+                username = path[1] || "user";
+                lang = "EN";
+            } else if (host.includes('facebook.com')) {
+                platform = "Facebook";
+                username = path[1] || "user";
+            } else if (host.includes('instagram.com')) {
+                platform = "Instagram";
+                username = path[1] || "user";
+            } else if (host.includes('tiktok.com')) {
+                platform = "TikTok";
+                username = (path[1] || "user").replace('@', '');
+            } else if (host.includes('xiaohongshu.com')) {
+                platform = "Xiaohongshu";
+                username = "XHS_User";
+                lang = "CN";
+            }
+        } catch(e) { console.log("Link lỗi"); }
+
+        // Lưu thông tin
         resources.ideas.push({
-            id: Date.now(), link: url, title: '[Bấm vào đây để gõ Tiêu đề]', 
-            lang: lang, platform: plat, topic: '[Gõ Chủ đề]', cre: cre, checked: false
+            id: Date.now(), 
+            link: url, 
+            title: '[Gõ Tiêu đề]', 
+            lang: lang, 
+            platform: platform, 
+            topic: username, // Lưu tài khoản vào cột Topic để hiển thị
+            cre: `Cre: ${platform}, @${username}`, 
+            checked: false
         });
+        
         localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources));
-        input.value = ''; renderResources();
-    }
-
-    window.updateIdeaField = function(id, field, value) {
-        let target = resources.ideas.find(i => i.id === id);
-        if(target) { target[field] = value.trim(); localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources)); }
-    }
-
-    window.toggleIdeaCheck = function(id) {
-        let target = resources.ideas.find(r => r.id === id);
-        if(target) { target.checked = !target.checked; localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources)); renderResources(); }
+        input.value = ''; 
+        renderResources();
     }
 
     /* --- CÁC HÀM TÀI NGUYÊN KHÁC --- */
