@@ -465,8 +465,9 @@
     let selectedDate = new Date();
     if(selectedDate.getFullYear() !== YEAR) { selectedDate = new Date(YEAR, 5, 5); }
 
-    let db = JSON.parse(localStorage.getItem('hy_sakura_v10_db')) || {};
-    let resources = JSON.parse(localStorage.getItem('hy_resources_v10_db')) || { ideas: [], links: [], remotes: [] };
+    // SỬ DỤNG PHIÊN BẢN DATABASE MỚI SẠCH SẼ ĐỂ TRÁNH XUNG ĐỘT RÁC CACHE CŨ
+    let db = JSON.parse(localStorage.getItem('hy_sakura_v12_db')) || {};
+    let resources = JSON.parse(localStorage.getItem('hy_resources_v12_db')) || { ideas: [], links: [], remotes: [] };
     let backupBeforeClear = null;
 
     const segmentMapping = { 'tiktok': [1,2,10], 'instagram': [3], 'fb-hyhy': [4,5], 'fb-hyblog': [6,7], 'fb-shokaimono': [8,11], 'zalo': [12,13,14,15,16,17,18,19,20,21] };
@@ -753,7 +754,7 @@
         [1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21].forEach(i => { if(!db[key].tasks[i]) db[key].tasks[i] = { checked: false }; });
     }
 
-    /* --- TỰ ĐỘNG PHÂN TÍCH LINK BÀI CHUẨN BỊ DỊCH RA 3 CỘT THÔNG MINH --- */
+    /* --- TỰ ĐỘNG PHÂN TÍCH LINK BÀI CHUẨN BỊ DỊCH RA 3 CỘT SẠCH RÁC CACHE --- */
     window.addSmartIdea = function() {
         let input = document.getElementById('input-idea');
         let url = input.value.trim();
@@ -810,25 +811,27 @@
             plat = "Khác";
         }
         
+        if(!resources.ideas) resources.ideas = [];
         resources.ideas.push({ id: Date.now(), link: url, platform: plat, cre: username, checked: false });
-        localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources));
-        input.value = ''; renderResources();
+        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
+        input.value = ''; 
+        renderResources();
     }
 
     window.updateIdeaField = function(id, field, value) {
         let target = resources.ideas.find(i => i.id === id);
-        if(target) { target[field] = value.trim(); localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources)); }
+        if(target) { target[field] = value.trim(); localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources)); }
     }
 
     window.toggleIdeaCheck = function(id) {
         let target = resources.ideas.find(r => r.id === id);
-        if(target) { target.checked = !target.checked; localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources)); renderResources(); }
+        if(target) { target.checked = !target.checked; localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources)); renderResources(); }
     }
 
     window.addResource = function(type, inputId) {
         let input = document.getElementById(inputId); let val = input.value.trim(); if(!val) return;
         resources[type].push({ id: Date.now(), content: val });
-        localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources)); input.value = ''; renderResources();
+        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources)); input.value = ''; renderResources();
     }
 
     window.addRemoteResource = function() {
@@ -841,15 +844,15 @@
         }
         if(!resources.remotes) resources.remotes = [];
         resources.remotes.push({ id: Date.now(), link: link, idCode: idCode, checked: false });
-        localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources)); document.getElementById('input-remote').value = ''; renderResources();
+        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources)); document.getElementById('input-remote').value = ''; renderResources();
     }
 
     window.copyToClipboard = function(text) {
         navigator.clipboard.writeText(text).then(() => alert(`📋 Đã copy: "${text}"`)).catch(() => alert('Lỗi copy!'));
     }
 
-    window.toggleRemoteCheck = function(id) { let t = resources.remotes.find(r => r.id === id); if(t) { t.checked = !t.checked; localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources)); renderResources(); } }
-    window.deleteResource = function(type, id) { resources[type] = resources[type].filter(i => i.id !== id); localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources)); renderResources(); }
+    window.toggleRemoteCheck = function(id) { let t = resources.remotes.find(r => r.id === id); if(t) { t.checked = !t.checked; localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources)); renderResources(); } }
+    window.deleteResource = function(type, id) { resources[type] = resources[type].filter(i => i.id !== id); localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources)); renderResources(); }
 
     function renderResources() {
         let tbodyIdeas = document.getElementById('list-ideas'); tbodyIdeas.innerHTML = '';
@@ -881,7 +884,7 @@
         });
 
         let ul = document.getElementById('list-links'); ul.innerHTML = '';
-        resources.links.forEach(item => {
+        (resources.links || []).forEach(item => {
             let li = document.createElement('li'); li.style.padding = "8px"; li.style.borderBottom = "1px dashed #ccc";
             if(item.content.startsWith('http')) li.innerHTML = `<a href="${item.content}" target="_blank" style="color:var(--zalo-color);">${item.content}</a>`;
             else li.innerHTML = `<span>${item.content}</span>`;
@@ -910,11 +913,11 @@
         document.getElementById('db-year-bonus').innerText = totalBonusCount;
     }
 
-    function saveAndReload() { localStorage.setItem('hy_sakura_v10_db', JSON.stringify(db)); renderChecklistValues(); calculateDashboard(); }
+    function saveAndReload() { localStorage.setItem('hy_sakura_v12_db', JSON.stringify(db)); renderChecklistValues(); calculateDashboard(); }
 
     window.clearEverything = function() {
         if(confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử?")) {
-            backupBeforeClear = JSON.stringify(db); db = {}; localStorage.removeItem('hy_sakura_v10_db');
+            backupBeforeClear = JSON.stringify(db); db = {}; localStorage.removeItem('hy_sakura_v12_db');
             document.getElementById('btn-undo-box').style.display = 'block';
             if(currentView !== 'resources') { renderChecklistValues(); calculateDashboard(); } else { renderResources(); }
         }
@@ -922,7 +925,7 @@
 
     window.undoDeleteData = function() {
         if(backupBeforeClear) {
-            db = JSON.parse(backupBeforeClear); localStorage.setItem('hy_sakura_v10_db', backupBeforeClear); backupBeforeClear = null; 
+            db = JSON.parse(backupBeforeClear); localStorage.setItem('hy_sakura_v12_db', backupBeforeClear); backupBeforeClear = null; 
             document.getElementById('btn-undo-box').style.display = 'none';
             if(currentView !== 'resources') { renderChecklistValues(); calculateDashboard(); } else { renderResources(); }
             alert("🎉 Khôi phục thành công!");
