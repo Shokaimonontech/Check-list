@@ -269,7 +269,7 @@
 
         <!-- KHO TÀI NGUYÊN -->
         <div class="resources-box" id="resources-box">
-            <!-- IDEAS BẢNG MỚI (Bài lưu chuẩn bị dịch - ĐÃ TINH CHỈNH THÀNH 3 CỘT GỌN GÀNG) -->
+            <!-- IDEAS BẢNG MỚI (Bài lưu chuẩn bị dịch - 3 cột chuẩn chỉ) -->
             <div class="resource-section open" id="res-sec-ideas">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-ideas')">
                     <h3>📌 Bài Lưu Chuẩn Bị Dịch (Ý tưởng)</h3><span>▼</span>
@@ -435,7 +435,6 @@
                         <div class="progress-label"><span style="font-size:0.75rem; color:#666;">Tiến độ Zalo</span><span id="text-mini-zalo" style="font-size:0.75rem; color:#666;">0%</span></div>
                         <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-zalo"></div></div>
                     </div>
-                    <div class="sub-group-title">Nhiệm vụ cố định (10 Video gắn link)</div>
                     <div class="task-grid-horizontal" id="grid-tasks-zalo">
                         <label class="inline-task-box" id="lbl-12"><input type="checkbox" id="check-12" onchange="updateTask(12)"> V1</label>
                         <label class="inline-task-box" id="lbl-13"><input type="checkbox" id="check-13" onchange="updateTask(13)"> V2</label>
@@ -754,7 +753,7 @@
         [1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21].forEach(i => { if(!db[key].tasks[i]) db[key].tasks[i] = { checked: false }; });
     }
 
-    /* --- QUẢN LÝ BÀI CHUẨN BỊ DỊCH (HÀM PHÂN TÍCH TỰ ĐỘNG LINK RA 3 CỘT THÔNG MINH) --- */
+    /* --- TỰ ĐỘNG PHÂN TÍCH LINK BÀI CHUẨN BỊ DỊCH RA 3 CỘT THÔNG MINH --- */
     window.addSmartIdea = function() {
         let input = document.getElementById('input-idea');
         let url = input.value.trim();
@@ -762,10 +761,9 @@
 
         let domain = url.toLowerCase();
         let plat = "Khác";
-        let username = "Chưa nhận diện";
+        let username = "Nhấp sửa tên TK";
         
         try {
-            // Sử dụng URL object để bóc tách thông tin một cách khoa học
             let urlObj = new URL(url);
             let pathParts = urlObj.pathname.split('/').filter(p => p.length > 0);
 
@@ -775,10 +773,7 @@
             } 
             else if (domain.includes('threads.net')) {
                 plat = "Threads";
-                if(pathParts.length > 0) {
-                    // Threads link thường có dạng /@username/post/... hoặc /@username
-                    username = pathParts[0].replace('@', '');
-                }
+                if(pathParts.length > 0) username = pathParts[0].replace('@', '');
             }
             else if (domain.includes('tiktok.com')) {
                 plat = "TikTok";
@@ -798,41 +793,26 @@
             }
             else if (domain.includes('xiaohongshu.com') || domain.includes('xhslink.com')) {
                 plat = "Xiaohongshu";
-                username = "Nhấp vào sửa tên TK";
             }
             else if (domain.includes('yahoo.co.jp')) {
-                plat = "Yahoo Japan";
-                username = "Yahoo News";
+                plat = "Yahoo Japan"; username = "Yahoo News";
             }
             else if (domain.includes('weibo.com')) {
-                plat = "Weibo";
-                if(pathParts.length > 0) username = pathParts[0];
+                plat = "Weibo"; if(pathParts.length > 0) username = pathParts[0];
             }
             else if (domain.includes('douyin.com')) {
-                plat = "Douyin";
-                if(pathParts.length > 0) username = pathParts[0];
+                plat = "Douyin"; if(pathParts.length > 0) username = pathParts[0];
             }
             else if (domain.includes('youtube.com')) {
-                plat = "YouTube";
-                if(pathParts.length > 0) username = pathParts[0].replace('@', '');
+                plat = "YouTube"; if(pathParts.length > 0) username = pathParts[0].replace('@', '');
             }
         } catch (e) {
-            // Phòng hờ nếu user dán chuỗi chữ thường không đúng định dạng link URL
             plat = "Khác";
-            username = "Nhấp vào để sửa";
         }
         
-        resources.ideas.push({
-            id: Date.now(), 
-            link: url, 
-            platform: plat, 
-            cre: username, 
-            checked: false
-        });
-
+        resources.ideas.push({ id: Date.now(), link: url, platform: plat, cre: username, checked: false });
         localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources));
-        input.value = ''; 
-        renderResources();
+        input.value = ''; renderResources();
     }
 
     window.updateIdeaField = function(id, field, value) {
@@ -872,7 +852,6 @@
     window.deleteResource = function(type, id) { resources[type] = resources[type].filter(i => i.id !== id); localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources)); renderResources(); }
 
     function renderResources() {
-        // RENDER BẢNG CHUẨN BỊ DỊCH MỚI CỦA BẠN (3 CỘT CHÍNH)
         let tbodyIdeas = document.getElementById('list-ideas'); tbodyIdeas.innerHTML = '';
         (resources.ideas || []).forEach(item => {
             let tr = document.createElement('tr');
