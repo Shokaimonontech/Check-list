@@ -1,50 +1,44 @@
 /**
- * FILE: custom.js (Sửa lỗi: Ép buộc sửa tên tài khoản)
+ * FILE: custom.js (Bản cuối cùng - Dọn dẹp & Ép sửa tên)
  */
 
 window.addEventListener('load', function() {
-    console.log("🌸 Đang khởi chạy tính năng sửa tên...");
+    // 1. TỰ ĐỘNG XÓA DASHBOARD (Nếu nó tồn tại)
+    let dashBar = document.getElementById('dash-filter-bar');
+    if(dashBar) dashBar.remove();
 
-    // 1. TÍNH NĂNG COPY (Giữ nguyên)
+    // 2. TÍNH NĂNG COPY "Cre:"
     window.copyToClipboard = function(text) {
         let finalStr = text.startsWith("Cre:") ? text : "Cre: " + text;
         navigator.clipboard.writeText(finalStr).then(() => alert(`📋 Đã copy: "${finalStr}"`));
     };
 
-    // 2. GHI CHÚ LỊCH (Giữ nguyên)
+    // 3. GHI CHÚ LỊCH
     document.addEventListener('click', function(e) {
         let btn = e.target.closest('.cal-btn');
         if (btn) {
-            let dayText = btn.querySelector('.cal-solar') ? btn.querySelector('.cal-solar').innerText : btn.innerText.split('\n')[0];
-            let key = "note_" + dayText;
-            let note = prompt("Nhập ghi chú cho ngày " + dayText + ":", localStorage.getItem(key) || "");
+            let dayText = btn.innerText.split('\n')[0];
+            let note = prompt("Nhập ghi chú cho ngày " + dayText + ":", localStorage.getItem('note_'+dayText) || "");
             if (note !== null) {
-                localStorage.setItem(key, note);
+                localStorage.setItem('note_'+dayText, note);
                 btn.setAttribute("title", note);
-                btn.style.border = "2px dashed #FF8B94";
             }
         }
     });
 
-    // 3. SỬA TÊN TÀI KHOẢN (Phiên bản quét toàn diện)
-    // Dùng kỹ thuật quét mỗi 500ms để đảm bảo không bỏ sót bất kỳ bảng nào
-    setInterval(function() {
-        // Quét tất cả các ô td trong trang
-        document.querySelectorAll('td').forEach(td => {
-            // Nếu ô đó chứa chữ "Nhấp sửa" hoặc nằm trong bảng Tài nguyên
-            if (td.innerText.includes("Nhấp sửa") || td.closest('.remote-table')) {
-                if (!td.hasAttribute('contenteditable')) {
-                    td.setAttribute('contenteditable', 'true');
-                    td.style.backgroundColor = "#FFF9F9";
-                    td.style.border = "1px solid #FFB7B2";
-                    td.style.cursor = "text";
-                    
-                    // Ghi lại sự kiện khi sửa xong
-                    td.onblur = function() {
-                        console.log("Đã sửa tên thành:", this.innerText);
-                    };
-                }
+    // 4. ÉP SỬA TÊN TÀI KHOẢN (Bảng Bài lưu)
+    // Dùng kỹ thuật kiểm tra sự kiện click trực tiếp để không bị xung đột
+    document.addEventListener('click', function(e) {
+        let target = e.target;
+        // Kiểm tra xem có phải là ô td trong bảng bài lưu không
+        if (target.closest('#list-ideas') && target.tagName === 'TD') {
+            // Chỉ cho phép sửa cột thứ 4 (tên tài khoản)
+            if (target.cellIndex === 3) {
+                target.setAttribute('contenteditable', 'true');
+                target.style.backgroundColor = "#FFF9F9";
+                target.style.border = "1px solid #FFB7B2";
+                target.focus();
             }
-        });
-    }, 500); 
+        }
+    });
 });
