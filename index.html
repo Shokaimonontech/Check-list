@@ -385,6 +385,11 @@
         renderCalendarSection(); renderChecklistValues();
         if(currentView !== 'resources') calculateDashboard();
     }
+    // Bổ sung hàm này vào phía trên loadDataFromGoogleSheet();
+window.copyToClipboard = function(text) {
+    let finalCre = text.startsWith("Cre:") ? text : "Cre: " + text;
+    navigator.clipboard.writeText(finalCre).then(() => alert(`📋 Đã copy: "${finalCre}"`));
+}
 
     // HÀM QUÉT GOOGLE SHEET VÀ TỰ ĐỘNG VẼ GIAO DIỆN HỘP CHECKLIST DỰA TRÊN SHEET
     function loadDataFromGoogleSheet() {
@@ -579,6 +584,43 @@
         btn.onclick = () => { selectedDate = dateObj; document.querySelectorAll('.cal-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderChecklistValues(); };
         targetGrid.appendChild(btn);
     }
+    // Tìm hàm createDayButton và sửa phần hiển thị nút bấm thành thế này:
+function createDayButton(dateObj, targetGrid) {
+    let btn = document.createElement('button'); btn.className = 'cal-btn';
+    let key = formatDateKey(dateObj);
+    let note = calendarNotes[key] || "";
+    
+    // Thêm dòng này để rê chuột hiện ghi chú
+    btn.setAttribute("title", note ? "Ghi chú: " + note : "Bấm để thêm ghi chú");
+    
+    // ... phần logic còn lại giữ nguyên
+    
+    // Sửa phần onclick để lưu ghi chú:
+    btn.onclick = () => {
+        if(formatDateKey(selectedDate) === key) {
+            let input = prompt("Nhập ghi chú cho ngày " + key + ":", calendarNotes[key] || "");
+            if(input !== null) {
+                calendarNotes[key] = input;
+                localStorage.setItem('hy_calendar_notes', JSON.stringify(calendarNotes));
+                btn.setAttribute("title", "Ghi chú: " + input);
+                saveNoteToSheet(key, input); // Lưu lên Sheet
+            }
+        } else {
+            selectedDate = dateObj;
+            renderChecklistValues();
+        }
+    };
+    targetGrid.appendChild(btn);
+}
+
+// Bổ sung hàm lưu ghi chú lên Sheet
+function saveNoteToSheet(date, note) {
+    fetch(SHEET_API_URL, {
+        method: "POST", mode: "no-cors",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({action: "updateNote", date: date, note: note})
+    });
+}
 
     function renderChecklistValues() {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
