@@ -225,12 +225,14 @@
     <div class="main-content">
         <h1 id="main-title">🌸 HY HY WORKSPACE 🌸</h1>
         
+        <!-- BỘ ĐIỀU HƯỚNG BANNER -->
         <div class="date-navigator">
             <button class="nav-arrow-btn" onclick="adjustDate(-1)">◀ Hôm qua</button>
             <div class="date-banner" id="date-banner" onclick="backToToday()" title="Bấm để quay nhanh về Hôm nay">---</div>
             <button class="nav-arrow-btn" onclick="adjustDate(1)">Ngày mai ▶</button>
         </div>
 
+        <!-- HỘP THỜI TIẾT & ĐỒNG HỒ VĨNH LONG -->
         <div class="widget-box" id="widget-box-container">
             <div class="live-clock-box">🕒 <span id="live-clock">00:00:00</span></div>
             <div class="weather-box">📍 Lộc Thuận, Vĩnh Long, VN: <span id="live-weather">31°C • Nắng 🌸</span></div>
@@ -238,6 +240,7 @@
 
         <button class="btn-undo-delete" id="btn-undo-box" onclick="undoDeleteData()">↩️ QUAY LẠI (Khôi phục dữ liệu vừa xóa)</button>
 
+        <!-- TIẾN ĐỘ TỔNG -->
         <div class="progress-container" id="total-progress-box">
             <div class="progress-label">
                 <span>Tiến độ tổng ngày 🌸</span>
@@ -246,6 +249,7 @@
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar-fill"></div></div>
         </div>
 
+        <!-- DASHBOARD TỔNG KẾT -->
         <div class="dashboard-box" id="dashboard-box">
             <div class="dashboard-title">📊 DASHBOARD TỔNG KẾT</div>
             <div class="db-grid">
@@ -263,7 +267,9 @@
             <div id="calendar-grid"></div>
         </div>
 
+        <!-- KHO TÀI NGUYÊN -->
         <div class="resources-box" id="resources-box">
+            <!-- IDEAS BẢNG MỚI (Bài lưu chuẩn bị dịch - 3 cột chuẩn chỉ) -->
             <div class="resource-section open" id="res-sec-ideas">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-ideas')">
                     <h3>📌 Bài Lưu Chuẩn Bị Dịch (Ý tưởng)</h3><span>▼</span>
@@ -288,6 +294,7 @@
                 </div>
             </div>
 
+            <!-- REMOTE XHS -->
             <div class="resource-section" id="res-sec-remote">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-remote')">
                     <h3>🇨🇳 REMOTE (Xiaohongshu Link & ID)</h3><span>▼</span>
@@ -306,6 +313,7 @@
                 </div>
             </div>
             
+            <!-- LINKS ĐÃ ĐĂNG -->
             <div class="resource-section" id="res-sec-links">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-links')">
                     <h3>🔗 Link Các Bài/Video Đã Đăng</h3><span>▼</span>
@@ -320,8 +328,9 @@
             </div>
         </div>
 
+        <!-- CÁC HỘP CHECKLIST CÔNG VIỆC -->
         <div id="checklist-container">
-            
+            <!-- TIKTOK -->
             <div class="card tiktok" id="card-tiktok">
                 <div class="card-header-toggle" onclick="toggleCard('card-tiktok')">
                     <div class="card-title">🎵 TikTok</div><span class="toggle-icon" id="icon-card-tiktok">▼</span>
@@ -346,6 +355,7 @@
                 </div>
             </div>
 
+            <!-- INSTAGRAM -->
             <div class="card instagram" id="card-instagram">
                 <div class="card-header-toggle" onclick="toggleCard('card-instagram')">
                     <div class="card-title">📸 Instagram</div><span class="toggle-icon" id="icon-card-instagram">▼</span>
@@ -367,6 +377,7 @@
                 </div>
             </div>
 
+            <!-- FACEBOOK -->
             <div class="card facebook" id="card-facebook">
                 <div class="card-header-toggle" onclick="toggleCard('card-facebook')">
                     <div class="card-title">📘 Facebook</div><span class="toggle-icon" id="icon-card-facebook">▼</span>
@@ -376,6 +387,7 @@
                         <div class="progress-label"><span style="font-size:0.75rem; color:#666;">Tiến độ Facebook</span><span id="text-mini-facebook" style="font-size:0.75rem; color:#666;">0%</span></div>
                         <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-facebook"></div></div>
                     </div>
+                    <!-- TRANG HY HY -->
                     <div class="sub-group-title" style="color:var(--facebook-color); border-bottom: 2px solid #000;">Trang HY HY</div>
                     <div class="task-grid-horizontal" id="grid-tasks-fb-hyhy">
                         <label class="inline-task-box" id="lbl-4"><input type="checkbox" id="check-4" onchange="updateTask(4)"> Bài dịch 1</label>
@@ -387,6 +399,7 @@
                     <div class="popup-selection" id="popup-add-fb-hyhy"><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Bài dịch', 'add')">+ Bài dịch</button></div>
                     <div class="popup-selection" id="popup-prep-fb-hyhy"><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Bài dịch', 'prep')">+ Chuẩn bị Bài dịch</button></div>
 
+                    <!-- TRANG HY ĐANG LÀM BLOG -->
                     <div class="sub-group-title" style="color:var(--facebook-color); border-bottom: 2px solid #000; margin-top:15px;">Trang HY đang làm Blog</div>
                     <div class="task-grid-horizontal" id="grid-tasks-fb-hyblog">
                         <label class="inline-task-box" id="lbl-6"><input type="checkbox" id="check-6" onchange="updateTask(6)"> Bài dịch 1</label>
@@ -398,6 +411,7 @@
                     <div class="popup-selection" id="popup-add-fb-hyblog"><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Bài dịch', 'add')">+ Bài dịch</button></div>
                     <div class="popup-selection" id="popup-prep-fb-hyblog"><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Bài dịch', 'prep')">+ Chuẩn bị Bài dịch</button></div>
 
+                    <!-- TRANG SHOKAIMONO -->
                     <div class="sub-group-title" style="color:var(--facebook-color); border-bottom: 2px solid #000; margin-top:15px;">Trang Shokaimono</div>
                     <div class="task-grid-horizontal" id="grid-tasks-fb-shokaimono">
                         <label class="inline-task-box" id="lbl-8"><input type="checkbox" id="check-8" onchange="updateTask(8)"> Bài dịch 1</label>
@@ -411,6 +425,7 @@
                 </div>
             </div>
 
+            <!-- ZALO VIDEO -->
             <div class="card zalo" id="card-zalo">
                 <div class="card-header-toggle" onclick="toggleCard('card-zalo')">
                     <div class="card-title">📱 Zalo Video</div><span class="toggle-icon" id="icon-card-zalo">▼</span>
@@ -865,6 +880,26 @@
         });
     }
 
+    // HÀM XÓA ĐỒNG BỘ THẲNG LÊN GOOGLE SHEET
+    window.deleteResource = function(type, id) {
+        let target = resources[type].find(i => i.id === id);
+        if(!target) return;
+
+        // Xóa cục bộ trên màn hình trước cho mượt
+        resources[type] = resources[type].filter(i => i.id !== id);
+        renderResources();
+
+        if(!SHEET_API_URL || SHEET_API_URL.includes("DÁN_LINK")) return;
+
+        // Bắn lệnh xóa dựa trên liên kết 'link' lên Sheet
+        fetch(SHEET_API_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "delete", link: target.link })
+        }).then(() => setTimeout(loadDataFromGoogleSheet, 1500));
+    }
+
     window.copyToClipboard = function(text) {
         navigator.clipboard.writeText(text).then(() => alert(`📋 Đã copy: "${text}"`)).catch(() => alert('Lỗi copy!'));
     }
@@ -878,9 +913,9 @@
                 <td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleSheetCheck('ideas', '${item.link}', this.checked)"></td>
                 <td style="text-align: center;"><a href="${item.link}" target="_blank">🔗 Mở</a></td>
                 <td style="color:var(--zalo-color); font-weight:800;">${item.platform || 'Nhận diện'}</td>
-                <td style="color:#e1306c;">${item.codeOrCre}</td>
+                <td style="color:#e1306c;">${item.cre || item.codeOrCre}</td>
                 <td style="text-align: center;">
-                    <button class="btn-copy-mini" onclick="copyToClipboard('${item.codeOrCre.replace(/'/g, "\\'")}')">📋 Copy Cre</button>
+                    <button class="btn-copy-mini" onclick="copyToClipboard('${(item.cre || item.codeOrCre).replace(/'/g, "\\'")}')">📋 Copy Cre</button>
                     <button class="delete-custom-btn" onclick="deleteResource('ideas', ${item.id})">×</button>
                 </td>
             `;
@@ -890,10 +925,11 @@
         let tbodyRemote = document.getElementById('list-remotes'); tbodyRemote.innerHTML = '';
         (resources.remotes || []).forEach(item => {
             let tr = document.createElement('tr'); if(item.checked) tr.className = 'completed';
+            let finalCode = item.idCode || item.codeOrCre;
             tr.innerHTML = `
                 <td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleSheetCheck('remotes', '${item.link}', this.checked)"></td>
                 <td><a href="${item.link}" target="_blank">${item.link}</a></td>
-                <td><span style="color:#e1306c;">${item.idCode || item.codeOrCre}</span><button class="btn-copy-mini" style="margin-left:8px;" onclick="copyToClipboard('${item.idCode || item.codeOrCre}')">Copy</button></td>
+                <td><span style="color:#e1306c;">${finalCode}</span><button class="btn-copy-mini" style="margin-left:8px;" onclick="copyToClipboard('${finalCode}')">Copy</button></td>
                 <td style="text-align: center;"><button class="delete-custom-btn" onclick="deleteResource('remotes', ${item.id})">×</button></td>
             `; tbodyRemote.appendChild(tr);
         });
