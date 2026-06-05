@@ -2,45 +2,91 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌸 HY HY WORKSPACE 2026 🌸</title>
-    <!-- CSS VÀ HTML CŨ CỦA BẠN DÁN Ở ĐÂY -->
-    <style> /* Dán CSS cũ vào đây */ </style>
+    <style>
+        :root { --bg-color: #FFF5F5; --text-color: #000; --sakura-pink: #FFB7B2; --sakura-dark: #FF8B94; --tiktok-color: #000; --instagram-color: #E1306C; --facebook-color: #1877F2; --zalo-color: #0068FF; }
+        body { font-family: sans-serif; background-color: var(--bg-color); margin: 0; padding: 20px; }
+        .card { background: #fff; border: 3px solid #000; border-radius: 22px; padding: 15px; margin-bottom: 20px; box-shadow: 4px 4px 0 #000; }
+        .res-btn { background: var(--sakura-pink); padding: 5px 15px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .remote-table { width: 100%; border-collapse: collapse; }
+        .remote-table td, th { border: 1px solid #000; padding: 8px; }
+        .completed { background: #e2fcd4; text-decoration: line-through; }
+    </style>
 </head>
 <body>
-    <!-- Dán HTML cũ vào đây -->
-    
-    <script>
-        const SHEET_API_URL = "https://script.google.com/macros/s/AKfycby_xJujI0KTZABafj5ikfgG74CdUeSqNYNHYcBb4VeymeJdBxk10BeK2xMa5qq5AdaR/exec";
 
-        // TÍNH NĂNG COPY CRE
+    <h1>🌸 HY HY WORKSPACE 🌸</h1>
+    <div id="checklist-container"></div>
+    <div class="resources-box" id="resources-box" style="display:block;">
+        <h3>📌 Bài Lưu Chuẩn Bị Dịch</h3>
+        <input type="text" id="input-idea" placeholder="Dán link...">
+        <button class="res-btn" onclick="addSmartIdea()">Lưu</button>
+        <table class="remote-table"><tbody id="list-ideas"></tbody></table>
+    </div>
+
+    <script>
+        // -----------------------------------------------------------------
+        const SHEET_API_URL = "DÁN_LINK_EXEC_CỦA_BẠN_VÀO_ĐÂY";
+        // -----------------------------------------------------------------
+
+        let resources = { ideas: [] };
+
+        // 1. COPY CÓ "Cre:"
         window.copyToClipboard = function(text) {
             let finalStr = text.startsWith("Cre:") ? text : "Cre: " + text;
             navigator.clipboard.writeText(finalStr).then(() => alert(`📋 Đã copy: "${finalStr}"`));
         }
 
-        // TÍNH NĂNG ĐỒNG BỘ SHEET + LỊCH GHI CHÚ
-        async function loadData() {
-            const res = await fetch(SHEET_API_URL);
-            const data = await res.json();
-            
-            // Xử lý ghi chú lịch
-            let calendarNotes = {};
-            data.notes.forEach(n => calendarNotes[n.date] = n.note);
-            
-            // Render logic ở đây...
-            console.log("Đã tải:", data);
-        }
-
-        // TÍNH NĂNG LƯU GHI CHÚ VÀO SHEET
-        function saveNoteToSheet(date, note) {
-            fetch(SHEET_API_URL, {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({action: "updateNote", date: date, note: note})
+        // 2. LOAD TỪ SHEET
+        function loadDataFromGoogleSheet() {
+            if(SHEET_API_URL.includes("https://script.google.com/macros/s/AKfycby_xJujI0KTZABafj5ikfgG74CdUeSqNYNHYcBb4VeymeJdBxk10BeK2xMa5qq5AdaR/exec")) return;
+            fetch(SHEET_API_URL)
+            .then(res => res.json())
+            .then(data => {
+                resources = data.resources;
+                renderResources();
             });
         }
-        
-        loadData();
+
+        // 3. RENDER BẢNG TÀI NGUYÊN (Với hàm Copy mới)
+        function renderResources() {
+            let tbodyIdeas = document.getElementById('list-ideas');
+            tbodyIdeas.innerHTML = '';
+            (resources.ideas || []).forEach(item => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.link}</td>
+                    <td>${item.codeOrCre}</td>
+                    <td>
+                        <button onclick="copyToClipboard('${item.codeOrCre}')">📋 Copy Cre</button>
+                        <button onclick="deleteResource('${item.link}')">×</button>
+                    </td>
+                `;
+                tbodyIdeas.appendChild(tr);
+            });
+        }
+
+        // 4. HÀM XÓA TRỰC TIẾP LÊN SHEET
+        window.deleteResource = function(link) {
+            fetch(SHEET_API_URL, {
+                method: "POST", mode: "no-cors",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({action: "delete", link: link})
+            }).then(() => setTimeout(loadDataFromGoogleSheet, 1000));
+        }
+
+        window.addSmartIdea = function() {
+            let input = document.getElementById('input-idea');
+            let val = input.value;
+            fetch(SHEET_API_URL, {
+                method: "POST", mode: "no-cors",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({action: "add", type: "ideas", link: val, codeOrCre: "Chưa tên"})
+            }).then(() => setTimeout(loadDataFromGoogleSheet, 1000));
+        }
+
+        loadDataFromGoogleSheet();
     </script>
 </body>
 </html>
