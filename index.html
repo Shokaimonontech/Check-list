@@ -225,12 +225,14 @@
     <div class="main-content">
         <h1 id="main-title">🌸 HY HY WORKSPACE 🌸</h1>
         
+        <!-- BỘ ĐIỀU HƯỚNG BANNER -->
         <div class="date-navigator">
             <button class="nav-arrow-btn" onclick="adjustDate(-1)">◀ Hôm qua</button>
             <div class="date-banner" id="date-banner" onclick="backToToday()" title="Bấm để quay nhanh về Hôm nay">---</div>
             <button class="nav-arrow-btn" onclick="adjustDate(1)">Ngày mai ▶</button>
         </div>
 
+        <!-- HỘP THỜI TIẾT & ĐỒNG HỒ VĨNH LONG -->
         <div class="widget-box" id="widget-box-container">
             <div class="live-clock-box">🕒 <span id="live-clock">00:00:00</span></div>
             <div class="weather-box">📍 Lộc Thuận, Vĩnh Long, VN: <span id="live-weather">31°C • Nắng 🌸</span></div>
@@ -238,6 +240,7 @@
 
         <button class="btn-undo-delete" id="btn-undo-box" onclick="undoDeleteData()">↩️ QUAY LẠI (Khôi phục dữ liệu vừa xóa)</button>
 
+        <!-- TIẾN ĐỘ TỔNG -->
         <div class="progress-container" id="total-progress-box">
             <div class="progress-label">
                 <span>Tiến độ tổng ngày 🌸</span>
@@ -246,6 +249,7 @@
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar-fill"></div></div>
         </div>
 
+        <!-- DASHBOARD TỔNG KẾT -->
         <div class="dashboard-box" id="dashboard-box">
             <div class="dashboard-title">📊 DASHBOARD TỔNG KẾT</div>
             <div class="db-grid">
@@ -263,7 +267,9 @@
             <div id="calendar-grid"></div>
         </div>
 
+        <!-- KHO TÀI NGUYÊN -->
         <div class="resources-box" id="resources-box">
+            <!-- IDEAS BẢNG MỚI (Bài lưu chuẩn bị dịch - 3 cột chuẩn chỉ) -->
             <div class="resource-section open" id="res-sec-ideas">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-ideas')">
                     <h3>📌 Bài Lưu Chuẩn Bị Dịch (Ý tưởng)</h3><span>▼</span>
@@ -288,6 +294,7 @@
                 </div>
             </div>
 
+            <!-- REMOTE XHS -->
             <div class="resource-section" id="res-sec-remote">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-remote')">
                     <h3>🇨🇳 REMOTE (Xiaohongshu Link & ID)</h3><span>▼</span>
@@ -306,6 +313,7 @@
                 </div>
             </div>
             
+            <!-- LINKS ĐÃ ĐĂNG -->
             <div class="resource-section" id="res-sec-links">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-links')">
                     <h3>🔗 Link Các Bài/Video Đã Đăng</h3><span>▼</span>
@@ -320,28 +328,159 @@
             </div>
         </div>
 
+        <!-- CÁC HỘP CHECKLIST -->
         <div id="checklist-container">
-             </div>
+            <!-- TIKTOK -->
+            <div class="card tiktok" id="card-tiktok">
+                <div class="card-header-toggle" onclick="toggleCard('card-tiktok')">
+                    <div class="card-title">🎵 TikTok</div><span class="toggle-icon" id="icon-card-tiktok">▼</span>
+                </div>
+                <div class="card-body-content">
+                    <div class="mini-progress">
+                        <div class="progress-label"><span style="font-size:0.75rem; color:#666;">Tiến độ TikTok</span><span id="text-mini-tiktok" style="font-size:0.75rem; color:#666;">0%</span></div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-tiktok"></div></div>
+                    </div>
+                    <div class="sub-group-title">Nhiệm vụ cố định</div>
+                    <div class="task-grid-horizontal" id="grid-tasks-tiktok">
+                        <label class="inline-task-box" id="lbl-1"><input type="checkbox" id="check-1" onchange="updateTask(1)"> Video Kanji (1 cũ + 1 mới)</label>
+                        <label class="inline-task-box" id="lbl-2"><input type="checkbox" id="check-2" onchange="updateTask(2)"> Video 1</label>
+                        <label class="inline-task-box" id="lbl-10"><input type="checkbox" id="check-10" onchange="updateTask(10)"> Video 2</label>
+                    </div>
+                    <div class="sub-group-title">Làm thêm & Chuẩn bị</div>
+                    <div class="task-grid-horizontal" id="custom-container-tiktok"></div>
+                    <button class="btn-add-mini" onclick="showPopupSelection('tiktok', 'add')">✨ Thêm</button>
+                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('tiktok', 'prep')">🌸 Chuẩn bị</button>
+                    <div class="popup-selection" id="popup-add-tiktok"><button class="popup-btn" onclick="addCustomToApp('tiktok', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('tiktok', 'Bài dịch', 'add')">+ Bài dịch</button></div>
+                    <div class="popup-selection" id="popup-prep-tiktok"><button class="popup-btn" onclick="addCustomToApp('tiktok', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('tiktok', 'Bài dịch', 'prep')">+ Chuẩn bị Bài dịch</button></div>
+                </div>
+            </div>
+
+            <!-- INSTAGRAM -->
+            <div class="card instagram" id="card-instagram">
+                <div class="card-header-toggle" onclick="toggleCard('card-instagram')">
+                    <div class="card-title">📸 Instagram</div><span class="toggle-icon" id="icon-card-instagram">▼</span>
+                </div>
+                <div class="card-body-content">
+                    <div class="mini-progress">
+                        <div class="progress-label"><span style="font-size:0.75rem; color:#666;">Tiến độ Instagram</span><span id="text-mini-instagram" style="font-size:0.75rem; color:#666;">0%</span></div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-instagram"></div></div>
+                    </div>
+                    <div class="task-grid-horizontal" id="grid-tasks-instagram">
+                        <label class="inline-task-box" id="lbl-3"><input type="checkbox" id="check-3" onchange="updateTask(3)"> Video Kanji (Up từ TikTok)</label>
+                    </div>
+                    <div class="sub-group-title">Làm thêm & Chuẩn bị</div>
+                    <div class="task-grid-horizontal" id="custom-container-instagram"></div>
+                    <button class="btn-add-mini" onclick="showPopupSelection('instagram', 'add')">✨ Thêm</button>
+                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('instagram', 'prep')">🌸 Chuẩn bị</button>
+                    <div class="popup-selection" id="popup-add-instagram"><button class="popup-btn" onclick="addCustomToApp('instagram', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('instagram', 'Bài dịch', 'add')">+ Bài dịch</button></div>
+                    <div class="popup-selection" id="popup-prep-instagram"><button class="popup-btn" onclick="addCustomToApp('instagram', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('instagram', 'Bài dịch', 'prep')">+ Chuẩn bị Bài dịch</button></div>
+                </div>
+            </div>
+
+            <!-- FACEBOOK -->
+            <div class="card facebook" id="card-facebook">
+                <div class="card-header-toggle" onclick="toggleCard('card-facebook')">
+                    <div class="card-title">📘 Facebook</div><span class="toggle-icon" id="icon-card-facebook">▼</span>
+                </div>
+                <div class="card-body-content">
+                    <div class="mini-progress">
+                        <div class="progress-label"><span style="font-size:0.75rem; color:#666;">Tiến độ Facebook</span><span id="text-mini-facebook" style="font-size:0.75rem; color:#666;">0%</span></div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-facebook"></div></div>
+                    </div>
+                    <!-- TRANG HY HY -->
+                    <div class="sub-group-title" style="color:var(--facebook-color); border-bottom: 2px solid #000;">Trang HY HY</div>
+                    <div class="task-grid-horizontal" id="grid-tasks-fb-hyhy">
+                        <label class="inline-task-box" id="lbl-4"><input type="checkbox" id="check-4" onchange="updateTask(4)"> Bài dịch 1</label>
+                        <label class="inline-task-box" id="lbl-5"><input type="checkbox" id="check-5" onchange="updateTask(5)"> Video 1</label>
+                    </div>
+                    <div class="task-grid-horizontal" id="custom-container-fb-hyhy"></div>
+                    <button class="btn-add-mini" onclick="showPopupSelection('fb-hyhy', 'add')">✨ Thêm (HY HY)</button>
+                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('fb-hyhy', 'prep')">🌸 Chuẩn bị (HY HY)</button>
+                    <div class="popup-selection" id="popup-add-fb-hyhy"><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Bài dịch', 'add')">+ Bài dịch</button></div>
+                    <div class="popup-selection" id="popup-prep-fb-hyhy"><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Bài dịch', 'prep')">+ Chuẩn bị Bài dịch</button></div>
+
+                    <!-- TRANG HY ĐANG LÀM BLOG -->
+                    <div class="sub-group-title" style="color:var(--facebook-color); border-bottom: 2px solid #000; margin-top:15px;">Trang HY đang làm Blog</div>
+                    <div class="task-grid-horizontal" id="grid-tasks-fb-hyblog">
+                        <label class="inline-task-box" id="lbl-6"><input type="checkbox" id="check-6" onchange="updateTask(6)"> Bài dịch 1</label>
+                        <label class="inline-task-box" id="lbl-7"><input type="checkbox" id="check-7" onchange="updateTask(7)"> Video 1</label>
+                    </div>
+                    <div class="task-grid-horizontal" id="custom-container-fb-hyblog"></div>
+                    <button class="btn-add-mini" onclick="showPopupSelection('fb-hyblog', 'add')">✨ Thêm (Blog)</button>
+                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('fb-hyblog', 'prep')">🌸 Chuẩn bị (Blog)</button>
+                    <div class="popup-selection" id="popup-add-fb-hyblog"><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Bài dịch', 'add')">+ Bài dịch</button></div>
+                    <div class="popup-selection" id="popup-prep-fb-hyblog"><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Bài dịch', 'prep')">+ Chuẩn bị Bài dịch</button></div>
+
+                    <!-- TRANG SHOKAIMONO -->
+                    <div class="sub-group-title" style="color:var(--facebook-color); border-bottom: 2px solid #000; margin-top:15px;">Trang Shokaimono</div>
+                    <div class="task-grid-horizontal" id="grid-tasks-fb-shokaimono">
+                        <label class="inline-task-box" id="lbl-8"><input type="checkbox" id="check-8" onchange="updateTask(8)"> Bài dịch 1</label>
+                        <label class="inline-task-box" id="lbl-11"><input type="checkbox" id="check-11" onchange="updateTask(11)"> Bài dịch 2</label>
+                    </div>
+                    <div class="task-grid-horizontal" id="custom-container-fb-shokaimono"></div>
+                    <button class="btn-add-mini" onclick="showPopupSelection('fb-shokaimono', 'add')">✨ Thêm (Shokaimono)</button>
+                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('fb-shokaimono', 'prep')">🌸 Chuẩn bị (Shokaimono)</button>
+                    <div class="popup-selection" id="popup-add-fb-shokaimono"><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Bài dịch', 'add')">+ Bài dịch</button></div>
+                    <div class="popup-selection" id="popup-prep-fb-shokaimono"><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Bài dịch', 'prep')">+ Chuẩn bị Bài dịch</button></div>
+                </div>
+            </div>
+
+            <!-- ZALO VIDEO -->
+            <div class="card zalo" id="card-zalo">
+                <div class="card-header-toggle" onclick="toggleCard('card-zalo')">
+                    <div class="card-title">📱 Zalo Video</div><span class="toggle-icon" id="icon-card-zalo">▼</span>
+                </div>
+                <div class="card-body-content">
+                    <div class="mini-progress">
+                        <div class="progress-label"><span style="font-size:0.75rem; color:#666;">Tiến độ Zalo</span><span id="text-mini-zalo" style="font-size:0.75rem; color:#666;">0%</span></div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-zalo"></div></div>
+                    </div>
+                    <div class="task-grid-horizontal" id="grid-tasks-zalo">
+                        <label class="inline-task-box" id="lbl-12"><input type="checkbox" id="check-12" onchange="updateTask(12)"> V1</label>
+                        <label class="inline-task-box" id="lbl-13"><input type="checkbox" id="check-13" onchange="updateTask(13)"> V2</label>
+                        <label class="inline-task-box" id="lbl-14"><input type="checkbox" id="check-14" onchange="updateTask(14)"> V3</label>
+                        <label class="inline-task-box" id="lbl-15"><input type="checkbox" id="check-15" onchange="updateTask(15)"> V4</label>
+                        <label class="inline-task-box" id="lbl-16"><input type="checkbox" id="check-16" onchange="updateTask(16)"> V5</label>
+                        <label class="inline-task-box" id="lbl-17"><input type="checkbox" id="check-17" onchange="updateTask(17)"> V6</label>
+                        <label class="inline-task-box" id="lbl-18"><input type="checkbox" id="check-18" onchange="updateTask(18)"> V7</label>
+                        <label class="inline-task-box" id="lbl-19"><input type="checkbox" id="check-19" onchange="updateTask(19)"> V8</label>
+                        <label class="inline-task-box" id="lbl-20"><input type="checkbox" id="check-20" onchange="updateTask(20)"> V9</label>
+                        <label class="inline-task-box" id="lbl-21"><input type="checkbox" id="check-21" onchange="updateTask(21)"> V10</label>
+                    </div>
+                    <div class="task-grid-horizontal" id="custom-container-zalo"></div>
+                    <button class="btn-add-mini" onclick="showPopupSelection('zalo', 'add')">✨ Thêm</button>
+                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('zalo', 'prep')">🌸 Chuẩn bị</button>
+                    <div class="popup-selection" id="popup-add-zalo"><button class="popup-btn" onclick="addCustomToApp('zalo', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('zalo', 'Bài dịch', 'add')">+ Bài dịch</button></div>
+                    <div class="popup-selection" id="popup-prep-zalo"><button class="popup-btn" onclick="addCustomToApp('zalo', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('zalo', 'Bài dịch', 'prep')">+ Chuẩn bị Bài dịch</button></div>
+                </div>
+            </div>
+        </div>
 
         <button class="btn-clear-all" onclick="clearEverything()">Xóa Hết Dữ Liệu Lưu Trữ</button>
     </div>
 
 <script>
-    // -------------------------------------------------------------
-    // ĐIỀN ĐƯỜNG LINK GOOGLE APPS SCRIPT CỦA BẠN VÀO ĐÂY CHÍNH XÁC:
-    const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzB9ebV7wr3Iw74mN81v_xWC2u26COU2m5BY8oW4S1DYkf-9I8s5QSIPGhRs30b2J6R/exec";
-    // -------------------------------------------------------------
-
     const YEAR = 2026;
     let currentView = 'today';
     let selectedDate = new Date();
     if(selectedDate.getFullYear() !== YEAR) { selectedDate = new Date(YEAR, 5, 5); }
 
-    let db = JSON.parse(localStorage.getItem('hy_sakura_sheet_db')) || {};
-    let resources = { ideas: [], links: [], remotes: [] };
-    let segmentMapping = {};
-    let appMapping = {};
+    // SỬ DỤNG PHIÊN BẢN DATABASE MỚI SẠCH SẼ ĐỂ TRÁNH XUNG ĐỘT RÁC CACHE CŨ
+    let db = JSON.parse(localStorage.getItem('hy_sakura_v12_db')) || {};
+    let resources = JSON.parse(localStorage.getItem('hy_resources_v12_db')) || { ideas: [], links: [], remotes: [] };
     let backupBeforeClear = null;
+
+    const segmentMapping = { 'tiktok': [1,2,10], 'instagram': [3], 'fb-hyhy': [4,5], 'fb-hyblog': [6,7], 'fb-shokaimono': [8,11], 'zalo': [12,13,14,15,16,17,18,19,20,21] };
+    const appMapping = { tiktok: [1,2,10], instagram: [3], facebook: [4,5,6,7,8,11], zalo: [12,13,14,15,16,17,18,19,20,21] };
+    const TOTAL_FIXED_TASKS = 20;
+
+    function getLunarString(dateObj) {
+        try {
+            let formatter = new Intl.DateTimeFormat('vi-VN-u-ca-chinese', {day: 'numeric', month: 'numeric'});
+            let result = formatter.format(dateObj).replace('thg ', '/');
+            return "ÂL: " + result;
+        } catch(e) { return ""; }
+    }
 
     function updateLiveClock() {
         const now = new Date();
@@ -349,120 +488,11 @@
     }
     setInterval(updateLiveClock, 1000); updateLiveClock();
 
-    // Tải dữ liệu từ Google Sheet về ngay khi bật Web lên
-    function loadDataFromGoogleSheet() {
-        if(SHEET_API_URL.includes("DÁN_LINK")) {
-            alert("Vui lòng dán link Google Apps Script vào dòng code số 415 để đồng bộ Sheet nhé!");
-            return;
-        }
-        fetch(SHEET_API_URL)
-        .then(res => res.json())
-        .then(data => {
-            resources = data.resources;
-            buildChecklistInterface(data.tasks);
-            renderChecklistValues();
-            calculateDashboard();
-        })
-        .catch(err => console.error("Lỗi đồng bộ dữ liệu từ Sheet: ", err));
-    }
-
-    // Tự động dựng khung App dựa vào những gì bạn ghi trên Google Sheet
-    function buildChecklistInterface(tasks) {
-        const container = document.getElementById('checklist-container');
-        container.innerHTML = '';
-        
-        segmentMapping = {};
-        appMapping = {};
-        
-        let appGroups = { tiktok: [], instagram: [], facebook: [], zalo: [] };
-        tasks.forEach(t => {
-            if(appGroups[t.platform]) appGroups[t.platform].push(t);
-        });
-
-        for(let app in appGroups) {
-            appMapping[app] = appGroups[app].map(t => t.id);
-            
-            let card = document.createElement('div');
-            card.className = `card ${app}`;
-            card.id = `card-${app}`;
-            
-            let titleText = app === 'tiktok' ? '🎵 TikTok' : app === 'instagram' ? '📸 Instagram' : app === 'facebook' ? '📘 Facebook' : '📱 Zalo Video';
-            
-            let html = `
-                <div class="card-header-toggle" onclick="toggleCard('card-${app}')">
-                    <div class="card-title">${titleText}</div><span class="toggle-icon" id="icon-card-${app}">▼</span>
-                </div>
-                <div class="card-body-content">
-                    <div class="mini-progress">
-                        <div class="progress-label"><span style="font-size:0.75rem; color:#666;">Tiến độ</span><span id="text-mini-${app}" style="font-size:0.75rem; color:#666;">0%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-${app}"></div></div>
-                    </div>
-                    <div class="sub-group-title">Nhiệm vụ cố định</div>
-                    <div class="task-grid-horizontal" id="fixed-grid-${app}"></div>
-                    <div id="dynamic-segments-box-${app}"></div>
-                </div>
-            `;
-            card.innerHTML = html;
-            container.appendChild(card);
-            
-            // Đổ các ô check cố định
-            let fixedGrid = card.querySelector(`#fixed-grid-${app}`);
-            let segBox = card.querySelector(`#dynamic-segments-box-${app}`);
-            
-            // Gom nhóm theo phân đoạn nhỏ vệ tinh (dành riêng cho Facebook)
-            let segData = {};
-            appGroups[app].forEach(t => {
-                if(t.segment) {
-                    if(!segData[t.segment]) segData[t.segment] = [];
-                    segData[t.segment].push(t);
-                } else {
-                    let lbl = `<label class="inline-task-box" id="lbl-${t.id}"><input type="checkbox" id="check-${t.id}" onchange="updateTask(${t.id})"> ${t.text}</label>`;
-                    fixedGrid.innerHTML += lbl;
-                }
-            });
-            
-            // Xử lý vẽ các nhóm trang của Facebook nếu có
-            for(let seg in segData) {
-                segmentMapping[seg] = segData[seg].map(t => t.id);
-                let safeSeg = seg.replace(/\s+/g, '-').toLowerCase();
-                let segHtml = `
-                    <div class="sub-group-title" style="color:var(--facebook-color); border-bottom: 2px solid #000; margin-top:15px;">${seg}</div>
-                    <div class="task-grid-horizontal">
-                `;
-                segData[seg].forEach(t => {
-                    segHtml += `<label class="inline-task-box" id="lbl-${t.id}"><input type="checkbox" id="check-${t.id}" onchange="updateTask(${t.id})"> ${t.text}</label>`;
-                });
-                segHtml += `</div><div class="task-grid-horizontal" id="custom-container-${safeSeg}"></div>`;
-                segHtml += `
-                    <button class="btn-add-mini" onclick="showPopupSelection('${safeSeg}', 'add')">✨ Thêm (${seg})</button>
-                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('${safeSeg}', 'prep')">🌸 Chuẩn bị (${seg})</button>
-                    <div class="popup-selection" id="popup-add-${safeSeg}"><button class="popup-btn" onclick="addCustomToApp('${safeSeg}', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('I${safeSeg}', 'Bài dịch', 'add')">+ Bài dịch</button></div>
-                    <div class="popup-selection" id="popup-prep-${safeSeg}"><button class="popup-btn" onclick="addCustomToApp('${safeSeg}', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('${safeSeg}', 'Bài dịch', 'prep')">+ Chuẩn bị Bài dịch</button></div>
-                `;
-                segBox.innerHTML += segHtml;
-            }
-            
-            // Nếu app thường không có phân trang (TikTok, Zalo, Insta), tạo nút Thêm/Chuẩn bị chung dưới Card
-            if(Object.keys(segData).length === 0) {
-                segmentMapping[app] = appMapping[app];
-                let btnHtml = `
-                    <div class="sub-group-title">Làm thêm & Chuẩn bị trước</div>
-                    <div class="task-grid-horizontal" id="custom-container-${app}"></div>
-                    <button class="btn-add-mini" onclick="showPopupSelection('${app}', 'add')">✨ Thêm</button>
-                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('${app}', 'prep')">🌸 Chuẩn bị</button>
-                    <div class="popup-selection" id="popup-add-${app}"><button class="popup-btn" onclick="addCustomToApp('${app}', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('${app}', 'Bài dịch', 'add')">+ Bài dịch</button></div>
-                    <div class="popup-selection" id="popup-prep-${app}"><button class="popup-btn" onclick="addCustomToApp('${app}', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('${app}', 'Bài dịch', 'prep')">+ Chuẩn bị Bài dịch</button></div>
-                `;
-                segBox.innerHTML += btnHtml;
-            }
-        }
-    }
-
-    // Các hàm giao diện phụ
     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
     function toggleSidebarDropdown() { const d = document.getElementById('sidebar-view-dropdown'); d.classList.toggle('collapsed'); document.getElementById('sidebar-drop-icon').innerText = d.classList.contains('collapsed') ? '▼' : '▲'; }
-    function toggleCard(cardId) { const c = document.getElementById(cardId); if(c) c.classList.toggle('collapsed'); }
+    function toggleCard(cardId) { const c = document.getElementById(cardId); c.classList.toggle('collapsed'); document.getElementById('icon-' + cardId).innerText = c.classList.contains('collapsed') ? '▲' : '▼'; }
     function toggleResourceSec(id) { document.getElementById(id).classList.toggle('open'); }
+
     window.showPopupSelection = function(seg, mode) {
         const popup = document.getElementById(`popup-${mode}-${seg}`);
         const isShow = popup.style.display === 'flex';
@@ -471,8 +501,137 @@
     }
 
     window.adjustDate = function(days) {
-        selectedDate.setDate(selectedDate.getDate() + days);
-        renderChecklistValues();
+        let target = new Date(selectedDate);
+        target.setDate(selectedDate.getDate() + days);
+        if(target.getFullYear() === YEAR) { selectedDate = target; renderCalendarSection(); renderChecklistValues(); }
+        else { alert("Chỉ hỗ trợ xem trong năm 2026!"); }
+    }
+
+    window.backToToday = function() {
+        selectedDate = new Date();
+        if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5);
+        renderCalendarSection(); renderChecklistValues();
+        if(currentView !== 'resources') calculateDashboard();
+    }
+
+    function switchView(view) {
+        currentView = view;
+        document.querySelectorAll('.menu-item').forEach(b => b.classList.remove('active'));
+        if(document.getElementById(`btn-view-${view}`)) document.getElementById(`btn-view-${view}`).classList.add('active');
+        
+        if(view === 'today') { selectedDate = new Date(); if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5); }
+        
+        if (view === 'resources') {
+            document.getElementById('checklist-container').style.display = 'none';
+            document.getElementById('total-progress-box').style.display = 'none';
+            document.getElementById('dashboard-box').style.display = 'none';
+            document.getElementById('calendar-container').style.display = 'none';
+            document.querySelector('.date-navigator').style.display = 'none';
+            document.getElementById('widget-box-container').style.display = 'none';
+            document.getElementById('resources-box').style.display = 'block';
+            document.getElementById('main-title').innerText = "🌸 KHO TÀI NGUYÊN 🌸";
+            renderResources();
+        } else {
+            document.getElementById('checklist-container').style.display = 'block';
+            document.getElementById('total-progress-box').style.display = 'block';
+            document.querySelector('.date-navigator').style.display = 'flex';
+            document.getElementById('widget-box-container').style.display = 'flex';
+            document.getElementById('resources-box').style.display = 'none';
+            document.getElementById('main-title').innerText = "🌸 HY HY WORKSPACE 🌸";
+            document.getElementById('dashboard-box').style.display = (view === 'today') ? 'none' : 'block';
+            
+            renderCalendarSection(); renderChecklistValues(); calculateDashboard();
+        }
+        toggleSidebar();
+    }
+
+    function renderCalendarSection() {
+        const container = document.getElementById('calendar-container');
+        const grid = document.getElementById('calendar-grid');
+        const header = document.getElementById('calendar-header');
+        const daysHeader = document.getElementById('calendar-days-header');
+
+        if (currentView === 'today') { container.style.display = 'none'; return; }
+        container.style.display = 'block';
+        grid.innerHTML = '';
+        daysHeader.style.display = 'none';
+
+        if (currentView === 'week') {
+            header.innerText = "Lịch Tuần Này";
+            daysHeader.style.display = 'grid';
+            grid.className = 'grid-days';
+            
+            let currentDayIdx = selectedDate.getDay();
+            let distanceToMon = currentDayIdx === 0 ? -6 : 1 - currentDayIdx;
+            let monday = new Date(selectedDate);
+            monday.setDate(selectedDate.getDate() + distanceToMon);
+            
+            for(let i=0; i<7; i++) {
+                let d = new Date(monday); d.setDate(monday.getDate() + i);
+                createDayButton(d, grid);
+            }
+        } 
+        else if (currentView === 'month') {
+            let m = selectedDate.getMonth();
+            header.innerText = `Lịch Tháng ${m + 1} / ${YEAR}`;
+            daysHeader.style.display = 'grid';
+            grid.className = 'grid-days';
+            
+            let firstDay = new Date(YEAR, m, 1).getDay();
+            let startOffset = firstDay === 0 ? 6 : firstDay - 1;
+            let totalDays = new Date(YEAR, m + 1, 0).getDate();
+            
+            for(let i=0; i<startOffset; i++) {
+                let empty = document.createElement('div'); empty.className = 'cal-btn empty-slot'; grid.appendChild(empty);
+            }
+            
+            for(let i=1; i<=totalDays; i++) {
+                let d = new Date(YEAR, m, i);
+                createDayButton(d, grid);
+            }
+        } 
+        else if (currentView === 'year') {
+            header.innerText = `Toàn bộ 12 Tháng năm ${YEAR}`;
+            grid.className = 'grid-months';
+            const monthNames = ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"];
+            for(let i=0; i<12; i++) {
+                let btn = document.createElement('button'); btn.className = 'cal-btn';
+                if(selectedDate.getMonth() === i) btn.classList.add('active');
+                btn.innerHTML = `<span class="cal-solar">${monthNames[i]}</span>`;
+                btn.onclick = () => { selectedDate = new Date(YEAR, i, 1); switchView('month'); };
+                grid.appendChild(btn);
+            }
+        }
+    }
+
+    function createDayButton(dateObj, targetGrid) {
+        let btn = document.createElement('button'); btn.className = 'cal-btn';
+        let key = formatDateKey(dateObj);
+        
+        let hasData = false;
+        if(db[key]) {
+            if(Object.keys(db[key].tasks || {}).length > 0) hasData = true;
+            let c = db[key].customs || {};
+            for(let k in c) { if((c[k]||[]).length > 0) hasData = true; }
+        }
+        if(hasData) btn.classList.add('has-data');
+        if(formatDateKey(selectedDate) === key) btn.classList.add('active');
+        
+        let solarTxt = currentView === 'week' ? `${dateObj.getDate()}/${dateObj.getMonth()+1}` : dateObj.getDate();
+        let lunarTxt = getLunarString(dateObj);
+        
+        btn.innerHTML = `
+            <div class="cal-solar">${solarTxt}</div>
+            <div class="cal-lunar">${lunarTxt}</div>
+        `;
+        
+        btn.onclick = () => {
+            selectedDate = dateObj;
+            document.querySelectorAll('.cal-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderChecklistValues();
+        };
+        targetGrid.appendChild(btn);
     }
 
     function renderChecklistValues() {
@@ -481,13 +640,14 @@
 
         let realToday = new Date(); realToday.setHours(0,0,0,0);
         let checkDate = new Date(selectedDate); checkDate.setHours(0,0,0,0);
+        
         let isFuture = checkDate > realToday;
         let isPast = checkDate < realToday;
-        
         const navBox = document.querySelector('.date-navigator');
+        
         navBox.classList.remove('future-view', 'past-view');
-        if(isFuture) navBox.classList.add('future-view');
-        if(isPast) navBox.classList.add('past-view');
+        if(isFuture) { navBox.classList.add('future-view'); } 
+        else if(isPast) { navBox.classList.add('past-view'); }
 
         let key = formatDateKey(selectedDate);
         let dayData = db[key] || { tasks: {}, customs: {} };
@@ -496,7 +656,6 @@
 
         let totalCheckedGlobal = 0, totalCountGlobal = TOTAL_FIXED_TASKS;
 
-        // Quét cập nhật trạng thái ô tick dựa vào ánh xạ động từ Sheet về
         for (const segment in segmentMapping) {
             let customContainer = document.getElementById(`custom-container-${segment}`);
             if(customContainer) customContainer.innerHTML = '';
@@ -523,6 +682,7 @@
 
             segCustomsList.forEach(cTask => {
                 if(cTask.checked) { totalCheckedGlobal++; }
+                
                 let lockClass = (isFuture) ? 'future-disabled' : ((isPast && cTask.checked) ? 'past-locked' : '');
                 let completeClass = cTask.checked ? 'completed' : '';
                 let isDisabled = (isFuture || (isPast && cTask.checked)) ? 'disabled' : '';
@@ -541,11 +701,9 @@
             });
         }
 
-        // Đồng bộ tiến độ mini từng hộp to
         for(const app in appMapping) {
             let appChecked = 0, appTotal = appMapping[app].length;
             appMapping[app].forEach(id => { if(tasksData[id] && tasksData[id].checked) appChecked++; });
-            
             if(app === 'facebook') {
                 ['fb-hyhy', 'fb-hyblog', 'fb-shokaimono'].forEach(seg => {
                     let list = customsData[seg] || []; appTotal += list.length;
@@ -556,12 +714,11 @@
                 list.forEach(c => { if(c.checked) appChecked++; });
             }
             let miniPct = appTotal > 0 ? Math.round((appChecked / appTotal) * 100) : 0;
-            let bar = document.getElementById(`fill-mini-${app}`);
-            let text = document.getElementById(`text-mini-${app}`);
-            if(bar) bar.style.width = miniPct + '%';
-            if(text) text.innerText = `${miniPct}% (${appChecked}/${appTotal})`;
+            document.getElementById(`fill-mini-${app}`).style.width = miniPct + '%';
+            document.getElementById(`text-mini-${app}`).innerText = `${miniPct}% (${appChecked}/${appTotal})`;
         }
 
+        let pctGlobal = totalCountGlobal > 0 ? Math.round((totalCheckedGlobal / totalCountGlobal) * 100) : 0;
         document.getElementById('progress-bar-fill').style.width = pctGlobal + '%';
         document.getElementById('progress-text').innerText = `${pctGlobal}% (${totalCheckedGlobal}/${totalCountGlobal})`;
     }
@@ -576,10 +733,16 @@
         if(mode === 'prep') { noteText = prompt(`🌸 [CHUẨN BỊ] Nhập ghi chú cho ${type}:`); if(noteText === null || noteText.trim() === "") return; }
 
         let count = 0;
-        db[key].customs[segment].forEach(c => { if(c.text.includes(type)) count++; });
+        if(mode === 'prep') { 
+            db[key].customs[segment].forEach(c => { if(c.text.includes(type) && c.text.includes('chuần bị')) count++; }); 
+        } else {
+            let kw = type === 'Video' ? 'video' : 'bài dịch';
+            segmentMapping[segment].forEach(id => { let t = document.getElementById(`lbl-${id}`).innerText.toLowerCase(); if(t.includes(kw)) count++; });
+            db[key].customs[segment].forEach(c => { if(c.text.startsWith(type)) count++; });
+        }
         
         let label = mode === 'prep' ? `${count+1}. ${type} cần chuần bị` : `${type} ${count+1}`;
-        db[key].customs[segment].push({ id: Date.now(), text: label, note: noteText ? noteText.trim() : '', checked: false });
+        db[key].customs[segment].push({ id: Date.now(), text: label, note: noteText.trim(), checked: false });
         document.getElementById(`popup-${mode}-${segment}`).style.display = 'none';
         saveAndReload();
     }
@@ -588,107 +751,190 @@
         if(!db[key]) db[key] = { tasks: {}, customs: {} };
         if(!db[key].tasks) db[key].tasks = {}; if(!db[key].customs) db[key].customs = {};
         for(let s in segmentMapping) if(!db[key].customs[s]) db[key].customs[s] = [];
-        for(let i=1; i<=50; i++) { if(!db[key].tasks[i]) db[key].tasks[i] = { checked: false }; }
+        [1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21].forEach(i => { if(!db[key].tasks[i]) db[key].tasks[i] = { checked: false }; });
     }
 
-    // Gửi đồng bộ lên Google Sheet khi thêm ý tưởng mới
+    /* --- TỰ ĐỘNG PHÂN TÍCH LINK BÀI CHUẨN BỊ DỊCH RA 3 CỘT SẠCH RÁC CACHE --- */
     window.addSmartIdea = function() {
         let input = document.getElementById('input-idea');
-        let url = input.value.trim(); if(!url) return;
-        let domain = url.toLowerCase(); let plat = "Khác", username = "Nhấp sửa tên TK";
-        try {
-            let urlObj = new URL(url); let pathParts = urlObj.pathname.split('/').filter(p => p.length > 0);
-            if (domain.includes('x.com')) { plat = "X/Twitter"; if(pathParts.length > 0) username = pathParts[0]; } 
-            else if (domain.includes('threads.net')) { plat = "Threads"; if(pathParts.length > 0) username = pathParts[0].replace('@', ''); }
-            else if (domain.includes('tiktok.com')) { plat = "TikTok"; if(pathParts.length > 0) username = pathParts[0].replace('@', ''); }
-        } catch (e) {}
+        let url = input.value.trim();
+        if(!url) return;
 
-        sendToSheet("ideas", url, username);
-        input.value = '';
+        let domain = url.toLowerCase();
+        let plat = "Khác";
+        let username = "Nhấp sửa tên TK";
+        
+        try {
+            let urlObj = new URL(url);
+            let pathParts = urlObj.pathname.split('/').filter(p => p.length > 0);
+
+            if (domain.includes('x.com') || domain.includes('twitter.com')) {
+                plat = "X/Twitter";
+                if(pathParts.length > 0) username = pathParts[0];
+            } 
+            else if (domain.includes('threads.net')) {
+                plat = "Threads";
+                if(pathParts.length > 0) username = pathParts[0].replace('@', '');
+            }
+            else if (domain.includes('tiktok.com')) {
+                plat = "TikTok";
+                if(pathParts.length > 0) username = pathParts[0].replace('@', '');
+            }
+            else if (domain.includes('instagram.com')) {
+                plat = "Instagram";
+                if(pathParts.length > 0) username = pathParts[0];
+            }
+            else if (domain.includes('facebook.com')) {
+                plat = "Facebook";
+                if(pathParts.length > 0) {
+                    if (pathParts[0] === 'groups' && pathParts.length > 1) username = "Group: " + pathParts[1];
+                    else if (pathParts[0] === 'permalink.php' || pathParts[0] === 'shares') username = "Bài chia sẻ";
+                    else username = pathParts[0];
+                }
+            }
+            else if (domain.includes('xiaohongshu.com') || domain.includes('xhslink.com')) {
+                plat = "Xiaohongshu";
+            }
+            else if (domain.includes('yahoo.co.jp')) {
+                plat = "Yahoo Japan"; username = "Yahoo News";
+            }
+            else if (domain.includes('weibo.com')) {
+                plat = "Weibo"; if(pathParts.length > 0) username = pathParts[0];
+            }
+            else if (domain.includes('douyin.com')) {
+                plat = "Douyin"; if(pathParts.length > 0) username = pathParts[0];
+            }
+            else if (domain.includes('youtube.com')) {
+                plat = "YouTube"; if(pathParts.length > 0) username = pathParts[0].replace('@', '');
+            }
+        } catch (e) {
+            plat = "Khác";
+        }
+        
+        if(!resources.ideas) resources.ideas = [];
+        resources.ideas.push({ id: Date.now(), link: url, platform: plat, cre: username, checked: false });
+        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources));
+        input.value = ''; 
+        renderResources();
+    }
+
+    window.updateIdeaField = function(id, field, value) {
+        let target = resources.ideas.find(i => i.id === id);
+        if(target) { target[field] = value.trim(); localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources)); }
+    }
+
+    window.toggleIdeaCheck = function(id) {
+        let target = resources.ideas.find(r => r.id === id);
+        if(target) { target.checked = !target.checked; localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources)); renderResources(); }
+    }
+
+    window.addResource = function(type, inputId) {
+        let input = document.getElementById(inputId); let val = input.value.trim(); if(!val) return;
+        resources[type].push({ id: Date.now(), content: val });
+        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources)); input.value = ''; renderResources();
     }
 
     window.addRemoteResource = function() {
         let text = document.getElementById('input-remote').value.trim(); if(!text) return;
         let link = text, idCode = "Chưa có ID", space = text.indexOf(' ');
-        if(space !== -1) { link = text.substring(0, space).trim(); let raw = text.substring(space).trim(); idCode = raw.startsWith('XHS:') ? raw : 'XHS: ' + raw; }
-        sendToSheet("remotes", link, idCode);
-        document.getElementById('input-remote').value = '';
+        if(space !== -1) { 
+            link = text.substring(0, space).trim(); 
+            let raw = text.substring(space).trim(); 
+            idCode = raw.startsWith('XHS:') ? raw : 'XHS: ' + raw; 
+        }
+        if(!resources.remotes) resources.remotes = [];
+        resources.remotes.push({ id: Date.now(), link: link, idCode: idCode, checked: false });
+        localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources)); document.getElementById('input-remote').value = ''; renderResources();
     }
 
-    window.addResource = function(type, inputId) {
-        let input = document.getElementById(inputId); let val = input.value.trim(); if(!val) return;
-        sendToSheet("links", val, "Bài đăng");
-        input.value = '';
+    window.copyToClipboard = function(text) {
+        navigator.clipboard.writeText(text).then(() => alert(`📋 Đã copy: "${text}"`)).catch(() => alert('Lỗi copy!'));
     }
 
-    function sendToSheet(type, link, codeOrCre) {
-        // Lưu tạm giao diện cục bộ trước
-        resources[type].push({ id: Date.now(), link: link, codeOrCre: codeOrCre, checked: false });
-        renderResources();
-        // Bắn API đồng bộ lên Sheet âm thầm
-        fetch(SHEET_API_URL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ action: "add", type: type, link: link, codeOrCre: codeOrCre })
-        }).then(() => setTimeout(loadDataFromGoogleSheet, 1500));
-    }
-
-    window.toggleRemoteCheck = function(type, link, status) {
-        fetch(SHEET_API_URL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ action: "toggle", link: link, checked: status })
-        });
-    }
-
-    window.copyToClipboard = function(text) { navigator.clipboard.writeText(text).then(() => alert(`📋 Đã copy: "${text}"`)); }
+    window.toggleRemoteCheck = function(id) { let t = resources.remotes.find(r => r.id === id); if(t) { t.checked = !t.checked; localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources)); renderResources(); } }
+    window.deleteResource = function(type, id) { resources[type] = resources[type].filter(i => i.id !== id); localStorage.setItem('hy_resources_v12_db', JSON.stringify(resources)); renderResources(); }
 
     function renderResources() {
         let tbodyIdeas = document.getElementById('list-ideas'); tbodyIdeas.innerHTML = '';
         (resources.ideas || []).forEach(item => {
-            let tr = document.createElement('tr'); if(item.checked) tr.className = 'completed';
+            let tr = document.createElement('tr');
+            if(item.checked) tr.className = 'completed';
             tr.innerHTML = `
-                <td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleRemoteCheck('ideas', '${item.link}', this.checked)"></td>
+                <td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleIdeaCheck(${item.id})"></td>
                 <td style="text-align: center;"><a href="${item.link}" target="_blank">🔗 Mở</a></td>
-                <td><b>${item.link.includes('x.com') ? 'X/Twitter' : 'Threads'}</b></td>
-                <td style="color:#e1306c;">${item.codeOrCre}</td>
-                <td style="text-align: center;"><button class="btn-copy-mini" onclick="copyToClipboard('${item.codeOrCre}')">📋 Copy</button></td>
-            `; tbodyIdeas.appendChild(tr);
+                <td class="editable-cell" contenteditable="true" onblur="updateIdeaField(${item.id}, 'platform', this.innerText)" style="color:var(--zalo-color); font-weight:800;">${item.platform}</td>
+                <td class="editable-cell" contenteditable="true" style="color:#e1306c;" onblur="updateIdeaField(${item.id}, 'cre', this.innerText)">${item.cre}</td>
+                <td style="text-align: center;">
+                    <button class="btn-copy-mini" onclick="copyToClipboard('${item.cre.replace(/'/g, "\\'")}')">📋 Copy Cre</button>
+                    <button class="delete-custom-btn" onclick="deleteResource('ideas', ${item.id})">×</button>
+                </td>
+            `;
+            tbodyIdeas.appendChild(tr);
         });
 
         let tbodyRemote = document.getElementById('list-remotes'); tbodyRemote.innerHTML = '';
         (resources.remotes || []).forEach(item => {
             let tr = document.createElement('tr'); if(item.checked) tr.className = 'completed';
             tr.innerHTML = `
-                <td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleRemoteCheck('remotes', '${item.link}', this.checked)"></td>
+                <td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleRemoteCheck(${item.id})"></td>
                 <td><a href="${item.link}" target="_blank">${item.link}</a></td>
-                <td><span style="color:#e1306c;">${item.codeOrCre}</span><button class="btn-copy-mini" style="margin-left:8px;" onclick="copyToClipboard('${item.codeOrCre}')">Copy</button></td>
-                <td>-</td>
+                <td><span style="color:#e1306c;">${item.idCode}</span><button class="btn-copy-mini" style="margin-left:8px;" onclick="copyToClipboard('${item.idCode}')">Copy</button></td>
+                <td style="text-align: center;"><button class="delete-custom-btn" onclick="deleteResource('remotes', ${item.id})">×</button></td>
             `; tbodyRemote.appendChild(tr);
+        });
+
+        let ul = document.getElementById('list-links'); ul.innerHTML = '';
+        (resources.links || []).forEach(item => {
+            let li = document.createElement('li'); li.style.padding = "8px"; li.style.borderBottom = "1px dashed #ccc";
+            if(item.content.startsWith('http')) li.innerHTML = `<a href="${item.content}" target="_blank" style="color:var(--zalo-color);">${item.content}</a>`;
+            else li.innerHTML = `<span>${item.content}</span>`;
+            li.innerHTML += `<button class="delete-custom-btn" style="float:right;" onclick="deleteResource('links', ${item.id})">×</button>`;
+            ul.appendChild(li);
         });
     }
 
-    function switchView(view) {
-        currentView = view;
-        if(view === 'resources') {
-            document.getElementById('checklist-container').style.display = 'none';
-            document.getElementById('total-progress-box').style.display = 'none';
-            document.getElementById('resources-box').style.display = 'block';
-            renderResources();
-        } else {
-            document.getElementById('checklist-container').style.display = 'block';
-            document.getElementById('total-progress-box').style.display = 'block';
-            document.getElementById('resources-box').style.display = 'none';
+    function calculateDashboard() {
+        let keyToday = formatDateKey(new Date()), mSelected = selectedDate.getMonth();
+        let todayChecked = 0, monthTotalChecked = 0, totalBonusCount = 0;
+        if(db[keyToday]) {
+            for(let id in db[keyToday].tasks || {}) if(db[keyToday].tasks[id].checked) todayChecked++;
+            for(let seg in db[keyToday].customs || {}) db[keyToday].customs[seg].forEach(c => { if(c.checked) todayChecked++; });
         }
-        toggleSidebar();
+        for(let k in db) {
+            let datePart = new Date(k);
+            for(let seg in db[k].customs || {}) db[k].customs[seg].forEach(c => { if(c.checked) totalBonusCount++; });
+            if(datePart.getFullYear() === YEAR && datePart.getMonth() === mSelected) {
+                for(let id in db[k].tasks || {}) if(db[k].tasks[id].checked) monthTotalChecked++;
+                for(let seg in db[k].customs || {}) db[k].customs[seg].forEach(c => { if(c.checked) monthTotalChecked++; });
+            }
+        }
+        document.getElementById('db-today-count').innerText = todayChecked;
+        document.getElementById('db-month-count').innerText = monthTotalChecked;
+        document.getElementById('db-year-bonus').innerText = totalBonusCount;
     }
 
-    function calculateDashboard() { /* Giữ nguyên hàm logic dashboard */ }
-    function saveAndReload() { localStorage.setItem('hy_sakura_sheet_db', JSON.stringify(db)); renderChecklistValues(); }
+    function saveAndReload() { localStorage.setItem('hy_sakura_v12_db', JSON.stringify(db)); renderChecklistValues(); calculateDashboard(); }
 
-    loadDataFromGoogleSheet();
+    window.clearEverything = function() {
+        if(confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử?")) {
+            backupBeforeClear = JSON.stringify(db); db = {}; localStorage.removeItem('hy_sakura_v12_db');
+            document.getElementById('btn-undo-box').style.display = 'block';
+            if(currentView !== 'resources') { renderChecklistValues(); calculateDashboard(); } else { renderResources(); }
+        }
+    }
+
+    window.undoDeleteData = function() {
+        if(backupBeforeClear) {
+            db = JSON.parse(backupBeforeClear); localStorage.setItem('hy_sakura_v12_db', backupBeforeClear); backupBeforeClear = null; 
+            document.getElementById('btn-undo-box').style.display = 'none';
+            if(currentView !== 'resources') { renderChecklistValues(); calculateDashboard(); } else { renderResources(); }
+            alert("🎉 Khôi phục thành công!");
+        }
+    }
+
+    function formatDateKey(d) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+
+    switchView('today');
 </script>
 </body>
 </html>
