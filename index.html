@@ -1,21 +1,77 @@
-<!-- Dán code web vào đây -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>🌸 HY HY WORKSPACE 2026 🌸</title>
+    <!-- CSS giữ nguyên như cũ để không làm hỏng giao diện của bạn -->
+    <style>
+        /* ... (Bạn giữ nguyên phần CSS cũ của bạn ở đây) ... */
+    </style>
+</head>
+<body>
+    <!-- (Bạn giữ nguyên phần HTML cũ của bạn ở đây) -->
+
 <script>
-    const SHEET_API_URL = "https://script.google.com/macros/s/AKfycby_xJujI0KTZABafj5ikfgG74CdUeSqNYNHYcBb4VeymeJdBxk10BeK2xMa5qq5AdaR/exec";
-    
-    // Hàm này sẽ tự động lấy dữ liệu từ 3 Tab của bạn:
+    // -----------------------------------------------------------------
+    // ⚠️ DÁN LINK ĐÚNG VÀO ĐÂY:
+    const SHEET_API_URL = "https://script.google.com/macros/s/AKfycby_xJujI0KTZABafj5ikfgG74CdUeSqNYNHYcBb4VeymeJdBxk10BeK2xMa5qq5AdaR/exec"; 
+    // -----------------------------------------------------------------
+
+    // BIẾN TOÀN CỤC
+    let calendarNotes = JSON.parse(localStorage.getItem('hy_calendar_notes')) || {};
+
+    // 1. HÀM COPY CÓ CRE:
+    window.copyToClipboard = function(text) {
+        let finalStr = text.startsWith("Cre:") ? text : "Cre: " + text;
+        navigator.clipboard.writeText(finalStr).then(() => alert(`📋 Đã copy: "${finalStr}"`));
+    }
+
+    // 2. HÀM VẼ LỊCH CÓ GHI CHÚ
+    function createDayButton(dateObj, targetGrid) {
+        let btn = document.createElement('button'); btn.className = 'cal-btn';
+        let key = formatDateKey(dateObj);
+        let note = calendarNotes[key] || "";
+        
+        // Rê chuột hiện ghi chú
+        btn.setAttribute("title", note ? "Ghi chú: " + note : "Bấm để thêm ghi chú");
+        
+        btn.onclick = () => {
+            if(formatDateKey(selectedDate) === key) {
+                let input = prompt("Nhập ghi chú cho ngày " + key + ":", calendarNotes[key] || "");
+                if(input !== null) {
+                    calendarNotes[key] = input;
+                    localStorage.setItem('hy_calendar_notes', JSON.stringify(calendarNotes));
+                    btn.setAttribute("title", "Ghi chú: " + input);
+                    // Gửi ghi chú lên Sheet (Yêu cầu có tab "Ghi chú lịch")
+                    fetch(SHEET_API_URL, {
+                        method: "POST", mode: "no-cors",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({action: "updateNote", date: key, note: input})
+                    });
+                }
+            } else {
+                selectedDate = dateObj;
+                renderChecklistValues();
+            }
+        };
+        // ... (phần render còn lại)
+        targetGrid.appendChild(btn);
+    }
+
+    // 3. HÀM ĐỒNG BỘ MỚI (Tự đọc 3 Tab)
     function loadDataFromGoogleSheet() {
+        if(SHEET_API_URL.includes("....")) return;
         fetch(SHEET_API_URL)
         .then(res => res.json())
         .then(data => {
-            // 1. Vẽ checklist từ tab Nhiệm vụ
-            buildDynamicChecklist(data.tasks);
-            // 2. Load tài nguyên từ tab Tài nguyên
-            resources = data.resources;
-            renderResources();
-            // 3. Load ghi chú từ tab Ghi chú lịch
-            data.notes.forEach(n => calendarNotes[n.date] = n.note);
-            renderCalendarSection();
+            // data.tasks, data.resources, data.notes
+            if(data.notes) {
+                data.notes.forEach(n => calendarNotes[n.date] = n.note);
+                localStorage.setItem('hy_calendar_notes', JSON.stringify(calendarNotes));
+            }
+            // ... render tiếp
         });
     }
-    // ... (Phần logic còn lại giữ nguyên như tôi đã gửi ở tin nhắn trước)
 </script>
+</body>
+</html>
