@@ -73,11 +73,12 @@
             overflow: hidden; padding: 2px;
         }
         .nav-arrow-btn {
-            background: #FFF0F0; border: 2px solid #000; font-size: 0.9rem; font-weight: bold;
+            background: #FFE4E1; border: 2px solid #000; font-size: 0.9rem; font-weight: bold;
             padding: 8px 14px; cursor: pointer; color: #000; border-radius: 10px; margin: 4px;
-            transition: all 0.1s;
+            transition: all 0.1s; box-shadow: 0 2px 0 #000;
         }
         .nav-arrow-btn:hover { background: var(--sakura-pink); }
+        .nav-arrow-btn:active { transform: translateY(2px); box-shadow: none; }
         
         .date-banner { 
             font-size: 1.1rem; font-weight: bold; text-align: center; flex: 1; 
@@ -88,11 +89,11 @@
 
         .date-navigator.future-view { background: #f1f5f9 !important; }
         .date-navigator.future-view .date-banner { background: #cbd5e1 !important; color: #475569 !important; }
-        .date-navigator.future-view .nav-arrow-btn { background: #e2e8f0 !important; }
+        .date-navigator.future-view .nav-arrow-btn { background: #e2e8f0 !important; border-color: #475569; }
 
         .date-navigator.past-view { background: #fdf4ff !important; }
         .date-navigator.past-view .date-banner { background: #f3e8ff !important; color: #6b21a8 !important; }
-        .date-navigator.past-view .nav-arrow-btn { background: #fae8ff !important; }
+        .date-navigator.past-view .nav-arrow-btn { background: #fae8ff !important; border-color: #6b21a8; }
 
         .widget-box {
             background: #fff; border: 2px solid #000; border-radius: 15px;
@@ -116,7 +117,7 @@
         .db-num { font-size: 1.4rem; font-weight: 800; color: #000; margin-top: 4px; }
         .db-lbl { font-size: 0.8rem; font-weight: bold; color: #555; }
 
-        /* --- LỊCH TRỰC QUAN (CẬP NHẬT GIAO DIỆN ÂM DƯƠNG) --- */
+        /* --- LỊCH TRỰC QUAN --- */
         .calendar-container { background: #fff; border: 2px solid #000; border-radius: 20px; padding: 15px; margin-bottom: 25px; box-shadow: 0 4px 0 #000; display: none; }
         .calendar-header { text-align: center; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem; color: #d63384; }
         
@@ -172,7 +173,7 @@
         .popup-btn { padding: 4px 8px; border: 1px solid #000; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; background: #fff; }
         .popup-btn:hover { background: var(--sakura-pink); }
 
-        /* --- TRANG KHO TÀI NGUYÊN (BẢNG IDEAS MỚI) --- */
+        /* --- TRANG KHO TÀI NGUYÊN --- */
         .resources-box { background: #fff; border: 3px solid #000; border-radius: 22px; padding: 20px; box-shadow: 5px 5px 0 #000; display: none; }
         .resource-section { margin-bottom: 15px; border: 2px solid #000; border-radius: 15px; background: #fff; padding: 12px; overflow-x: auto; }
         .resource-header-toggle { display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
@@ -224,20 +225,22 @@
     <div class="main-content">
         <h1 id="main-title">🌸 HY HY WORKSPACE 🌸</h1>
         
+        <!-- BỘ ĐIỀU HƯỚNG BANNER -->
         <div class="date-navigator">
             <button class="nav-arrow-btn" onclick="adjustDate(-1)">◀ Hôm qua</button>
             <div class="date-banner" id="date-banner" onclick="backToToday()" title="Bấm để quay nhanh về Hôm nay">---</div>
             <button class="nav-arrow-btn" onclick="adjustDate(1)">Ngày mai ▶</button>
         </div>
 
+        <!-- HỘP THỜI TIẾT & ĐỒNG HỒ VĨNH LONG -->
         <div class="widget-box" id="widget-box-container">
             <div class="live-clock-box">🕒 <span id="live-clock">00:00:00</span></div>
-            <!-- Cập nhật vị trí chính xác của user -->
             <div class="weather-box">📍 Lộc Thuận, Vĩnh Long, VN: <span id="live-weather">31°C • Nắng 🌸</span></div>
         </div>
 
         <button class="btn-undo-delete" id="btn-undo-box" onclick="undoDeleteData()">↩️ QUAY LẠI (Khôi phục dữ liệu vừa xóa)</button>
 
+        <!-- TIẾN ĐỘ TỔNG -->
         <div class="progress-container" id="total-progress-box">
             <div class="progress-label">
                 <span>Tiến độ tổng ngày 🌸</span>
@@ -246,6 +249,7 @@
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar-fill"></div></div>
         </div>
 
+        <!-- DASHBOARD TỔNG KẾT -->
         <div class="dashboard-box" id="dashboard-box">
             <div class="dashboard-title">📊 DASHBOARD TỔNG KẾT</div>
             <div class="db-grid">
@@ -265,27 +269,24 @@
 
         <!-- KHO TÀI NGUYÊN -->
         <div class="resources-box" id="resources-box">
-            <!-- IDEAS BẢNG MỚI (Bài lưu chuẩn bị dịch) -->
+            <!-- IDEAS BẢNG MỚI (Bài lưu chuẩn bị dịch - ĐÃ TINH CHỈNH THÀNH 3 CỘT GỌN GÀNG) -->
             <div class="resource-section open" id="res-sec-ideas">
                 <div class="resource-header-toggle" onclick="toggleResourceSec('res-sec-ideas')">
                     <h3>📌 Bài Lưu Chuẩn Bị Dịch (Ý tưởng)</h3><span>▼</span>
                 </div>
                 <div class="resource-body">
                     <div class="res-input-group">
-                        <input type="text" id="input-idea" placeholder="Dán link bài gốc vào đây để hệ thống tự phân tích...">
+                        <input type="text" id="input-idea" placeholder="Dán link bài gốc vào đây (X, Threads, TikTok, Facebook...)...">
                         <button class="res-btn" onclick="addSmartIdea()">Lưu</button>
                     </div>
                     <table class="remote-table">
                         <thead>
                             <tr>
-                                <th style="width: 30px;">Tick</th>
-                                <th style="width: 40px;">Link</th>
-                                <th>Tiêu đề (Click để gõ)</th>
-                                <th style="width: 30px;">NN</th>
-                                <th style="width: 80px;">Nền tảng</th>
-                                <th style="width: 80px;">Chủ đề</th>
-                                <th style="width: 150px;">Cre (Click copy)</th>
-                                <th style="width: 30px;">Xóa</th>
+                                <th style="width: 50px;">Tick</th>
+                                <th style="width: 70px;">Mở Link</th>
+                                <th style="width: 150px;">Nền tảng</th>
+                                <th>Tên tài khoản (Click để sửa)</th>
+                                <th style="width: 100px; text-align: center;">Hành động</th>
                             </tr>
                         </thead>
                         <tbody id="list-ideas"></tbody>
@@ -398,8 +399,8 @@
                     <div class="popup-selection" id="popup-add-fb-hyhy"><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Bài dịch', 'add')">+ Bài dịch</button></div>
                     <div class="popup-selection" id="popup-prep-fb-hyhy"><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Bài dịch', 'prep')">+ Chuẩn bị Bài dịch</button></div>
 
-                    <!-- TRANG HY BLOG -->
-                    <div class="sub-group-title" style="color:var(--facebook-color); border-bottom: 2px solid #000; margin-top:15px;">Trang HY làm Blog</div>
+                    <!-- TRANG HY ĐANG LÀM BLOG -->
+                    <div class="sub-group-title" style="color:var(--facebook-color); border-bottom: 2px solid #000; margin-top:15px;">Trang HY đang làm Blog</div>
                     <div class="task-grid-horizontal" id="grid-tasks-fb-hyblog">
                         <label class="inline-task-box" id="lbl-6"><input type="checkbox" id="check-6" onchange="updateTask(6)"> Bài dịch 1</label>
                         <label class="inline-task-box" id="lbl-7"><input type="checkbox" id="check-7" onchange="updateTask(7)"> Video 1</label>
@@ -434,6 +435,7 @@
                         <div class="progress-label"><span style="font-size:0.75rem; color:#666;">Tiến độ Zalo</span><span id="text-mini-zalo" style="font-size:0.75rem; color:#666;">0%</span></div>
                         <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-zalo"></div></div>
                     </div>
+                    <div class="sub-group-title">Nhiệm vụ cố định (10 Video gắn link)</div>
                     <div class="task-grid-horizontal" id="grid-tasks-zalo">
                         <label class="inline-task-box" id="lbl-12"><input type="checkbox" id="check-12" onchange="updateTask(12)"> V1</label>
                         <label class="inline-task-box" id="lbl-13"><input type="checkbox" id="check-13" onchange="updateTask(13)"> V2</label>
@@ -472,7 +474,6 @@
     const appMapping = { tiktok: [1,2,10], instagram: [3], facebook: [4,5,6,7,8,11], zalo: [12,13,14,15,16,17,18,19,20,21] };
     const TOTAL_FIXED_TASKS = 20;
 
-    // Tính Lịch Âm dựa trên API chuẩn của trình duyệt
     function getLunarString(dateObj) {
         try {
             let formatter = new Intl.DateTimeFormat('vi-VN-u-ca-chinese', {day: 'numeric', month: 'numeric'});
@@ -557,7 +558,7 @@
 
         if (currentView === 'week') {
             header.innerText = "Lịch Tuần Này";
-            daysHeader.style.display = 'grid'; // Hiện thứ 2->CN
+            daysHeader.style.display = 'grid';
             grid.className = 'grid-days';
             
             let currentDayIdx = selectedDate.getDay();
@@ -576,11 +577,10 @@
             daysHeader.style.display = 'grid';
             grid.className = 'grid-days';
             
-            let firstDay = new Date(YEAR, m, 1).getDay(); // 0 is Sun
+            let firstDay = new Date(YEAR, m, 1).getDay();
             let startOffset = firstDay === 0 ? 6 : firstDay - 1;
             let totalDays = new Date(YEAR, m + 1, 0).getDate();
             
-            // Vẽ các ô trống đầu tháng
             for(let i=0; i<startOffset; i++) {
                 let empty = document.createElement('div'); empty.className = 'cal-btn empty-slot'; grid.appendChild(empty);
             }
@@ -642,7 +642,7 @@
         let checkDate = new Date(selectedDate); checkDate.setHours(0,0,0,0);
         
         let isFuture = checkDate > realToday;
-        let isPast = checkDate < realToday; // Hôm qua trở về trước
+        let isPast = checkDate < realToday;
         const navBox = document.querySelector('.date-navigator');
         
         navBox.classList.remove('future-view', 'past-view');
@@ -671,7 +671,6 @@
                     cb.disabled = false;
 
                     if(isFuture) { cb.disabled = true; lbl.classList.add('future-disabled'); }
-                    // KHÓA NHIỆM VỤ QUÁ KHỨ ĐÃ LÀM
                     else if (isPast && tData.checked) { cb.disabled = true; lbl.classList.add('past-locked'); }
 
                     if(tData.checked) { lbl.classList.add('completed'); totalCheckedGlobal++; }
@@ -734,12 +733,14 @@
         if(mode === 'prep') { noteText = prompt(`🌸 [CHUẨN BỊ] Nhập ghi chú cho ${type}:`); if(noteText === null || noteText.trim() === "") return; }
 
         let count = 0;
-        if(mode === 'prep') { db[key].customs[segment].forEach(c => { if(c.text.includes(type) && c.text.includes('chuần bị')) count++; }); } 
-        else {
+        if(mode === 'prep') { 
+            db[key].customs[segment].forEach(c => { if(c.text.includes(type) && c.text.includes('chuần bị')) count++; }); 
+        } else {
             let kw = type === 'Video' ? 'video' : 'bài dịch';
             segmentMapping[segment].forEach(id => { let t = document.getElementById(`lbl-${id}`).innerText.toLowerCase(); if(t.includes(kw)) count++; });
             db[key].customs[segment].forEach(c => { if(c.text.startsWith(type)) count++; });
         }
+        
         let label = mode === 'prep' ? `${count+1}. ${type} cần chuần bị` : `${type} ${count+1}`;
         db[key].customs[segment].push({ id: Date.now(), text: label, note: noteText.trim(), checked: false });
         document.getElementById(`popup-${mode}-${segment}`).style.display = 'none';
@@ -753,31 +754,85 @@
         [1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21].forEach(i => { if(!db[key].tasks[i]) db[key].tasks[i] = { checked: false }; });
     }
 
-    /* --- QUẢN LÝ BÀI CHUẨN BỊ DỊCH (TỰ ĐỘNG PHÂN TÍCH LINK) --- */
+    /* --- QUẢN LÝ BÀI CHUẨN BỊ DỊCH (HÀM PHÂN TÍCH TỰ ĐỘNG LINK RA 3 CỘT THÔNG MINH) --- */
     window.addSmartIdea = function() {
         let input = document.getElementById('input-idea');
         let url = input.value.trim();
         if(!url) return;
 
         let domain = url.toLowerCase();
-        let plat = "Khác", lang = "VN", cre = "Cre: Tên nền tảng, [Tên TK/Báo]";
+        let plat = "Khác";
+        let username = "Chưa nhận diện";
         
-        if(domain.includes('yahoo.co')) { plat = "Yahoo Japan"; lang = "JP"; cre = "Cre: Yahoo Japan News, [Nhập Tiêu đề] - Yahoo!ニュース"; }
-        else if(domain.includes('xiaohongshu')) { plat = "Xiaohongshu"; lang = "CN"; cre = "Cre: Xiaohongshu, [Nhập tên TK]"; }
-        else if(domain.includes('weibo')) { plat = "Weibo"; lang = "CN"; cre = "Cre: Weibo, [Nhập tên TK]"; }
-        else if(domain.includes('douyin')) { plat = "Douyin"; lang = "CN"; cre = "Cre: Douyin, [Nhập tên TK]"; }
-        else if(domain.includes('tiktok')) { plat = "TikTok"; lang = "VN"; cre = "Cre: TikTok, [Nhập tên TK]"; }
-        else if(domain.includes('instagram')) { plat = "Instagram"; lang = "EN"; cre = "Cre: Instagram, [Nhập tên TK]"; }
-        else if(domain.includes('facebook')) { plat = "Facebook"; lang = "VN"; cre = "Cre: Facebook, [Nhập tên TK]"; }
-        else if(domain.includes('x.com') || domain.includes('twitter')) { plat = "X/Twitter"; lang = "EN"; cre = "Cre: X, [Nhập tên TK]"; }
-        else if(domain.includes('youtube')) { plat = "YouTube"; lang = "EN"; cre = "Cre: YouTube, [Nhập tên TK]"; }
+        try {
+            // Sử dụng URL object để bóc tách thông tin một cách khoa học
+            let urlObj = new URL(url);
+            let pathParts = urlObj.pathname.split('/').filter(p => p.length > 0);
+
+            if (domain.includes('x.com') || domain.includes('twitter.com')) {
+                plat = "X/Twitter";
+                if(pathParts.length > 0) username = pathParts[0];
+            } 
+            else if (domain.includes('threads.net')) {
+                plat = "Threads";
+                if(pathParts.length > 0) {
+                    // Threads link thường có dạng /@username/post/... hoặc /@username
+                    username = pathParts[0].replace('@', '');
+                }
+            }
+            else if (domain.includes('tiktok.com')) {
+                plat = "TikTok";
+                if(pathParts.length > 0) username = pathParts[0].replace('@', '');
+            }
+            else if (domain.includes('instagram.com')) {
+                plat = "Instagram";
+                if(pathParts.length > 0) username = pathParts[0];
+            }
+            else if (domain.includes('facebook.com')) {
+                plat = "Facebook";
+                if(pathParts.length > 0) {
+                    if (pathParts[0] === 'groups' && pathParts.length > 1) username = "Group: " + pathParts[1];
+                    else if (pathParts[0] === 'permalink.php' || pathParts[0] === 'shares') username = "Bài chia sẻ";
+                    else username = pathParts[0];
+                }
+            }
+            else if (domain.includes('xiaohongshu.com') || domain.includes('xhslink.com')) {
+                plat = "Xiaohongshu";
+                username = "Nhấp vào sửa tên TK";
+            }
+            else if (domain.includes('yahoo.co.jp')) {
+                plat = "Yahoo Japan";
+                username = "Yahoo News";
+            }
+            else if (domain.includes('weibo.com')) {
+                plat = "Weibo";
+                if(pathParts.length > 0) username = pathParts[0];
+            }
+            else if (domain.includes('douyin.com')) {
+                plat = "Douyin";
+                if(pathParts.length > 0) username = pathParts[0];
+            }
+            else if (domain.includes('youtube.com')) {
+                plat = "YouTube";
+                if(pathParts.length > 0) username = pathParts[0].replace('@', '');
+            }
+        } catch (e) {
+            // Phòng hờ nếu user dán chuỗi chữ thường không đúng định dạng link URL
+            plat = "Khác";
+            username = "Nhấp vào để sửa";
+        }
         
         resources.ideas.push({
-            id: Date.now(), link: url, title: '[Bấm vào đây để gõ Tiêu đề]', 
-            lang: lang, platform: plat, topic: '[Gõ Chủ đề]', cre: cre, checked: false
+            id: Date.now(), 
+            link: url, 
+            platform: plat, 
+            cre: username, 
+            checked: false
         });
+
         localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources));
-        input.value = ''; renderResources();
+        input.value = ''; 
+        renderResources();
     }
 
     window.updateIdeaField = function(id, field, value) {
@@ -790,7 +845,6 @@
         if(target) { target.checked = !target.checked; localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources)); renderResources(); }
     }
 
-    /* --- CÁC HÀM TÀI NGUYÊN KHÁC --- */
     window.addResource = function(type, inputId) {
         let input = document.getElementById(inputId); let val = input.value.trim(); if(!val) return;
         resources[type].push({ id: Date.now(), content: val });
@@ -800,7 +854,11 @@
     window.addRemoteResource = function() {
         let text = document.getElementById('input-remote').value.trim(); if(!text) return;
         let link = text, idCode = "Chưa có ID", space = text.indexOf(' ');
-        if(space !== -1) { link = text.substring(0, space).trim(); let raw = text.substring(space).trim(); idCode = raw.startsWith('XHS:') ? raw : 'XHS: ' + raw; }
+        if(space !== -1) { 
+            link = text.substring(0, space).trim(); 
+            let raw = text.substring(space).trim(); 
+            idCode = raw.startsWith('XHS:') ? raw : 'XHS: ' + raw; 
+        }
         if(!resources.remotes) resources.remotes = [];
         resources.remotes.push({ id: Date.now(), link: link, idCode: idCode, checked: false });
         localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources)); document.getElementById('input-remote').value = ''; renderResources();
@@ -814,6 +872,7 @@
     window.deleteResource = function(type, id) { resources[type] = resources[type].filter(i => i.id !== id); localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources)); renderResources(); }
 
     function renderResources() {
+        // RENDER BẢNG CHUẨN BỊ DỊCH MỚI CỦA BẠN (3 CỘT CHÍNH)
         let tbodyIdeas = document.getElementById('list-ideas'); tbodyIdeas.innerHTML = '';
         (resources.ideas || []).forEach(item => {
             let tr = document.createElement('tr');
@@ -821,13 +880,10 @@
             tr.innerHTML = `
                 <td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleIdeaCheck(${item.id})"></td>
                 <td style="text-align: center;"><a href="${item.link}" target="_blank">🔗 Mở</a></td>
-                <td class="editable-cell" contenteditable="true" onblur="updateIdeaField(${item.id}, 'title', this.innerText)">${item.title}</td>
-                <td class="editable-cell" contenteditable="true" onblur="updateIdeaField(${item.id}, 'lang', this.innerText)" style="text-align: center;">${item.lang}</td>
-                <td class="editable-cell" contenteditable="true" onblur="updateIdeaField(${item.id}, 'platform', this.innerText)">${item.platform}</td>
-                <td class="editable-cell" contenteditable="true" onblur="updateIdeaField(${item.id}, 'topic', this.innerText)">${item.topic}</td>
+                <td class="editable-cell" contenteditable="true" onblur="updateIdeaField(${item.id}, 'platform', this.innerText)" style="color:var(--zalo-color); font-weight:800;">${item.platform}</td>
                 <td class="editable-cell" contenteditable="true" style="color:#e1306c;" onblur="updateIdeaField(${item.id}, 'cre', this.innerText)">${item.cre}</td>
                 <td style="text-align: center;">
-                    <button class="btn-copy-mini" style="margin-bottom: 5px;" onclick="copyToClipboard('${item.cre.replace(/'/g, "\\'")}')">Copy Cre</button>
+                    <button class="btn-copy-mini" onclick="copyToClipboard('${item.cre.replace(/'/g, "\\'")}')">📋 Copy Cre</button>
                     <button class="delete-custom-btn" onclick="deleteResource('ideas', ${item.id})">×</button>
                 </td>
             `;
