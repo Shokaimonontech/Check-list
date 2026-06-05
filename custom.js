@@ -1,12 +1,9 @@
 /**
- * FILE: custom.js - Tự động nhận diện Threads và các nền tảng
+ * FILE: custom.js (Bản sửa lỗi nhận diện & sửa tên)
  */
 
 window.addEventListener('load', function() {
-    // 1. TỰ ĐỘNG NHẬN DIỆN & GHI ĐÈ HÀM CŨ
-    // Chúng ta lưu lại hàm gốc để vẫn sử dụng được logic thêm vào Sheet
-    const oldAddSmartIdea = window.addSmartIdea;
-
+    // 1. GHI ĐÈ HÀM THÊM Ý TƯỞNG (Tự nhận diện Threads, TikTok, FB, Insta)
     window.addSmartIdea = function() {
         let input = document.getElementById('input-idea');
         let url = input.value.trim();
@@ -15,51 +12,50 @@ window.addEventListener('load', function() {
         let plat = "Khác";
         let username = "Nhấp sửa tên TK";
 
-        // Logic nhận diện thông minh
         try {
-            let urlObj = new URL(url);
-            let hostname = urlObj.hostname.toLowerCase();
-            let pathname = urlObj.pathname.split('/').filter(p => p.length > 0);
-
-            if (hostname.includes('threads.net') || hostname.includes('threads.com')) {
-                plat = "Threads";
-                username = pathname[0] ? pathname[0].replace('@', '') : "ThreadsUser";
-            } else if (hostname.includes('tiktok.com')) {
-                plat = "TikTok";
-                username = pathname[0] ? pathname[0].replace('@', '') : "TikTokUser";
-            } else if (hostname.includes('instagram.com')) {
-                plat = "Instagram";
-                username = pathname[0] ? pathname[0] : "InstaUser";
-            } else if (hostname.includes('facebook.com')) {
-                plat = "Facebook";
-                username = "FacebookUser";
-            }
-
-            // Sau khi nhận diện, ta tự điền vào input hoặc gọi hàm gửi đi
-            // Ở đây ta gọi hàm gửi dữ liệu của bạn, nhưng với giá trị đã được nhận diện
-            sendToSheet("ideas", url, username);
-            input.value = '';
+            let u = new URL(url);
+            let h = u.hostname.toLowerCase();
+            let p = u.pathname.split('/').filter(x => x);
             
-            // Cập nhật lại giao diện ngay sau khi thêm
-            setTimeout(renderResources, 500);
-            
-        } catch (e) {
-            console.error("Link không hợp lệ", e);
-        }
+            if (h.includes('threads.net')) { plat = "Threads"; username = p[0] ? p[0].replace('@','') : "ThreadsUser"; }
+            else if (h.includes('tiktok.com')) { plat = "TikTok"; username = p[0] ? p[0].replace('@','') : "TikTokUser"; }
+            else if (h.includes('instagram.com')) { plat = "Instagram"; username = p[0] ? p[0] : "InstaUser"; }
+            else if (h.includes('facebook.com')) { plat = "Facebook"; username = "FBUser"; }
+        } catch(e) { console.log("Lỗi nhận diện link"); }
+
+        // Gọi hàm gửi gốc trong index.html
+        sendToSheet("ideas", url, username); 
+        input.value = '';
     };
 
-    // 2. ÉP SỬA TÊN KHÔNG MẤT DỮ LIỆU
-    document.addEventListener('blur', function(e) {
-        if (e.target.closest('#list-ideas') && e.target.tagName === 'TD' && e.target.cellIndex === 3) {
-            // Khi bạn gõ xong, dữ liệu tự được lưu vào thuộc tính của thẻ,
-            // renderResources của bạn sẽ tự lấy giá trị này khi load lại.
-            e.target.setAttribute('contenteditable', 'true');
-        }
-    }, true);
-    
-    // 3. ẨN DASHBOARD
-    setInterval(() => {
-        let db = document.getElementById('dashboard-box');
-        if(db && db.style.display !== 'none') db.style.display = 'none';
-    }, 500);
+    // 2. MỞ KHÓA SỬA TÊN BẢNG (Dùng MutationObserver để quét bảng liên tục)
+    const observer = new MutationObserver(() => {
+        let cells = document.querySelectorAll('#list-ideas td');
+        cells.forEach(td => {
+            // Cột số 4 là cột Tên tài khoản
+            if (td.cellIndex === 3 && !td.hasAttribute('contenteditable')) {
+                td.setAttribute('contenteditable', 'true');
+                td.style.border = "2px dashed #FF8B94";
+                td.style.backgroundColor = "#FFF9F9";
+                
+                // Lưu lại khi sửa xong
+                td.addEventListener('blur', function() {
+                    console.log("Đã sửa tên thành:", this.innerText);
+                });
+            }
+        });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // 3. COPY "Cre:" CHÍNH XÁC (Dù bạn đã sửa tên, nó vẫn lấy tên mới)
+    window.copyToClipboard = function(text, btnElement) {
+        // Lấy tên từ ô td thứ 4 trong cùng hàng với nút bấm copy
+        let row = btnElement.closest('tr');
+        let currentName = row.cells[3].innerText;
+        let finalStr = "Cre: " + currentName;
+        
+        navigator.clipboard.writeText(finalStr).then(() => {
+            alert(`📋 Đã copy: "${finalStr}"`);
+        });
+    };
 });
