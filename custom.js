@@ -1,64 +1,68 @@
 /**
- * FILE: custom.js - Dashboard điều hướng Tuần/Tháng/Năm
+ * FILE: custom.js (Tất cả trong một)
  */
 
 window.addEventListener('load', function() {
-    // 1. TẠO MENU DASHBOARD TRONG SIDEBAR
+    console.log("🌸 Hệ thống HY HY Workspace đã sẵn sàng!");
+
+    // 1. TÍNH NĂNG COPY (Tự thêm Cre:)
+    window.copyToClipboard = function(text) {
+        let finalStr = text.startsWith("Cre:") ? text : "Cre: " + text;
+        navigator.clipboard.writeText(finalStr).then(() => alert(`📋 Đã copy: "${finalStr}"`));
+    };
+
+    // 2. DASHBOARD ĐIỀU HƯỚNG (Tuần - Tháng - Năm)
     const sidebar = document.getElementById('sidebar-view-dropdown');
     if (sidebar) {
         sidebar.innerHTML = `
             <button class="menu-item" onclick="switchView('today')">✨ Hôm Nay</button>
             <div style="margin: 10px 0; border-top: 2px solid #FFB7B2;"></div>
             <div style="text-align:center; font-weight:bold; color:#d63384;">📊 DASHBOARD</div>
-            <div style="display:flex; gap:5px; margin-top:5px;">
-                <button class="menu-item" onclick="showDashboard('week')">Tuần</button>
-                <button class="menu-item" onclick="showDashboard('month')">Tháng</button>
-                <button class="menu-item" onclick="showDashboard('year')">Năm</button>
+            <div style="display:flex; flex-direction:column; gap:5px; margin-top:5px;">
+                <button class="menu-item" onclick="showDash('week')">🗓️ Xem Theo Tuần</button>
+                <button class="menu-item" onclick="showDash('month')">📅 Xem Theo Tháng</button>
+                <button class="menu-item" onclick="showDash('year')">📊 Xem Cả Năm</button>
             </div>
         `;
     }
+
+    // 3. LOGIC XỬ LÝ DASHBOARD & SỬA TÊN & GHI CHÚ LỊCH
+    window.showDash = function(type) {
+        let val = prompt("Nhập " + (type === 'week' ? "số tuần" : "tháng") + " bạn muốn xem:", "1");
+        if(val) {
+            document.getElementById('main-title').innerText = "📊 DASHBOARD " + type.toUpperCase() + " " + val;
+            alert("Đã chuyển sang chế độ lọc: " + type + " " + val);
+            // Bạn có thể thêm hàm filter dữ liệu tại đây
+        }
+    };
+
+    // 4. GHI CHÚ LỊCH & SỬA TÊN (Tự quét mỗi 1 giây để đảm bảo luôn chạy)
+    setInterval(function() {
+        // Ghi chú lịch
+        const calGrid = document.getElementById('calendar-grid');
+        if(calGrid && !calGrid.hasAttribute('data-ready')) {
+            calGrid.addEventListener('click', function(e) {
+                let btn = e.target.closest('.cal-btn');
+                if(btn) {
+                    let day = btn.innerText.split('\n')[0];
+                    let note = prompt("Ghi chú ngày " + day + ":", localStorage.getItem('note_'+day) || "");
+                    if(note !== null) {
+                        localStorage.setItem('note_'+day, note);
+                        btn.setAttribute("title", note);
+                        btn.style.border = "2px dashed #FF8B94";
+                    }
+                }
+            });
+            calGrid.setAttribute('data-ready', 'true');
+        }
+
+        // Sửa tên tài khoản
+        document.querySelectorAll('#list-ideas td, #list-remotes td').forEach(td => {
+            if((td.cellIndex === 3 || td.cellIndex === 2) && !td.hasAttribute('contenteditable')) {
+                td.setAttribute('contenteditable', 'true');
+                td.style.backgroundColor = "#FFF9F9";
+                td.style.border = "1px solid #FFB7B2";
+            }
+        });
+    }, 1000);
 });
-
-// 2. HÀM HIỂN THỊ CÁC Ô DASHBOARD (Tuần/Tháng/Năm)
-window.showDashboard = function(type) {
-    const mainContent = document.querySelector('.main-content');
-    let dashContainer = document.getElementById('dash-view');
-    
-    // Tạo container hiển thị dashboard nếu chưa có
-    if (!dashContainer) {
-        dashContainer = document.createElement('div');
-        dashContainer.id = 'dash-view';
-        dashContainer.style.cssText = "display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; justify-content:center;";
-        mainContent.insertBefore(dashContainer, document.getElementById('checklist-container'));
-    }
-    dashContainer.innerHTML = '';
-
-    let items = [];
-    if (type === 'week') items = Array.from({length: 52}, (_, i) => i + 1);      // 52 Tuần
-    if (type === 'month') items = Array.from({length: 12}, (_, i) => i + 1);     // 12 Tháng
-    if (type === 'year') items = [2026];                                         // 1 Năm
-
-    items.forEach(item => {
-        let btn = document.createElement('button');
-        btn.innerHTML = type === 'week' ? `W${item}` : (type === 'month' ? `T${item}` : item);
-        btn.style.cssText = "padding:10px; border:2px solid #000; border-radius:10px; cursor:pointer; background:#FFF5F5;";
-        
-        btn.onclick = () => {
-            alert("Đang lọc dữ liệu cho: " + (type === 'week' ? "Tuần " : "Tháng ") + item);
-            filterDataByCriteria(type, item);
-        };
-        dashContainer.appendChild(btn);
-    });
-};
-
-// 3. HÀM LỌC DỮ LIỆU (Tương tác với index.html cũ)
-window.filterDataByCriteria = function(type, val) {
-    // Ẩn tất cả các thẻ Card công việc
-    document.querySelectorAll('.card').forEach(card => {
-        card.style.display = 'none'; // Ẩn hết
-    });
-
-    // Logic: Ở đây bạn muốn hiện những công việc nào thuộc tuần/tháng đó.
-    // Nếu bạn muốn hiện lại, ta sẽ cần logic đối chiếu ngày.
-    alert("Hệ thống đã nhận lệnh lọc theo " + type + " thứ " + val);
-};
