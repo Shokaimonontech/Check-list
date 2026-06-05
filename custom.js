@@ -1,9 +1,9 @@
 /**
- * FILE: custom.js
- * Tính năng: Copy "Cre:", Lịch ghi chú (Rê chuột hiện), Lưu ghi chú lên Sheet
+ * FILE: custom-features.js
+ * Tính năng: Copy "Cre:", Sửa tên tài khoản, Lịch ghi chú (Rê chuột hiện)
  */
 
-// 1. Nâng cấp Copy: Tự động thêm "Cre:"
+// 1. TỰ ĐỘNG THÊM "Cre: " KHI COPY
 window.copyToClipboard = function(text) {
     let finalStr = text.startsWith("Cre:") ? text : "Cre: " + text;
     navigator.clipboard.writeText(finalStr).then(() => {
@@ -11,41 +11,40 @@ window.copyToClipboard = function(text) {
     });
 };
 
-// 2. Lịch ghi chú (Dùng chung bộ nhớ và Sheet)
-function initCalendarNotes() {
-    // Gọi hàm này sau khi web đã load xong dữ liệu
-    setTimeout(() => {
-        const calendarButtons = document.querySelectorAll('.cal-btn');
-        calendarButtons.forEach(btn => {
-            // Khi di chuột qua ô lịch, nó tự hiện title là nội dung ghi chú
-            // (Title này đã được cập nhật từ hàm render của bạn)
-            btn.addEventListener('mouseenter', function() {
-                console.log("Rê chuột qua ngày:", this.innerText);
-            });
-        });
-    }, 2000);
+// 2. CHO PHÉP SỬA TÊN TÀI KHOẢN (Click vào là sửa được)
+// Hàm này sẽ tự động gắn vào các ô tên khi web load xong
+function enableNameEditing() {
+    document.querySelectorAll('td').forEach(td => {
+        if (td.innerText.includes("Nhấp sửa") || td.parentElement.parentElement.id === 'list-ideas') {
+            td.setAttribute('contenteditable', 'true');
+            td.classList.add('editable-cell');
+            td.onblur = function() {
+                // Tự động lưu tên sau khi sửa
+                console.log("Tên mới đã lưu:", this.innerText);
+                // Bạn có thể thêm hàm fetch gửi lên Sheet ở đây nếu cần
+            };
+        }
+    });
 }
 
-// 3. Hàm ghi đè để chỉnh sửa ghi chú trực tiếp
-window.updateCalendarNote = function(key, currentNote) {
-    let input = prompt("Nhập ghi chú cho ngày " + key + ":", currentNote || "");
-    if(input !== null) {
-        // Lưu vào bộ nhớ trình duyệt
-        let notes = JSON.parse(localStorage.getItem('hy_calendar_notes')) || {};
-        notes[key] = input;
-        localStorage.setItem('hy_calendar_notes', JSON.stringify(notes));
-        
-        // Gửi lên Sheet
-        fetch(SHEET_API_URL, {
-            method: "POST", mode: "no-cors",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({action: "updateNote", date: key, note: input})
-        }).then(() => {
-            alert("Đã lưu ghi chú lên Sheet!");
-            location.reload(); // F5 để cập nhật
-        });
-    }
-};
+// 3. XỬ LÝ LỊCH GHI CHÚ (Rê chuột hiện)
+function initCalendarNotes() {
+    const calendarGrid = document.getElementById('calendar-grid');
+    if (!calendarGrid) return;
 
-// Tự động khởi tạo sau khi web load xong
-window.addEventListener('load', initCalendarNotes);
+    // Lắng nghe sự kiện để gắn title (hiện tooltip)
+    calendarGrid.addEventListener('mouseover', (e) => {
+        let btn = e.target.closest('.cal-btn');
+        if (btn) {
+            let key = btn.innerText.split('\n')[0]; // Giả định lấy ngày từ nội dung
+            let note = localStorage.getItem('note_' + key) || "Chưa có ghi chú";
+            btn.setAttribute("title", "Ghi chú: " + note);
+        }
+    });
+}
+
+// Khởi chạy các tính năng mới
+window.addEventListener('load', () => {
+    enableNameEditing();
+    initCalendarNotes();
+});
