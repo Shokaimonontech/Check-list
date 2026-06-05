@@ -812,12 +812,10 @@
         }
     }
 
-<script>
-      function formatDateKey(d) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
-        
-        loadDataFromGoogleSheet();
-        switchView('today');
-    </script>
-    <script src="custom.js"></script>
+    function formatDateKey(d) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+
+    loadDataFromGoogleSheet();
+    switchView('today');
+</script>
 </body>
 </html>
