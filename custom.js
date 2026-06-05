@@ -1,50 +1,62 @@
 /**
- * FILE: custom-features.js
- * Tính năng: Copy "Cre:", Sửa tên tài khoản, Lịch ghi chú (Rê chuột hiện)
+ * FILE: custom.js
+ * Tính năng: Copy "Cre:", Sửa tên tài khoản, Ghi chú lịch
  */
 
-// 1. TỰ ĐỘNG THÊM "Cre: " KHI COPY
-window.copyToClipboard = function(text) {
-    let finalStr = text.startsWith("Cre:") ? text : "Cre: " + text;
-    navigator.clipboard.writeText(finalStr).then(() => {
-        alert(`📋 Đã copy: "${finalStr}"`);
-    });
-};
+window.addEventListener('load', function() {
+    console.log("🌸 Custom script đã khởi chạy...");
 
-// 2. CHO PHÉP SỬA TÊN TÀI KHOẢN (Click vào là sửa được)
-// Hàm này sẽ tự động gắn vào các ô tên khi web load xong
-function enableNameEditing() {
-    document.querySelectorAll('td').forEach(td => {
-        if (td.innerText.includes("Nhấp sửa") || td.parentElement.parentElement.id === 'list-ideas') {
-            td.setAttribute('contenteditable', 'true');
-            td.classList.add('editable-cell');
-            td.onblur = function() {
-                // Tự động lưu tên sau khi sửa
-                console.log("Tên mới đã lưu:", this.innerText);
-                // Bạn có thể thêm hàm fetch gửi lên Sheet ở đây nếu cần
-            };
-        }
-    });
-}
+    // 1. NÂNG CẤP COPY: Luôn có "Cre:"
+    // Ghi đè hàm copy cũ bằng hàm mới
+    window.copyToClipboard = function(text) {
+        let finalStr = text.startsWith("Cre:") ? text : "Cre: " + text;
+        navigator.clipboard.writeText(finalStr).then(() => {
+            alert(`📋 Đã copy: "${finalStr}"`);
+        });
+    };
 
-// 3. XỬ LÝ LỊCH GHI CHÚ (Rê chuột hiện)
-function initCalendarNotes() {
-    const calendarGrid = document.getElementById('calendar-grid');
-    if (!calendarGrid) return;
-
-    // Lắng nghe sự kiện để gắn title (hiện tooltip)
-    calendarGrid.addEventListener('mouseover', (e) => {
-        let btn = e.target.closest('.cal-btn');
-        if (btn) {
-            let key = btn.innerText.split('\n')[0]; // Giả định lấy ngày từ nội dung
-            let note = localStorage.getItem('note_' + key) || "Chưa có ghi chú";
-            btn.setAttribute("title", "Ghi chú: " + note);
-        }
-    });
-}
-
-// Khởi chạy các tính năng mới
-window.addEventListener('load', () => {
+    // 2. TÍNH NĂNG SỬA TÊN TÀI KHOẢN (Cho phần Chuẩn bị dịch)
+    // Tự động tìm các ô chứa tên tài khoản trong bảng tài nguyên
+    function enableNameEditing() {
+        const rows = document.querySelectorAll('#list-ideas tr');
+        rows.forEach(tr => {
+            let nameCell = tr.cells[3]; // Cột 4 (Tên tài khoản)
+            if (nameCell) {
+                nameCell.setAttribute('contenteditable', 'true');
+                nameCell.style.border = "1px dashed #FF8B94";
+                nameCell.onblur = function() {
+                    console.log("Tên mới:", this.innerText);
+                    // Ở đây nếu muốn lưu thẳng lên Sheet bạn thêm lệnh fetch sau
+                };
+            }
+        });
+    }
     enableNameEditing();
-    initCalendarNotes();
+
+    // 3. TÍNH NĂNG LỊCH CÓ GHI CHÚ
+    const calendarGrid = document.getElementById('calendar-grid');
+    if (calendarGrid) {
+        calendarGrid.addEventListener('click', function(e) {
+            let btn = e.target.closest('.cal-btn');
+            if (btn) {
+                // Lấy ngày từ ô lịch
+                let datePart = btn.innerText.split('\n')[0]; 
+                let key = formatDateKey(new Date()) + "-" + datePart; // Tạo key duy nhất
+                
+                let currentNote = localStorage.getItem('note_' + key) || "";
+                let input = prompt("Nhập ghi chú cho ngày " + datePart + ":", currentNote);
+                
+                if (input !== null) {
+                    localStorage.setItem('note_' + key, input);
+                    btn.setAttribute("title", "Ghi chú: " + input);
+                    btn.style.backgroundColor = "#FFD1DC"; // Đổi màu khi có ghi chú
+                }
+            }
+        });
+    }
 });
+
+// Hàm hỗ trợ format ngày
+function formatDateKey(d) {
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
