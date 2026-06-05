@@ -5,30 +5,29 @@
     <title>🌸 HY HY WORKSPACE 2026 🌸</title>
 </head>
 <body>
-    <div id="status" style="text-align:center; padding:50px;">Đang tải dữ liệu từ Sheet...</div>
-    <div id="main-content" style="display:none;">
-        <!-- Dán nội dung HTML cũ của bạn vào đây -->
-    </div>
+    <div id="loading" style="text-align:center; padding:50px; font-size:20px;">Đang khởi động công việc...</div>
+    
+    <script>
+        // DÁN LINK /EXEC CỦA BẠN VÀO DƯỚI ĐÂY
+        const SHEET_API_URL = "https://script.google.com/macros/s/AKfycby_xJujI0KTZABafj5ikfgG74CdUeSqNYNHYcBb4VeymeJdBxk10BeK2xMa5qq5AdaR/exec"; 
 
-<script>
-    const SHEET_API_URL = "https://script.google.com/macros/s/AKfycby_xJujI0KTZABafj5ikfgG74CdUeSqNYNHYcBb4VeymeJdBxk10BeK2xMa5qq5AdaR/exec";
-
-    // HÀM KẾT NỐI CHÍNH
-    async function loadData() {
-        try {
-            const res = await fetch(SHEET_API_URL);
-            const data = await res.json();
-            document.getElementById('status').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-            
-            // Xử lý dữ liệu tại đây
-            console.log("Dữ liệu nhận được:", data);
-        } catch(err) {
-            document.getElementById('status').innerText = "Lỗi kết nối Sheet! Hãy kiểm tra link /exec trong code.";
-            console.error(err);
+        async function init() {
+            try {
+                const response = await fetch(SHEET_API_URL);
+                const data = await response.json();
+                
+                document.getElementById('loading').style.display = 'none';
+                console.log("Dữ liệu kết nối thành công:", data);
+                alert("Kết nối thành công! Web đã nhận dữ liệu từ Sheet.");
+                
+                // Nếu đến đây mà hiện Alert, nghĩa là link bạn đã chuẩn!
+                // Giờ chỉ cần dán phần giao diện cũ vào sau body là xong.
+                
+            } catch (error) {
+                document.getElementById('loading').innerText = "Lỗi kết nối: " + error.message;
+            }
         }
-    }
-    loadData();
-</script>
+        init();
+    </script>
 </body>
 </html>
