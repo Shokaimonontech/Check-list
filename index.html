@@ -804,7 +804,31 @@
         
         localStorage.setItem('hy_resources_v10_db', JSON.stringify(resources));
         input.value = ''; 
-        renderResources();
+        function renderResources() {
+        let tbodyIdeas = document.getElementById('list-ideas'); 
+        tbodyIdeas.innerHTML = '';
+        
+        (resources.ideas || []).forEach(item => {
+            let tr = document.createElement('tr');
+            if(item.checked) tr.className = 'completed';
+            
+            // Cột 'topic' bây giờ sẽ hiển thị tên tài khoản mà hàm addSmartIdea đã tách được
+            tr.innerHTML = `
+                <td style="text-align: center;"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleIdeaCheck(${item.id})"></td>
+                <td style="text-align: center;"><a href="${item.link}" target="_blank">🔗 Mở</a></td>
+                <td class="editable-cell" contenteditable="true" onblur="updateIdeaField(${item.id}, 'title', this.innerText)">${item.title}</td>
+                <td class="editable-cell" contenteditable="true" onblur="updateIdeaField(${item.id}, 'lang', this.innerText)" style="text-align: center;">${item.lang}</td>
+                <td class="editable-cell" contenteditable="true" onblur="updateIdeaField(${item.id}, 'platform', this.innerText)">${item.platform}</td>
+                <td class="editable-cell" contenteditable="true" onblur="updateIdeaField(${item.id}, 'topic', this.innerText)">${item.topic}</td>
+                <td class="editable-cell" contenteditable="true" style="color:#e1306c;" onblur="updateIdeaField(${item.id}, 'cre', this.innerText)">${item.cre}</td>
+                <td style="text-align: center;">
+                    <button class="btn-copy-mini" style="margin-bottom: 5px;" onclick="copyToClipboard('${item.cre.replace(/'/g, "\\'")}')">Copy Cre</button>
+                    <button class="delete-custom-btn" onclick="deleteResource('ideas', ${item.id})">×</button>
+                </td>
+            `;
+            tbodyIdeas.appendChild(tr);
+        });
+    };
     }
 
     /* --- CÁC HÀM TÀI NGUYÊN KHÁC --- */
