@@ -3,31 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>🌸 HY HY WORKSPACE 2026 🌸</title>
+    <!-- CSS VÀ HTML CŨ CỦA BẠN DÁN Ở ĐÂY -->
+    <style> /* Dán CSS cũ vào đây */ </style>
 </head>
 <body>
-    <div id="loading" style="text-align:center; padding:50px; font-size:20px;">Đang khởi động công việc...</div>
+    <!-- Dán HTML cũ vào đây -->
     
     <script>
-        // DÁN LINK /EXEC CỦA BẠN VÀO DƯỚI ĐÂY
-        const SHEET_API_URL = "https://script.google.com/macros/s/AKfycby_xJujI0KTZABafj5ikfgG74CdUeSqNYNHYcBb4VeymeJdBxk10BeK2xMa5qq5AdaR/exec"; 
+        const SHEET_API_URL = "https://script.google.com/macros/s/AKfycby_xJujI0KTZABafj5ikfgG74CdUeSqNYNHYcBb4VeymeJdBxk10BeK2xMa5qq5AdaR/exec";
 
-        async function init() {
-            try {
-                const response = await fetch(SHEET_API_URL);
-                const data = await response.json();
-                
-                document.getElementById('loading').style.display = 'none';
-                console.log("Dữ liệu kết nối thành công:", data);
-                alert("Kết nối thành công! Web đã nhận dữ liệu từ Sheet.");
-                
-                // Nếu đến đây mà hiện Alert, nghĩa là link bạn đã chuẩn!
-                // Giờ chỉ cần dán phần giao diện cũ vào sau body là xong.
-                
-            } catch (error) {
-                document.getElementById('loading').innerText = "Lỗi kết nối: " + error.message;
-            }
+        // TÍNH NĂNG COPY CRE
+        window.copyToClipboard = function(text) {
+            let finalStr = text.startsWith("Cre:") ? text : "Cre: " + text;
+            navigator.clipboard.writeText(finalStr).then(() => alert(`📋 Đã copy: "${finalStr}"`));
         }
-        init();
+
+        // TÍNH NĂNG ĐỒNG BỘ SHEET + LỊCH GHI CHÚ
+        async function loadData() {
+            const res = await fetch(SHEET_API_URL);
+            const data = await res.json();
+            
+            // Xử lý ghi chú lịch
+            let calendarNotes = {};
+            data.notes.forEach(n => calendarNotes[n.date] = n.note);
+            
+            // Render logic ở đây...
+            console.log("Đã tải:", data);
+        }
+
+        // TÍNH NĂNG LƯU GHI CHÚ VÀO SHEET
+        function saveNoteToSheet(date, note) {
+            fetch(SHEET_API_URL, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({action: "updateNote", date: date, note: note})
+            });
+        }
+        
+        loadData();
     </script>
 </body>
 </html>
