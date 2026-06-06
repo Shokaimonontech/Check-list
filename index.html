@@ -924,7 +924,7 @@
             calculateAndRenderDashboard('year');
             setTimeout(scrollToCalendar, 350);
         } else if (view === 'dashboard') {
-            document.getElementById('main-title').innerText = "📊 DASHBOARD HỆ THỐNG 📊";
+            document.getElementById('main-title').innerText = "💮 DASHBOARD HỆ THỐNG 💮";
             isDateFilteringActive = false; 
             buildMonthSelectors(); selectCalendarMonth(selectedDate.getMonth());
             calculateAndRenderDashboard('month');
@@ -975,7 +975,7 @@
                     currentView = 'dashboard'; 
                     document.getElementById('btn-view-year').classList.remove('active'); 
                     document.getElementById('btn-view-dashboard').classList.add('active'); 
-                    document.getElementById('main-title').innerText = "📊 DASHBOARD HỆ THỐNG 📊";
+                    document.getElementById('main-title').innerText = "💮 DASHBOARD HỆ THỐNG 💮";
                 }
                 
                 document.querySelectorAll('.month-selector-btn').forEach(b => b.classList.remove('active-month'));
@@ -1366,7 +1366,7 @@
                 <div class="res-meta-right">
                     <span class="badge-platform">${item.platform}</span>
                     <span class="res-acc-text" title="${item.account}">👤 ${item.account}</span>
-                    <button class="btn-copy-mini" onclick="copyOneTouchCre('${item.cre}')">📋 Copy Cre</button>
+                    <button class="btn-copy-mini" onclick="copyOneTouchCre('${item.cre}')">🌸 Copy Cre</button>
                     <button class="delete-custom-btn" onclick="deleteResourceItem(${item.id})">×</button>
                 </div>
             `;
