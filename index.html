@@ -120,7 +120,7 @@
         .widget-block:hover { transform: translate(-2px, -2px) scale(1.02); box-shadow: 5px 5px 0px #1e293b; }
         .block-loc { background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-color: #1b5e20; } 
         .block-weather { background: linear-gradient(135deg, #FFF8E1 0%, #FFE082 100%); border-color: #b7791f; }
-        .block-text { font-size: 0.7rem; font-weight: 900; color: #475569; text-transform: uppercase; margin-bottom: 2px; display: flex; align-items: center; gap: 4px; }
+        .block-text { font-size: 0.75rem; font-weight: 900; color: #475569; text-transform: uppercase; margin-bottom: 2px; display: flex; align-items: center; gap: 4px; }
         .block-val { font-size: 0.85rem; font-weight: 900; }
         
         .clock-container-wrapper { background: linear-gradient(135deg, #FFF0F0 0%, #FFD1D1 100%); border: var(--main-border); border-radius: 20px; display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 4px 14px; height: 68px; box-shadow: 3px 3px 0px #1e293b; box-sizing: border-box; }
@@ -217,15 +217,27 @@
         }
         .dash-app-card.tiktok-ds { background: #F9FAFB; border-color: var(--tiktok-color); }
         .dash-app-card.instagram-ds { background: #FFF5F7; border-color: var(--instagram-color); }
-        .dash-app-card.facebook-ds { background: #F0F7FF; border-color: var(--facebook-color); grid-column: 1 / -1; }
+        .dash-app-card.facebook-ds { background: #F0F7FF; border-color: var(--facebook-color); grid-column: 1 / -1; padding: 0; overflow: hidden; }
         .dash-app-card.zalo-ds { background: #F5F7FF; border-color: var(--zalo-color); }
         
         .dash-app-title { font-weight: 900; font-size: 0.9rem; margin-bottom: 4px; text-transform: uppercase; text-align: center; border-bottom: 2px dotted rgba(0,0,0,0.1); padding-bottom: 4px; }
         .dash-stat-row { font-size: 0.8rem; font-weight: 700; color: #475569; display: flex; justify-content: space-between; padding: 2px 4px; }
         .dash-stat-row span:last-child { color: #1e293b; font-weight: 800; }
         
+        /* FACEBOOK ACCORDION */
+        .dash-fb-accordion-header {
+            background: var(--facebook-gradient); padding: 14px; font-weight: 900; font-size: 0.9rem; color: #0050b3;
+            text-transform: uppercase; text-align: center; cursor: pointer; user-select: none; display: flex; justify-content: center; align-items: center; gap: 8px;
+            border-bottom: 2px solid #1e293b;
+        }
+        .dash-fb-accordion-header::after { content: ' ▲'; font-size: 0.7rem; font-weight: bold; transition: transform 0.2s; margin-left: 4px; }
+        .dash-fb-accordion-header.collapsed::after { transform: rotate(180deg); }
+        .dash-fb-accordion-content { padding: 12px; display: flex; flex-direction: column; gap: 10px; transition: all 0.3s ease; }
+        .dash-app-card.facebook-ds.collapsed .dash-fb-accordion-content { display: none; }
+        .dash-app-card.facebook-ds.collapsed .dash-fb-accordion-header { border-bottom: none; }
+
         .dash-fb-sub-group {
-            margin-top: 6px; padding: 8px; border: 1.5px dashed #bae0ff; border-radius: 12px; background: #ffffff;
+            margin-top: 2px; padding: 8px; border: 1.5px dashed #bae0ff; border-radius: 12px; background: #ffffff;
         }
         .dash-fb-sub-title { font-size: 0.8rem; font-weight: 800; color: #0050b3; margin-bottom: 4px; text-transform: uppercase; display: flex; align-items: center; gap: 4px; }
 
@@ -265,7 +277,7 @@
         .res-link-anchor { font-weight: 700; font-size: 0.85rem; color: #2563eb; text-decoration: none; word-break: break-all; }
         
         .res-meta-right { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
-        .badge-platform { background: #E2E8F0; border: 1.5px solid #1e293b; padding: 4px 8px; border-radius: 10px; font-size: 0.7 foolproof; font-weight: 800; text-transform: uppercase; }
+        .badge-platform { background: #E2E8F0; border: 1.5px solid #1e293b; padding: 4px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
         .res-acc-text { font-size: 0.8rem; font-weight: 700; color: #475569; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
         /* CHECKLIST CARDS */
@@ -429,25 +441,28 @@
                     <div class="dash-stat-row"><span>Tổng số Video:</span><span id="dash-zl-video">0</span></div>
                 </div>
                 
-                <div class="dash-app-card facebook-ds">
-                    <div class="dash-app-title" style="color: var(--facebook-color);">🌸 Facebook Page System</div>
-                    
-                    <div class="dash-fb-sub-group">
-                        <div class="dash-fb-sub-title">💮 Trang HY HY</div>
-                        <div class="dash-stat-row"><span>Bản dịch:</span><span id="dash-fb-hyhy-trans">0</span></div>
-                        <div class="dash-stat-row"><span>Video:</span><span id="dash-fb-hyhy-video">0</span></div>
+                <div class="dash-app-card facebook-ds" id="dash-fb-card-root">
+                    <div class="dash-fb-accordion-header" id="dash-fb-trigger" onclick="toggleFacebookDashboardAccordion()">
+                        🌸 Facebook Page System
                     </div>
-                    
-                    <div class="dash-fb-sub-group">
-                        <div class="dash-fb-sub-title">💮 Trang HY đang làm Blog</div>
-                        <div class="dash-stat-row"><span>Bản dịch:</span><span id="dash-fb-hyblog-trans">0</span></div>
-                        <div class="dash-stat-row"><span>Video:</span><span id="dash-fb-hyblog-video">0</span></div>
-                    </div>
-                    
-                    <div class="dash-fb-sub-group">
-                        <div class="dash-fb-sub-title">💮 Trang Shokaimono</div>
-                        <div class="dash-stat-row"><span>Bản dịch:</span><span id="dash-fb-shokai-trans">0</span></div>
-                        <div class="dash-stat-row"><span>Video:</span><span id="dash-fb-shokai-video">0</span></div>
+                    <div class="dash-fb-accordion-content">
+                        <div class="dash-fb-sub-group">
+                            <div class="dash-fb-sub-title">💮 Trang HY HY</div>
+                            <div class="dash-stat-row"><span>Bản dịch:</span><span id="dash-fb-hyhy-trans">0</span></div>
+                            <div class="dash-stat-row"><span>Video:</span><span id="dash-fb-hyhy-video">0</span></div>
+                        </div>
+                        
+                        <div class="dash-fb-sub-group">
+                            <div class="dash-fb-sub-title">💮 Trang HY đang làm Blog</div>
+                            <div class="dash-stat-row"><span>Bản dịch:</span><span id="dash-fb-hyblog-trans">0</span></div>
+                            <div class="dash-stat-row"><span>Video:</span><span id="dash-fb-hyblog-video">0</span></div>
+                        </div>
+                        
+                        <div class="dash-fb-sub-group">
+                            <div class="dash-fb-sub-title">💮 Trang Shokaimono</div>
+                            <div class="dash-stat-row"><span>Bản dịch:</span><span id="dash-fb-shokai-trans">0</span></div>
+                            <div class="dash-stat-row"><span>Video:</span><span id="dash-fb-shokai-video">0</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -614,6 +629,12 @@
     <button class="btn-back-to-top" id="btn-goto-top" onclick="scrollWorkspaceToTop()">🌸</button>
 
 <script>
+    // -------------------------------------------------------------
+    // 🌸 ĐƯỜNG DẪN WEB APP GOOGLE SHEETS CỦA BẠN 🌸
+    // Hãy dán URL Web App (sau khi deploy bên Google Script) vào dấu ngoặc kép dưới đây:
+    const API_URL = "https://script.google.com/macros/s/AKfycbylBfG9pYxnkPGvH2AuLboN63qqIz3J0sxWgHhFi5e0uqvasE6wAk0kc7WYrVnKarHdaQ/exec"; 
+    // -------------------------------------------------------------
+
     const YEAR = 2026;
     let currentView = 'today';
     let selectedDate = new Date();
@@ -622,6 +643,8 @@
     let db = {}; let hy_resources = []; let hy_posts = []; 
     let backup_db = null; let backup_resources = null; let backup_posts = null;
     let activeDashboardMonth = selectedDate.getMonth();
+    
+    let isDateFilteringActive = false;
 
     const segmentMapping = {
         'tiktok': [1, 2, 10], 'instagram': [3], 'fb-hyhy': [4, 5],
@@ -646,6 +669,40 @@
         "#FFE0B2", "#FFCCBC", "#FCE4EC", "#F3E5F5", "#EDE7F6", "#E8EAF6", "#E1F5FE",
         "#E0F7FA", "#E2F3F5", "#F7F9FA"
     ];
+
+    // Giao tiếp API thay thế google.script.run
+    async function apiFetch(action, params = {}) {
+        try {
+            let url = `${API_URL}?action=${action}`;
+            for (let key in params) {
+                url += `&${key}=${encodeURIComponent(params[key])}`;
+            }
+            let response = await fetch(url);
+            let result = await response.json();
+            if (result.status === "success") return result.data;
+            else throw new Error(result.message);
+        } catch (e) {
+            console.error("Lỗi tải dữ liệu:", e);
+            alert("Có lỗi xảy ra khi kết nối máy chủ Google Sheets!");
+        }
+    }
+
+    async function apiPost(action, bodyData = {}) {
+        try {
+            bodyData.action = action;
+            let response = await fetch(API_URL, {
+                method: "POST",
+                body: JSON.stringify(bodyData),
+                headers: { "Content-Type": "text/plain;charset=utf-8" }
+            });
+            let result = await response.json();
+            if (result.status === "success") return true;
+            else throw new Error(result.message);
+        } catch (e) {
+            console.error("Lỗi gửi dữ liệu:", e);
+            alert("Không thể lưu thông tin lên Google Sheets!");
+        }
+    }
 
     window.addEventListener('scroll', function() {
         const btn = document.getElementById('btn-goto-top');
@@ -741,15 +798,27 @@
         icon.innerText = container.classList.contains('collapsed') ? "▼ Mở rộng" : "▲ Thu gọn";
     }
 
-    function loadDataFromGoogleSheets() {
+    function toggleFacebookDashboardAccordion() {
+        const fbCard = document.getElementById('dash-fb-card-root');
+        const fbHeader = document.getElementById('dash-fb-trigger');
+        fbCard.classList.toggle('collapsed');
+        fbHeader.classList.toggle('collapsed');
+    }
+
+    async function loadDataFromGoogleSheets() {
         showLoading(true);
-        google.script.run.withSuccessHandler(function(result) {
+        let result = await apiFetch("getAllData");
+        if (result) {
             db = result.db || {}; hy_resources = result.resources || []; hy_posts = result.posts || [];
             renderChecklistValues();
-            calculateAndRenderDashboard(currentView === 'year' ? 'year' : (currentView === 'dashboard' ? 'month' : 'day'));
+            
+            let dashboardMode = 'year';
+            if (currentView === 'dashboard') dashboardMode = isDateFilteringActive ? 'day' : 'month';
+            calculateAndRenderDashboard(dashboardMode);
+            
             if (currentView === 'resources') { renderResourcesCards(); renderPostsCards(); }
-            showLoading(false);
-        }).getAllDataFromSheets();
+        }
+        showLoading(false);
     }
     
     function showLoading(status) { document.getElementById('sync-loading').style.display = status ? 'block' : 'none'; }
@@ -814,24 +883,26 @@
         if(tempDate.getFullYear() === YEAR) { 
             selectedDate = tempDate;
             activeDashboardMonth = selectedDate.getMonth();
+            if (currentView === 'dashboard') isDateFilteringActive = true; 
             document.getElementById('btn-nav-prev').classList.remove('active-nav');
             document.getElementById('btn-nav-next').classList.remove('active-nav');
             if(days === -1) document.getElementById('btn-nav-prev').classList.add('active-nav');
             if(days === 1) document.getElementById('btn-nav-next').classList.add('active-nav');
             if(currentView === 'year' || currentView === 'dashboard') { buildMonthSelectors(); selectCalendarMonth(selectedDate.getMonth()); }
             renderChecklistValues(); 
-            calculateAndRenderDashboard(currentView === 'year' ? 'year' : (currentView === 'dashboard' ? 'month' : 'day'));
+            calculateAndRenderDashboard(currentView === 'year' ? 'year' : (currentView === 'dashboard' ? (isDateFilteringActive ? 'day' : 'month') : 'day'));
         } else { alert("Workspace hiện tại được tối ưu hóa dữ liệu trong năm 2026!"); }
     }
 
     window.backToToday = function() {
         selectedDate = new Date(); if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5);
         activeDashboardMonth = selectedDate.getMonth();
+        isDateFilteringActive = (currentView === 'today' || currentView === 'dashboard');
         document.getElementById('btn-nav-prev').classList.remove('active-nav');
         document.getElementById('btn-nav-next').classList.remove('active-nav');
         if(currentView === 'year' || currentView === 'dashboard') { buildMonthSelectors(); selectCalendarMonth(selectedDate.getMonth()); }
         renderChecklistValues();
-        calculateAndRenderDashboard('day');
+        calculateAndRenderDashboard(currentView === 'year' ? 'year' : (isDateFilteringActive ? 'day' : 'month'));
     }
 
     function switchView(view) {
@@ -839,23 +910,22 @@
         document.querySelectorAll('.menu-item').forEach(btn => btn.classList.remove('active'));
         if(document.getElementById(`btn-view-${view}`)) document.getElementById(`btn-view-${view}`).classList.add('active');
         
-        // Cài đặt ẩn hiện theo yêu cầu mới
         document.getElementById('calendar-container').style.display = (view === 'year' || view === 'dashboard') ? 'block' : 'none';
         document.getElementById('hy-dashboard-panel').style.display = (view === 'year' || view === 'dashboard') ? 'block' : 'none';
         document.getElementById('checklist-container').style.display = (view === 'today') ? 'block' : 'none';
         
-        // Ẩn thanh tiến độ hôm nay ở bảng lịch và dashboard đi
         document.getElementById('total-progress-box').style.display = (view === 'today') ? 'block' : 'none';
         document.getElementById('resources-box').style.display = (view === 'resources') ? 'block' : 'none';
         
         if (view === 'year') {
             document.getElementById('main-title').innerText = "🌸 LỊCH CẢ NĂM 2026 🌸";
+            isDateFilteringActive = false;
             buildMonthSelectors(); selectCalendarMonth(selectedDate.getMonth());
-            // Nhấn vô năm 2026 nó cũng hiện ra dashboard cả năm luôn
             calculateAndRenderDashboard('year');
             setTimeout(scrollToCalendar, 350);
         } else if (view === 'dashboard') {
             document.getElementById('main-title').innerText = "📊 DASHBOARD HỆ THỐNG 📊";
+            isDateFilteringActive = false; 
             buildMonthSelectors(); selectCalendarMonth(selectedDate.getMonth());
             calculateAndRenderDashboard('month');
             setTimeout(() => { document.getElementById('hy-dashboard-panel').scrollIntoView({ behavior: 'smooth' }); }, 350);
@@ -871,6 +941,7 @@
             });
         } else {
             document.getElementById('main-title').innerText = "🌸 HY HY WORKSPACE 🌸";
+            isDateFilteringActive = true;
             renderChecklistValues();
             calculateAndRenderDashboard('day');
         }
@@ -883,14 +954,34 @@
         shortMonths.forEach((m, idx) => {
             let btn = document.createElement('button'); btn.className = 'month-selector-btn';
             btn.style.backgroundColor = monthPastelColors[idx]; 
+            
             if(activeDashboardMonth === idx && currentView !== 'year') btn.classList.add('active-month');
+            
             btn.innerText = m;
             btn.onclick = () => {
-                // Nếu đang ở view Cả Năm, bấm chọn tháng sẽ chuyển sang chế độ Dashboard của tháng đó
-                if(currentView === 'year') { currentView = 'dashboard'; document.getElementById('btn-view-year').classList.remove('active'); document.getElementById('btn-view-dashboard').classList.add('active'); }
+                if (currentView === 'dashboard' && activeDashboardMonth === idx) {
+                    currentView = 'year';
+                    document.getElementById('btn-view-dashboard').classList.remove('active');
+                    document.getElementById('btn-view-year').classList.add('active');
+                    document.getElementById('main-title').innerText = "🌸 LỊCH CẢ NĂM 2026 🌸";
+                    isDateFilteringActive = false;
+                    buildMonthSelectors();
+                    selectCalendarMonth(idx);
+                    calculateAndRenderDashboard('year');
+                    return;
+                }
+
+                if(currentView === 'year') { 
+                    currentView = 'dashboard'; 
+                    document.getElementById('btn-view-year').classList.remove('active'); 
+                    document.getElementById('btn-view-dashboard').classList.add('active'); 
+                    document.getElementById('main-title').innerText = "📊 DASHBOARD HỆ THỐNG 📊";
+                }
+                
                 document.querySelectorAll('.month-selector-btn').forEach(b => b.classList.remove('active-month'));
                 btn.classList.add('active-month'); 
                 activeDashboardMonth = idx;
+                isDateFilteringActive = false; 
                 selectCalendarMonth(idx);
                 calculateAndRenderDashboard('month');
             };
@@ -911,13 +1002,15 @@
         for(let i=1; i<=totalDays; i++) { let d = new Date(YEAR, m, i); createCalButton(d, i, grid, m); }
     }
 
-    window.writeNoteOnCalendar = function(dateKey) {
+    window.writeNoteOnCalendar = async function(dateKey) {
         initDayKey(dateKey);
         let oldNote = db[dateKey].note || "";
         let newNote = prompt("🌸 Nhập thông tin ghi chú cho ngày này:", oldNote);
         if (newNote !== null) {
             db[dateKey].note = newNote.trim(); showLoading(true);
-            google.script.run.withSuccessHandler(function() { selectCalendarMonth(activeDashboardMonth); showLoading(false); }).saveLichToSheet(dateKey, db[dateKey]);
+            let success = await apiPost("saveLich", { dateKey: dateKey, dayDataObj: db[dateKey] });
+            if (success) { selectCalendarMonth(activeDashboardMonth); }
+            showLoading(false);
         }
     }
 
@@ -934,7 +1027,8 @@
         }
         if(hasData) btn.classList.add('has-data');
         if(key === todayKey) btn.classList.add('today-highlight');
-        if(formatDateKey(selectedDate) === key) btn.classList.add('active');
+        
+        if(formatDateKey(selectedDate) === key && isDateFilteringActive) btn.classList.add('active');
 
         if(db[key] && db[key].note && db[key].note.trim() !== "") { btn.title = `📝 Ghi chú: ${db[key].note.trim()}`; } 
         else { btn.title = "Nhấp đúp chuột để thêm ghi chú nhanh 🌸"; }
@@ -945,8 +1039,21 @@
 
         btn.innerHTML = htmlStr;
         btn.onclick = () => { 
+            if (isDateFilteringActive && formatDateKey(selectedDate) === key) {
+                isDateFilteringActive = false;
+                btn.classList.remove('active');
+                if (currentView === 'dashboard') {
+                    calculateAndRenderDashboard('month'); 
+                } else {
+                    calculateAndRenderDashboard('year');
+                }
+                return;
+            }
+
             selectedDate = dateObj; 
             activeDashboardMonth = dateObj.getMonth();
+            isDateFilteringActive = true; 
+            
             document.querySelectorAll('.month-selector-btn').forEach((b, i) => {
                 if(i === dateObj.getMonth() && currentView !== 'year') b.classList.add('active-month'); else b.classList.remove('active-month');
             });
@@ -958,7 +1065,6 @@
         targetGrid.appendChild(btn);
     }
 
-    /* AUTOMATED DASHBOARD ENGINE (CẬP NHẬT THEO YÊU CẦU MỚI) */
     window.calculateAndRenderDashboard = function(mode) {
         let summary = {
             tiktok: { video: 0 },
@@ -986,7 +1092,6 @@
                 targetKeys.push(`${YEAR}-${mStr}-${dStr}`);
             }
         } else if (mode === 'year') {
-            // Tính toán Dashboard cho toàn bộ cả năm 2026
             titleScope.innerText = `🌸 HỆ THỐNG ANH ĐÀO TOÀN DIỆN CẢ NĂM 2026 🌸`;
             for (let m = 1; m <= 12; m++) {
                 for (let d = 1; d <= 31; d++) {
@@ -1002,7 +1107,6 @@
             let t = db[k].tasks || {};
             let c = db[k].customs || {};
 
-            // 1. TikTok (Chỉ tính Video, loại bỏ Bản dịch)
             if (t[1] && t[1].checked) summary.tiktok.video++; 
             if (t[2] && t[2].checked) summary.tiktok.video++; 
             if (t[10] && t[10].checked) summary.tiktok.video++; 
@@ -1012,7 +1116,6 @@
                 });
             }
 
-            // 2. Instagram (Chỉ tính Video, loại bỏ Bản dịch)
             if (t[3] && t[3].checked) summary.instagram.video++;
             if (c['instagram']) {
                 c['instagram'].forEach(item => {
@@ -1020,7 +1123,6 @@
                 });
             }
 
-            // 3. Zalo (Chỉ tính Video, loại bỏ Bản dịch)
             for (let id = 12; id <= 21; id++) {
                 if (t[id] && t[id].checked) summary.zalo.video++;
             }
@@ -1030,8 +1132,6 @@
                 });
             }
 
-            // 4. Facebook (Tách chi tiết 3 Trang hạ tầng)
-            // Trang HY HY
             if (t[4] && t[4].checked) summary.facebook.hyhy.trans++; 
             if (t[5] && t[5].checked) summary.facebook.hyhy.video++; 
             if (c['fb-hyhy']) {
@@ -1043,7 +1143,6 @@
                 });
             }
 
-            // Trang HY đang làm Blog
             if (t[6] && t[6].checked) summary.facebook.hyblog.trans++; 
             if (t[7] && t[7].checked) summary.facebook.hyblog.video++; 
             if (c['fb-hyblog']) {
@@ -1055,7 +1154,6 @@
                 });
             }
 
-            // Trang Shokaimono
             if (t[8] && t[8].checked) summary.facebook.shokai.trans++; 
             if (t[11] && t[11].checked) summary.facebook.shokai.trans++; 
             if (c['fb-shokaimono']) {
@@ -1068,12 +1166,10 @@
             }
         });
 
-        // Kết xuất phân phối hiển thị giao diện
         document.getElementById('dash-tk-video').innerText = summary.tiktok.video;
         document.getElementById('dash-ig-video').innerText = summary.instagram.video;
         document.getElementById('dash-zl-video').innerText = summary.zalo.video;
         
-        // Facebook Groups render
         document.getElementById('dash-fb-hyhy-trans').innerText = summary.facebook.hyhy.trans;
         document.getElementById('dash-fb-hyhy-video').innerText = summary.facebook.hyhy.video;
         document.getElementById('dash-fb-hyblog-trans').innerText = summary.facebook.hyblog.trans;
@@ -1222,11 +1318,12 @@
     }
     function formatDateKey(d) { let mm = String(d.getMonth() + 1).padStart(2, '0'); let dd = String(d.getDate()).padStart(2, '0'); return `${d.getFullYear()}-${mm}-${dd}`; }
     
-    function saveLichData(key) { 
+    async function saveLichData(key) { 
         renderChecklistValues(); 
-        calculateAndRenderDashboard(currentView === 'year' ? 'year' : (currentView === 'dashboard' ? 'month' : 'day'));
+        calculateAndRenderDashboard(currentView === 'year' ? 'year' : (currentView === 'dashboard' ? (isDateFilteringActive ? 'day' : 'month') : 'day'));
         showLoading(true); 
-        google.script.run.withSuccessHandler(function() { showLoading(false); }).saveLichToSheet(key, db[key]); 
+        await apiPost("saveLich", { dateKey: key, dayDataObj: db[key] });
+        showLoading(false); 
     }
 
     function detectPlatformFromUrl(url) {
@@ -1240,7 +1337,7 @@
         return "Khác";
     }
 
-    window.processAndSaveResource = function() {
+    window.processAndSaveResource = async function() {
         let urlInput = document.getElementById('resource-url-input'); let rawInput = urlInput.value.trim(); if(!rawInput) return;
         let finalUrl = rawInput; let platform = detectPlatformFromUrl(rawInput); let username = "Nguồn ẩn danh";
         if(platform === "Xiaohongshu") {
@@ -1249,10 +1346,12 @@
             else { let match = rawInput.match(/user\/([^\/\?]+)/i); username = (match && match[1]) ? match[1] : "XHS_User"; }
         } else { let match = rawInput.match(/@([^\/\?]+)/i); if(match && match[1]) username = match[1]; }
         hy_resources.push({ id: Date.now(), checked: false, link: finalUrl, platform: platform, account: username, cre: username });
-        urlInput.value = ''; renderResourcesCards(); showLoading(true); google.script.run.withSuccessHandler(function() { showLoading(false); }).saveResourcesToSheet(hy_resources);
+        urlInput.value = ''; renderResourcesCards(); showLoading(true); 
+        await apiPost("saveResources", { resourcesArray: hy_resources });
+        showLoading(false);
     }
-    window.toggleResourceCheck = function(id) { let target = hy_resources.find(r => r.id === id); if(target) target.checked = !target.checked; renderResourcesCards(); showLoading(true); google.script.run.withSuccessHandler(function() { showLoading(false); }).saveResourcesToSheet(hy_resources); }
-    window.deleteResourceItem = function(id) { hy_resources = hy_resources.filter(r => r.id !== id); renderResourcesCards(); showLoading(true); google.script.run.withSuccessHandler(function() { showLoading(false); }).saveResourcesToSheet(hy_resources); }
+    window.toggleResourceCheck = async function(id) { let target = hy_resources.find(r => r.id === id); if(target) target.checked = !target.checked; renderResourcesCards(); showLoading(true); await apiPost("saveResources", { resourcesArray: hy_resources }); showLoading(false); }
+    window.deleteResourceItem = async function(id) { hy_resources = hy_resources.filter(r => r.id !== id); renderResourcesCards(); showLoading(true); await apiPost("saveResources", { resourcesArray: hy_resources }); showLoading(false); }
     
     function renderResourcesCards() {
         let listArea = document.getElementById('resource-cards-list-area'); if(!listArea) return; listArea.innerHTML = '';
@@ -1275,12 +1374,14 @@
         });
     }
 
-    window.processAndSavePublishedPost = function() {
+    window.processAndSavePublishedPost = async function() {
         let postInput = document.getElementById('post-url-input'); let rawUrl = postInput.value.trim(); if (!rawUrl) return;
         hy_posts.push({ id: Date.now(), link: rawUrl, platform: detectPlatformFromUrl(rawUrl) });
-        postInput.value = ''; renderPostsCards(); showLoading(true); google.script.run.withSuccessHandler(function() { showLoading(false); }).savePostsToSheet(hy_posts);
+        postInput.value = ''; renderPostsCards(); showLoading(true); 
+        await apiPost("savePosts", { postsArray: hy_posts });
+        showLoading(false);
     }
-    window.deletePostItem = function(id) { hy_posts = hy_posts.filter(p => p.id !== id); renderPostsCards(); showLoading(true); google.script.run.withSuccessHandler(function() { showLoading(false); }).savePostsToSheet(hy_posts); }
+    window.deletePostItem = async function(id) { hy_posts = hy_posts.filter(p => p.id !== id); renderPostsCards(); showLoading(true); await apiPost("savePosts", { postsArray: hy_posts }); showLoading(false); }
     
     function renderPostsCards() {
         let listArea = document.getElementById('post-cards-list-area'); if (!listArea) return; listArea.innerHTML = '';
@@ -1305,28 +1406,32 @@
         navigator.clipboard.writeText(formattedCre).then(() => { alert(`🌸 Đã copy thành công: "${formattedCre}"`); }); 
     }
     
-    window.clearEverything = function() { 
+    window.clearEverything = async function() { 
         if(confirm("Cảnh báo! Bạn có thực sự muốn xóa sạch toàn bộ dữ liệu trên Sheet không?")) { 
             backup_db = JSON.parse(JSON.stringify(db)); backup_resources = JSON.parse(JSON.stringify(hy_resources)); backup_posts = JSON.parse(JSON.stringify(hy_posts));
             db = {}; hy_resources = []; hy_posts = []; 
             document.getElementById('btn-restore-action').style.display = 'inline-flex';
             showLoading(true); 
-            google.script.run.withSuccessHandler(function() { 
-                renderChecklistValues(); calculateAndRenderDashboard('day'); renderResourcesCards(); renderPostsCards(); showLoading(false); 
+            let success = await apiPost("clearAll");
+            if (success) {
+                renderChecklistValues(); calculateAndRenderDashboard('day'); renderResourcesCards(); renderPostsCards();
                 alert("Đã xóa xong! Nếu bấm lầm, hãy nhấn nút 'Khôi Phục Liền' kế bên liền nha!");
-            }).clearAllSheetsData(); 
+            }
+            showLoading(false); 
         } 
     }
 
-    window.restoreBackupData = function() {
+    window.restoreBackupData = async function() {
         if(!backup_db && !backup_resources && !backup_posts) { alert("Không tìm thấy dữ liệu sao lưu!"); return; }
         showLoading(true);
         db = JSON.parse(JSON.stringify(backup_db)); hy_resources = JSON.parse(JSON.stringify(backup_resources)); hy_posts = JSON.parse(JSON.stringify(backup_posts));
-        google.script.run.withSuccessHandler(function() {
+        let success = await apiPost("restoreAll", { db: db, resources: hy_resources, posts: hy_posts });
+        if (success) {
             renderChecklistValues(); calculateAndRenderDashboard('day'); renderResourcesCards(); renderPostsCards();
-            document.getElementById('btn-restore-action').style.display = 'none'; showLoading(false);
+            document.getElementById('btn-restore-action').style.display = 'none';
             alert("🎉 Toàn bộ dữ liệu cũ đã được khôi phục nguyên vẹn lên Google Sheets thành công!");
-        }).restoreAllSheetsData(db, hy_resources, hy_posts);
+        }
+        showLoading(false);
     }
 
     loadDataFromGoogleSheets();
