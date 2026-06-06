@@ -132,22 +132,22 @@
         .minute-hand { width: 1.8px; height: 13px; background: #475569; }
         .second-hand { width: 1px; height: 15px; background: #ef4444; }
 
+        /* --- MINI PLAYER CONTAINER --- */
         .widget-music-controls { 
-            border: var(--main-border); padding: 12px; border-radius: 24px; background-color: #ffffff; box-shadow: 3px 3px 0px #1e293b; display: flex; flex-direction: column; gap: 10px; box-sizing: border-box; align-items: center; position: relative;
+            border: var(--main-border); padding: 10px; border-radius: 24px; background-color: #ffffff; box-shadow: 3px 3px 0px #1e293b; display: flex; flex-direction: column; gap: 8px; box-sizing: border-box; align-items: center; position: relative;
         }
-        
-        /* KHUNG NHẠC MINI THAY ĐĨA XOAY */
-        .music-mini-player-carrier {
-            width: 100%; height: 72px; border-radius: 16px; border: 2px solid #1e293b; background: #f8fafc; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+        .mini-player-container {
+            width: 100%; height: 110px; border: 2px solid #1e293b; border-radius: 14px; overflow: hidden; background: #f8fafc; display: flex; align-items: center; justify-content: center; position: relative;
         }
-        .music-mini-player-carrier iframe, .music-mini-player-carrier audio, .music-mini-player-carrier video {
-            width: 100%; height: 100%; border: none; object-fit: cover;
+        .mini-player-container iframe {
+            width: 100%; height: 100%; border: none; display: none;
         }
-        .music-blank-state {
-            font-size: 0.7rem; font-weight: 800; color: #94a3b8; text-align: center; padding: 4px; display: flex; flex-direction: column; align-items: center; gap: 2px;
+        .player-placeholder {
+            font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-align: center; padding: 10px; position: absolute; pointer-events: none;
         }
 
         .widget-music-controls input { font-family: inherit; width: 100%; padding: 8px 10px; border: 2px solid #1e293b; border-radius: 12px; font-size: 0.75rem; font-weight: 700; box-sizing: border-box; text-align: center; background: #FAFAFA; }
+        .widget-music-controls input:focus { background: #fff; outline: none; border-color: var(--sakura-dark); }
         .widget-music-controls button { font-family: inherit; width: 100%; background: var(--sakura-pink); border: 2px solid #1e293b; border-radius: 12px; padding: 8px; font-weight: 800; font-size: 0.75rem; cursor: pointer; box-shadow: 2px 2px 0 #1e293b; transition: all 0.1s; }
         .widget-music-controls button:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 #1e293b; background: var(--sakura-dark); color: white; }
 
@@ -160,8 +160,8 @@
             .info-widgets-sidebar > div, .info-widgets-sidebar > .widget-block {
                 flex: 0 0 160px; height: 75px; margin: 0 !important; padding: 10px 12px; border-radius: 18px; justify-content: center; align-items: flex-start; box-shadow: 3px 3px 0px #1e293b;
             }
-            .info-widgets-sidebar .widget-music-controls { flex: 0 0 260px; flex-direction: row; align-items: center; gap: 8px; padding: 8px 10px; height: 75px; }
-            .music-mini-player-carrier { width: 85px; height: 55px; border-radius: 10px; flex-shrink: 0; }
+            .info-widgets-sidebar .widget-music-controls { flex: 0 0 280px; flex-direction: row; align-items: center; gap: 8px; padding: 8px 10px; }
+            .mini-player-container { width: 110px; height: 55px; flex-shrink: 0; }
             .widget-music-controls > div:last-child { display: flex; flex-direction: column; gap: 4px; flex: 1; }
             .widget-music-controls input { padding: 4px 8px; font-size: 0.7rem; border-radius: 8px; }
             .widget-music-controls button { padding: 4px; font-size: 0.7rem; border-radius: 8px; }
@@ -197,7 +197,7 @@
         .lunar-date { font-size: 0.55rem; color: #64748b; font-weight: 500; }
         .weekday-header { font-weight: 900; font-size: 0.75rem; color: #1e293b; padding-bottom: 4px; }
 
-        /* DYNAMIC DASHBOARD DESIGN */
+        /* --- DASHBOARD --- */
         .dashboard-container {
             background: linear-gradient(135deg, #FFF9FA 0%, #FFF0F3 100%);
             border: var(--main-border); border-radius: 26px; padding: 20px; margin-bottom: 25px;
@@ -383,15 +383,13 @@
             </div>
             
             <div class="widget-music-controls">
-                <div class="music-mini-player-carrier" id="multimedia-carrier-element">
-                    <div class="music-blank-state" id="player-blank-status">
-                        <span>🌸 Hy Hy Audio</span>
-                        <span>Sẵn sàng kết nối...</span>
-                    </div>
+                <div class="mini-player-container">
+                    <span class="player-placeholder" id="player-placeholder-text">Chưa dán link phát...<br>(Hỗ trợ YouTube nhúng, Spotify, SoundCloud...)</span>
+                    <iframe id="mini-player-frame" src="about:blank" allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                 </div>
                 <div>
-                    <input type="text" id="music-url-src" placeholder="Dán link nhạc, clip phát...">
-                    <button onclick="handleUpdateMultimediaPlayer()">🌸 Đổi Nhạc</button>
+                    <input type="text" id="music-url-src" placeholder="Dán link YouTube / Nhúng vào đây...">
+                    <button onclick="handleUpdateYoutubePlayer()">🌸 Đổi Trình Phát</button>
                 </div>
             </div>
         </div>
@@ -629,8 +627,6 @@
     <button class="btn-back-to-top" id="btn-goto-top" onclick="scrollWorkspaceToTop()">🌸</button>
 
 <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbylBfG9pYxnkPGvH2AuLboN63qqIz3J0sxWgHhFi5e0uqvasE6wAk0kc7WYrVnKarHdaQ/exec"; 
-
     const YEAR = 2026;
     let currentView = 'today';
     let selectedDate = new Date();
@@ -666,44 +662,13 @@
         "#E0F7FA", "#E2F3F5", "#F7F9FA"
     ];
 
-    async function apiFetch(action, params = {}) {
-        try {
-            let url = `${API_URL}?action=${action}`;
-            for (let key in params) { url += `&${key}=${encodeURIComponent(params[key])}`; }
-            let response = await fetch(url);
-            let result = await response.json();
-            if (result.status === "success") return result.data;
-            else throw new Error(result.message);
-        } catch (e) {
-            console.error("Lỗi tải dữ liệu:", e);
-            alert("Có lỗi xảy ra khi kết nối máy chủ Google Sheets!");
-        }
-    }
-
-    async function apiPost(action, bodyData = {}) {
-        try {
-            bodyData.action = action;
-            let response = await fetch(API_URL, {
-                method: "POST",
-                body: JSON.stringify(bodyData),
-                headers: { "Content-Type": "text/plain;charset=utf-8" }
-            });
-            let result = await response.json();
-            if (result.status === "success") return true;
-            else throw new Error(result.message);
-        } catch (e) {
-            console.error("Lỗi gửi dữ liệu:", e);
-            alert("Không thể lưu thông tin lên Google Sheets!");
-        }
-    }
-
     window.addEventListener('scroll', function() {
         const btn = document.getElementById('btn-goto-top');
         if (window.scrollY > 300) { btn.style.display = 'flex'; } 
         else { btn.style.display = 'none'; }
     });
 
-    /* --- EFFECT ENGINE --- */
+    // --- EFFECT ENGINE ---
     const canvas = document.getElementById('sakura-canvas');
     const ctx = canvas.getContext('2d');
     let dynamicParticles = [];
@@ -798,10 +763,9 @@
         fbHeader.classList.toggle('collapsed');
     }
 
-    async function loadDataFromGoogleSheets() {
+    function loadDataFromGoogleSheets() {
         showLoading(true);
-        let result = await apiFetch("getAllData");
-        if (result) {
+        google.script.run.withSuccessHandler(function(result) {
             db = result.db || {}; hy_resources = result.resources || []; hy_posts = result.posts || [];
             renderChecklistValues();
             
@@ -810,8 +774,8 @@
             calculateAndRenderDashboard(dashboardMode);
             
             if (currentView === 'resources') { renderResourcesCards(); renderPostsCards(); }
-        }
-        showLoading(false);
+            showLoading(false);
+        }).getAllDataFromSheets();
     }
     
     function showLoading(status) { document.getElementById('sync-loading').style.display = status ? 'block' : 'none'; }
@@ -827,45 +791,56 @@
     }
     setInterval(updateLiveClock, 1000); updateLiveClock();
 
-    /* --- XỬ LÝ LIÊN KẾT ĐA PHƯƠNG TIỆN THÔNG MINH (MỌI LOẠI LINK) --- */
-    function handleUpdateMultimediaPlayer() {
+    // --- CẬP NHẬT LOGIC PHÁT ĐA NĂNG (XỬ LÝ THÔNG MINH CHO MỌI LOẠI LIÊN KẾT) ---
+    function handleUpdateYoutubePlayer() {
         const urlInput = document.getElementById('music-url-src').value.trim();
-        const carrier = document.getElementById('multimedia-carrier-element');
-        if (!urlInput) { alert("Vui lòng dán link đa phương tiện cần phát nhé!"); return; }
+        if (!urlInput) { alert("Vui lòng nhập đường dẫn hoặc mã nhúng nhé!"); return; }
+        
+        let embedUrl = "";
+        const placeholder = document.getElementById('player-placeholder-text');
+        const playerFrame = document.getElementById('mini-player-frame');
 
-        carrier.innerHTML = ""; // Xoá trạng thái cũ
-
-        // 1. Kiểm tra định dạng link Youtube
-        let youtubeEmbedUrl = "";
-        if(urlInput.includes("list=")) {
-            let match = urlInput.match(/list=([^&]+)/); if(match && match[1]) youtubeEmbedUrl = "https://www.youtube.com/embed/videoseries?list=" + match[1];
-        } else if(urlInput.includes("v=")) {
-            let match = urlInput.match(/v=([^&]+)/); if(match && match[1]) youtubeEmbedUrl = "https://www.youtube.com/embed/" + match[1];
-        } else if(urlInput.includes("youtu.be/")) {
-            let parts = urlInput.split("youtu.be/"); if(parts[1]) youtubeEmbedUrl = "https://www.youtube.com/embed/" + parts[1].split(/[?#]/)[0];
-        } else if(urlInput.includes("youtube.com/embed/")) {
-            youtubeEmbedUrl = urlInput;
+        // Trường hợp 1: Người dùng dán nguyên đoạn mã iframe nhúng (Embed Code)
+        if (urlInput.toLowerCase().includes("<iframe")) {
+            const matchSrc = urlInput.match(/src=["']([^"']+)["']/i);
+            if (matchSrc && matchSrc[1]) {
+                embedUrl = matchSrc[1];
+            }
+        } 
+        // Trường hợp 2: Liên kết YouTube chuẩn bài hoặc YouTube Shorts/Playlist
+        else if (urlInput.includes("list=")) {
+            let match = urlInput.match(/list=([^&]+)/); 
+            if(match && match[1]) embedUrl = "https://www.youtube.com/embed/videoseries?list=" + match[1];
+        } else if (urlInput.includes("v=")) {
+            let match = urlInput.match(/v=([^&]+)/); 
+            if(match && match[1]) embedUrl = "https://www.youtube.com/embed/" + match[1];
+        } else if (urlInput.includes("youtu.be/")) {
+            let parts = urlInput.split("youtu.be/"); 
+            if(parts[1]) embedUrl = "https://www.youtube.com/embed/" + parts[1].split(/[?#]/)[0];
+        } else if (urlInput.includes("youtube.com/shorts/")) {
+            let parts = urlInput.split("youtube.com/shorts/");
+            if(parts[1]) embedUrl = "https://www.youtube.com/embed/" + parts[1].split(/[?#]/)[0];
+        }
+        // Trường hợp 3: Đường dẫn Spotify tiêu chuẩn -> chuyển tự động sang link nhúng phát nhạc công cộng
+        else if (urlInput.includes("open.spotify.com/")) {
+            embedUrl = urlInput.replace("open.spotify.com/", "open.spotify.com/embed/");
+        }
+        // Trường hợp 4: Đường dẫn SoundCloud tiêu chuẩn -> chuyển sang widget nhúng của SoundCloud
+        else if (urlInput.includes("soundcloud.com/")) {
+            embedUrl = "https://w.soundcloud.com/player/?url=" + encodeURIComponent(urlInput) + "&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
+        }
+        // Trường hợp 5: Bất kì liên kết trang web/audio/video khác tự động chạy trực tiếp vào Frame sandbox
+        else if (urlInput.startsWith("http://") || urlInput.startsWith("https://")) {
+            embedUrl = urlInput;
         }
 
-        if (youtubeEmbedUrl) {
-            carrier.innerHTML = `<iframe src="${youtubeEmbedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-            return;
+        if (embedUrl) {
+            placeholder.style.display = "none";
+            playerFrame.style.display = "block";
+            playerFrame.src = embedUrl;
+        } else { 
+            alert("Đường dẫn nhập vào không hợp lệ hoặc không đúng cấu trúc!"); 
         }
-
-        // 2. Kiểm tra tệp Audio trực tiếp (.mp3, .ogg, .wav, .m4a)
-        if (/\.(mp3|ogg|wav|m4a|aac)(?:\?.*)?$/i.test(urlInput)) {
-            carrier.innerHTML = `<audio src="${urlInput}" controls autoplay style="width:90%;"></audio>`;
-            return;
-        }
-
-        // 3. Kiểm tra tệp Video trực tiếp (.mp4, .webm, .ogv)
-        if (/\.(mp4|webm|ogv|mov)(?:\?.*)?$/i.test(urlInput)) {
-            carrier.innerHTML = `<video src="${urlInput}" controls autoplay></video>`;
-            return;
-        }
-
-        // 4. Fallback: Nếu không khớp các cấu trúc trên, nhúng bằng Iframe đa năng để hỗ trợ các web nghe nhạc khác
-        carrier.innerHTML = `<iframe src="${urlInput}" allow="autoplay"></iframe>`;
     }
 
     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
@@ -900,7 +875,7 @@
         if(tempDate.getFullYear() === YEAR) { 
             selectedDate = tempDate;
             activeDashboardMonth = selectedDate.getMonth();
-            if (currentView === 'dashboard') isDateFilteringActive = true; 
+            if (currentView === 'dashboard') isDateFilteringActive = true;
             document.getElementById('btn-nav-prev').classList.remove('active-nav');
             document.getElementById('btn-nav-next').classList.remove('active-nav');
             if(days === -1) document.getElementById('btn-nav-prev').classList.add('active-nav');
@@ -941,8 +916,8 @@
             calculateAndRenderDashboard('year');
             setTimeout(scrollToCalendar, 350);
         } else if (view === 'dashboard') {
-            document.getElementById('main-title').innerText = "💮 DASHBOARD HỆ THỐNG 💮";
-            isDateFilteringActive = false; 
+            document.getElementById('main-title').innerText = "📊 DASHBOARD HỆ THỐNG 📊";
+            isDateFilteringActive = false;
             buildMonthSelectors(); selectCalendarMonth(selectedDate.getMonth());
             calculateAndRenderDashboard('month');
             setTimeout(() => { document.getElementById('hy-dashboard-panel').scrollIntoView({ behavior: 'smooth' }); }, 350);
@@ -992,13 +967,13 @@
                     currentView = 'dashboard'; 
                     document.getElementById('btn-view-year').classList.remove('active'); 
                     document.getElementById('btn-view-dashboard').classList.add('active'); 
-                    document.getElementById('main-title').innerText = "💮 DASHBOARD HỆ THỐNG 💮";
+                    document.getElementById('main-title').innerText = "📊 DASHBOARD HỆ THỐNG 📊";
                 }
                 
                 document.querySelectorAll('.month-selector-btn').forEach(b => b.classList.remove('active-month'));
                 btn.classList.add('active-month'); 
                 activeDashboardMonth = idx;
-                isDateFilteringActive = false; 
+                isDateFilteringActive = false;
                 selectCalendarMonth(idx);
                 calculateAndRenderDashboard('month');
             };
@@ -1019,15 +994,13 @@
         for(let i=1; i<=totalDays; i++) { let d = new Date(YEAR, m, i); createCalButton(d, i, grid, m); }
     }
 
-    window.writeNoteOnCalendar = async function(dateKey) {
+    window.writeNoteOnCalendar = function(dateKey) {
         initDayKey(dateKey);
         let oldNote = db[dateKey].note || "";
         let newNote = prompt("🌸 Nhập thông tin ghi chú cho ngày này:", oldNote);
         if (newNote !== null) {
             db[dateKey].note = newNote.trim(); showLoading(true);
-            let success = await apiPost("saveLich", { dateKey: dateKey, dayDataObj: db[dateKey] });
-            if (success) { selectCalendarMonth(activeDashboardMonth); }
-            showLoading(false);
+            google.script.run.withSuccessHandler(function() { selectCalendarMonth(activeDashboardMonth); showLoading(false); }).saveLichToSheet(dateKey, db[dateKey]);
         }
     }
 
@@ -1059,14 +1032,17 @@
             if (isDateFilteringActive && formatDateKey(selectedDate) === key) {
                 isDateFilteringActive = false;
                 btn.classList.remove('active');
-                if (currentView === 'dashboard') { calculateAndRenderDashboard('month'); } 
-                else { calculateAndRenderDashboard('year'); }
+                if (currentView === 'dashboard') {
+                    calculateAndRenderDashboard('month');
+                } else {
+                    calculateAndRenderDashboard('year');
+                }
                 return;
             }
 
             selectedDate = dateObj; 
             activeDashboardMonth = dateObj.getMonth();
-            isDateFilteringActive = true; 
+            isDateFilteringActive = true;
             
             document.querySelectorAll('.month-selector-btn').forEach((b, i) => {
                 if(i === dateObj.getMonth() && currentView !== 'year') b.classList.add('active-month'); else b.classList.remove('active-month');
@@ -1081,9 +1057,13 @@
 
     window.calculateAndRenderDashboard = function(mode) {
         let summary = {
-            tiktok: { video: 0 }, instagram: { video: 0 }, zalo: { video: 0 },
+            tiktok: { video: 0 },
+            instagram: { video: 0 },
+            zalo: { video: 0 },
             facebook: {
-                hyhy: { trans: 0, video: 0 }, hyblog: { trans: 0, video: 0 }, shokai: { trans: 0, video: 0 }
+                hyhy: { trans: 0, video: 0 },
+                hyblog: { trans: 0, video: 0 },
+                shokai: { trans: 0, video: 0 }
             }
         };
 
@@ -1091,7 +1071,8 @@
         let targetKeys = [];
 
         if (mode === 'day') {
-            let key = formatDateKey(selectedDate); targetKeys.push(key);
+            let key = formatDateKey(selectedDate);
+            targetKeys.push(key);
             titleScope.innerText = `🌸 TỔNG KẾT NGÀY: ${selectedDate.toLocaleDateString('vi-VN')} 🌸`;
         } else if (mode === 'month') {
             titleScope.innerText = `🌸 TỔNG KẾT THÁNG ${activeDashboardMonth + 1} / NĂM ${YEAR} 🌸`;
@@ -1104,7 +1085,8 @@
             titleScope.innerText = `🌸 HỆ THỐNG ANH ĐÀO TOÀN DIỆN CẢ NĂM 2026 🌸`;
             for (let m = 1; m <= 12; m++) {
                 for (let d = 1; d <= 31; d++) {
-                    let mStr = String(m).padStart(2, '0'); let dStr = String(d).padStart(2, '0');
+                    let mStr = String(m).padStart(2, '0');
+                    let dStr = String(d).padStart(2, '0');
                     targetKeys.push(`${YEAR}-${mStr}-${dStr}`);
                 }
             }
@@ -1112,23 +1094,32 @@
 
         targetKeys.forEach(k => {
             if (!db[k]) return;
-            let t = db[k].tasks || {}; let c = db[k].customs || {};
+            let t = db[k].tasks || {};
+            let c = db[k].customs || {};
 
             if (t[1] && t[1].checked) summary.tiktok.video++; 
             if (t[2] && t[2].checked) summary.tiktok.video++; 
             if (t[10] && t[10].checked) summary.tiktok.video++; 
             if (c['tiktok']) {
-                c['tiktok'].forEach(item => { if (item.checked && item.text.toLowerCase().includes('video')) summary.tiktok.video++; });
+                c['tiktok'].forEach(item => {
+                    if (item.checked && item.text.toLowerCase().includes('video')) summary.tiktok.video++;
+                });
             }
 
             if (t[3] && t[3].checked) summary.instagram.video++;
             if (c['instagram']) {
-                c['instagram'].forEach(item => { if (item.checked && item.text.toLowerCase().includes('video')) summary.instagram.video++; });
+                c['instagram'].forEach(item => {
+                    if (item.checked && item.text.toLowerCase().includes('video')) summary.instagram.video++;
+                });
             }
 
-            for (let id = 12; id <= 21; id++) { if (t[id] && t[id].checked) summary.zalo.video++; }
+            for (let id = 12; id <= 21; id++) {
+                if (t[id] && t[id].checked) summary.zalo.video++;
+            }
             if (c['zalo']) {
-                c['zalo'].forEach(item => { if (item.checked && item.text.toLowerCase().includes('video')) summary.zalo.video++; });
+                c['zalo'].forEach(item => {
+                    if (item.checked && item.text.toLowerCase().includes('video')) summary.zalo.video++;
+                });
             }
 
             if (t[4] && t[4].checked) summary.facebook.hyhy.trans++; 
@@ -1317,12 +1308,11 @@
     }
     function formatDateKey(d) { let mm = String(d.getMonth() + 1).padStart(2, '0'); let dd = String(d.getDate()).padStart(2, '0'); return `${d.getFullYear()}-${mm}-${dd}`; }
     
-    async function saveLichData(key) { 
+    function saveLichData(key) { 
         renderChecklistValues(); 
         calculateAndRenderDashboard(currentView === 'year' ? 'year' : (currentView === 'dashboard' ? (isDateFilteringActive ? 'day' : 'month') : 'day'));
         showLoading(true); 
-        await apiPost("saveLich", { dateKey: key, dayDataObj: db[key] });
-        showLoading(false); 
+        google.script.run.withSuccessHandler(function() { showLoading(false); }).saveLichToSheet(key, db[key]); 
     }
 
     function detectPlatformFromUrl(url) {
@@ -1336,7 +1326,7 @@
         return "Khác";
     }
 
-    window.processAndSaveResource = async function() {
+    window.processAndSaveResource = function() {
         let urlInput = document.getElementById('resource-url-input'); let rawInput = urlInput.value.trim(); if(!rawInput) return;
         let finalUrl = rawInput; let platform = detectPlatformFromUrl(rawInput); let username = "Nguồn ẩn danh";
         if(platform === "Xiaohongshu") {
@@ -1345,12 +1335,10 @@
             else { let match = rawInput.match(/user\/([^\/\?]+)/i); username = (match && match[1]) ? match[1] : "XHS_User"; }
         } else { let match = rawInput.match(/@([^\/\?]+)/i); if(match && match[1]) username = match[1]; }
         hy_resources.push({ id: Date.now(), checked: false, link: finalUrl, platform: platform, account: username, cre: username });
-        urlInput.value = ''; renderResourcesCards(); showLoading(true); 
-        await apiPost("saveResources", { resourcesArray: hy_resources });
-        showLoading(false);
+        urlInput.value = ''; renderResourcesCards(); showLoading(true); google.script.run.withSuccessHandler(function() { showLoading(false); }).saveResourcesToSheet(hy_resources);
     }
-    window.toggleResourceCheck = async function(id) { let target = hy_resources.find(r => r.id === id); if(target) target.checked = !target.checked; renderResourcesCards(); showLoading(true); await apiPost("saveResources", { resourcesArray: hy_resources }); showLoading(false); }
-    window.deleteResourceItem = async function(id) { hy_resources = hy_resources.filter(r => r.id !== id); renderResourcesCards(); showLoading(true); await apiPost("saveResources", { resourcesArray: hy_resources }); showLoading(false); }
+    window.toggleResourceCheck = function(id) { let target = hy_resources.find(r => r.id === id); if(target) target.checked = !target.checked; renderResourcesCards(); showLoading(true); google.script.run.withSuccessHandler(function() { showLoading(false); }).saveResourcesToSheet(hy_resources); }
+    window.deleteResourceItem = function(id) { hy_resources = hy_resources.filter(r => r.id !== id); renderResourcesCards(); showLoading(true); google.script.run.withSuccessHandler(function() { showLoading(false); }).saveResourcesToSheet(hy_resources); }
     
     function renderResourcesCards() {
         let listArea = document.getElementById('resource-cards-list-area'); if(!listArea) return; listArea.innerHTML = '';
@@ -1365,7 +1353,7 @@
                 <div class="res-meta-right">
                     <span class="badge-platform">${item.platform}</span>
                     <span class="res-acc-text" title="${item.account}">👤 ${item.account}</span>
-                    <button class="btn-copy-mini" onclick="copyOneTouchCre('${item.cre}')">🌸 Copy Cre</button>
+                    <button class="btn-copy-mini" onclick="copyOneTouchCre('${item.cre}')">📋 Copy Cre</button>
                     <button class="delete-custom-btn" onclick="deleteResourceItem(${item.id})">×</button>
                 </div>
             `;
@@ -1373,14 +1361,12 @@
         });
     }
 
-    window.processAndSavePublishedPost = async function() {
+    window.processAndSavePublishedPost = function() {
         let postInput = document.getElementById('post-url-input'); let rawUrl = postInput.value.trim(); if (!rawUrl) return;
         hy_posts.push({ id: Date.now(), link: rawUrl, platform: detectPlatformFromUrl(rawUrl) });
-        postInput.value = ''; renderPostsCards(); showLoading(true); 
-        await apiPost("savePosts", { postsArray: hy_posts });
-        showLoading(false);
+        postInput.value = ''; renderPostsCards(); showLoading(true); google.script.run.withSuccessHandler(function() { showLoading(false); }).savePostsToSheet(hy_posts);
     }
-    window.deletePostItem = async function(id) { hy_posts = hy_posts.filter(p => p.id !== id); renderPostsCards(); showLoading(true); await apiPost("savePosts", { postsArray: hy_posts }); showLoading(false); }
+    window.deletePostItem = function(id) { hy_posts = hy_posts.filter(p => p.id !== id); renderPostsCards(); showLoading(true); google.script.run.withSuccessHandler(function() { showLoading(false); }).savePostsToSheet(hy_posts); }
     
     function renderPostsCards() {
         let listArea = document.getElementById('post-cards-list-area'); if (!listArea) return; listArea.innerHTML = '';
@@ -1405,32 +1391,28 @@
         navigator.clipboard.writeText(formattedCre).then(() => { alert(`🌸 Đã copy thành công: "${formattedCre}"`); }); 
     }
     
-    window.clearEverything = async function() { 
+    window.clearEverything = function() { 
         if(confirm("Cảnh báo! Bạn có thực sự muốn xóa sạch toàn bộ dữ liệu trên Sheet không?")) { 
             backup_db = JSON.parse(JSON.stringify(db)); backup_resources = JSON.parse(JSON.stringify(hy_resources)); backup_posts = JSON.parse(JSON.stringify(hy_posts));
             db = {}; hy_resources = []; hy_posts = []; 
             document.getElementById('btn-restore-action').style.display = 'inline-flex';
             showLoading(true); 
-            let success = await apiPost("clearAll");
-            if (success) {
-                renderChecklistValues(); calculateAndRenderDashboard('day'); renderResourcesCards(); renderPostsCards();
+            google.script.run.withSuccessHandler(function() { 
+                renderChecklistValues(); calculateAndRenderDashboard('day'); renderResourcesCards(); renderPostsCards(); showLoading(false); 
                 alert("Đã xóa xong! Nếu bấm lầm, hãy nhấn nút 'Khôi Phục Liền' kế bên liền nha!");
-            }
-            showLoading(false); 
+            }).clearAllSheetsData(); 
         } 
     }
 
-    window.restoreBackupData = async function() {
+    window.restoreBackupData = function() {
         if(!backup_db && !backup_resources && !backup_posts) { alert("Không tìm thấy dữ liệu sao lưu!"); return; }
         showLoading(true);
         db = JSON.parse(JSON.stringify(backup_db)); hy_resources = JSON.parse(JSON.stringify(backup_resources)); hy_posts = JSON.parse(JSON.stringify(backup_posts));
-        let success = await apiPost("restoreAll", { db: db, resources: hy_resources, posts: posts });
-        if (success) {
+        google.script.run.withSuccessHandler(function() {
             renderChecklistValues(); calculateAndRenderDashboard('day'); renderResourcesCards(); renderPostsCards();
-            document.getElementById('btn-restore-action').style.display = 'none';
+            document.getElementById('btn-restore-action').style.display = 'none'; showLoading(false);
             alert("🎉 Toàn bộ dữ liệu cũ đã được khôi phục nguyên vẹn lên Google Sheets thành công!");
-        }
-        showLoading(false);
+        }).restoreAllSheetsData(db, hy_resources, hy_posts);
     }
 
     loadDataFromGoogleSheets();
