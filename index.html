@@ -133,23 +133,23 @@
         .second-hand { width: 1px; height: 15px; background: #ef4444; }
 
         .widget-music-controls { 
-            border: var(--main-border); padding: 14px; border-radius: 24px; background-color: #ffffff; box-shadow: 3px 3px 0px #1e293b; display: flex; flex-direction: column; gap: 10px; box-sizing: border-box; align-items: center; position: relative;
+            border: var(--main-border); padding: 12px; border-radius: 24px; background-color: #ffffff; box-shadow: 3px 3px 0px #1e293b; display: flex; flex-direction: column; gap: 10px; box-sizing: border-box; align-items: center; position: relative;
         }
-        .music-vinyl-disk {
-            width: 72px; height: 72px; border-radius: 50%; border: 3px solid #1e293b;
-            background: radial-gradient(circle, #2d3748 30%, #1a202c 31%, #2d3748 60%, #111827 61%, #000 100%);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15), inset 0 0 4px rgba(255,255,255,0.3);
-            display: flex; align-items: center; justify-content: center; position: relative;
-            animation: spinDisk 4s linear infinite; animation-play-state: running;
+        
+        /* KHUNG NHẠC MINI THAY ĐĨA XOAY */
+        .music-mini-player-carrier {
+            width: 100%; height: 72px; border-radius: 16px; border: 2px solid #1e293b; background: #f8fafc; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
         }
-        .music-vinyl-disk::before { content: ''; width: 20px; height: 20px; background: #fff; border: 2px solid #1e293b; border-radius: 50%; position: absolute; z-index: 2; }
-        .music-vinyl-disk::after { content: '🌸'; position: absolute; z-index: 3; font-size: 10px; margin-top: -1px; }
-        @keyframes spinDisk { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .music-mini-player-carrier iframe, .music-mini-player-carrier audio, .music-mini-player-carrier video {
+            width: 100%; height: 100%; border: none; object-fit: cover;
+        }
+        .music-blank-state {
+            font-size: 0.7rem; font-weight: 800; color: #94a3b8; text-align: center; padding: 4px; display: flex; flex-direction: column; align-items: center; gap: 2px;
+        }
 
         .widget-music-controls input { font-family: inherit; width: 100%; padding: 8px 10px; border: 2px solid #1e293b; border-radius: 12px; font-size: 0.75rem; font-weight: 700; box-sizing: border-box; text-align: center; background: #FAFAFA; }
         .widget-music-controls button { font-family: inherit; width: 100%; background: var(--sakura-pink); border: 2px solid #1e293b; border-radius: 12px; padding: 8px; font-weight: 800; font-size: 0.75rem; cursor: pointer; box-shadow: 2px 2px 0 #1e293b; transition: all 0.1s; }
         .widget-music-controls button:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 #1e293b; background: var(--sakura-dark); color: white; }
-        .hidden-youtube-carrier { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; overflow: hidden; top: -999px; }
 
         @media (max-width: 1199px) {
             .main-content { padding-top: 60px; }
@@ -160,9 +160,8 @@
             .info-widgets-sidebar > div, .info-widgets-sidebar > .widget-block {
                 flex: 0 0 160px; height: 75px; margin: 0 !important; padding: 10px 12px; border-radius: 18px; justify-content: center; align-items: flex-start; box-shadow: 3px 3px 0px #1e293b;
             }
-            .info-widgets-sidebar .widget-music-controls { flex: 0 0 240px; flex-direction: row; align-items: center; gap: 8px; padding: 8px 10px; }
-            .music-vinyl-disk { width: 42px; height: 42px; border-width: 2px; }
-            .music-vinyl-disk::before { width: 12px; height: 12px; }
+            .info-widgets-sidebar .widget-music-controls { flex: 0 0 260px; flex-direction: row; align-items: center; gap: 8px; padding: 8px 10px; height: 75px; }
+            .music-mini-player-carrier { width: 85px; height: 55px; border-radius: 10px; flex-shrink: 0; }
             .widget-music-controls > div:last-child { display: flex; flex-direction: column; gap: 4px; flex: 1; }
             .widget-music-controls input { padding: 4px 8px; font-size: 0.7rem; border-radius: 8px; }
             .widget-music-controls button { padding: 4px; font-size: 0.7rem; border-radius: 8px; }
@@ -359,10 +358,6 @@
         </div>
     </div>
 
-    <div class="hidden-youtube-carrier">
-        <iframe id="youtube-player-core" width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=PLwJjqpZg6HAH_fU8zU9X_Xun8E-2sn3eI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-
     <div class="main-content">
         <div class="info-widgets-sidebar" id="fixed-widget-panel">
             <div class="clock-container-wrapper">
@@ -388,10 +383,15 @@
             </div>
             
             <div class="widget-music-controls">
-                <div class="music-vinyl-disk" id="music-disk-element"></div>
+                <div class="music-mini-player-carrier" id="multimedia-carrier-element">
+                    <div class="music-blank-state" id="player-blank-status">
+                        <span>🌸 Hy Hy Audio</span>
+                        <span>Sẵn sàng kết nối...</span>
+                    </div>
+                </div>
                 <div>
-                    <input type="text" id="music-url-src" placeholder="Dán link nhạc Sakura...">
-                    <button onclick="handleUpdateYoutubePlayer()">🌸 Đổi Nhạc</button>
+                    <input type="text" id="music-url-src" placeholder="Dán link nhạc, clip phát...">
+                    <button onclick="handleUpdateMultimediaPlayer()">🌸 Đổi Nhạc</button>
                 </div>
             </div>
         </div>
@@ -629,11 +629,7 @@
     <button class="btn-back-to-top" id="btn-goto-top" onclick="scrollWorkspaceToTop()">🌸</button>
 
 <script>
-    // -------------------------------------------------------------
-    // 🌸 ĐƯỜNG DẪN WEB APP GOOGLE SHEETS CỦA BẠN 🌸
-    // Hãy dán URL Web App (sau khi deploy bên Google Script) vào dấu ngoặc kép dưới đây:
     const API_URL = "https://script.google.com/macros/s/AKfycbylBfG9pYxnkPGvH2AuLboN63qqIz3J0sxWgHhFi5e0uqvasE6wAk0kc7WYrVnKarHdaQ/exec"; 
-    // -------------------------------------------------------------
 
     const YEAR = 2026;
     let currentView = 'today';
@@ -670,13 +666,10 @@
         "#E0F7FA", "#E2F3F5", "#F7F9FA"
     ];
 
-    // Giao tiếp API thay thế google.script.run
     async function apiFetch(action, params = {}) {
         try {
             let url = `${API_URL}?action=${action}`;
-            for (let key in params) {
-                url += `&${key}=${encodeURIComponent(params[key])}`;
-            }
+            for (let key in params) { url += `&${key}=${encodeURIComponent(params[key])}`; }
             let response = await fetch(url);
             let result = await response.json();
             if (result.status === "success") return result.data;
@@ -710,7 +703,7 @@
         else { btn.style.display = 'none'; }
     });
 
-    // --- EFFECT ENGINE ---
+    /* --- EFFECT ENGINE --- */
     const canvas = document.getElementById('sakura-canvas');
     const ctx = canvas.getContext('2d');
     let dynamicParticles = [];
@@ -834,21 +827,45 @@
     }
     setInterval(updateLiveClock, 1000); updateLiveClock();
 
-    function handleUpdateYoutubePlayer() {
+    /* --- XỬ LÝ LIÊN KẾT ĐA PHƯƠNG TIỆN THÔNG MINH (MỌI LOẠI LINK) --- */
+    function handleUpdateMultimediaPlayer() {
         const urlInput = document.getElementById('music-url-src').value.trim();
-        if (!urlInput) { alert("Vui lòng dán link YouTube nhé!"); return; }
-        let embedUrl = "";
+        const carrier = document.getElementById('multimedia-carrier-element');
+        if (!urlInput) { alert("Vui lòng dán link đa phương tiện cần phát nhé!"); return; }
+
+        carrier.innerHTML = ""; // Xoá trạng thái cũ
+
+        // 1. Kiểm tra định dạng link Youtube
+        let youtubeEmbedUrl = "";
         if(urlInput.includes("list=")) {
-            let match = urlInput.match(/list=([^&]+)/); if(match && match[1]) embedUrl = "https://www.youtube.com/embed/videoseries?list=" + match[1];
+            let match = urlInput.match(/list=([^&]+)/); if(match && match[1]) youtubeEmbedUrl = "https://www.youtube.com/embed/videoseries?list=" + match[1];
         } else if(urlInput.includes("v=")) {
-            let match = urlInput.match(/v=([^&]+)/); if(match && match[1]) embedUrl = "https://www.youtube.com/embed/" + match[1];
+            let match = urlInput.match(/v=([^&]+)/); if(match && match[1]) youtubeEmbedUrl = "https://www.youtube.com/embed/" + match[1];
         } else if(urlInput.includes("youtu.be/")) {
-            let parts = urlInput.split("youtu.be/"); if(parts[1]) embedUrl = "https://www.youtube.com/embed/" + parts[1].split(/[?#]/)[0];
+            let parts = urlInput.split("youtu.be/"); if(parts[1]) youtubeEmbedUrl = "https://www.youtube.com/embed/" + parts[1].split(/[?#]/)[0];
+        } else if(urlInput.includes("youtube.com/embed/")) {
+            youtubeEmbedUrl = urlInput;
         }
-        if(embedUrl) {
-            document.getElementById('youtube-player-core').src = embedUrl;
-            document.getElementById('music-disk-element').style.animationPlayState = 'running';
-        } else { alert("Đường dẫn chưa đúng cấu trúc video/playlist YouTube!"); }
+
+        if (youtubeEmbedUrl) {
+            carrier.innerHTML = `<iframe src="${youtubeEmbedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            return;
+        }
+
+        // 2. Kiểm tra tệp Audio trực tiếp (.mp3, .ogg, .wav, .m4a)
+        if (/\.(mp3|ogg|wav|m4a|aac)(?:\?.*)?$/i.test(urlInput)) {
+            carrier.innerHTML = `<audio src="${urlInput}" controls autoplay style="width:90%;"></audio>`;
+            return;
+        }
+
+        // 3. Kiểm tra tệp Video trực tiếp (.mp4, .webm, .ogv)
+        if (/\.(mp4|webm|ogv|mov)(?:\?.*)?$/i.test(urlInput)) {
+            carrier.innerHTML = `<video src="${urlInput}" controls autoplay></video>`;
+            return;
+        }
+
+        // 4. Fallback: Nếu không khớp các cấu trúc trên, nhúng bằng Iframe đa năng để hỗ trợ các web nghe nhạc khác
+        carrier.innerHTML = `<iframe src="${urlInput}" allow="autoplay"></iframe>`;
     }
 
     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
@@ -1042,11 +1059,8 @@
             if (isDateFilteringActive && formatDateKey(selectedDate) === key) {
                 isDateFilteringActive = false;
                 btn.classList.remove('active');
-                if (currentView === 'dashboard') {
-                    calculateAndRenderDashboard('month'); 
-                } else {
-                    calculateAndRenderDashboard('year');
-                }
+                if (currentView === 'dashboard') { calculateAndRenderDashboard('month'); } 
+                else { calculateAndRenderDashboard('year'); }
                 return;
             }
 
@@ -1067,13 +1081,9 @@
 
     window.calculateAndRenderDashboard = function(mode) {
         let summary = {
-            tiktok: { video: 0 },
-            instagram: { video: 0 },
-            zalo: { video: 0 },
+            tiktok: { video: 0 }, instagram: { video: 0 }, zalo: { video: 0 },
             facebook: {
-                hyhy: { trans: 0, video: 0 },
-                hyblog: { trans: 0, video: 0 },
-                shokai: { trans: 0, video: 0 }
+                hyhy: { trans: 0, video: 0 }, hyblog: { trans: 0, video: 0 }, shokai: { trans: 0, video: 0 }
             }
         };
 
@@ -1081,8 +1091,7 @@
         let targetKeys = [];
 
         if (mode === 'day') {
-            let key = formatDateKey(selectedDate);
-            targetKeys.push(key);
+            let key = formatDateKey(selectedDate); targetKeys.push(key);
             titleScope.innerText = `🌸 TỔNG KẾT NGÀY: ${selectedDate.toLocaleDateString('vi-VN')} 🌸`;
         } else if (mode === 'month') {
             titleScope.innerText = `🌸 TỔNG KẾT THÁNG ${activeDashboardMonth + 1} / NĂM ${YEAR} 🌸`;
@@ -1095,8 +1104,7 @@
             titleScope.innerText = `🌸 HỆ THỐNG ANH ĐÀO TOÀN DIỆN CẢ NĂM 2026 🌸`;
             for (let m = 1; m <= 12; m++) {
                 for (let d = 1; d <= 31; d++) {
-                    let mStr = String(m).padStart(2, '0');
-                    let dStr = String(d).padStart(2, '0');
+                    let mStr = String(m).padStart(2, '0'); let dStr = String(d).padStart(2, '0');
                     targetKeys.push(`${YEAR}-${mStr}-${dStr}`);
                 }
             }
@@ -1104,32 +1112,23 @@
 
         targetKeys.forEach(k => {
             if (!db[k]) return;
-            let t = db[k].tasks || {};
-            let c = db[k].customs || {};
+            let t = db[k].tasks || {}; let c = db[k].customs || {};
 
             if (t[1] && t[1].checked) summary.tiktok.video++; 
             if (t[2] && t[2].checked) summary.tiktok.video++; 
             if (t[10] && t[10].checked) summary.tiktok.video++; 
             if (c['tiktok']) {
-                c['tiktok'].forEach(item => {
-                    if (item.checked && item.text.toLowerCase().includes('video')) summary.tiktok.video++;
-                });
+                c['tiktok'].forEach(item => { if (item.checked && item.text.toLowerCase().includes('video')) summary.tiktok.video++; });
             }
 
             if (t[3] && t[3].checked) summary.instagram.video++;
             if (c['instagram']) {
-                c['instagram'].forEach(item => {
-                    if (item.checked && item.text.toLowerCase().includes('video')) summary.instagram.video++;
-                });
+                c['instagram'].forEach(item => { if (item.checked && item.text.toLowerCase().includes('video')) summary.instagram.video++; });
             }
 
-            for (let id = 12; id <= 21; id++) {
-                if (t[id] && t[id].checked) summary.zalo.video++;
-            }
+            for (let id = 12; id <= 21; id++) { if (t[id] && t[id].checked) summary.zalo.video++; }
             if (c['zalo']) {
-                c['zalo'].forEach(item => {
-                    if (item.checked && item.text.toLowerCase().includes('video')) summary.zalo.video++;
-                });
+                c['zalo'].forEach(item => { if (item.checked && item.text.toLowerCase().includes('video')) summary.zalo.video++; });
             }
 
             if (t[4] && t[4].checked) summary.facebook.hyhy.trans++; 
@@ -1425,7 +1424,7 @@
         if(!backup_db && !backup_resources && !backup_posts) { alert("Không tìm thấy dữ liệu sao lưu!"); return; }
         showLoading(true);
         db = JSON.parse(JSON.stringify(backup_db)); hy_resources = JSON.parse(JSON.stringify(backup_resources)); hy_posts = JSON.parse(JSON.stringify(backup_posts));
-        let success = await apiPost("restoreAll", { db: db, resources: hy_resources, posts: hy_posts });
+        let success = await apiPost("restoreAll", { db: db, resources: hy_resources, posts: posts });
         if (success) {
             renderChecklistValues(); calculateAndRenderDashboard('day'); renderResourcesCards(); renderPostsCards();
             document.getElementById('btn-restore-action').style.display = 'none';
