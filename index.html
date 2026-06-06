@@ -44,8 +44,8 @@
         .menu-btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px #1e293b; }
         
         .sidebar {
-            position: fixed; top: 0; left: -280px; width: 250px; height: 100%; background: #ffffff;
-            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding: 80px 15px 20px 15px; z-index: 900; border-right: 4px dashed var(--sakura-pink); overflow-y: auto; box-sizing: border-box;
+            position: fixed; top: 0; left: -290px; width: 260px; height: 100%; background: #ffffff;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding: 75px 15px 20px 15px; z-index: 900; border-right: 4px dashed var(--sakura-pink); overflow-y: auto; box-sizing: border-box;
         }
         .sidebar.open { left: 0; }
         
@@ -67,6 +67,15 @@
         }
         .menu-item:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0px #1e293b; background: #fff; }
         .menu-item.active { background: var(--sakura-dark); color: #fff; border-color: #1e293b; box-shadow: inset 0 2px 4px rgba(0,0,0,0.15); }
+
+        /* Cấu trúc phần cài đặt API ID */
+        .api-config-box {
+            background: #FFF7ED; border: 2px dashed #ea580c; border-radius: 14px; padding: 10px; margin-top: 15px; box-sizing: border-box;
+        }
+        .api-config-box label { font-size: 0.75rem; font-weight: 800; color: #ea580c; display: block; margin-bottom: 4px; text-align: center; }
+        .api-config-box input { width: 100%; padding: 8px; border: 2px solid #1e293b; border-radius: 10px; font-size: 0.7rem; font-family: inherit; font-weight: 600; box-sizing: border-box; }
+        .api-config-box button { width: 100%; margin-top: 6px; background: #ffedd5; border: 1.5px solid #1e293b; padding: 6px; font-size: 0.7rem; font-weight: 800; border-radius: 8px; cursor: pointer; box-shadow: 1px 1px 0 #1e293b; }
+        .api-config-box button:hover { background: #fed7aa; }
 
         /* --- MAIN LAYOUT --- */
         .main-content { flex: 1; max-width: 900px; margin: 0 auto; padding: 20px; padding-top: 75px; width: 100%; box-sizing: border-box; position: relative; }
@@ -120,7 +129,7 @@
         .widget-block:hover { transform: translate(-2px, -2px) scale(1.02); box-shadow: 5px 5px 0px #1e293b; }
         .block-loc { background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-color: #1b5e20; } 
         .block-weather { background: linear-gradient(135deg, #FFF8E1 0%, #FFE082 100%); border-color: #b7791f; }
-        .block-text { font-size: 0.75rem; font-weight: 900; color: #475569; text-transform: uppercase; margin-bottom: 2px; display: flex; align-items: center; gap: 4px; }
+        .block-text { font-size: 0.7rem; font-weight: 900; color: #475569; text-transform: uppercase; margin-bottom: 2px; display: flex; align-items: center; gap: 4px; }
         .block-val { font-size: 0.85rem; font-weight: 900; }
         
         .clock-container-wrapper { background: linear-gradient(135deg, #FFF0F0 0%, #FFD1D1 100%); border: var(--main-border); border-radius: 20px; display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 4px 14px; height: 68px; box-shadow: 3px 3px 0px #1e293b; box-sizing: border-box; }
@@ -132,7 +141,6 @@
         .minute-hand { width: 1.8px; height: 13px; background: #475569; }
         .second-hand { width: 1px; height: 15px; background: #ef4444; }
 
-        /* --- MINI PLAYER CONTAINER --- */
         .widget-music-controls { 
             border: var(--main-border); padding: 10px; border-radius: 24px; background-color: #ffffff; box-shadow: 3px 3px 0px #1e293b; display: flex; flex-direction: column; gap: 8px; box-sizing: border-box; align-items: center; position: relative;
         }
@@ -140,14 +148,13 @@
             width: 100%; height: 110px; border: 2px solid #1e293b; border-radius: 14px; overflow: hidden; background: #f8fafc; display: flex; align-items: center; justify-content: center; position: relative;
         }
         .mini-player-container iframe {
-            width: 100%; height: 100%; border: none; display: none;
+            width: 100%; height: 100%; border: none; display: block;
         }
         .player-placeholder {
             font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-align: center; padding: 10px; position: absolute; pointer-events: none;
         }
 
         .widget-music-controls input { font-family: inherit; width: 100%; padding: 8px 10px; border: 2px solid #1e293b; border-radius: 12px; font-size: 0.75rem; font-weight: 700; box-sizing: border-box; text-align: center; background: #FAFAFA; }
-        .widget-music-controls input:focus { background: #fff; outline: none; border-color: var(--sakura-dark); }
         .widget-music-controls button { font-family: inherit; width: 100%; background: var(--sakura-pink); border: 2px solid #1e293b; border-radius: 12px; padding: 8px; font-weight: 800; font-size: 0.75rem; cursor: pointer; box-shadow: 2px 2px 0 #1e293b; transition: all 0.1s; }
         .widget-music-controls button:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 #1e293b; background: var(--sakura-dark); color: white; }
 
@@ -170,7 +177,7 @@
         }
 
         /* PROGRESS BOX */
-        .progress-container { background: #fff; border: var(--main-border); padding: 14px; border-radius: 20px; margin-bottom: 20px; box-shadow: var(--box-shadow-3d); scroll-margin-top: 80px; }
+        .progress-container { padding: 14px; border-radius: 20px; margin-bottom: 20px; box-shadow: var(--box-shadow-3d); scroll-margin-top: 80px; background: #fff; border: var(--main-border); }
         .progress-label { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800; margin-bottom: 8px; }
         .progress-bar-bg { background-color: #e2e8f0; height: 14px; border-radius: 8px; overflow: hidden; border: 2px solid #1e293b; }
         .progress-bar-fill { background: linear-gradient(90deg, #FFB7B2, #FF8B94, #B39DDB); height: 100%; width: 0%; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -197,7 +204,7 @@
         .lunar-date { font-size: 0.55rem; color: #64748b; font-weight: 500; }
         .weekday-header { font-weight: 900; font-size: 0.75rem; color: #1e293b; padding-bottom: 4px; }
 
-        /* --- DASHBOARD --- */
+        /* DYNAMIC DASHBOARD DESIGN */
         .dashboard-container {
             background: linear-gradient(135deg, #FFF9FA 0%, #FFF0F3 100%);
             border: var(--main-border); border-radius: 26px; padding: 20px; margin-bottom: 25px;
@@ -356,6 +363,13 @@
         <div class="sidebar-menu-wrapper" id="wrapper-acc-archive">
             <button class="menu-item" id="btn-view-resources" onclick="switchView('resources')">🎐 Kho Bài Gốc</button>
         </div>
+
+        <!-- Ô ĐIỀN ID / LINK GOOGLE SHEETS WEB APP -->
+        <div class="api-config-box">
+            <label>⚙️ LIÊN KẾT GOOGLE SHEETS</label>
+            <input type="text" id="input-web-app-url" placeholder="Dán link Web App tại đây...">
+            <button onclick="saveApiUrlConfig()">🌸 Cập Nhật Kết Nối</button>
+        </div>
     </div>
 
     <div class="main-content">
@@ -413,7 +427,7 @@
 
         <div class="calendar-container" id="calendar-container">
             <div class="calendar-header" onclick="toggleCalendarSection()">
-                <span id="calendar-box-title">🏵️ Bảng Lịch Năm 2026</span>
+                <span id="calendar-box-title">▲ Bảng Lịch Năm 2026</span>
                 <span id="calendar-toggle-icon" style="font-size:0.9rem;">▲ Thu gọn</span>
             </div>
             <div class="calendar-body" id="calendar-body-area">
@@ -637,6 +651,10 @@
     let activeDashboardMonth = selectedDate.getMonth();
     
     let isDateFilteringActive = false;
+    let currentConfigPlayerUrl = "";
+    
+    // Khởi tạo link API rỗng, dữ liệu sẽ lấy từ localStorage (Trình duyệt)
+    let googleScriptWebAppUrl = localStorage.getItem("HY_WORKSPACE_API_URL") || "";
 
     const segmentMapping = {
         'tiktok': [1, 2, 10], 'instagram': [3], 'fb-hyhy': [4, 5],
@@ -661,6 +679,68 @@
         "#FFE0B2", "#FFCCBC", "#FCE4EC", "#F3E5F5", "#EDE7F6", "#E8EAF6", "#E1F5FE",
         "#E0F7FA", "#E2F3F5", "#F7F9FA"
     ];
+
+    // Hàm lưu cấu hình Link Sheets API do bạn nhập vào
+    window.saveApiUrlConfig = function() {
+        let inputUrl = document.getElementById('input-web-app-url').value.trim();
+        if(!inputUrl) {
+            alert("Vui lòng nhập link Web App nhé!");
+            return;
+        }
+        localStorage.setItem("HY_WORKSPACE_API_URL", inputUrl);
+        googleScriptWebAppUrl = inputUrl;
+        alert("🎉 Đã cập nhật kết nối Google Sheets thành công! Trang web sẽ tải lại nhen.");
+        location.reload();
+    }
+
+    // Thiết lập giả lập môi trường chạy trực tiếp (Fetch API cho GitHub Pages thay vì google.script.run lỗi)
+    const google = {
+        script: {
+            run: {
+                withSuccessHandler: function(callback) {
+                    return {
+                        getAllDataFromSheets: function() {
+                            if(!googleScriptWebAppUrl) { showLoading(false); return; }
+                            fetch(`${googleScriptWebAppUrl}?action=getAllData`)
+                            .then(res => res.json())
+                            .then(resData => { if(resData.status === "success") callback(resData.data); })
+                            .catch(err => console.error("Lỗi tải dữ liệu:", err));
+                        },
+                        saveLichToSheet: function(dateKey, dayDataObj) {
+                            if(!googleScriptWebAppUrl) return;
+                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "saveLich", dateKey: dateKey, dayDataObj: dayDataObj }) })
+                            .then(() => showLoading(false));
+                        },
+                        saveResourcesToSheet: function(resourcesArray) {
+                            if(!googleScriptWebAppUrl) return;
+                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "saveResources", resourcesArray: resourcesArray }) })
+                            .then(() => showLoading(false));
+                        },
+                        savePostsToSheet: function(postsArray) {
+                            if(!googleScriptWebAppUrl) return;
+                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "savePosts", postsArray: postsArray }) })
+                            .then(() => showLoading(false));
+                        },
+                        savePlayerUrlToSheet: function(playerUrl) {
+                            if(!googleScriptWebAppUrl) return;
+                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "savePlayerUrl", playerUrl: playerUrl }) })
+                            .then(() => showLoading(false));
+                        },
+                        clearAllSheetsData: function() {
+                            if(!googleScriptWebAppUrl) return;
+                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "clearAll" }) })
+                            .then(() => location.reload());
+                        },
+                        restoreAllSheetsData: function(db, resources, posts) {
+                            if(!googleScriptWebAppUrl) return;
+                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "restoreAll", db: db, resources: resources, posts: posts, playerUrl: currentConfigPlayerUrl }) })
+                            .then(() => location.reload());
+                        }
+                    }
+                }
+            }
+        }
+    };
 
     window.addEventListener('scroll', function() {
         const btn = document.getElementById('btn-goto-top');
@@ -764,9 +844,25 @@
     }
 
     function loadDataFromGoogleSheets() {
+        if (googleScriptWebAppUrl) {
+            document.getElementById('input-web-app-url').value = googleScriptWebAppUrl;
+        } else {
+            alert("🌸 Chào Hy Hy! Hãy nhấn nút Menu góc trái trên cùng, dán liên kết Google Sheets Web App vào rồi nhấn Cập Nhật nhé!");
+            return;
+        }
+        
         showLoading(true);
         google.script.run.withSuccessHandler(function(result) {
             db = result.db || {}; hy_resources = result.resources || []; hy_posts = result.posts || [];
+            currentConfigPlayerUrl = result.playerUrl || "";
+            
+            if (currentConfigPlayerUrl) {
+                document.getElementById('player-placeholder-text').style.display = "none";
+                document.getElementById('mini-player-frame').style.display = "block";
+                document.getElementById('mini-player-frame').src = currentConfigPlayerUrl;
+                document.getElementById('music-url-src').value = currentConfigPlayerUrl;
+            }
+
             renderChecklistValues();
             
             let dashboardMode = 'year';
@@ -791,7 +887,6 @@
     }
     setInterval(updateLiveClock, 1000); updateLiveClock();
 
-    // --- CẬP NHẬT LOGIC PHÁT ĐA NĂNG (XỬ LÝ THÔNG MINH CHO MỌI LOẠI LIÊN KẾT) ---
     function handleUpdateYoutubePlayer() {
         const urlInput = document.getElementById('music-url-src').value.trim();
         if (!urlInput) { alert("Vui lòng nhập đường dẫn hoặc mã nhúng nhé!"); return; }
@@ -800,14 +895,12 @@
         const placeholder = document.getElementById('player-placeholder-text');
         const playerFrame = document.getElementById('mini-player-frame');
 
-        // Trường hợp 1: Người dùng dán nguyên đoạn mã iframe nhúng (Embed Code)
         if (urlInput.toLowerCase().includes("<iframe")) {
             const matchSrc = urlInput.match(/src=["']([^"']+)["']/i);
             if (matchSrc && matchSrc[1]) {
                 embedUrl = matchSrc[1];
             }
         } 
-        // Trường hợp 2: Liên kết YouTube chuẩn bài hoặc YouTube Shorts/Playlist
         else if (urlInput.includes("list=")) {
             let match = urlInput.match(/list=([^&]+)/); 
             if(match && match[1]) embedUrl = "https://www.youtube.com/embed/videoseries?list=" + match[1];
@@ -817,19 +910,10 @@
         } else if (urlInput.includes("youtu.be/")) {
             let parts = urlInput.split("youtu.be/"); 
             if(parts[1]) embedUrl = "https://www.youtube.com/embed/" + parts[1].split(/[?#]/)[0];
-        } else if (urlInput.includes("youtube.com/shorts/")) {
-            let parts = urlInput.split("youtube.com/shorts/");
-            if(parts[1]) embedUrl = "https://www.youtube.com/embed/" + parts[1].split(/[?#]/)[0];
+        } 
+        else if (urlInput.includes("spotify.com/")) {
+            embedUrl = urlInput.replace("spotify.com/", "spotify.com/embed/");
         }
-        // Trường hợp 3: Đường dẫn Spotify tiêu chuẩn -> chuyển tự động sang link nhúng phát nhạc công cộng
-        else if (urlInput.includes("open.spotify.com/")) {
-            embedUrl = urlInput.replace("open.spotify.com/", "open.spotify.com/embed/");
-        }
-        // Trường hợp 4: Đường dẫn SoundCloud tiêu chuẩn -> chuyển sang widget nhúng của SoundCloud
-        else if (urlInput.includes("soundcloud.com/")) {
-            embedUrl = "https://w.soundcloud.com/player/?url=" + encodeURIComponent(urlInput) + "&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
-        }
-        // Trường hợp 5: Bất kì liên kết trang web/audio/video khác tự động chạy trực tiếp vào Frame sandbox
         else if (urlInput.startsWith("http://") || urlInput.startsWith("https://")) {
             embedUrl = urlInput;
         }
@@ -838,6 +922,13 @@
             placeholder.style.display = "none";
             playerFrame.style.display = "block";
             playerFrame.src = embedUrl;
+            currentConfigPlayerUrl = embedUrl;
+            
+            showLoading(true);
+            google.script.run.withSuccessHandler(function() {
+                showLoading(false);
+            }).savePlayerUrlToSheet(embedUrl);
+            
         } else { 
             alert("Đường dẫn nhập vào không hợp lệ hoặc không đúng cấu trúc!"); 
         }
