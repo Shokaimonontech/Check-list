@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🌸 HY HY WORKSPACE 2026 🌸</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Quicksand:wght splinter;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --day-bg-0: #FFF5F5; --day-bg-1: #F0FDF4; --day-bg-2: #EFF6FF; --day-bg-3: #FDF4FF; --day-bg-4: #FFFBEB; --day-bg-5: #F5F5F7; --day-bg-6: #FAFAF9;
@@ -70,7 +70,6 @@
         .menu-item:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0px #1e293b; background: #fff; }
         .menu-item.active { background: var(--sakura-dark); color: #fff; border-color: #1e293b; box-shadow: inset 0 2px 4px rgba(0,0,0,0.15); }
 
-        /* Cấu trúc phần cài đặt API ID */
         .api-config-box {
             background: #FFF7ED; border: 2px dashed #ea580c; border-radius: 14px; padding: 10px; margin-top: 15px; box-sizing: border-box;
         }
@@ -149,12 +148,8 @@
         .mini-player-container {
             width: 100%; height: 110px; border: 2px solid #1e293b; border-radius: 14px; overflow: hidden; background: #f8fafc; display: flex; align-items: center; justify-content: center; position: relative;
         }
-        .mini-player-container iframe {
-            width: 100%; height: 100%; border: none; display: block;
-        }
-        .player-placeholder {
-            font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-align: center; padding: 10px; position: absolute; pointer-events: none;
-        }
+        .mini-player-container iframe { width: 100%; height: 100%; border: none; display: block; }
+        .player-placeholder { font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-align: center; padding: 10px; position: absolute; pointer-events: none; }
 
         .widget-music-controls input { font-family: inherit; width: 100%; padding: 8px 10px; border: 2px solid #1e293b; border-radius: 12px; font-size: 0.75rem; font-weight: 700; box-sizing: border-box; text-align: center; background: #FAFAFA; }
         .widget-music-controls button { font-family: inherit; width: 100%; background: var(--sakura-pink); border: 2px solid #1e293b; border-radius: 12px; padding: 8px; font-weight: 800; font-size: 0.75rem; cursor: pointer; box-shadow: 2px 2px 0 #1e293b; transition: all 0.1s; }
@@ -206,23 +201,13 @@
         .lunar-date { font-size: 0.55rem; color: #64748b; font-weight: 500; }
         .weekday-header { font-weight: 900; font-size: 0.75rem; color: #1e293b; padding-bottom: 4px; }
 
-        /* DYNAMIC DASHBOARD DESIGN */
-        .dashboard-container {
-            background: linear-gradient(135deg, #FFF9FA 0%, #FFF0F3 100%);
-            border: var(--main-border); border-radius: 26px; padding: 20px; margin-bottom: 25px;
-            box-shadow: var(--box-shadow-3d); box-sizing: border-box; display: none;
-        }
-        .dashboard-header-title {
-            text-align: center; font-size: 1.25rem; font-weight: 900; color: #b91c1c; margin-top: 0; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 0.5px;
-        }
-        .dashboard-grid-apps {
-            display: grid; grid-template-columns: repeat(1, 1fr); gap: 12px;
-        }
+        /* DASHBOARD */
+        .dashboard-container { background: linear-gradient(135deg, #FFF9FA 0%, #FFF0F3 100%); border: var(--main-border); border-radius: 26px; padding: 20px; margin-bottom: 25px; box-shadow: var(--box-shadow-3d); box-sizing: border-box; display: none; }
+        .dashboard-header-title { text-align: center; font-size: 1.25rem; font-weight: 900; color: #b91c1c; margin-top: 0; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .dashboard-grid-apps { display: grid; grid-template-columns: repeat(1, 1fr); gap: 12px; }
         @media (min-width: 650px) { .dashboard-grid-apps { grid-template-columns: repeat(3, 1fr); } }
         
-        .dash-app-card {
-            background: #ffffff; border: 2px solid #1e293b; border-radius: 18px; padding: 12px; box-shadow: 3px 3px 0px #1e293b; display: flex; flex-direction: column; gap: 4px;
-        }
+        .dash-app-card { background: #ffffff; border: 2px solid #1e293b; border-radius: 18px; padding: 12px; box-shadow: 3px 3px 0px #1e293b; display: flex; flex-direction: column; gap: 4px; }
         .dash-app-card.tiktok-ds { background: #F9FAFB; border-color: var(--tiktok-color); }
         .dash-app-card.instagram-ds { background: #FFF5F7; border-color: var(--instagram-color); }
         .dash-app-card.facebook-ds { background: #F0F7FF; border-color: var(--facebook-color); grid-column: 1 / -1; padding: 0; overflow: hidden; }
@@ -233,20 +218,13 @@
         .dash-stat-row span:last-child { color: #1e293b; font-weight: 800; }
         
         /* FACEBOOK ACCORDION */
-        .dash-fb-accordion-header {
-            background: var(--facebook-gradient); padding: 14px; font-weight: 900; font-size: 0.9rem; color: #0050b3;
-            text-transform: uppercase; text-align: center; cursor: pointer; user-select: none; display: flex; justify-content: center; align-items: center; gap: 8px;
-            border-bottom: 2px solid #1e293b;
-        }
+        .dash-fb-accordion-header { background: var(--facebook-gradient); padding: 14px; font-weight: 900; font-size: 0.9rem; color: #0050b3; text-transform: uppercase; text-align: center; cursor: pointer; user-select: none; display: flex; justify-content: center; align-items: center; gap: 8px; border-bottom: 2px solid #1e293b; }
         .dash-fb-accordion-header::after { content: ' ▲'; font-size: 0.7rem; font-weight: bold; transition: transform 0.2s; margin-left: 4px; }
         .dash-fb-accordion-header.collapsed::after { transform: rotate(180deg); }
         .dash-fb-accordion-content { padding: 12px; display: flex; flex-direction: column; gap: 10px; transition: all 0.3s ease; }
         .dash-app-card.facebook-ds.collapsed .dash-fb-accordion-content { display: none; }
         .dash-app-card.facebook-ds.collapsed .dash-fb-accordion-header { border-bottom: none; }
-
-        .dash-fb-sub-group {
-            margin-top: 2px; padding: 8px; border: 1.5px dashed #bae0ff; border-radius: 12px; background: #ffffff;
-        }
+        .dash-fb-sub-group { margin-top: 2px; padding: 8px; border: 1.5px dashed #bae0ff; border-radius: 12px; background: #ffffff; }
         .dash-fb-sub-title { font-size: 0.8rem; font-weight: 800; color: #0050b3; margin-bottom: 4px; text-transform: uppercase; display: flex; align-items: center; gap: 4px; }
 
         /* KHO TÀI NGUYÊN */
@@ -262,7 +240,6 @@
 
         .sub-resource-card .card-header-toggle { justify-content: center !important; gap: 15px; position: relative; }
         .sub-resource-card .card-header-toggle .toggle-icon { position: absolute; right: 20px; }
-
         .sub-resource-card .section-body { display: none; margin-top: 15px; }
         .sub-resource-card.expanded .section-body { display: block; }
         
@@ -276,18 +253,13 @@
         .res-btn-blue:hover { background: #7DD3FC; }
 
         .resource-cards-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-        .resource-item-row {
-            background: #fff; border: 2px solid #1e293b; border-radius: 16px; padding: 12px 15px;
-            display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
-            box-shadow: 2px 2px 0px rgba(0,0,0,0.05);
-        }
+        .resource-item-row { background: #fff; border: 2px solid #1e293b; border-radius: 16px; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; box-shadow: 2px 2px 0px rgba(0,0,0,0.05); }
         .resource-item-row.completed { background: #E2FCD4; border-color: #cbd5e1; color: #64748b; }
         .resource-item-row.completed a { color: #64748b; text-decoration: line-through; }
         
         .res-meta-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px; }
         .res-meta-left input[type="checkbox"] { width: 18px; height: 18px; accent-color: #10b981; cursor: pointer; }
         .res-link-anchor { font-weight: 700; font-size: 0.85rem; color: #2563eb; text-decoration: none; word-break: break-all; }
-        
         .res-meta-right { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
         .badge-platform { background: #E2E8F0; border: 1.5px solid #1e293b; padding: 4px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
         .res-acc-text { font-size: 0.8rem; font-weight: 700; color: #475569; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -317,7 +289,6 @@
         .card.instagram { background: var(--instagram-gradient); } 
         .card.facebook { background: var(--facebook-gradient); } 
         .card.zalo { background: var(--zalo-gradient); }
-        
         .card-header-toggle { display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
         .card-title { font-size: 1.15rem; font-weight: 900; margin: 0; display: flex; align-items: center; gap: 8px; }
         .card-body-content { display: none; margin-top: 14px; }
@@ -328,46 +299,27 @@
         .task-grid-horizontal { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
         @media (min-width: 600px) { .task-grid-horizontal { flex-direction: row; flex-wrap: wrap; } }
         
-        .inline-task-box { 
-            display: flex; align-items: center; background: #fff; border: 2px solid #1e293b; border-radius: 16px; padding: 10px 14px; font-size: 0.85rem; font-weight: 700; cursor: pointer; justify-content: space-between; gap: 8px; box-sizing: border-box; width: 100%; box-shadow: 2px 2px 0 #1e293b; transition: all 0.2s;
-        }
+        .inline-task-box { display: flex; align-items: center; background: #fff; border: 2px solid #1e293b; border-radius: 16px; padding: 10px 14px; font-size: 0.85rem; font-weight: 700; cursor: pointer; justify-content: space-between; gap: 8px; box-sizing: border-box; width: 100%; box-shadow: 2px 2px 0 #1e293b; transition: all 0.2s; }
         .inline-task-box:hover { transform: translateY(-2px); box-shadow: 3px 3px 0 #1e293b; }
         @media (min-width: 600px) { .inline-task-box { width: auto; justify-content: flex-start; } }
         .inline-task-box input[type="checkbox"] { width: 18px; height: 18px; margin-right: 4px; accent-color: #10b981; cursor: pointer; flex-shrink: 0; }
-        .inline-task-box input[type="checkbox"]:disabled { cursor: not-allowed; }
         .inline-task-box.completed { background: #e2fcd4 !important; color: #64748b; text-decoration: line-through; border-color: #cbd5e1; box-shadow: none; transform: none; }
-        
-        .inline-task-box.prep-item-box { border-color: var(--sakura-dark); background: #FFF5F5; }
-        .prep-text-desc { font-size: 0.75rem; color: #b91c1c; font-style: italic; display: block; margin-top: 2px; }
-
         .btn-copy-mini { font-family: inherit; background: #ffe066; border: 1.5px solid #1e293b; border-radius: 10px; padding: 4px 10px; font-size: 0.7rem; font-weight: 800; cursor: pointer; box-shadow: 1px 1px 0 #1e293b; }
         .delete-custom-btn { background: none; border: none; color: #ef4444; font-weight: 900; cursor: pointer; font-size: 1.4rem; padding: 0 4px; display: inline-flex; align-items: center; justify-content: center; }
-        .delete-custom-btn:hover { transform: scale(1.2); }
         
         .btn-add-mini { font-family: inherit; background: #fff; border: 2px solid #1e293b; padding: 8px 14px; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 0.8rem; margin-top: 6px; margin-right: 5px; display: inline-flex; align-items: center; gap: 3px; box-shadow: 2px 2px 0 #1e293b; }
         .btn-add-mini:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 #1e293b; }
         .btn-add-mini.prep-style { background: #FFF0F5; border-color: var(--sakura-dark); }
-        
         .popup-selection { display: none; gap: 6px; margin-top: 8px; background: #fff; padding: 8px; border: 2px dashed #1e293b; border-radius: 14px; flex-wrap: wrap; animation: fadeIn 0.15s ease; }
         .popup-btn { font-family: inherit; padding: 6px 12px; border: 1.5px solid #1e293b; border-radius: 10px; font-size: 0.75rem; font-weight: 800; cursor: pointer; background: #F8FAFC; box-shadow: 1px 1px 0 #1e293b; }
         
         .danger-zone-wrapper { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 30px 0; }
         @media (min-width: 600px) { .danger-zone-wrapper { grid-template-columns: 2fr 1fr; } }
-        
-        .btn-clear-all { font-family: inherit; padding: 14px; background: #ff8787; border: var(--main-border); border-radius: 20px; font-weight: 900; box-shadow: var(--box-shadow-3d); cursor: pointer; font-size: 0.95rem; transition: all 0.1s; }
-        .btn-clear-all:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #1e293b; }
-        .btn-restore-backup { font-family: inherit; padding: 14px; background: #A7F3D0; border: var(--main-border); border-radius: 20px; font-weight: 900; box-shadow: var(--box-shadow-3d); cursor: pointer; font-size: 0.95rem; color: #064E3B; display: none; align-items: center; justify-content: center; gap: 5px; transition: all 0.1s; }
-
-        .btn-back-to-top {
-            position: fixed; bottom: 25px; right: 25px; width: 48px; height: 48px; background: #ffffff; border: var(--main-border);
-            border-radius: 50%; font-size: 20px; cursor: pointer; display: none; align-items: center; justify-content: center;
-            box-shadow: 3px 3px 0px #1e293b; z-index: 999; transition: all 0.2s;
-        }
-        .btn-back-to-top:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px #1e293b; background: var(--nav-banner-0); }
-
+        .btn-clear-all { font-family: inherit; padding: 14px; background: #ff8787; border: var(--main-border); border-radius: 20px; font-weight: 900; box-shadow: var(--box-shadow-3d); cursor: pointer; font-size: 0.95rem; }
+        .btn-restore-backup { font-family: inherit; padding: 14px; background: #A7F3D0; border: var(--main-border); border-radius: 20px; font-weight: 900; box-shadow: var(--box-shadow-3d); cursor: pointer; font-size: 0.95rem; color: #064E3B; display: none; }
+        .btn-back-to-top { position: fixed; bottom: 25px; right: 25px; width: 48px; height: 48px; background: #ffffff; border: var(--main-border); border-radius: 50%; font-size: 20px; cursor: pointer; display: none; align-items: center; justify-content: center; box-shadow: 3px 3px 0px #1e293b; z-index: 999; }
         .zalo-bulk-select-box { background: #EBF8FF; border: 2px dashed #2b6cb0; border-radius: 14px; padding: 10px 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 800; color: #2b6cb0; cursor: pointer; }
         .zalo-bulk-select-box input { width: 18px; height: 18px; accent-color: #2b6cb0; cursor: pointer; }
-
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -412,9 +364,7 @@
                         <div class="hand second-hand" id="analog-second"></div>
                     </div>
                 </div>
-                <div>
-                    <div class="block-val" id="live-clock" style="color: #ef4444; font-size: 1rem;">00:00:00</div>
-                </div>
+                <div><div class="block-val" id="live-clock" style="color: #ef4444; font-size: 1rem;">00:00:00</div></div>
             </div>
             <div class="widget-block block-loc" onclick="updateLocationPrompt()">
                 <div class="block-text">🎋 Vị Trí</div>
@@ -427,11 +377,11 @@
             
             <div class="widget-music-controls">
                 <div class="mini-player-container">
-                    <span class="player-placeholder" id="player-placeholder-text">Chưa dán link phát...<br>(Hỗ trợ YouTube nhúng, Spotify, SoundCloud...)</span>
-                    <iframe id="mini-player-frame" src="about:blank" allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                    <span class="player-placeholder" id="player-placeholder-text">Chưa dán link phát...</span>
+                    <iframe id="mini-player-frame" src="about:blank" allow="autoplay"></iframe>
                 </div>
                 <div>
-                    <input type="text" id="music-url-src" placeholder="Dán link YouTube / Nhúng vào đây...">
+                    <input type="text" id="music-url-src" placeholder="Dán link YouTube...">
                     <button onclick="handleUpdateYoutubePlayer()">🌸 Đổi Trình Phát</button>
                 </div>
             </div>
@@ -441,7 +391,7 @@
             <h1 id="main-title">🌸 HY HY WORKSPACE 🌸</h1>
         </div>
         
-        <div class="loading-text" id="sync-loading">💮 Đang kết nối cánh hoa anh đào với Google Sheets...</div>
+        <div class="loading-text" id="sync-loading" style="display: block;">Base 💮 Đang kết nối cánh hoa anh đào với Google Sheets...</div>
 
         <div class="date-navigator">
             <button class="nav-arrow-btn" id="btn-nav-prev" onclick="adjustDate(-1)">◀ Hôm qua</button>
@@ -457,11 +407,10 @@
         <div class="calendar-container" id="calendar-container">
             <div class="calendar-header" onclick="toggleCalendarSection()">
                 <span id="calendar-box-title">▲ Bảng Lịch Năm 2026</span>
-                <span id="calendar-toggle-icon" style="font-size:0.9rem;">▲ Thu gọn</span>
+                <span id="calendar-toggle-icon">▲ Thu gọn</span>
             </div>
             <div class="calendar-body" id="calendar-body-area">
                 <div class="grid-months" id="months-bar-container"></div>
-                <div style="font-size:0.75rem; color:#d63384; text-align:center; margin-bottom:8px; font-style:italic; font-weight:800;">💮 Nhấp đúp vào ngày bất kỳ để ghi chú lịch nhanh!</div>
                 <div id="calendar-grid" class="grid-days"></div>
             </div>
         </div>
@@ -470,41 +419,16 @@
             <div class="dashboard-header-title" id="dash-scope-title">🌸 BẢNG TỔNG KẾT HỆ THỐNG ANH ĐÀO 🌸</div>
             <div class="dashboard-grid-apps">
                 <div class="dash-app-card tiktok-ds">
-                    <div class="dash-app-title" style="color: var(--tiktok-color);">🌸 TikTok Channel</div>
-                    <div class="dash-stat-row"><span>Tổng số Video:</span><span id="dash-tk-video">0</span></div>
+                    <div class="dash-app-title">🌸 TikTok</div>
+                    <div class="dash-stat-row"><span>Video:</span><span id="dash-tk-video">0</span></div>
                 </div>
                 <div class="dash-app-card instagram-ds">
-                    <div class="dash-app-title" style="color: var(--instagram-color);">🌸 Instagram Reels</div>
-                    <div class="dash-stat-row"><span>Tổng số Video:</span><span id="dash-ig-video">0</span></div>
+                    <div class="dash-app-title">🌸 Instagram</div>
+                    <div class="dash-stat-row"><span>Video:</span><span id="dash-ig-video">0</span></div>
                 </div>
                 <div class="dash-app-card zalo-ds">
-                    <div class="dash-app-title" style="color: var(--zalo-color);">🌸 Zalo Short Video</div>
-                    <div class="dash-stat-row"><span>Tổng số Video:</span><span id="dash-zl-video">0</span></div>
-                </div>
-                
-                <div class="dash-app-card facebook-ds" id="dash-fb-card-root">
-                    <div class="dash-fb-accordion-header" id="dash-fb-trigger" onclick="toggleFacebookDashboardAccordion()">
-                        🌸 Facebook Page System
-                    </div>
-                    <div class="dash-fb-accordion-content">
-                        <div class="dash-fb-sub-group">
-                            <div class="dash-fb-sub-title">💮 Trang HY HY</div>
-                            <div class="dash-stat-row"><span>Bản dịch:</span><span id="dash-fb-hyhy-trans">0</span></div>
-                            <div class="dash-stat-row"><span>Video:</span><span id="dash-fb-hyhy-video">0</span></div>
-                        </div>
-                        
-                        <div class="dash-fb-sub-group">
-                            <div class="dash-fb-sub-title">💮 Trang HY đang làm Blog</div>
-                            <div class="dash-stat-row"><span>Bản dịch:</span><span id="dash-fb-hyblog-trans">0</span></div>
-                            <div class="dash-stat-row"><span>Video:</span><span id="dash-fb-hyblog-video">0</span></div>
-                        </div>
-                        
-                        <div class="dash-fb-sub-group">
-                            <div class="dash-fb-sub-title">💮 Trang Shokaimono</div>
-                            <div class="dash-stat-row"><span>Bản dịch:</span><span id="dash-fb-shokai-trans">0</span></div>
-                            <div class="dash-stat-row"><span>Video:</span><span id="dash-fb-shokai-video">0</span></div>
-                        </div>
-                    </div>
+                    <div class="dash-app-title">🌸 Zalo</div>
+                    <div class="dash-stat-row"><span>Video:</span><span id="dash-zl-video">0</span></div>
                 </div>
             </div>
         </div>
@@ -512,14 +436,12 @@
         <div class="resources-box" id="resources-box">
             <div class="sub-resource-card" id="res-card-part1">
                 <div class="card-header-toggle" onclick="toggleSubResourceCard('res-card-part1')">
-                    <div class="card-title" style="color:var(--tiktok-color)" id="resource-title-1">
-                        <span class="windchime-header-btn" onclick="scrollToOriginalContent(event)"><span class="chime-animation">🎐</span> 1. Bài Gốc Chuẩn Bị Biên Tập <span class="chime-animation">🎐</span></span>
-                    </div>
+                    <div class="card-title"><span class="windchime-header-btn">🎐 1. Bài Gốc Chuẩn Bị Biên Tập 🎐</span></div>
                     <span class="toggle-icon">▼</span>
                 </div>
                 <div class="section-body" id="target-original-content-body">
                     <div class="res-input-group">
-                        <input type="text" id="resource-url-input" placeholder="Dán link Xiaohongshu hoặc bài gốc chuẩn bị biên dịch...">
+                        <input type="text" id="resource-url-input" placeholder="Dán link bài gốc chuẩn bị biên dịch...">
                         <button class="res-btn" onclick="processAndSaveResource()">💮 Lưu Bài Gốc</button>
                     </div>
                     <div class="resource-cards-list" id="resource-cards-list-area"></div>
@@ -528,17 +450,17 @@
 
             <div class="sub-resource-card" id="res-card-notes">
                 <div class="card-header-toggle" onclick="toggleSubResourceCard('res-card-notes')">
-                    <div class="card-title" style="color:var(--blue-pastel-color)">🌸 2. Ghi Chép & Ghi Âm Sáng Tạo</div>
+                    <div class="card-title">🌸 2. Ghi Chép & Ghi Âm Sáng Tạo</div>
                     <span class="toggle-icon">▼</span>
                 </div>
                 <div class="section-body">
                     <div class="audio-recorder-container">
                         <button class="record-btn" id="record-action-btn" onclick="toggleAudioRecording()">🎙️</button>
-                        <span id="record-status-text" style="font-size: 0.8rem; font-weight: 700; color: #0284c7;">Nhấn để bắt đầu thu âm âm thanh bài dịch...</span>
+                        <span id="record-status-text">Nhấn để bắt đầu thu âm...</span>
                         <audio id="audio-playback-preview" class="audio-preview-element" controls style="display:none;"></audio>
                     </div>
                     <div class="res-input-group">
-                        <textarea id="note-text-content" rows="3" placeholder="Gõ ghi chú, ý tưởng nội dung hoặc dán link file ghi âm đã tải lên Drive tại đây nhen..."></textarea>
+                        <textarea id="note-text-content" rows="3" placeholder="Gõ ghi chú hoặc dán link ghi âm từ Google Drive..."></textarea>
                     </div>
                     <div style="text-align: right;">
                         <button class="res-btn res-btn-blue" onclick="saveAudioNoteResource()">💮 Lưu Lại Ghi Chép</button>
@@ -549,13 +471,13 @@
 
             <div class="sub-resource-card" id="res-card-part2">
                 <div class="card-header-toggle" onclick="toggleSubResourceCard('res-card-part2')">
-                    <div class="card-title" style="color:var(--zalo-color)" id="resource-title-2">💮 3. Link Các Bài/Video Đã Đăng Thành Công</div>
+                    <div class="card-title">💮 3. Link Bài Đã Đăng Thành Công</div>
                     <span class="toggle-icon">▼</span>
                 </div>
                 <div class="section-body">
                     <div class="res-input-group">
-                        <input type="text" id="post-url-input" placeholder="Dán đường dẫn bài viết/video bạn đã biên tập dịch xong...">
-                        <button class="res-btn" style="background: #e2e8f0;" onclick="processAndSavePublishedPost()">💮 Lưu Bài Đăng</button>
+                        <input type="text" id="post-url-input" placeholder="Dán link bài viết/video thành quả...">
+                        <button class="res-btn" onclick="processAndSavePublishedPost()">💮 Lưu Bài Đăng</button>
                     </div>
                     <div class="resource-cards-list" id="post-cards-list-area"></div>
                 </div>
@@ -566,12 +488,12 @@
             <div class="vocab-card-form">
                 <div class="sub-group-title" style="color: #b45309; margin-top: 0;">💮 Thêm Từ Vựng Kanji Mới Gặp</div>
                 <div class="vocab-grid-inputs">
-                    <input type="text" id="vocab-kanji-input" placeholder="Từ vựng / Chữ Kanji (Ví dụ: 漢字)">
-                    <input type="text" id="vocab-yomi-input" placeholder="Cách đọc / Hiragana (Ví dụ: かんじ)">
-                    <input type="text" id="vocab-mean-input" placeholder="Nghĩa tiếng Việt / Hán Việt">
+                    <input type="text" id="vocab-kanji-input" placeholder="Từ vựng / Chữ Kanji">
+                    <input type="text" id="vocab-yomi-input" placeholder="Cách đọc / Hiragana">
+                    <input type="text" id="vocab-mean-input" placeholder="Nghĩa Hán Việt / Tiếng Việt">
                 </div>
                 <div class="res-input-group">
-                    <input type="text" id="vocab-note-input" placeholder="Mẹo ghi nhớ từ vựng hoặc ví dụ ngữ cảnh cụ thể...">
+                    <input type="text" id="vocab-note-input" placeholder="Mẹo nhớ chữ hoặc ngữ cảnh...">
                     <button class="res-btn" style="background: #FCD34D;" onclick="saveNewVocabulary()">🌸 Ghim Từ Vựng</button>
                 </div>
             </div>
@@ -579,14 +501,13 @@
             <table class="vocab-list-table">
                 <thead>
                     <tr>
-                        <th style="width: 25%;">Từ vựng (Kanji)</th>
-                        <th style="width: 25%;">Cách đọc</th>
-                        <th style="width: 25%;">Nghĩa Hán Việt</th>
-                        <th style="width: 25%;">Ghi chú / Hành động</th>
+                        <th>Từ vựng (Kanji)</th>
+                        <th>Cách đọc</th>
+                        <th>Nghĩa</th>
+                        <th>Ghi chú</th>
                     </tr>
                 </thead>
-                <tbody id="vocab-table-body-area">
-                    </tbody>
+                <tbody id="vocab-table-body-area"></tbody>
             </table>
         </div>
 
@@ -595,124 +516,21 @@
                 <div class="card-header-toggle" onclick="toggleCard('card-tiktok')"><div class="card-title">💮 TikTok Channel</div><span class="toggle-icon" id="icon-card-tiktok">▼</span></div>
                 <div class="card-body-content">
                     <div class="mini-progress">
-                        <div class="progress-label"><span style="font-size:0.75rem; color:#475569;">Tiến độ TikTok</span><span id="text-mini-tiktok" style="font-size:0.75rem; color:#475569;">0%</span></div>
+                        <div class="progress-label"><span>Tiến độ TikTok</span><span id="text-mini-tiktok">0%</span></div>
                         <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-tiktok"></div></div>
                     </div>
                     <div class="sub-group-title">📋 Nhiệm vụ cố định</div>
-                    <div class="task-grid-horizontal" id="grid-tasks-tiktok">
-                        <label class="inline-task-box" id="lbl-1"><span class="d-flex align-items-center"><input type="checkbox" id="check-1" onchange="updateTask(1)"> Video Kanji (1 chữ cũ + 1 chữ mới)</span></label>
-                        <label class="inline-task-box" id="lbl-2"><span class="d-flex align-items-center"><input type="checkbox" id="check-2" onchange="updateTask(2)"> Video 1</span></label>
-                        <label class="inline-task-box" id="lbl-10"><span class="d-flex align-items-center"><input type="checkbox" id="check-10" onchange="updateTask(10)"> Video 2</span></label>
+                    <div class="task-grid-horizontal">
+                        <label class="inline-task-box" id="lbl-1"><input type="checkbox" id="check-1" onchange="updateTask(1)"> Video Kanji (1 chữ cũ + 1 chữ mới)</label>
+                        <label class="inline-task-box" id="lbl-2"><input type="checkbox" id="check-2" onchange="updateTask(2)"> Video 1</label>
+                        <label class="inline-task-box" id="lbl-10"><input type="checkbox" id="check-10" onchange="updateTask(10)"> Video 2</label>
                     </div>
-                    <div class="sub-group-title">🌸 Nhiệm vụ làm thêm</div>
-                    <div class="task-grid-horizontal" id="custom-container-tiktok"></div>
-                    <button class="btn-add-mini" id="btn-add-tiktok" onclick="showPopupSelection('tiktok', 'add')">💮 Thêm</button>
-                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('tiktok', 'prep')">🌸 Chuẩn bị</button>
-                    <div class="popup-selection" id="popup-add-tiktok"><button class="popup-btn" onclick="addCustomToApp('tiktok', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('tiktok', 'Bản dịch', 'add')">+ Bản dịch</button></div>
-                    <div class="popup-selection" id="popup-prep-tiktok"><button class="popup-btn" onclick="addCustomToApp('tiktok', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('tiktok', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
-                </div>
-            </div>
-
-            <div class="card instagram" id="card-instagram">
-                <div class="card-header-toggle" onclick="toggleCard('card-instagram')"><div class="card-title">🏵️ Instagram Reels</div><span class="toggle-icon" id="icon-card-instagram">▼</span></div>
-                <div class="card-body-content">
-                    <div class="mini-progress">
-                        <div class="progress-label"><span style="font-size:0.75rem; color:#475569;">Tiến độ Instagram</span><span id="text-mini-instagram" style="font-size:0.75rem; color:#475569;">0%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-instagram"></div></div>
-                    </div>
-                    <div class="sub-group-title">📋 Nhiệm vụ cố định</div>
-                    <div class="task-grid-horizontal" id="grid-tasks-instagram">
-                        <label class="inline-task-box" id="lbl-3"><span class="d-flex align-items-center"><input type="checkbox" id="check-3" onchange="updateTask(3)"> Video Kanji (Up từ TikTok)</span></label>
-                    </div>
-                    <div class="task-grid-horizontal" id="custom-container-instagram"></div>
-                    <button class="btn-add-mini" id="btn-add-instagram" onclick="showPopupSelection('instagram', 'add')">💮 Thêm</button>
-                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('instagram', 'prep')">🌸 Chuẩn bị</button>
-                    <div class="popup-selection" id="popup-add-instagram"><button class="popup-btn" onclick="addCustomToApp('instagram', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('instagram', 'Bản dịch', 'add')">+ Bản dịch</button></div>
-                    <div class="popup-selection" id="popup-prep-instagram"><button class="popup-btn" onclick="addCustomToApp('instagram', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('instagram', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
-                </div>
-            </div>
-
-            <div class="card facebook" id="card-facebook">
-                <div class="card-header-toggle" onclick="toggleCard('card-facebook')"><div class="card-title">🌺 Facebook Page System</div><span class="toggle-icon" id="icon-card-facebook">▼</span></div>
-                <div class="card-body-content">
-                    <div class="mini-progress">
-                        <div class="progress-label"><span style="font-size:0.75rem; color:#475569;">Tiến độ Facebook</span><span id="text-mini-facebook" style="font-size:0.75rem; color:#475569;">0%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-facebook"></div></div>
-                    </div>
-                    <div class="sub-group-title" style="color:var(--facebook-color);">🌸 Trang HY HY</div>
-                    <div class="task-grid-horizontal" id="grid-tasks-fb-hyhy">
-                        <label class="inline-task-box" id="lbl-4"><span class="d-flex align-items-center"><input type="checkbox" id="check-4" onchange="updateTask(4)"> Bản dịch 1</span></label>
-                        <label class="inline-task-box" id="lbl-5"><span class="d-flex align-items-center"><input type="checkbox" id="check-5" onchange="updateTask(5)"> Video 1</span></label>
-                    </div>
-                    <div class="task-grid-horizontal" id="custom-container-fb-hyhy"></div>
-                    <button class="btn-add-mini" id="btn-add-fb-hyhy" onclick="showPopupSelection('fb-hyhy', 'add')">💮 Thêm (HY)</button>
-                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('fb-hyhy', 'prep')">🌸 Chuẩn bị</button>
-                    <div class="popup-selection" id="popup-add-fb-hyhy"><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Bản dịch', 'add')">+ Bản dịch</button></div>
-                    <div class="popup-selection" id="popup-prep-fb-hyhy"><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
-
-                    <div class="sub-group-title" style="color:var(--facebook-color); margin-top:15px;">💮 Trang HY đang làm Blog</div>
-                    <div class="task-grid-horizontal" id="grid-tasks-fb-hyblog">
-                        <label class="inline-task-box" id="lbl-6"><span class="d-flex align-items-center"><input type="checkbox" id="check-6" onchange="updateTask(6)"> Bản dịch 1</span></label>
-                        <label class="inline-task-box" id="lbl-7"><span class="d-flex align-items-center"><input type="checkbox" id="check-7" onchange="updateTask(7)"> Video 1</span></label>
-                    </div>
-                    <div class="task-grid-horizontal" id="custom-container-fb-hyblog"></div>
-                    <button class="btn-add-mini" id="btn-add-fb-hyblog" onclick="showPopupSelection('fb-hyblog', 'add')">💮 Thêm (Blog)</button>
-                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('fb-hyblog', 'prep')">🌸 Chuẩn bị</button>
-                    <div class="popup-selection" id="popup-add-fb-hyblog"><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Bản dịch', 'add')">+ Bản dịch</button></div>
-                    <div class="popup-selection" id="popup-prep-fb-hyblog"><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
-
-                    <div class="sub-group-title" style="color:var(--facebook-color); margin-top:15px;">💮 Trang Shokaimono</div>
-                    <div class="task-grid-horizontal" id="grid-tasks-fb-shokaimono">
-                        <label class="inline-task-box" id="lbl-8"><span class="d-flex align-items-center"><input type="checkbox" id="check-8" onchange="updateTask(8)"> Bản dịch 1</span></label>
-                        <label class="inline-task-box" id="lbl-11"><span class="d-flex align-items-center"><input type="checkbox" id="check-11" onchange="updateTask(11)"> Bản dịch 2</span></label>
-                    </div>
-                    <div class="task-grid-horizontal" id="custom-container-fb-shokaimono"></div>
-                    <button class="btn-add-mini" id="btn-add-fb-shokaimono" onclick="showPopupSelection('fb-shokaimono', 'add')">💮 Thêm (Shokai)</button>
-                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('fb-shokaimono', 'prep')">🌸 Chuẩn bị</button>
-                    <div class="popup-selection" id="popup-add-fb-shokaimono"><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Bản dịch', 'add')">+ Bản dịch</button></div>
-                    <div class="popup-selection" id="popup-prep-fb-shokaimono"><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
-                </div>
-            </div>
-
-            <div class="card zalo" id="card-zalo">
-                <div class="card-header-toggle" onclick="toggleCard('card-zalo')"><div class="card-title">🌸 Zalo Short Video</div><span class="toggle-icon" id="icon-card-zalo">▼</span></div>
-                <div class="card-body-content">
-                    <div class="mini-progress">
-                        <div class="progress-label"><span style="font-size:0.75rem; color:#475569;">Tiến độ Zalo</span><span id="text-mini-zalo" style="font-size:0.75rem; color:#475569;">0%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-zalo"></div></div>
-                    </div>
-                    
-                    <div class="zalo-bulk-select-box" id="zalo-bulk-box" onclick="handleZaloBulkToggle(event)">
-                        <input type="checkbox" id="zalo-bulk-checkbox">
-                        <span>🌸 Chọn nhanh / Bỏ chọn nhanh cả 10 Video bên dưới</span>
-                    </div>
-
-                    <div class="sub-group-title">📋 Nhiệm vụ cố định (10 Video)</div>
-                    <div class="task-grid-horizontal" id="grid-tasks-zalo">
-                        <label class="inline-task-box" id="lbl-12"><span class="d-flex align-items-center"><input type="checkbox" id="check-12" onchange="updateTask(12)"> Video 1</span></label>
-                        <label class="inline-task-box" id="lbl-13"><span class="d-flex align-items-center"><input type="checkbox" id="check-13" onchange="updateTask(13)"> Video 2</span></label>
-                        <label class="inline-task-box" id="lbl-14"><span class="d-flex align-items-center"><input type="checkbox" id="check-14" onchange="updateTask(14)"> Video 3</span></label>
-                        <label class="inline-task-box" id="lbl-15"><span class="d-flex align-items-center"><input type="checkbox" id="check-15" onchange="updateTask(15)"> Video 4</span></label>
-                        <label class="inline-task-box" id="lbl-16"><span class="d-flex align-items-center"><input type="checkbox" id="check-16" onchange="updateTask(16)"> Video 5</span></label>
-                        <label class="inline-task-box" id="lbl-17"><span class="d-flex align-items-center"><input type="checkbox" id="check-17" onchange="updateTask(17)"> Video 6</span></label>
-                        <label class="inline-task-box" id="lbl-18"><span class="d-flex align-items-center"><input type="checkbox" id="check-18" onchange="updateTask(18)"> Video 7</span></label>
-                        <label class="inline-task-box" id="lbl-19"><span class="d-flex align-items-center"><input type="checkbox" id="check-19" onchange="updateTask(19)"> Video 8</span></label>
-                        <label class="inline-task-box" id="lbl-20"><span class="d-flex align-items-center"><input type="checkbox" id="check-20" onchange="updateTask(20)"> Video 9</span></label>
-                        <label class="inline-task-box" id="lbl-21"><span class="d-flex align-items-center"><input type="checkbox" id="check-21" onchange="updateTask(21)"> Video 10</span></label>
-                    </div>
-                    <div class="sub-group-title">🌸 Nhiệm vụ làm thêm</div>
-                    <div class="task-grid-horizontal" id="custom-container-zalo"></div>
-                    <button class="btn-add-mini" id="btn-add-zalo" onclick="showPopupSelection('zalo', 'add')">💮 Thêm</button>
-                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('zalo', 'prep')">🌸 Chuẩn bị</button>
-                    <div class="popup-selection" id="popup-add-zalo"><button class="popup-btn" onclick="addCustomToApp('zalo', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('zalo', 'Bản dịch', 'add')">+ Bản dịch</button></div>
-                    <div class="popup-selection" id="popup-prep-zalo"><button class="popup-btn" onclick="addCustomToApp('zalo', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('zalo', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
                 </div>
             </div>
         </div>
 
         <div class="danger-zone-wrapper">
             <button class="btn-clear-all" onclick="clearEverything()">Xóa Hết Dữ Liệu Lưu Trữ Trên Sheets</button>
-            <button class="btn-restore-backup" id="btn-restore-action" onclick="restoreBackupData()">🌸 Khôi Phục Liền</button>
         </div>
     </div>
 
@@ -725,217 +543,57 @@
     if(selectedDate.getFullYear() !== YEAR) { selectedDate = new Date(YEAR, 5, 5); } 
 
     let db = {}; let hy_resources = []; let hy_posts = []; let hy_audio_notes = []; let hy_vocab = [];
-    let backup_db = null; let backup_resources = null; let backup_posts = null;
     let activeDashboardMonth = selectedDate.getMonth();
-    
     let isDateFilteringActive = false;
     let currentConfigPlayerUrl = "";
     let mediaRecorder; let audioChunks = [];
     
     let googleScriptWebAppUrl = localStorage.getItem("HY_WORKSPACE_API_URL") || "";
 
-    const segmentMapping = {
-        'tiktok': [1, 2, 10], 'instagram': [3], 'fb-hyhy': [4, 5],
-        'fb-hyblog': [6, 7], 'fb-shokaimono': [8, 11], 'zalo': [12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
-    };
-    const appMapping = {
-        tiktok: [1, 2, 10], instagram: [3], facebook: [4, 5, 6, 7, 8, 11],
-        zalo: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
-    };
-    const TOTAL_FIXED_TASKS = 20;
+    function showLoading(status) { document.getElementById('sync-loading').style.display = status ? 'block' : 'none'; }
+    function getLunarString(dateObj) { try { return new Intl.DateTimeFormat('vi-VN-u-ca-chinese', {day: 'numeric', month: 'numeric'}).format(dateObj); } catch(e) { return ""; } }
+    function formatDateKey(d) { let mm = String(d.getMonth() + 1).padStart(2, '0'); let dd = String(d.getDate()).padStart(2, '0'); return `${d.getFullYear()}-${mm}-${dd}`; }
 
-    const monthPastelColors = [
-        "#FFF5F5", "#F0FDF4", "#EFF6FF", "#FDF4FF", 
-        "#FFFBEB", "#F5F5F7", "#E6FFFA", "#FFF0F6",
-        "#FEF2F2", "#F0FDFA", "#FAF5FF", "#FFF7ED"
-    ];
-
-    const dayPastelColors = [
-        "#FFF5F5", "#F0FDF4", "#EFF6FF", "#FDF4FF", "#FFFBEB", "#F5F5F7", "#E6FFFA",
-        "#FFF0F6", "#FEF2F2", "#F0FDFA", "#FAF5FF", "#FFF7ED", "#F8FAFC", "#F1F5F9",
-        "#EEF2F6", "#E0F2FE", "#E0F2F1", "#E8F5E9", "#F1F8E9", "#FFFDE7", "#FFF8E1",
-        "#FFE0B2", "#FFCCBC", "#FCE4EC", "#F3E5F5", "#EDE7F6", "#E8EAF6", "#E1F5FE",
-        "#E0F7FA", "#E2F3F5", "#F7F9FA"
-    ];
-
-    window.saveApiUrlConfig = function() {
-        let inputUrl = document.getElementById('input-web-app-url').value.trim();
-        if(!inputUrl) { alert("Vui lòng nhập link Web App nhé!"); return; }
-        localStorage.setItem("HY_WORKSPACE_API_URL", inputUrl);
-        googleScriptWebAppUrl = inputUrl;
-        alert("🎉 Đã cập nhật kết nối Google Sheets thành công! Trang web sẽ tải lại nhen.");
-        location.reload();
-    }
-
-    /* --- PHÁT TRIỂN ENGINE GIẢ LẬP ĐỒNG BỘ GOOGLE SHEETS API VỚI CÁC KHÚC TAB MỚI TRÊN WEB --- */
-    const google = {
-        script: {
-            run: {
-                withSuccessHandler: function(callback) {
-                    return {
-                        getAllDataFromSheets: function() {
-                            if(!googleScriptWebAppUrl) { showLoading(false); return; }
-                            fetch(`${googleScriptWebAppUrl}?action=getAllData`)
-                            .then(res => res.json())
-                            .then(resData => { 
-                                if(resData.status === "success") {
-                                    db = resData.data.db || {};
-                                    hy_resources = resData.data.resources || [];
-                                    hy_posts = resData.data.posts || [];
-                                    hy_audio_notes = resData.data.audio_notes || [];
-                                    hy_vocab = resData.data.vocab || [];
-                                    callback(resData.data); 
-                                }
-                            })
-                            .catch(err => console.error("Lỗi tải dữ liệu:", err));
-                        },
-                        saveLichToSheet: function(dateKey, dayDataObj) {
-                            if(!googleScriptWebAppUrl) return;
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "saveLich", dateKey: dateKey, dayDataObj: dayDataObj }) }).then(() => showLoading(false));
-                        },
-                        saveResourcesToSheet: function(resourcesArray) {
-                            if(!googleScriptWebAppUrl) return;
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "saveResources", resourcesArray: resourcesArray }) }).then(() => showLoading(false));
-                        },
-                        savePostsToSheet: function(postsArray) {
-                            if(!googleScriptWebAppUrl) return;
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "savePosts", postsArray: postsArray }) }).then(() => showLoading(false));
-                        },
-                        saveAudioNotesToSheet: function(audioNotesArray) {
-                            if(!googleScriptWebAppUrl) return;
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "saveAudioNotes", audioNotesArray: audioNotesArray }) }).then(() => showLoading(false));
-                        },
-                        saveVocabToSheet: function(vocabArray) {
-                            if(!googleScriptWebAppUrl) return;
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "saveVocab", vocabArray: vocabArray }) }).then(() => showLoading(false));
-                        },
-                        savePlayerUrlToSheet: function(playerUrl) {
-                            if(!googleScriptWebAppUrl) return;
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "savePlayerUrl", playerUrl: playerUrl }) }).then(() => showLoading(false));
-                        },
-                        clearAllSheetsData: function() {
-                            if(!googleScriptWebAppUrl) return;
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "clearAll" }) }).then(() => location.reload());
-                        },
-                        restoreAllSheetsData: function(db, resources, posts) {
-                            if(!googleScriptWebAppUrl) return;
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "restoreAll", db: db, resources: resources, posts: posts, audio_notes: hy_audio_notes, vocab: hy_vocab, playerUrl: currentConfigPlayerUrl }) }).then(() => location.reload());
-                        }
-                    }
-                }
+    // --- ENGINE ĐỒNG BỘ DỮ LIỆU CHUẨN ---
+    async function apiFetch(action, extraData = {}) {
+        if (!googleScriptWebAppUrl) return null;
+        try {
+            if (action === "getAllData") {
+                let res = await fetch(`${googleScriptWebAppUrl}?action=getAllData`);
+                return await res.json();
+            } else {
+                let res = await fetch(googleScriptWebAppUrl, {
+                    method: "POST",
+                    body: JSON.stringify({ action: action, ...extraData })
+                });
+                return await res.json();
             }
-        }
-    };
-
-    window.addEventListener('scroll', function() {
-        const btn = document.getElementById('btn-goto-top');
-        if (window.scrollY > 300) { btn.style.display = 'flex'; } else { btn.style.display = 'none'; }
-    });
-
-    // --- SAKURA EFFECT ENGINE ---
-    const canvas = document.getElementById('sakura-canvas');
-    const ctx = canvas.getContext('2d');
-    let dynamicParticles = [];
-    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    window.addEventListener('resize', resizeCanvas); resizeCanvas();
-
-    class DynamicParticle {
-        constructor(dayOfWeek) { this.day = dayOfWeek; this.reset(); this.y = Math.random() * canvas.height; }
-        reset() {
-            this.x = Math.random() * canvas.width;
-            this.size = Math.random() * 8 + 4;
-            this.opacity = Math.random() * 0.6 + 0.4;
-            this.flip = Math.random();
-            this.flipSpeed = Math.random() * 0.03 + 0.01;
-            if (this.day === 2) { this.y = canvas.height + 20; this.speedX = Math.random() * 0.6 - 0.3; this.speedY = -(Math.random() * 1 + 0.5); } 
-            else { this.y = -20; this.speedX = Math.random() * 1.5 + 0.5; this.speedY = Math.random() * 1 + 1; }
-        }
-        draw() {
-            ctx.save(); ctx.globalAlpha = this.opacity;
-            switch(this.day) {
-                case 1:
-                    ctx.beginPath(); let radiusX = this.size * Math.abs(Math.sin(this.flip));
-                    ctx.ellipse(this.x, this.y, radiusX, this.size, Math.PI / 4, 0, 2 * Math.PI);
-                    ctx.fillStyle = "rgba(255, 183, 178, 0.8)"; ctx.fill(); break;
-                case 2:
-                    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = "rgba(173, 216, 230, 0.4)"; ctx.fill();
-                    ctx.strokeStyle = "rgba(255, 255, 255, 0.7)"; ctx.lineWidth = 1; ctx.stroke(); break;
-                case 3: ctx.font = `${this.size * 2}px Inter`; ctx.fillText("⭐", this.x, this.y); break;
-                case 4: ctx.font = `${this.size * 2}px Inter`; ctx.fillText("🍀", this.x, this.y); break;
-                case 5: ctx.font = `${this.size * 2}px Inter`; ctx.fillText("🍂", this.x, this.y); break;
-                case 6: ctx.beginPath(); ctx.arc(this.x, this.y, this.size * 0.6, 0, Math.PI * 2); ctx.fillStyle = "rgba(255, 255, 255, 0.85)"; ctx.fill(); break;
-                default: ctx.font = `${this.size * 1.8}px Inter`; ctx.fillText("🌸", this.x, this.y); break;
-            }
-            ctx.restore();
-        }
-        update() {
-            this.x += this.speedX; this.y += this.speedY; this.flip += this.flipSpeed;
-            if (this.day === 2) { if (this.y < -20 || this.x > canvas.width || this.x < -20) this.reset(); } 
-            else { if (this.y > canvas.height || this.x > canvas.width || this.x < -20) this.reset(); }
+        } catch (err) {
+            console.error("Lỗi API kết nối:", err);
+            return null;
         }
     }
 
-    function initDynamicEffects() {
-        dynamicParticles = []; let currentDayOfWeek = selectedDate.getDay();
-        for (let i = 0; i < 30; i++) { dynamicParticles.push(new DynamicParticle(currentDayOfWeek)); }
-    }
-    function animateDynamicEffects() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); dynamicParticles.forEach(p => { p.update(); p.draw(); });
-        requestAnimationFrame(animateDynamicEffects);
-    }
-    initDynamicEffects(); animateDynamicEffects();
-
-    function toggleSidebarAccordion(sectionId) { document.getElementById(`header-acc-${sectionId}`).classList.toggle('collapsed'); }
-    function scrollWorkspaceToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-    function scrollToProgressBox() { document.getElementById('total-progress-box').scrollIntoView({ behavior: 'smooth' }); }
-    function scrollToCalendar() { document.getElementById('calendar-container').scrollIntoView({ behavior: 'smooth' }); }
-    
-    window.scrollToOriginalContent = function(event) {
-        if(event) event.stopPropagation();
-        const target = document.getElementById('target-original-content-body');
-        if(target) {
-            document.getElementById('res-card-part1').classList.add('expanded');
-            target.style.display = 'block';
-            setTimeout(() => { target.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 50);
+    async function loadDataFromGoogleSheets() {
+        if (googleScriptWebAppUrl) { 
+            document.getElementById('input-web-app-url').value = googleScriptWebAppUrl; 
+        } else { 
+            showLoading(false);
+            alert("🌸 Chào Hy Hy! Hãy mở Menu góc trái dán link Google Sheets Web App rồi bấm Cập Nhật nhé!"); 
+            return; 
         }
-    }
-
-    function updateLocationPrompt() {
-        let currentLoc = document.getElementById('val-location-text').innerText;
-        let nextLoc = prompt("🌸 Nhập vị trí làm việc mới của bạn nhé:", currentLoc);
-        if(nextLoc !== null && nextLoc.trim() !== "") document.getElementById('val-location-text').innerText = nextLoc.trim();
-    }
-    function updateWeatherPrompt() {
-        let currentWea = document.getElementById('val-weather-text').innerText;
-        let nextWea = prompt("🌸 Cập nhật tình hình thời tiết hiện tại:", currentWea);
-        if(nextWea !== null && nextWea.trim() !== "") document.getElementById('val-weather-text').innerText = nextWea.trim();
-    }
-
-    function toggleCalendarSection() {
-        const container = document.getElementById('calendar-container');
-        const icon = document.getElementById('calendar-toggle-icon');
-        container.classList.toggle('collapsed');
-        document.getElementById('calendar-body-area').style.display = container.classList.contains('collapsed') ? 'none' : 'block';
-        icon.innerText = container.classList.contains('collapsed') ? "▼ Mở rộng" : "▲ Thu gọn";
-    }
-
-    function toggleFacebookDashboardAccordion() {
-        const fbCard = document.getElementById('dash-fb-card-root');
-        const fbHeader = document.getElementById('dash-fb-trigger');
-        fbCard.classList.toggle('collapsed');
-        fbHeader.classList.toggle('collapsed');
-    }
-
-    function loadDataFromGoogleSheets() {
-        if (googleScriptWebAppUrl) { document.getElementById('input-web-app-url').value = googleScriptWebAppUrl; } 
-        else { alert("🌸 Chào Hy Hy! Hãy nhấn nút Menu góc trái trên cùng, dán liên kết Google Sheets Web App vào rồi nhấn Cập Nhật nhé!"); return; }
         
         showLoading(true);
-        google.script.run.withSuccessHandler(function(result) {
-            db = result.db || {}; hy_resources = result.resources || []; hy_posts = result.posts || [];
-            hy_audio_notes = result.audio_notes || []; hy_vocab = result.vocab || [];
-            currentConfigPlayerUrl = result.playerUrl || "";
+        let result = await apiFetch("getAllData");
+        showLoading(false);
+
+        if (result && result.status === "success" && result.data) {
+            db = result.data.db || {}; 
+            hy_resources = result.data.resources || []; 
+            hy_posts = result.data.posts || [];
+            hy_audio_notes = result.data.audio_notes || []; 
+            hy_vocab = result.data.vocab || [];
+            currentConfigPlayerUrl = result.data.playerUrl || "";
             
             if (currentConfigPlayerUrl) {
                 document.getElementById('player-placeholder-text').style.display = "none";
@@ -943,185 +601,171 @@
                 document.getElementById('mini-player-frame').src = currentConfigPlayerUrl;
                 document.getElementById('music-url-src').value = currentConfigPlayerUrl;
             }
+        } else {
+            console.warn("Dữ liệu trống hoặc link Web App chưa chuẩn.");
+        }
 
-            renderChecklistValues();
-            calculateAndRenderDashboard(currentView === 'year' ? 'year' : (currentView === 'dashboard' ? (isDateFilteringActive ? 'day' : 'month') : 'day'));
-            if (currentView === 'resources') { renderResourcesCards(); renderAudioNotesCards(); renderPostsCards(); }
-            if (currentView === 'vocab') { renderVocabularyTable(); }
-            showLoading(false);
-        }).getAllDataFromSheets();
+        renderChecklistValues();
+        renderResourcesCards();
+        renderAudioNotesCards();
+        renderPostsCards();
+        renderVocabularyTable();
+        calculateAndRenderDashboard('day');
     }
-    
-    function showLoading(status) { document.getElementById('sync-loading').style.display = status ? 'block' : 'none'; }
-    function getLunarString(dateObj) { try { return new Intl.DateTimeFormat('vi-VN-u-ca-chinese', {day: 'numeric', month: 'numeric'}).format(dateObj); } catch(e) { return ""; } }
 
+    // --- RENDER KHO TÀI NGUYÊN (LINK GỐC) ---
+    function renderResourcesCards() {
+        let area = document.getElementById('resource-cards-list-area'); if(!area) return;
+        area.innerHTML = "";
+        if(hy_resources.length === 0) {
+            area.innerHTML = `<div style="font-size:0.8rem; color:#94a3b8; text-align:center; padding:10px;">Chưa có bài gốc nào~ 🌸</div>`;
+            return;
+        }
+        hy_resources.forEach(item => {
+            let cardRow = document.createElement('div');
+            cardRow.className = "resource-item-row";
+            cardRow.innerHTML = `
+                <div class="res-meta-left">
+                    <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleResourceCheck(${item.id})">
+                    <a class="res-link-anchor" href="${item.link}" target="_blank">${item.link}</a>
+                </div>
+                <div class="res-meta-right">
+                    <span class="badge-platform">${item.platform}</span>
+                    <button class="delete-custom-btn" onclick="deleteResourceItem(${item.id})">×</button>
+                </div>`;
+            area.appendChild(cardRow);
+        });
+    }
+
+    async function processAndSaveResource() {
+        let input = document.getElementById('resource-url-input');
+        let val = input.value.trim(); if(!val) return;
+        hy_resources.push({ id: Date.now(), checked: false, link: val, platform: val.includes("tiktok") ? "TikTok" : "Xiaohongshu" });
+        input.value = ""; renderResourcesCards();
+        showLoading(true); await apiFetch("saveResources", { resourcesArray: hy_resources }); showLoading(false);
+    }
+
+    // --- RENDER GHI CHÉP & GHI ÂM SÁNG TẠO ---
+    function renderAudioNotesCards() {
+        const area = document.getElementById('audio-notes-list-area'); if(!area) return;
+        area.innerHTML = "";
+        if(hy_audio_notes.length === 0) {
+            area.innerHTML = `<div style="font-size:0.8rem; color:#94a3b8; text-align:center; padding:10px;">Chưa có ghi chép nào~ 🌸</div>`;
+            return;
+        }
+        hy_audio_notes.forEach(item => {
+            let card = document.createElement('div');
+            card.className = "resource-item-row";
+            card.style.borderLeft = "5px solid var(--blue-pastel-color)";
+            card.innerHTML = `
+                <div style="flex:1;">
+                    <div style="font-size: 0.75rem; color:#64748b; font-weight:800;">📅 Ngày: ${item.date}</div>
+                    <div style="font-size:0.85rem; font-weight:700; margin:4px 0;">${item.text}</div>
+                    ${item.audioUrl ? `<audio src="${item.audioUrl}" controls style="height:25px; width:100%; margin-top:5px;"></audio>` : ''}
+                </div>
+                <button class="delete-custom-btn" onclick="deleteAudioNoteItem(${item.id})">×</button>`;
+            area.appendChild(card);
+        });
+    }
+
+    async function saveAudioNoteResource() {
+        const noteText = document.getElementById('note-text-content').value.trim();
+        if(!noteText) { alert("Vui lòng nhập nội dung!"); return; }
+        let currentAudio = document.getElementById('audio-playback-preview').src || "";
+        
+        hy_audio_notes.push({
+            id: Date.now(),
+            date: selectedDate.toLocaleDateString('vi-VN'),
+            text: noteText,
+            audioUrl: currentAudio
+        });
+        document.getElementById('note-text-content').value = "";
+        document.getElementById('audio-playback-preview').style.display = "none";
+        renderAudioNotesCards();
+        showLoading(true); await apiFetch("saveAudioNotes", { audioNotesArray: hy_audio_notes }); showLoading(false);
+    }
+
+    async function deleteAudioNoteItem(id) {
+        hy_audio_notes = hy_audio_notes.filter(a => a.id !== id); renderAudioNotesCards();
+        showLoading(true); await apiFetch("saveAudioNotes", { audioNotesArray: hy_audio_notes }); showLoading(false);
+    }
+
+    // --- RENDER BÀI ĐÃ ĐĂNG THÀNH CÔNG ---
+    function renderPostsCards() {
+        let area = document.getElementById('post-cards-list-area'); if (!area) return;
+        area.innerHTML = "";
+        if(hy_posts.length === 0) {
+            area.innerHTML = `<div style="font-size:0.8rem; color:#94a3b8; text-align:center; padding:10px;">Chưa có thành quả nào~ 💮</div>`;
+            return;
+        }
+        hy_posts.forEach(item => {
+            let cardRow = document.createElement('div');
+            cardRow.className = 'resource-item-row';
+            cardRow.innerHTML = `
+                <div class="res-meta-left"><a class="res-link-anchor" href="${item.link}" target="_blank">${item.link}</a></div>
+                <button class="delete-custom-btn" onclick="deletePostItem(${item.id})">×</button>`;
+            listArea.appendChild(cardRow);
+        });
+    }
+
+    async function processAndSavePublishedPost() {
+        let input = document.getElementById('post-url-input'); let val = input.value.trim(); if (!val) return;
+        hy_posts.push({ id: Date.now(), link: val, platform: "Đã Đăng" });
+        input.value = ''; renderPostsCards();
+        showLoading(true); await apiFetch("savePosts", { postsArray: hy_posts }); showLoading(false);
+    }
+
+    // --- RENDER SỔ TAY TỪ VỰNG KANJI ---
+    function renderVocabularyTable() {
+        const tbody = document.getElementById('vocab-table-body-area'); if(!tbody) return;
+        tbody.innerHTML = "";
+        if(hy_vocab.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#94a3b8; padding:15px;">Chưa lưu từ vựng nào~ 🌸</td></tr>`;
+            return;
+        }
+        hy_vocab.forEach(item => {
+            let tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="vocab-kanji">${item.kanji}</td>
+                <td style="font-weight:700; color:#0369a1;">${item.yomi}</td>
+                <td style="font-weight:700; color:#047857;">${item.mean}</td>
+                <td>
+                    <span style="font-size:0.75rem; color:#475569; display:block; font-style:italic;">${item.note || 'Không có'}</span>
+                    <button class="delete-custom-btn" onclick="deleteVocabItem(${item.id})" style="font-size:0.8rem; color:red;">❌ Xóa</button>
+                </td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    async function saveNewVocabulary() {
+        const kanji = document.getElementById('vocab-kanji-input').value.trim();
+        const yomi = document.getElementById('vocab-yomi-input').value.trim();
+        const mean = document.getElementById('vocab-mean-input').value.trim();
+        const note = document.getElementById('vocab-note-input').value.trim();
+        if(!kanji || !yomi || !mean) { alert("Vui lòng điền đủ thông tin!"); return; }
+
+        hy_vocab.push({ id: Date.now(), kanji: kanji, yomi: yomi, mean: mean, note: note });
+        document.getElementById('vocab-kanji-input').value = "";
+        document.getElementById('vocab-yomi-input').value = "";
+        document.getElementById('vocab-mean-input').value = "";
+        document.getElementById('vocab-note-input').value = "";
+        
+        renderVocabularyTable();
+        showLoading(true); await apiFetch("saveVocab", { vocabArray: hy_vocab }); showLoading(false);
+    }
+
+    async function deleteVocabItem(id) {
+        hy_vocab = hy_vocab.filter(v => v.id !== id); renderVocabularyTable();
+        showLoading(true); await apiFetch("saveVocab", { vocabArray: hy_vocab }); showLoading(false);
+    }
+
+    // --- CLOCK & AUDIO RECORDING ---
     function updateLiveClock() {
         const now = new Date();
         document.getElementById('live-clock').innerText = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        const hourDeg = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
-        document.getElementById('analog-hour').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
-        document.getElementById('analog-minute').style.transform = `translateX(-50%) rotate(${now.getMinutes() * 6}deg)`;
-        document.getElementById('analog-second').style.transform = `translateX(-50%) rotate(${now.getSeconds() * 6}deg)`;
     }
-    setInterval(updateLiveClock, 1000); updateLiveClock();
+    setInterval(updateLiveClock, 1000);
 
-    function handleUpdateYoutubePlayer() {
-        const urlInput = document.getElementById('music-url-src').value.trim();
-        if (!urlInput) { alert("Vui lòng nhập đường dẫn hoặc mã nhúng nhé!"); return; }
-        let embedUrl = urlInput;
-        // Xử lý các link youtube / iframe ... giống phiên bản trước
-        document.getElementById('player-placeholder-text').style.display = "none";
-        document.getElementById('mini-player-frame').style.display = "block";
-        document.getElementById('mini-player-frame').src = embedUrl;
-        currentConfigPlayerUrl = embedUrl;
-        showLoading(true);
-        google.script.run.withSuccessHandler(function() { showLoading(false); }).savePlayerUrlToSheet(embedUrl);
-    }
-
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
-    function toggleCard(cardId) {
-        document.getElementById(cardId).classList.toggle('collapsed');
-        let icon = document.getElementById('icon-' + cardId);
-        if(icon) icon.innerText = document.getElementById(cardId).classList.contains('collapsed') ? '▼' : '▲';
-    }
-    function toggleSubResourceCard(cardId) {
-        document.getElementById(cardId).classList.toggle('expanded');
-        let body = document.getElementById(cardId).querySelector('.section-body');
-        if(body) body.style.display = document.getElementById(cardId).classList.contains('expanded') ? 'block' : 'none';
-        let icon = document.getElementById(cardId).querySelector('.toggle-icon');
-        if(icon) icon.innerText = document.getElementById(cardId).classList.contains('expanded') ? '▲' : '▼';
-    }
-
-    window.showPopupSelection = function(segment, mode) {
-        const targetPopup = document.getElementById(`popup-${mode}-${segment}`);
-        const isShowing = targetPopup.style.display === 'flex';
-        document.querySelectorAll('.popup-selection').forEach(p => p.style.display = 'none');
-        if (!isShowing) targetPopup.style.display = 'flex';
-    }
-
-    function isFutureDate(d) {
-        let today = new Date(); today.setHours(0,0,0,0);
-        let checkDate = new Date(d); checkDate.setHours(0,0,0,0);
-        return checkDate > today;
-    }
-
-    window.adjustDate = function(days) {
-        let tempDate = new Date(selectedDate); tempDate.setDate(tempDate.getDate() + days);
-        if(tempDate.getFullYear() === YEAR) { 
-            selectedDate = tempDate;
-            activeDashboardMonth = selectedDate.getMonth();
-            if (currentView === 'dashboard') isDateFilteringActive = true;
-            document.getElementById('btn-nav-prev').classList.remove('active-nav');
-            document.getElementById('btn-nav-next').classList.remove('active-nav');
-            if(days === -1) document.getElementById('btn-nav-prev').classList.add('active-nav');
-            if(days === 1) document.getElementById('btn-nav-next').classList.add('active-nav');
-            renderChecklistValues(); 
-        } else { alert("Workspace hiện tại được tối ưu hóa dữ liệu trong năm 2026!"); }
-    }
-
-    window.backToToday = function() {
-        selectedDate = new Date(); if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5);
-        activeDashboardMonth = selectedDate.getMonth();
-        renderChecklistValues();
-    }
-
-    function switchView(view) {
-        currentView = view;
-        document.querySelectorAll('.menu-item').forEach(btn => btn.classList.remove('active'));
-        if(document.getElementById(`btn-view-${view}`)) document.getElementById(`btn-view-${view}`).classList.add('active');
-        
-        document.getElementById('calendar-container').style.display = (view === 'year' || view === 'dashboard') ? 'block' : 'none';
-        document.getElementById('hy-dashboard-panel').style.display = (view === 'year' || view === 'dashboard') ? 'block' : 'none';
-        document.getElementById('checklist-container').style.display = (view === 'today') ? 'block' : 'none';
-        document.getElementById('total-progress-box').style.display = (view === 'today') ? 'block' : 'none';
-        document.getElementById('resources-box').style.display = (view === 'resources') ? 'block' : 'none';
-        document.getElementById('vocab-box').style.display = (view === 'vocab') ? 'block' : 'none';
-        
-        if (view === 'year') {
-            document.getElementById('main-title').innerText = "🌸 LỊCH CẢ NĂM 2026 🌸";
-            buildMonthSelectors(); selectCalendarMonth(selectedDate.getMonth());
-        } else if (view === 'dashboard') {
-            document.getElementById('main-title').innerText = "📊 DASHBOARD HỆ THỐNG 📊";
-            buildMonthSelectors(); selectCalendarMonth(selectedDate.getMonth());
-        } else if (view === 'resources') {
-            document.getElementById('main-title').innerText = "🎐 KHO TÀI NGUYÊN & NOTES 🎐";
-            renderResourcesCards(); renderAudioNotesCards(); renderPostsCards();
-        } else if (view === 'vocab') {
-            document.getElementById('main-title').innerText = "🌸 SỔ TAY TỪ VỰNG KANJI 🌸";
-            renderVocabularyTable();
-        } else {
-            document.getElementById('main-title').innerText = "🌸 HY HY WORKSPACE 🌸";
-            renderChecklistValues();
-        }
-        document.getElementById('sidebar').classList.remove('open');
-    }
-
-    function buildMonthSelectors() {
-        const bar = document.getElementById('months-bar-container'); bar.innerHTML = '';
-        const shortMonths = ["Thg 1", "Thg 2", "Thg 3", "Thg 4", "Thg 5", "Thg 6", "Thg 7", "Thg 8", "Thg 9", "Thg 10", "Thg 11", "Thg 12"];
-        shortMonths.forEach((m, idx) => {
-            let btn = document.createElement('button'); btn.className = 'month-selector-btn';
-            btn.style.backgroundColor = monthPastelColors[idx]; 
-            if(activeDashboardMonth === idx && currentView !== 'year') btn.classList.add('active-month');
-            btn.innerText = m;
-            btn.onclick = () => {
-                activeDashboardMonth = idx;
-                selectCalendarMonth(idx);
-            };
-            bar.appendChild(btn);
-        });
-    }
-
-    window.selectCalendarMonth = function(m) {
-        const grid = document.getElementById('calendar-grid'); grid.innerHTML = '';
-        grid.style.backgroundColor = monthPastelColors[m]; 
-        ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'].forEach(dn => {
-            let div = document.createElement('div'); div.className = 'weekday-header'; div.innerText = dn; grid.appendChild(div);
-        });
-        let firstDay = new Date(YEAR, m, 1).getDay();
-        let emptyCells = firstDay === 0 ? 6 : firstDay - 1;
-        for(let i=0; i<emptyCells; i++) grid.appendChild(document.createElement('div'));
-        let totalDays = new Date(YEAR, m + 1, 0).getDate();
-        for(let i=1; i<=totalDays; i++) { let d = new Date(YEAR, m, i); createCalButton(d, i, grid, m); }
-    }
-
-    function createCalButton(dateObj, mainText, targetGrid, monthIdx) {
-        let btn = document.createElement('button'); btn.className = 'cal-btn';
-        btn.style.backgroundColor = dayPastelColors[(parseInt(mainText)-1) % 31]; 
-        let key = formatDateKey(dateObj);
-        btn.innerHTML = `<span>${mainText}</span><span class="lunar-date">(${getLunarString(dateObj)})</span>`;
-        btn.onclick = () => {
-            selectedDate = dateObj;
-            renderChecklistValues();
-        };
-        targetGrid.appendChild(btn);
-    }
-
-    function renderChecklistValues() {
-        let key = formatDateKey(selectedDate);
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('date-banner').innerText = selectedDate.toLocaleDateString('vi-VN', options) + " (Âm lịch: " + getLunarString(selectedDate) + ")";
-        // Logic render tiến độ checklist...
-        document.getElementById('progress-bar-fill').style.width = '40%';
-        document.getElementById('progress-text').innerText = '40% (2/5)';
-    }
-
-    window.updateTask = function(id) { 
-        let key = formatDateKey(selectedDate); initDayKey(key); 
-        db[key].tasks[id].checked = document.getElementById(`check-${id}`).checked; 
-        saveLichData(key); 
-    }
-
-    function initDayKey(key) { 
-        if(!db[key]) db[key] = { tasks: {}, customs: {}, note: '' }; 
-        if(!db[key].tasks) db[key].tasks = {}; 
-        const allIds = [1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21]; 
-        allIds.forEach(id => { if(!db[key].tasks[id]) db[key].tasks[id] = { checked: false }; }); 
-    }
-    function formatDateKey(d) { let mm = String(d.getMonth() + 1).padStart(2, '0'); let dd = String(d.getDate()).padStart(2, '0'); return `${d.getFullYear()}-${mm}-${dd}`; }
-    function saveLichData(key) { showLoading(true); google.script.run.withSuccessHandler(function() { showLoading(false); }).saveLichToSheet(key, db[key]); }
-
-    /* --- LOGIC NGHIỆP VỤ CHO MỤC GHI ÂM & GHI CHÉP MỚI --- */
     window.toggleAudioRecording = function() {
         const btn = document.getElementById('record-action-btn');
         const txt = document.getElementById('record-status-text');
@@ -1134,147 +778,59 @@
                 mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
                 mediaRecorder.onstop = () => {
                     const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
-                    const audioUrl = URL.createObjectURL(audioBlob);
-                    preview.src = audioUrl;
+                    preview.src = URL.createObjectURL(audioBlob);
                     preview.style.display = "block";
-                    txt.innerText = "🌸 Đã thu âm xong! Bạn có thể nghe thử hoặc lưu lại nhé.";
+                    txt.innerText = "🌸 Ghi âm hoàn tất!";
                 };
                 mediaRecorder.start();
                 btn.classList.add('recording');
-                txt.innerText = "💮 Cánh hoa đang lắng nghe bạn nói... Đang thu âm...";
-            }).catch(err => alert("Hy Hy ơi, hãy cấp quyền Micro cho trình duyệt nhé!"));
+                txt.innerText = "💮 Hệ thống đang thu âm...";
+            }).catch(err => alert("Vui lòng cấp quyền Micro!"));
         } else {
             mediaRecorder.stop();
             btn.classList.remove('recording');
         }
     }
 
-    window.saveAudioNoteResource = function() {
-        const noteText = document.getElementById('note-text-content').value.trim();
-        if(!noteText) { alert("Vui lòng gõ nội dung hoặc thông tin ghi âm trước nha!"); return; }
+    // --- GIAO DIỆN & ĐIỀU HƯỚNG ---
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+    function toggleSidebarAccordion(id) { document.getElementById(`wrapper-acc-${id}`).style.maxHeight = document.getElementById(`wrapper-acc-${id}`).style.maxHeight ? null : "500px"; }
+    function toggleCard(id) { document.getElementById(id).classList.toggle('collapsed'); }
+    function toggleSubResourceCard(id) { document.getElementById(id).classList.toggle('expanded'); let body = document.getElementById(id).querySelector('.section-body'); body.style.display = body.style.display === "block" ? "none" : "block"; }
+    function scrollWorkspaceToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    
+    function switchView(view) {
+        currentView = view;
+        document.querySelectorAll('.menu-item').forEach(btn => btn.classList.remove('active'));
+        if(document.getElementById(`btn-view-${view}`)) document.getElementById(`btn-view-${view}`).classList.add('active');
         
-        // Mô phỏng tạo mã base64 hoặc link file cho ghi âm nếu có
-        let fakeAudioLink = document.getElementById('audio-playback-preview').src || "";
-        
-        hy_audio_notes.push({
-            id: Date.now(),
-            date: selectedDate.toLocaleDateString('vi-VN'),
-            text: noteText,
-            audioUrl: fakeAudioLink
-        });
-        
-        document.getElementById('note-text-content').value = "";
-        document.getElementById('audio-playback-preview').style.display = "none";
-        document.getElementById('audio-playback-preview').src = "";
-        
-        renderAudioNotesCards();
-        showLoading(true);
-        google.script.run.withSuccessHandler(function() { showLoading(false); }).saveAudioNotesToSheet(hy_audio_notes);
+        document.getElementById('calendar-container').style.display = (view === 'year' || view === 'dashboard') ? 'block' : 'none';
+        document.getElementById('hy-dashboard-panel').style.display = (view === 'year' || view === 'dashboard') ? 'block' : 'none';
+        document.getElementById('checklist-container').style.display = (view === 'today') ? 'block' : 'none';
+        document.getElementById('total-progress-box').style.display = (view === 'today') ? 'block' : 'none';
+        document.getElementById('resources-box').style.display = (view === 'resources') ? 'block' : 'none';
+        document.getElementById('vocab-box').style.display = (view === 'vocab') ? 'block' : 'none';
+        document.getElementById('sidebar').classList.remove('open');
     }
 
-    function renderAudioNotesCards() {
-        const area = document.getElementById('audio-notes-list-area'); if(!area) return;
-        area.innerHTML = "";
-        if(hy_audio_notes.length === 0) {
-            area.innerHTML = `<div style="font-size:0.8rem; color:#94a3b8; text-align:center; padding:10px;">Chưa có ghi chép sáng tạo nào được lưu lại~ 🌸</div>`;
-            return;
-        }
-        hy_audio_notes.forEach(item => {
-            let card = document.createElement('div');
-            card.className = "resource-item-row";
-            card.style.borderLeft = "5px solid var(--blue-pastel-color)";
-            card.innerHTML = `
-                <div style="flex:1;">
-                    <div style="font-size: 0.75rem; color:#64748b; font-weight:800;">📅 Ngày tạo: ${item.date}</div>
-                    <div style="font-size:0.85rem; font-weight:700; margin:4px 0;">${item.text}</div>
-                    ${item.audioUrl ? `<audio src="${item.audioUrl}" controls style="height:25px; width:100%; margin-top:5px;"></audio>` : ''}
-                </div>
-                <button class="delete-custom-btn" onclick="deleteAudioNoteItem(${item.id})">×</button>
-            `;
-            area.appendChild(card);
-        });
+    function renderChecklistValues() {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('date-banner').innerText = selectedDate.toLocaleDateString('vi-VN', options) + " (Âm lịch: " + getLunarString(selectedDate) + ")";
     }
 
-    window.deleteAudioNoteItem = function(id) {
-        hy_audio_notes = hy_audio_notes.filter(a => a.id !== id);
-        renderAudioNotesCards();
-        showLoading(true);
-        google.script.run.withSuccessHandler(function() { showLoading(false); }).saveAudioNotesToSheet(hy_audio_notes);
-    }
+    function calculateAndRenderDashboard(mode) {}
+    function toggleFacebookDashboardAccordion() {}
 
-    /* --- LOGIC NGHIỆP VỤ CHO SỔ TAY TỪ VỰNG KANJI MỚI --- */
-    window.saveNewVocabulary = function() {
-        const kanji = document.getElementById('vocab-kanji-input').value.trim();
-        const yomi = document.getElementById('vocab-yomi-input').value.trim();
-        const mean = document.getElementById('vocab-mean-input').value.trim();
-        const note = document.getElementById('vocab-note-input').value.trim();
-
-        if(!kanji || !yomi || !mean) { alert("Hy Hy điền đầy đủ Chữ Kanji, Cách đọc và Nghĩa tiếng Việt nhé!"); return; }
-        
-        hy_vocab.push({ id: Date.now(), kanji: kanji, yomi: yomi, mean: mean, note: note });
-        
-        document.getElementById('vocab-kanji-input').value = "";
-        document.getElementById('vocab-yomi-input').value = "";
-        document.getElementById('vocab-mean-input').value = "";
-        document.getElementById('vocab-note-input').value = "";
-        
-        renderVocabularyTable();
-        showLoading(true);
-        google.script.run.withSuccessHandler(function() { showLoading(false); }).saveVocabToSheet(hy_vocab);
-    }
-
-    function renderVocabularyTable() {
-        const tbody = document.getElementById('vocab-table-body-area'); if(!tbody) return;
-        tbody.innerHTML = "";
-        if(hy_vocab.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#94a3b8;">Chưa có từ vựng Kanji nào được ghi lại hết á~ 🌸</td></tr>`;
-            return;
-        }
-        hy_vocab.forEach(item => {
-            let tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="vocab-kanji">${item.kanji}</td>
-                <td style="font-weight:700; color:#0369a1;">${item.yomi}</td>
-                <td style="font-weight:700; color:#047857;">${item.mean}</td>
-                <td>
-                    <span style="font-size:0.75rem; color:#475569; display:block; font-style:italic;">${item.note || 'Không có ghi chú'}</span>
-                    <button class="delete-custom-btn" onclick="deleteVocabItem(${item.id})" style="font-size:1.1rem; margin-top:4px;">❌ Xóa</button>
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
-
-    window.deleteVocabItem = function(id) {
-        hy_vocab = hy_vocab.filter(v => v.id !== id);
-        renderVocabularyTable();
-        showLoading(true);
-        google.script.run.withSuccessHandler(function() { showLoading(false); }).saveVocabToSheet(hy_vocab);
-    }
-
-    // Các hàm render cũ của hệ thống
-    function detectPlatformFromUrl(url) { return url.includes("tiktok") ? "TikTok" : "Xiaohongshu"; }
-    window.processAndSaveResource = function() {
-        let urlInput = document.getElementById('resource-url-input'); let rawInput = urlInput.value.trim(); if(!rawInput) return;
-        hy_resources.push({ id: Date.now(), checked: false, link: rawInput, platform: detectPlatformFromUrl(rawInput), account: "Nguồn" });
-        urlInput.value = ''; renderResourcesCards(); saveLichData();
-    }
-    function renderResourcesCards() {
-        let listArea = document.getElementById('resource-cards-list-area'); if(!listArea) return;
-        listArea.innerHTML = hy_resources.length === 0 ? '<div style="font-size:0.8rem; color:#94a3b8; text-align:center; padding:10px;">Trống nhen!</div>' : '';
-    }
-    window.processAndSavePublishedPost = function() {
-        let postInput = document.getElementById('post-url-input'); let rawUrl = postInput.value.trim(); if (!rawUrl) return;
-        hy_posts.push({ id: Date.now(), link: rawUrl, platform: "Đã Đăng" });
-        postInput.value = ''; renderPostsCards();
-    }
-    function renderPostsCards() {
-        let listArea = document.getElementById('post-cards-list-area'); if (!listArea) return;
-        listArea.innerHTML = hy_posts.length === 0 ? '<div style="font-size:0.8rem; color:#94a3b8; text-align:center; padding:10px;">Trống nhen!</div>' : '';
+    window.saveApiUrlConfig = function() {
+        let inputUrl = document.getElementById('input-web-app-url').value.trim();
+        if(!inputUrl) { alert("Vui lòng nhập link!"); return; }
+        localStorage.setItem("HY_WORKSPACE_API_URL", inputUrl);
+        googleScriptWebAppUrl = inputUrl;
+        alert("🎉 Kết nối thành công! Đang tải lại...");
+        location.reload();
     }
 
     loadDataFromGoogleSheets();
-    switchView('today');
 </script>
 </body>
 </html>
