@@ -17,9 +17,8 @@
             --instagram-gradient: linear-gradient(135deg, #fdf4f7 0%, #fbdbe7 100%);
             --facebook-gradient: linear-gradient(135deg, #e6f4ff 0%, #bae0ff 100%);
             --zalo-gradient: linear-gradient(135deg, #f0f7ff 0%, #d6e4ff 100%);
-            --blue-pastel-gradient: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
             
-            --tiktok-color: #111827; --instagram-color: #d44271; --facebook-color: #1890ff; --zalo-color: #2f54eb; --blue-pastel-color: #0369a1;
+            --tiktok-color: #111827; --instagram-color: #d44271; --facebook-color: #1890ff; --zalo-color: #2f54eb;
             --nav-banner-0: #FFE4E6; --nav-banner-1: #DCFCE7; --nav-banner-2: #DBEAFE; --nav-banner-3: #F5E6FF; --nav-banner-4: #FEF3C7; --nav-banner-5: #F1F5F9; --nav-banner-6: #FAFAF9;
         }
 
@@ -36,6 +35,16 @@
             pointer-events: none; z-index: 9999;
         }
 
+        /* CONFIG MANAGER BOX */
+        .api-config-wrapper {
+            background: #fff; border: var(--main-border); border-radius: 20px; padding: 15px; margin-bottom: 20px; box-shadow: var(--box-shadow-3d);
+        }
+        .api-config-title { font-weight: 900; font-size: 0.9rem; margin-bottom: 8px; color: var(--sakura-dark); text-transform: uppercase; }
+        .api-config-row { display: flex; gap: 8px; }
+        .api-config-row input { flex: 1; padding: 10px 14px; border: 2px solid #1e293b; border-radius: 12px; font-family: inherit; font-size: 0.8rem; font-weight: 600; }
+        .api-config-row button { font-family: inherit; font-weight: 800; font-size: 0.8rem; padding: 10px 18px; border: 2px solid #1e293b; border-radius: 12px; background: #C8E6C9; cursor: pointer; box-shadow: 2px 2px 0 #1e293b; }
+        .api-config-row button:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 #1e293b; }
+
         /* --- SIDEBAR --- */
         .menu-btn {
             position: fixed; top: 15px; left: 15px; font-size: 22px; background: #ffffff; border: var(--main-border);
@@ -45,8 +54,8 @@
         .menu-btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px #1e293b; }
         
         .sidebar {
-            position: fixed; top: 0; left: -290px; width: 260px; height: 100%; background: #ffffff;
-            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding: 75px 15px 20px 15px; z-index: 900; border-right: 4px dashed var(--sakura-pink); overflow-y: auto; box-sizing: border-box;
+            position: fixed; top: 0; left: -280px; width: 250px; height: 100%; background: #ffffff;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding: 80px 15px 20px 15px; z-index: 900; border-right: 4px dashed var(--sakura-pink); overflow-y: auto; box-sizing: border-box;
         }
         .sidebar.open { left: 0; }
         
@@ -68,14 +77,6 @@
         }
         .menu-item:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0px #1e293b; background: #fff; }
         .menu-item.active { background: var(--sakura-dark); color: #fff; border-color: #1e293b; box-shadow: inset 0 2px 4px rgba(0,0,0,0.15); }
-
-        .api-config-box {
-            background: #FFF7ED; border: 2px dashed #ea580c; border-radius: 14px; padding: 10px; margin-top: 15px; box-sizing: border-box;
-        }
-        .api-config-box label { font-size: 0.75rem; font-weight: 800; color: #ea580c; display: block; margin-bottom: 4px; text-align: center; }
-        .api-config-box input { width: 100%; padding: 8px; border: 2px solid #1e293b; border-radius: 10px; font-size: 0.7rem; font-family: inherit; font-weight: 600; box-sizing: border-box; }
-        .api-config-box button { width: 100%; margin-top: 6px; background: #ffedd5; border: 1.5px solid #1e293b; padding: 6px; font-size: 0.7rem; font-weight: 800; border-radius: 8px; cursor: pointer; box-shadow: 1px 1px 0 #1e293b; }
-        .api-config-box button:hover { background: #fed7aa; }
 
         /* --- MAIN LAYOUT --- */
         .main-content { flex: 1; max-width: 900px; margin: 0 auto; padding: 20px; padding-top: 75px; width: 100%; box-sizing: border-box; position: relative; }
@@ -147,8 +148,13 @@
         .mini-player-container {
             width: 100%; height: 110px; border: 2px solid #1e293b; border-radius: 14px; overflow: hidden; background: #f8fafc; display: flex; align-items: center; justify-content: center; position: relative;
         }
-        .mini-player-container iframe { width: 100%; height: 100%; border: none; display: block; }
-        .player-placeholder { font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-align: center; padding: 10px; position: absolute; pointer-events: none; }
+        .mini-player-container iframe {
+            width: 100%; height: 100%; border: none; display: block;
+        }
+        .player-placeholder {
+            font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-align: center; padding: 10px; position: absolute; pointer-events: none;
+        }
+
         .widget-music-controls input { font-family: inherit; width: 100%; padding: 8px 10px; border: 2px solid #1e293b; border-radius: 12px; font-size: 0.75rem; font-weight: 700; box-sizing: border-box; text-align: center; background: #FAFAFA; }
         .widget-music-controls button { font-family: inherit; width: 100%; background: var(--sakura-pink); border: 2px solid #1e293b; border-radius: 12px; padding: 8px; font-weight: 800; font-size: 0.75rem; cursor: pointer; box-shadow: 2px 2px 0 #1e293b; transition: all 0.1s; }
         .widget-music-controls button:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 #1e293b; background: var(--sakura-dark); color: white; }
@@ -165,14 +171,14 @@
             .info-widgets-sidebar .widget-music-controls { flex: 0 0 280px; flex-direction: row; align-items: center; gap: 8px; padding: 8px 10px; }
             .mini-player-container { width: 110px; height: 55px; flex-shrink: 0; }
             .widget-music-controls > div:last-child { display: flex; flex-direction: column; gap: 4px; flex: 1; }
-            .widget-music-controls input { padding: 4px; font-size: 0.7rem; border-radius: 8px; }
+            .widget-music-controls input { padding: 4px 8px; font-size: 0.7rem; border-radius: 8px; }
             .widget-music-controls button { padding: 4px; font-size: 0.7rem; border-radius: 8px; }
             .clock-container-wrapper { justify-content: flex-start; gap: 8px; }
             .analog-clock { width: 32px; height: 32px; }
         }
 
         /* PROGRESS BOX */
-        .progress-container { padding: 14px; border-radius: 20px; margin-bottom: 20px; box-shadow: var(--box-shadow-3d); scroll-margin-top: 80px; background: #fff; border: var(--main-border); }
+        .progress-container { background: #fff; border: var(--main-border); padding: 14px; border-radius: 20px; margin-bottom: 20px; box-shadow: var(--box-shadow-3d); scroll-margin-top: 80px; }
         .progress-label { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800; margin-bottom: 8px; }
         .progress-bar-bg { background-color: #e2e8f0; height: 14px; border-radius: 8px; overflow: hidden; border: 2px solid #1e293b; }
         .progress-bar-fill { background: linear-gradient(90deg, #FFB7B2, #FF8B94, #B39DDB); height: 100%; width: 0%; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -199,32 +205,47 @@
         .lunar-date { font-size: 0.55rem; color: #64748b; font-weight: 500; }
         .weekday-header { font-weight: 900; font-size: 0.75rem; color: #1e293b; padding-bottom: 4px; }
 
-        /* DASHBOARD */
+        /* DYNAMIC DASHBOARD DESIGN */
         .dashboard-container {
-            background: linear-gradient(135deg, #FFF9FA 0%, #FFF0F3 100%); border: var(--main-border); border-radius: 26px; padding: 20px; margin-bottom: 25px; box-shadow: var(--box-shadow-3d); box-sizing: border-box; display: none;
+            background: linear-gradient(135deg, #FFF9FA 0%, #FFF0F3 100%);
+            border: var(--main-border); border-radius: 26px; padding: 20px; margin-bottom: 25px;
+            box-shadow: var(--box-shadow-3d); box-sizing: border-box; display: none;
         }
-        .dashboard-header-title { text-align: center; font-size: 1.25rem; font-weight: 900; color: #b91c1c; margin-top: 0; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .dashboard-grid-apps { display: grid; grid-template-columns: repeat(1, 1fr); gap: 12px; }
+        .dashboard-header-title {
+            text-align: center; font-size: 1.25rem; font-weight: 900; color: #b91c1c; margin-top: 0; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .dashboard-grid-apps {
+            display: grid; grid-template-columns: repeat(1, 1fr); gap: 12px;
+        }
         @media (min-width: 650px) { .dashboard-grid-apps { grid-template-columns: repeat(3, 1fr); } }
         
-        .dash-app-card { background: #ffffff; border: 2px solid #1e293b; border-radius: 18px; padding: 12px; box-shadow: 3px 3px 0px #1e293b; display: flex; flex-direction: column; gap: 4px; }
+        .dash-app-card {
+            background: #ffffff; border: 2px solid #1e293b; border-radius: 18px; padding: 12px; box-shadow: 3px 3px 0px #1e293b; display: flex; flex-direction: column; gap: 4px;
+        }
         .dash-app-card.tiktok-ds { background: #F9FAFB; border-color: var(--tiktok-color); }
         .dash-app-card.instagram-ds { background: #FFF5F7; border-color: var(--instagram-color); }
         .dash-app-card.facebook-ds { background: #F0F7FF; border-color: var(--facebook-color); grid-column: 1 / -1; padding: 0; overflow: hidden; }
         .dash-app-card.zalo-ds { background: #F5F7FF; border-color: var(--zalo-color); }
+        
         .dash-app-title { font-weight: 900; font-size: 0.9rem; margin-bottom: 4px; text-transform: uppercase; text-align: center; border-bottom: 2px dotted rgba(0,0,0,0.1); padding-bottom: 4px; }
         .dash-stat-row { font-size: 0.8rem; font-weight: 700; color: #475569; display: flex; justify-content: space-between; padding: 2px 4px; }
         .dash-stat-row span:last-child { color: #1e293b; font-weight: 800; }
         
+        /* FACEBOOK ACCORDION */
         .dash-fb-accordion-header {
-            background: var(--facebook-gradient); padding: 14px; font-weight: 900; font-size: 0.9rem; color: #0050b3; text-transform: uppercase; text-align: center; cursor: pointer; user-select: none; display: flex; justify-content: center; align-items: center; gap: 8px; border-bottom: 2px solid #1e293b;
+            background: var(--facebook-gradient); padding: 14px; font-weight: 900; font-size: 0.9rem; color: #0050b3;
+            text-transform: uppercase; text-align: center; cursor: pointer; user-select: none; display: flex; justify-content: center; align-items: center; gap: 8px;
+            border-bottom: 2px solid #1e293b;
         }
         .dash-fb-accordion-header::after { content: ' ▲'; font-size: 0.7rem; font-weight: bold; transition: transform 0.2s; margin-left: 4px; }
         .dash-fb-accordion-header.collapsed::after { transform: rotate(180deg); }
         .dash-fb-accordion-content { padding: 12px; display: flex; flex-direction: column; gap: 10px; transition: all 0.3s ease; }
         .dash-app-card.facebook-ds.collapsed .dash-fb-accordion-content { display: none; }
         .dash-app-card.facebook-ds.collapsed .dash-fb-accordion-header { border-bottom: none; }
-        .dash-fb-sub-group { margin-top: 2px; padding: 8px; border: 1.5px dashed #bae0ff; border-radius: 12px; background: #ffffff; }
+
+        .dash-fb-sub-group {
+            margin-top: 2px; padding: 8px; border: 1.5px dashed #bae0ff; border-radius: 12px; background: #ffffff;
+        }
         .dash-fb-sub-title { font-size: 0.8rem; font-weight: 800; color: #0050b3; margin-bottom: 4px; text-transform: uppercase; display: flex; align-items: center; gap: 4px; }
 
         /* KHO TÀI NGUYÊN */
@@ -235,13 +256,10 @@
         #res-card-part1 .card-header-toggle { background: var(--tiktok-gradient); padding: 10px 14px; border-radius: 16px; border: 2px solid #1e293b; }
         #res-card-part2 { background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%); }
         #res-card-part2 .card-header-toggle { background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); padding: 10px 14px; border-radius: 16px; border: 2px solid #1e293b; }
-        
-        /* AUDIO & VOCAB BLUE PASTEL STYLE */
-        #res-card-audio, #res-card-vocab { background: linear-gradient(180deg, #FFFFFF 0%, #EFF6FF 100%); }
-        #res-card-audio .card-header-toggle, #res-card-vocab .card-header-toggle { background: var(--blue-pastel-gradient); padding: 10px 14px; border-radius: 16px; border: 2px solid #1e293b; }
 
         .sub-resource-card .card-header-toggle { justify-content: center !important; gap: 15px; position: relative; }
         .sub-resource-card .card-header-toggle .toggle-icon { position: absolute; right: 20px; }
+
         .sub-resource-card .section-body { display: none; margin-top: 15px; }
         .sub-resource-card.expanded .section-body { display: block; }
         
@@ -254,7 +272,9 @@
 
         .resource-cards-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
         .resource-item-row {
-            background: #fff; border: 2px solid #1e293b; border-radius: 16px; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; box-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+            background: #fff; border: 2px solid #1e293b; border-radius: 16px; padding: 12px 15px;
+            display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.05);
         }
         .resource-item-row.completed { background: #E2FCD4; border-color: #cbd5e1; color: #64748b; }
         .resource-item-row.completed a { color: #64748b; text-decoration: line-through; }
@@ -264,20 +284,8 @@
         .res-link-anchor { font-weight: 700; font-size: 0.85rem; color: #2563eb; text-decoration: none; word-break: break-all; }
         
         .res-meta-right { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
-        .badge-platform { background: #E2E8F0; border: 1.5px solid #1e293b; padding: 4px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
+        .badge-platform { background: #E2E8F0; border: 1.5px solid #1e293b; padding: 4px 8px; border-radius: 10px; font-size: 0.7Rules; font-weight: 800; text-transform: uppercase; }
         .res-acc-text { font-size: 0.8rem; font-weight: 700; color: #475569; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-        /* Ghi âm Voice design */
-        .voice-recorder-box {
-            display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px; background: #F0F9FF; border: 2px dashed #0284c7; border-radius: 16px; margin-bottom: 12px;
-        }
-        .recorder-btn {
-            font-family: inherit; font-weight: 800; font-size: 0.8rem; border: 2px solid #1e293b; border-radius: 12px; padding: 8px 14px; cursor: pointer; box-shadow: 2px 2px 0 #1e293b; transition: all 0.1s;
-        }
-        .recorder-btn.start-rec { background: #FECDD3; color: #9F1239; }
-        .recorder-btn.stop-rec { background: #BAE6FD; color: #0369a1; }
-        .record-status-wave { font-size: 0.8rem; font-weight: 700; color: #0284c7; animation: blink 1s infinite alternate; display: none; }
-        @keyframes blink { from { opacity: 0.4; } to { opacity: 1; } }
 
         /* CHECKLIST CARDS */
         .card { border: var(--main-border); border-radius: 26px; padding: 18px; margin-bottom: 20px; box-shadow: var(--box-shadow-3d); box-sizing: border-box; }
@@ -302,14 +310,19 @@
         .inline-task-box:hover { transform: translateY(-2px); box-shadow: 3px 3px 0 #1e293b; }
         @media (min-width: 600px) { .inline-task-box { width: auto; justify-content: flex-start; } }
         .inline-task-box input[type="checkbox"] { width: 18px; height: 18px; margin-right: 4px; accent-color: #10b981; cursor: pointer; flex-shrink: 0; }
+        .inline-task-box input[type="checkbox"]:disabled { cursor: not-allowed; }
         .inline-task-box.completed { background: #e2fcd4 !important; color: #64748b; text-decoration: line-through; border-color: #cbd5e1; box-shadow: none; transform: none; }
         
+        .inline-task-box.prep-item-box { border-color: var(--sakura-dark); background: #FFF5F5; }
+        .prep-text-desc { font-size: 0.75rem; color: #b91c1c; font-style: italic; display: block; margin-top: 2px; }
+
         .btn-copy-mini { font-family: inherit; background: #ffe066; border: 1.5px solid #1e293b; border-radius: 10px; padding: 4px 10px; font-size: 0.7rem; font-weight: 800; cursor: pointer; box-shadow: 1px 1px 0 #1e293b; }
         .delete-custom-btn { background: none; border: none; color: #ef4444; font-weight: 900; cursor: pointer; font-size: 1.4rem; padding: 0 4px; display: inline-flex; align-items: center; justify-content: center; }
         .delete-custom-btn:hover { transform: scale(1.2); }
         
         .btn-add-mini { font-family: inherit; background: #fff; border: 2px solid #1e293b; padding: 8px 14px; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 0.8rem; margin-top: 6px; margin-right: 5px; display: inline-flex; align-items: center; gap: 3px; box-shadow: 2px 2px 0 #1e293b; }
         .btn-add-mini:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 #1e293b; }
+        .btn-add-mini.prep-style { background: #FFF0F5; border-color: var(--sakura-dark); }
         
         .popup-selection { display: none; gap: 6px; margin-top: 8px; background: #fff; padding: 8px; border: 2px dashed #1e293b; border-radius: 14px; flex-wrap: wrap; animation: fadeIn 0.15s ease; }
         .popup-btn { font-family: inherit; padding: 6px 12px; border: 1.5px solid #1e293b; border-radius: 10px; font-size: 0.75rem; font-weight: 800; cursor: pointer; background: #F8FAFC; box-shadow: 1px 1px 0 #1e293b; }
@@ -318,13 +331,19 @@
         @media (min-width: 600px) { .danger-zone-wrapper { grid-template-columns: 2fr 1fr; } }
         
         .btn-clear-all { font-family: inherit; padding: 14px; background: #ff8787; border: var(--main-border); border-radius: 20px; font-weight: 900; box-shadow: var(--box-shadow-3d); cursor: pointer; font-size: 0.95rem; transition: all 0.1s; }
-        .btn-restore-backup { font-family: inherit; padding: 14px; background: #A7F3D0; border: var(--main-border); border-radius: 20px; font-weight: 900; box-shadow: var(--box-shadow-3d); cursor: pointer; font-size: 0.95rem; color: #064E3B; display: none; align-items: center; justify-content: center; gap: 5px; }
+        .btn-clear-all:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #1e293b; }
+        .btn-restore-backup { font-family: inherit; padding: 14px; background: #A7F3D0; border: var(--main-border); border-radius: 20px; font-weight: 900; box-shadow: var(--box-shadow-3d); cursor: pointer; font-size: 0.95rem; color: #064E3B; display: none; align-items: center; justify-content: center; gap: 5px; transition: all 0.1s; }
 
         .btn-back-to-top {
-            position: fixed; bottom: 25px; right: 25px; width: 48px; height: 48px; background: #ffffff; border: var(--main-border); border-radius: 50%; font-size: 20px; cursor: pointer; display: none; align-items: center; justify-content: center; box-shadow: 3px 3px 0px #1e293b; z-index: 999;
+            position: fixed; bottom: 25px; right: 25px; width: 48px; height: 48px; background: #ffffff; border: var(--main-border);
+            border-radius: 50%; font-size: 20px; cursor: pointer; display: none; align-items: center; justify-content: center;
+            box-shadow: 3px 3px 0px #1e293b; z-index: 999; transition: all 0.2s;
         }
+        .btn-back-to-top:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px #1e293b; background: var(--nav-banner-0); }
+
         .zalo-bulk-select-box { background: #EBF8FF; border: 2px dashed #2b6cb0; border-radius: 14px; padding: 10px 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 800; color: #2b6cb0; cursor: pointer; }
         .zalo-bulk-select-box input { width: 18px; height: 18px; accent-color: #2b6cb0; cursor: pointer; }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -343,17 +362,19 @@
         
         <div class="sidebar-accordion-header" id="header-acc-archive" onclick="toggleSidebarAccordion('archive')">💮 LƯU TRỮ CHUYÊN SÂU</div>
         <div class="sidebar-menu-wrapper" id="wrapper-acc-archive">
-            <button class="menu-item" id="btn-view-resources" onclick="switchView('resources')">🎐 Kho Tổng Hợp</button>
-        </div>
-
-        <div class="api-config-box">
-            <label>⚙️ LIÊN KẾT GOOGLE SHEETS</label>
-            <input type="text" id="input-web-app-url" placeholder="Dán link Web App tại đây...">
-            <button onclick="saveApiUrlConfig()">🌸 Cập Nhật Kết Nối</button>
+            <button class="menu-item" id="btn-view-resources" onclick="switchView('resources')">🎐 Kho Bài Gốc</button>
         </div>
     </div>
 
     <div class="main-content">
+        <div class="api-config-wrapper">
+            <div class="api-config-title">⚙️ Kết nối Hệ Thống Anh Đào</div>
+            <div class="api-config-row">
+                <input type="text" id="api-url-input" placeholder="Dán đường dẫn Web App của Google Apps Script vào đây...">
+                <button onclick="saveApiUrlConfig()">Kết Nối</button>
+            </div>
+        </div>
+
         <div class="info-widgets-sidebar" id="fixed-widget-panel">
             <div class="clock-container-wrapper">
                 <div class="analog-clock">
@@ -379,7 +400,7 @@
             
             <div class="widget-music-controls">
                 <div class="mini-player-container">
-                    <span class="player-placeholder" id="player-placeholder-text">Chưa dán link phát...<br>(Hỗ trợ YouTube, Spotify...)</span>
+                    <span class="player-placeholder" id="player-placeholder-text">Chưa dán link phát...<br>(Hỗ trợ YouTube nhúng, Spotify, SoundCloud...)</span>
                     <iframe id="mini-player-frame" src="about:blank" allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                 </div>
                 <div>
@@ -408,7 +429,7 @@
 
         <div class="calendar-container" id="calendar-container">
             <div class="calendar-header" onclick="toggleCalendarSection()">
-                <span id="calendar-box-title">▲ Bảng Lịch Năm 2026</span>
+                <span id="calendar-box-title">🏵️ Bảng Lịch Năm 2026</span>
                 <span id="calendar-toggle-icon" style="font-size:0.9rem;">▲ Thu gọn</span>
             </div>
             <div class="calendar-body" id="calendar-body-area">
@@ -435,18 +456,22 @@
                 </div>
                 
                 <div class="dash-app-card facebook-ds" id="dash-fb-card-root">
-                    <div class="dash-fb-accordion-header" id="dash-fb-trigger" onclick="toggleFacebookDashboardAccordion()">🌸 Facebook Page System</div>
+                    <div class="dash-fb-accordion-header" id="dash-fb-trigger" onclick="toggleFacebookDashboardAccordion()">
+                        🌸 Facebook Page System
+                    </div>
                     <div class="dash-fb-accordion-content">
                         <div class="dash-fb-sub-group">
                             <div class="dash-fb-sub-title">💮 Trang HY HY</div>
                             <div class="dash-stat-row"><span>Bản dịch:</span><span id="dash-fb-hyhy-trans">0</span></div>
                             <div class="dash-stat-row"><span>Video:</span><span id="dash-fb-hyhy-video">0</span></div>
                         </div>
+                        
                         <div class="dash-fb-sub-group">
                             <div class="dash-fb-sub-title">💮 Trang HY đang làm Blog</div>
                             <div class="dash-stat-row"><span>Bản dịch:</span><span id="dash-fb-hyblog-trans">0</span></div>
                             <div class="dash-stat-row"><span>Video:</span><span id="dash-fb-hyblog-video">0</span></div>
                         </div>
+                        
                         <div class="dash-fb-sub-group">
                             <div class="dash-fb-sub-title">💮 Trang Shokaimono</div>
                             <div class="dash-stat-row"><span>Bản dịch:</span><span id="dash-fb-shokai-trans">0</span></div>
@@ -461,7 +486,7 @@
             <div class="sub-resource-card" id="res-card-part1">
                 <div class="card-header-toggle" onclick="toggleSubResourceCard('res-card-part1')">
                     <div class="card-title" style="color:var(--tiktok-color)" id="resource-title-1">
-                        <span class="windchime-header-btn"><span class="chime-animation">🎐</span> 1. Bài Gốc Biên Tập <span class="chime-animation">🎐</span></span>
+                        <span class="windchime-header-btn" onclick="scrollToOriginalContent(event)"><span class="chime-animation">🎐</span> 1. Bài Gốc Chuẩn Bị Biên Tập <span class="chime-animation">🎐</span></span>
                     </div>
                     <span class="toggle-icon">▼</span>
                 </div>
@@ -474,53 +499,9 @@
                 </div>
             </div>
 
-            <div class="sub-resource-card" id="res-card-audio">
-                <div class="card-header-toggle" onclick="toggleSubResourceCard('res-card-audio')">
-                    <div class="card-title" style="color:var(--blue-pastel-color)">
-                        <span>📼 2. Nhật Ký Ghi Chép & Âm Thanh 🌸</span>
-                    </div>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="section-body">
-                    <div class="voice-recorder-box">
-                        <button class="recorder-btn start-rec" id="btn-start-record" onclick="startRecordingAudio()">🎙️ Bật Ghi Âm</button>
-                        <button class="recorder-btn stop-rec" id="btn-stop-record" onclick="stopRecordingAudio()" disabled>⏹️ Dừng</button>
-                        <span class="record-status-wave" id="txt-rec-wave">🎚️ Đang thu âm giọng Hy Hy...</span>
-                    </div>
-                    <div id="audio-preview-container" style="margin-bottom:12px; display:none; text-align:center;">
-                        <audio id="audio-playback-widget" controls style="width:100%; max-width:300px;"></audio>
-                    </div>
-                    <div class="res-input-group">
-                        <input type="text" id="audio-text-note" placeholder="Nhập nội dung chép lời / text ghi chú...">
-                        <input type="text" id="audio-drive-url" placeholder="Dán link file ghi âm (Nếu upload qua Google Drive)...">
-                        <button class="res-btn" style="background:#bae6fd" onclick="saveAudioNoteAction()">🌸 Lưu Nhật Ký</button>
-                    </div>
-                    <div class="resource-cards-list" id="audio-notes-list-area"></div>
-                </div>
-            </div>
-
-            <div class="sub-resource-card" id="res-card-vocab">
-                <div class="card-header-toggle" onclick="toggleSubResourceCard('res-card-vocab')">
-                    <div class="card-title" style="color:var(--blue-pastel-color)">
-                        <span>📒 3. Sổ Tay Từ Vựng Thông Minh 💮</span>
-                    </div>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="section-body">
-                    <div class="res-input-group" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:6px;">
-                        <input type="text" id="vocab-word" placeholder="Từ vựng mới...">
-                        <input type="text" id="vocab-reading" placeholder="Phát âm / Cách đọc...">
-                        <input type="text" id="vocab-meaning" placeholder="Nghĩa tiếng Việt...">
-                        <input type="text" id="vocab-note" placeholder="Ngôn ngữ (Nhật, Anh, Trung...)">
-                    </div>
-                    <button class="res-btn" style="background:#bae6fd; width:100%; margin-top:8px;" onclick="saveNewVocabAction()">🌸 Thêm Vào Sổ Từ Vựng</button>
-                    <div class="resource-cards-list" id="vocab-list-area"></div>
-                </div>
-            </div>
-
             <div class="sub-resource-card" id="res-card-part2">
                 <div class="card-header-toggle" onclick="toggleSubResourceCard('res-card-part2')">
-                    <div class="card-title" style="color:var(--zalo-color)" id="resource-title-2">💮 4. Thành Quả Video/Bài Đã Đăng</div>
+                    <div class="card-title" style="color:var(--zalo-color)" id="resource-title-2">💮 2. Link Các Bài/Video Đã Đăng Thành Công</div>
                     <span class="toggle-icon">▼</span>
                 </div>
                 <div class="section-body">
@@ -543,9 +524,9 @@
                     </div>
                     <div class="sub-group-title">📋 Nhiệm vụ cố định</div>
                     <div class="task-grid-horizontal" id="grid-tasks-tiktok">
-                        <label class="inline-task-box" id="lbl-1"><span><input type="checkbox" id="check-1" onchange="updateTask(1)"> Video Kanji (1 cũ + 1 mới)</span></label>
-                        <label class="inline-task-box" id="lbl-2"><span><input type="checkbox" id="check-2" onchange="updateTask(2)"> Video 1</span></label>
-                        <label class="inline-task-box" id="lbl-10"><span><input type="checkbox" id="check-10" onchange="updateTask(10)"> Video 2</span></label>
+                        <label class="inline-task-box" id="lbl-1"><span class="d-flex align-items-center"><input type="checkbox" id="check-1" onchange="updateTask(1)"> Video Kanji (1 chữ cũ + 1 chữ mới)</span></label>
+                        <label class="inline-task-box" id="lbl-2"><span class="d-flex align-items-center"><input type="checkbox" id="check-2" onchange="updateTask(2)"> Video 1</span></label>
+                        <label class="inline-task-box" id="lbl-10"><span class="d-flex align-items-center"><input type="checkbox" id="check-10" onchange="updateTask(10)"> Video 2</span></label>
                     </div>
                     <div class="sub-group-title">🌸 Nhiệm vụ làm thêm</div>
                     <div class="task-grid-horizontal" id="custom-container-tiktok"></div>
@@ -565,7 +546,7 @@
                     </div>
                     <div class="sub-group-title">📋 Nhiệm vụ cố định</div>
                     <div class="task-grid-horizontal" id="grid-tasks-instagram">
-                        <label class="inline-task-box" id="lbl-3"><span><input type="checkbox" id="check-3" onchange="updateTask(3)"> Video Kanji (Up từ TikTok)</span></label>
+                        <label class="inline-task-box" id="lbl-3"><span class="d-flex align-items-center"><input type="checkbox" id="check-3" onchange="updateTask(3)"> Video Kanji (Up từ TikTok)</span></label>
                     </div>
                     <div class="task-grid-horizontal" id="custom-container-instagram"></div>
                     <button class="btn-add-mini" id="btn-add-instagram" onclick="showPopupSelection('instagram', 'add')">💮 Thêm</button>
@@ -584,28 +565,36 @@
                     </div>
                     <div class="sub-group-title" style="color:var(--facebook-color);">🌸 Trang HY HY</div>
                     <div class="task-grid-horizontal" id="grid-tasks-fb-hyhy">
-                        <label class="inline-task-box" id="lbl-4"><span><input type="checkbox" id="check-4" onchange="updateTask(4)"> Bản dịch 1</span></label>
-                        <label class="inline-task-box" id="lbl-5"><span><input type="checkbox" id="check-5" onchange="updateTask(5)"> Video 1</span></label>
+                        <label class="inline-task-box" id="lbl-4"><span class="d-flex align-items-center"><input type="checkbox" id="check-4" onchange="updateTask(4)"> Bản dịch 1</span></label>
+                        <label class="inline-task-box" id="lbl-5"><span class="d-flex align-items-center"><input type="checkbox" id="check-5" onchange="updateTask(5)"> Video 1</span></label>
                     </div>
                     <div class="task-grid-horizontal" id="custom-container-fb-hyhy"></div>
                     <button class="btn-add-mini" id="btn-add-fb-hyhy" onclick="showPopupSelection('fb-hyhy', 'add')">💮 Thêm (HY)</button>
                     <button class="btn-add-mini prep-style" onclick="showPopupSelection('fb-hyhy', 'prep')">🌸 Chuẩn bị</button>
+                    <div class="popup-selection" id="popup-add-fb-hyhy"><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Bản dịch', 'add')">+ Bản dịch</button></div>
+                    <div class="popup-selection" id="popup-prep-fb-hyhy"><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
 
                     <div class="sub-group-title" style="color:var(--facebook-color); margin-top:15px;">💮 Trang HY đang làm Blog</div>
                     <div class="task-grid-horizontal" id="grid-tasks-fb-hyblog">
-                        <label class="inline-task-box" id="lbl-6"><span><input type="checkbox" id="check-6" onchange="updateTask(6)"> Bản dịch 1</span></label>
-                        <label class="inline-task-box" id="lbl-7"><span><input type="checkbox" id="check-7" onchange="updateTask(7)"> Video 1</span></label>
+                        <label class="inline-task-box" id="lbl-6"><span class="d-flex align-items-center"><input type="checkbox" id="check-6" onchange="updateTask(6)"> Bản dịch 1</span></label>
+                        <label class="inline-task-box" id="lbl-7"><span class="d-flex align-items-center"><input type="checkbox" id="check-7" onchange="updateTask(7)"> Video 1</span></label>
                     </div>
                     <div class="task-grid-horizontal" id="custom-container-fb-hyblog"></div>
                     <button class="btn-add-mini" id="btn-add-fb-hyblog" onclick="showPopupSelection('fb-hyblog', 'add')">💮 Thêm (Blog)</button>
+                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('fb-hyblog', 'prep')">🌸 Chuẩn bị</button>
+                    <div class="popup-selection" id="popup-add-fb-hyblog"><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Bản dịch', 'add')">+ Bản dịch</button></div>
+                    <div class="popup-selection" id="popup-prep-fb-hyblog"><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
 
                     <div class="sub-group-title" style="color:var(--facebook-color); margin-top:15px;">💮 Trang Shokaimono</div>
                     <div class="task-grid-horizontal" id="grid-tasks-fb-shokaimono">
-                        <label class="inline-task-box" id="lbl-8"><span><input type="checkbox" id="check-8" onchange="updateTask(8)"> Bản dịch 1</span></label>
-                        <label class="inline-task-box" id="lbl-11"><span><input type="checkbox" id="check-11" onchange="updateTask(11)"> Bản dịch 2</span></label>
+                        <label class="inline-task-box" id="lbl-8"><span class="d-flex align-items-center"><input type="checkbox" id="check-8" onchange="updateTask(8)"> Bản dịch 1</span></label>
+                        <label class="inline-task-box" id="lbl-11"><span class="d-flex align-items-center"><input type="checkbox" id="check-11" onchange="updateTask(11)"> Bản dịch 2</span></label>
                     </div>
                     <div class="task-grid-horizontal" id="custom-container-fb-shokaimono"></div>
                     <button class="btn-add-mini" id="btn-add-fb-shokaimono" onclick="showPopupSelection('fb-shokaimono', 'add')">💮 Thêm (Shokai)</button>
+                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('fb-shokaimono', 'prep')">🌸 Chuẩn bị</button>
+                    <div class="popup-selection" id="popup-add-fb-shokaimono"><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Bản dịch', 'add')">+ Bản dịch</button></div>
+                    <div class="popup-selection" id="popup-prep-fb-shokaimono"><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
                 </div>
             </div>
 
@@ -616,24 +605,31 @@
                         <div class="progress-label"><span style="font-size:0.75rem; color:#475569;">Tiến độ Zalo</span><span id="text-mini-zalo" style="font-size:0.75rem; color:#475569;">0%</span></div>
                         <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-zalo"></div></div>
                     </div>
+                    
                     <div class="zalo-bulk-select-box" id="zalo-bulk-box" onclick="handleZaloBulkToggle(event)">
-                        <input type="checkbox" id="zalo-bulk-checkbox"><span>🌸 Chọn nhanh / Bỏ chọn nhanh cả 10 Video</span>
+                        <input type="checkbox" id="zalo-bulk-checkbox">
+                        <span>🌸 Chọn nhanh / Bỏ chọn nhanh cả 10 Video bên dưới</span>
                     </div>
+
                     <div class="sub-group-title">📋 Nhiệm vụ cố định (10 Video)</div>
                     <div class="task-grid-horizontal" id="grid-tasks-zalo">
-                        <label class="inline-task-box" id="lbl-12"><span><input type="checkbox" id="check-12" onchange="updateTask(12)"> Video 1</span></label>
-                        <label class="inline-task-box" id="lbl-13"><span><input type="checkbox" id="check-13" onchange="updateTask(13)"> Video 2</span></label>
-                        <label class="inline-task-box" id="lbl-14"><span><input type="checkbox" id="check-14" onchange="updateTask(14)"> Video 3</span></label>
-                        <label class="inline-task-box" id="lbl-15"><span><input type="checkbox" id="check-15" onchange="updateTask(15)"> Video 4</span></label>
-                        <label class="inline-task-box" id="lbl-16"><span><input type="checkbox" id="check-16" onchange="updateTask(16)"> Video 5</span></label>
-                        <label class="inline-task-box" id="lbl-17"><span><input type="checkbox" id="check-17" onchange="updateTask(17)"> Video 6</span></label>
-                        <label class="inline-task-box" id="lbl-18"><span><input type="checkbox" id="check-18" onchange="updateTask(18)"> Video 7</span></label>
-                        <label class="inline-task-box" id="lbl-19"><span><input type="checkbox" id="check-19" onchange="updateTask(19)"> Video 8</span></label>
-                        <label class="inline-task-box" id="lbl-20"><span><input type="checkbox" id="check-20" onchange="updateTask(20)"> Video 9</span></label>
-                        <label class="inline-task-box" id="lbl-21"><span><input type="checkbox" id="check-21" onchange="updateTask(21)"> Video 10</span></label>
+                        <label class="inline-task-box" id="lbl-12"><span class="d-flex align-items-center"><input type="checkbox" id="check-12" onchange="updateTask(12)"> Video 1</span></label>
+                        <label class="inline-task-box" id="lbl-13"><span class="d-flex align-items-center"><input type="checkbox" id="check-13" onchange="updateTask(13)"> Video 2</span></label>
+                        <label class="inline-task-box" id="lbl-14"><span class="d-flex align-items-center"><input type="checkbox" id="check-14" onchange="updateTask(14)"> Video 3</span></label>
+                        <label class="inline-task-box" id="lbl-15"><span class="d-flex align-items-center"><input type="checkbox" id="check-15" onchange="updateTask(15)"> Video 4</span></label>
+                        <label class="inline-task-box" id="lbl-16"><span class="d-flex align-items-center"><input type="checkbox" id="check-16" onchange="updateTask(16)"> Video 5</span></label>
+                        <label class="inline-task-box" id="lbl-17"><span class="d-flex align-items-center"><input type="checkbox" id="check-17" onchange="updateTask(17)"> Video 6</span></label>
+                        <label class="inline-task-box" id="lbl-18"><span class="d-flex align-items-center"><input type="checkbox" id="check-18" onchange="updateTask(18)"> Video 7</span></label>
+                        <label class="inline-task-box" id="lbl-19"><span class="d-flex align-items-center"><input type="checkbox" id="check-19" onchange="updateTask(19)"> Video 8</span></label>
+                        <label class="inline-task-box" id="lbl-20"><span class="d-flex align-items-center"><input type="checkbox" id="check-20" onchange="updateTask(20)"> Video 9</span></label>
+                        <label class="inline-task-box" id="lbl-21"><span class="d-flex align-items-center"><input type="checkbox" id="check-21" onchange="updateTask(21)"> Video 10</span></label>
                     </div>
+                    <div class="sub-group-title">🌸 Nhiệm vụ làm thêm</div>
                     <div class="task-grid-horizontal" id="custom-container-zalo"></div>
                     <button class="btn-add-mini" id="btn-add-zalo" onclick="showPopupSelection('zalo', 'add')">💮 Thêm</button>
+                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('zalo', 'prep')">🌸 Chuẩn bị</button>
+                    <div class="popup-selection" id="popup-add-zalo"><button class="popup-btn" onclick="addCustomToApp('zalo', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('zalo', 'Bản dịch', 'add')">+ Bản dịch</button></div>
+                    <div class="popup-selection" id="popup-prep-zalo"><button class="popup-btn" onclick="addCustomToApp('zalo', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('zalo', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
                 </div>
             </div>
         </div>
@@ -652,13 +648,12 @@
     let selectedDate = new Date();
     if(selectedDate.getFullYear() !== YEAR) { selectedDate = new Date(YEAR, 5, 5); } 
 
-    let db = {}; let hy_resources = []; let hy_posts = []; let hy_audio_notes = []; let hy_vocab = [];
+    let db = {}; let hy_resources = []; let hy_posts = []; 
     let backup_db = null; let backup_resources = null; let backup_posts = null;
     let activeDashboardMonth = selectedDate.getMonth();
-    let isDateFilteringActive = false; let currentConfigPlayerUrl = "";
     
-    let mediaRecorder; let audioChunks = [];
-    let googleScriptWebAppUrl = localStorage.getItem("HY_WORKSPACE_API_URL") || "";
+    let isDateFilteringActive = false;
+    let API_URL = localStorage.getItem('hy_workspace_api_url') || '';
 
     const segmentMapping = {
         'tiktok': [1, 2, 10], 'instagram': [3], 'fb-hyhy': [4, 5],
@@ -669,329 +664,796 @@
         zalo: [12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
     };
     const TOTAL_FIXED_TASKS = 20;
-    const monthPastelColors = ["#FFF5F5", "#F0FDF4", "#EFF6FF", "#FDF4FF", "#FFFBEB", "#F5F5F7", "#E6FFFA", "#FFF0F6", "#FEF2F2", "#F0FDFA", "#FAF5FF", "#FFF7ED"];
-    const dayPastelColors = ["#FFF5F5", "#F0FDF4", "#EFF6FF", "#FDF4FF", "#FFFBEB", "#F5F5F7", "#E6FFFA", "#FFF0F6", "#FEF2F2", "#F0FDFA", "#FAF5FF", "#FFF7ED", "#F8FAFC", "#F1F5F9"];
 
-    window.saveApiUrlConfig = function() {
-        let inputUrl = document.getElementById('input-web-app-url').value.trim();
-        if(!inputUrl) { alert("Vui lòng nhập link Web App nhé!"); return; }
-        localStorage.setItem("HY_WORKSPACE_API_URL", inputUrl);
-        googleScriptWebAppUrl = inputUrl;
-        alert("🎉 Đã kết nối thành công! Trang web sẽ tải lại.");
-        location.reload();
+    const monthPastelColors = [
+        "#FFF5F5", "#F0FDF4", "#EFF6FF", "#FDF4FF", 
+        "#FFFBEB", "#F5F5F7", "#E6FFFA", "#FFF0F6",
+        "#FEF2F2", "#F0FDFA", "#FAF5FF", "#FFF7ED"
+    ];
+
+    const dayPastelColors = [
+        "#FFF5F5", "#F0FDF4", "#EFF6FF", "#FDF4FF", "#FFFBEB", "#F5F5F7", "#E6FFFA",
+        "#FFF0F6", "#FEF2F2", "#F0FDFA", "#FAF5FF", "#FFF7ED", "#F8FAFC", "#F1F5F9",
+        "#EEF2F6", "#E0F2FE", "#E0F2F1", "#E8F5E9", "#F1F8E9", "#FFFDE7", "#FFF8E1",
+        "#FFE0B2", "#FFCCBC", "#FCE4EC", "#F3E5F5", "#EDE7F6", "#E8EAF6", "#E1F5FE",
+        "#E0F7FA", "#E2F3F5", "#F7F9FA"
+    ];
+
+    // Cấu hình API và Lưu vào LocalStorage
+    function saveApiUrlConfig() {
+        const inputVal = document.getElementById('api-url-input').value.trim();
+        if (!inputVal) { alert("Vui lòng điền link Web App!"); return; }
+        API_URL = inputVal;
+        localStorage.setItem('hy_workspace_api_url', API_URL);
+        alert("🎉 Kết nối thành công! Hệ thống tiến hành đồng bộ dữ liệu...");
+        loadDataFromGoogleSheets();
     }
 
-    const google = {
-        script: {
-            run: {
-                withSuccessHandler: function(callback) {
-                    return {
-                        getAllDataFromSheets: function() {
-                            if(!googleScriptWebAppUrl) { showLoading(false); return; }
-                            fetch(`${googleScriptWebAppUrl}?action=getAllData`)
-                            .then(res => res.json())
-                            .then(resData => { if(resData.status === "success") callback(resData.data); })
-                            .catch(err => console.error(err));
-                        },
-                        saveLichToSheet: function(dateKey, dayDataObj) {
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "saveLich", dateKey: dateKey, dayDataObj: dayDataObj }) }).then(() => showLoading(false));
-                        },
-                        saveResourcesToSheet: function(arr) {
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "saveResources", resourcesArray: arr }) }).then(() => showLoading(false));
-                        },
-                        saveAudioNotesToSheet: function(arr) {
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "saveAudioNotes", audioNotesArray: arr }) }).then(() => showLoading(false));
-                        },
-                        saveVocabToSheet: function(arr) {
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "saveVocab", vocabArray: arr }) }).then(() => showLoading(false));
-                        },
-                        savePostsToSheet: function(arr) {
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "savePosts", postsArray: arr }) }).then(() => showLoading(false));
-                        },
-                        savePlayerUrlToSheet: function(url) {
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "savePlayerUrl", playerUrl: url }) }).then(() => showLoading(false));
-                        },
-                        clearAllSheetsData: function() {
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "clearAll" }) }).then(() => location.reload());
-                        },
-                        restoreAllSheetsData: function(db, res, posts) {
-                            fetch(googleScriptWebAppUrl, { method: "POST", body: JSON.stringify({ action: "restoreAll", db: db, resources: res, posts: posts, audio_notes: hy_audio_notes, vocab: hy_vocab, playerUrl: currentConfigPlayerUrl }) }).then(() => location.reload());
-                        }
-                    }
-                }
-            }
+    // Hàm gọi API lõi (thay cho lệnh google.script.run cũ)
+    async function callFetchAPI(params, bodyData = null) {
+        if (!API_URL) {
+            showLoading(false);
+            return null;
         }
-    };
+        
+        let url = API_URL;
+        if (params) {
+            let queryString = Object.keys(params).map(key => key + '=' + encodeURIComponent(params[key])).join('&');
+            url += (url.includes('?') ? '&' : '?') + queryString;
+        }
+
+        try {
+            let options = { method: 'GET' };
+            if (bodyData) {
+                options = {
+                    method: 'POST',
+                    body: JSON.stringify(bodyData),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' } // Tránh lỗi CORS Preflight
+                };
+            }
+            let res = await fetch(url, options);
+            return await res.json();
+        } catch (err) {
+            console.error("Lỗi API kết nối:", err);
+            return null;
+        }
+    }
 
     window.addEventListener('scroll', function() {
-        document.getElementById('btn-goto-top').style.display = window.scrollY > 300 ? 'flex' : 'none';
+        const btn = document.getElementById('btn-goto-top');
+        if (window.scrollY > 300) { btn.style.display = 'flex'; } 
+        else { btn.style.display = 'none'; }
     });
 
-    // --- SAKURA CANVAS ---
-    const canvas = document.getElementById('sakura-canvas'); const ctx = canvas.getContext('2d');
+    // --- EFFECT ENGINE ---
+    const canvas = document.getElementById('sakura-canvas');
+    const ctx = canvas.getContext('2d');
     let dynamicParticles = [];
     function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     window.addEventListener('resize', resizeCanvas); resizeCanvas();
 
     class DynamicParticle {
-        constructor(day) { this.day = day; this.reset(); this.y = Math.random() * canvas.height; }
+        constructor(dayOfWeek) { this.day = dayOfWeek; this.reset(); this.y = Math.random() * canvas.height; }
         reset() {
-            this.x = Math.random() * canvas.width; this.size = Math.random() * 8 + 4; this.opacity = Math.random() * 0.6 + 0.4;
-            this.flip = Math.random(); this.flipSpeed = Math.random() * 0.03 + 0.01;
-            this.speedX = Math.random() * 1.5 + 0.5; this.speedY = Math.random() * 1 + 1; this.y = -20;
+            this.x = Math.random() * canvas.width;
+            this.size = Math.random() * 8 + 4;
+            this.opacity = Math.random() * 0.6 + 0.4;
+            this.flip = Math.random();
+            this.flipSpeed = Math.random() * 0.03 + 0.01;
+            if (this.day === 2) { this.y = canvas.height + 20; this.speedX = Math.random() * 0.6 - 0.3; this.speedY = -(Math.random() * 1 + 0.5); } 
+            else { this.y = -20; this.speedX = Math.random() * 1.5 + 0.5; this.speedY = Math.random() * 1 + 1; }
         }
         draw() {
-            ctx.save(); ctx.globalAlpha = this.opacity; ctx.beginPath();
-            let radiusX = this.size * Math.abs(Math.sin(this.flip));
-            ctx.ellipse(this.x, this.y, radiusX, this.size, Math.PI / 4, 0, 2 * Math.PI);
-            ctx.fillStyle = "rgba(255, 183, 178, 0.7)"; ctx.fill(); ctx.restore();
+            ctx.save(); ctx.globalAlpha = this.opacity;
+            switch(this.day) {
+                case 1:
+                    ctx.beginPath(); let radiusX = this.size * Math.abs(Math.sin(this.flip));
+                    ctx.ellipse(this.x, this.y, radiusX, this.size, Math.PI / 4, 0, 2 * Math.PI);
+                    ctx.fillStyle = "rgba(255, 183, 178, 0.8)"; ctx.fill(); break;
+                case 2:
+                    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = "rgba(173, 216, 230, 0.4)"; ctx.fill();
+                    ctx.strokeStyle = "rgba(255, 255, 255, 0.7)"; ctx.lineWidth = 1; ctx.stroke(); break;
+                case 3: ctx.font = `${this.size * 2}px Inter`; ctx.fillText("⭐", this.x, this.y); break;
+                case 4: ctx.font = `${this.size * 2}px Inter`; ctx.fillText("🍀", this.x, this.y); break;
+                case 5: ctx.font = `${this.size * 2}px Inter`; ctx.fillText("🍂", this.x, this.y); break;
+                case 6: ctx.beginPath(); ctx.arc(this.x, this.y, this.size * 0.6, 0, Math.PI * 2); ctx.fillStyle = "rgba(255, 255, 255, 0.85)"; ctx.fill(); break;
+                default: ctx.font = `${this.size * 1.8}px Inter`; ctx.fillText("❤️", this.x, this.y); break;
+            }
+            ctx.restore();
         }
-        update() { this.x += this.speedX; this.y += this.speedY; this.flip += this.flipSpeed; if (this.y > canvas.height || this.x > canvas.width) this.reset(); }
+        update() {
+            this.x += this.speedX; this.y += this.speedY; this.flip += this.flipSpeed;
+            if (this.day === 2) { if (this.y < -20 || this.x > canvas.width || this.x < -20) this.reset(); } 
+            else { if (this.y > canvas.height || this.x > canvas.width || this.x < -20) this.reset(); }
+        }
     }
-    function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); dynamicParticles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
-    for(let i=0; i<25; i++) dynamicParticles.push(new DynamicParticle(1)); animate();
 
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
-    function toggleSidebarAccordion(id) { document.getElementById(`header-acc-${id}`).classList.toggle('collapsed'); }
+    function initDynamicEffects() {
+        dynamicParticles = []; let currentDayOfWeek = selectedDate.getDay();
+        for (let i = 0; i < 30; i++) { dynamicParticles.push(new DynamicParticle(currentDayOfWeek)); }
+    }
+    function animateDynamicEffects() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); dynamicParticles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(animateDynamicEffects);
+    }
+    initDynamicEffects(); animateDynamicEffects();
+
+    function toggleSidebarAccordion(sectionId) { document.getElementById(`header-acc-${sectionId}`).classList.toggle('collapsed'); }
     function scrollWorkspaceToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
     function scrollToProgressBox() { document.getElementById('total-progress-box').scrollIntoView({ behavior: 'smooth' }); }
+    function scrollToCalendar() { document.getElementById('calendar-container').scrollIntoView({ behavior: 'smooth' }); }
+    
+    window.scrollToOriginalContent = function(event) {
+        if(event) event.stopPropagation();
+        const target = document.getElementById('target-original-content-body');
+        if(target) {
+            document.getElementById('res-card-part1').classList.add('expanded');
+            target.style.display = 'block';
+            setTimeout(() => { target.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 50);
+        }
+    }
 
     function updateLocationPrompt() {
-        let n = prompt("🌸 Vị trí mới:", document.getElementById('val-location-text').innerText);
-        if(n) document.getElementById('val-location-text').innerText = n.trim();
+        let currentLoc = document.getElementById('val-location-text').innerText;
+        let nextLoc = prompt("🌸 Nhập vị trí làm việc mới của bạn nhé:", currentLoc);
+        if(nextLoc !== null && nextLoc.trim() !== "") document.getElementById('val-location-text').innerText = nextLoc.trim();
     }
     function updateWeatherPrompt() {
-        let n = prompt("🌸 Thời tiết mới:", document.getElementById('val-weather-text').innerText);
-        if(n) document.getElementById('val-weather-text').innerText = n.trim();
-    }
-    function toggleCard(id) { document.getElementById(id).classList.toggle('collapsed'); }
-    function toggleSubResourceCard(id) {
-        let c = document.getElementById(id); c.classList.toggle('expanded');
-        c.querySelector('.section-body').style.display = c.classList.contains('expanded') ? 'block' : 'none';
+        let currentWea = document.getElementById('val-weather-text').innerText;
+        let nextWea = prompt("🌸 Cập nhật tình hình thời tiết hiện tại:", currentWea);
+        if(nextWea !== null && nextWea.trim() !== "") document.getElementById('val-weather-text').innerText = nextWea.trim();
     }
 
-    function loadDataFromGoogleSheets() {
-        if (googleScriptWebAppUrl) document.getElementById('input-web-app-url').value = googleScriptWebAppUrl;
+    function toggleCalendarSection() {
+        const container = document.getElementById('calendar-container');
+        const icon = document.getElementById('calendar-toggle-icon');
+        container.classList.toggle('collapsed');
+        document.getElementById('calendar-body-area').style.display = container.classList.contains('collapsed') ? 'none' : 'block';
+        icon.innerText = container.classList.contains('collapsed') ? "▼ Mở rộng" : "▲ Thu gọn";
+    }
+
+    function toggleFacebookDashboardAccordion() {
+        const fbCard = document.getElementById('dash-fb-card-root');
+        const fbHeader = document.getElementById('dash-fb-trigger');
+        fbCard.classList.toggle('collapsed');
+        fbHeader.classList.toggle('collapsed');
+    }
+
+    async function loadDataFromGoogleSheets() {
+        if(!API_URL) return;
         showLoading(true);
-        google.script.run.withSuccessHandler(function(result) {
+        let result = await callFetchAPI({ action: "getAllData" });
+        if(result) {
             db = result.db || {}; hy_resources = result.resources || []; hy_posts = result.posts || [];
-            hy_audio_notes = result.audio_notes || []; hy_vocab = result.vocab || [];
-            currentConfigPlayerUrl = result.playerUrl || "";
-            if (currentConfigPlayerUrl) { document.getElementById('mini-player-frame').src = currentConfigPlayerUrl; document.getElementById('music-url-src').value = currentConfigPlayerUrl; document.getElementById('player-placeholder-text').style.display="none"; }
-            renderChecklistValues(); renderResourcesCards(); renderPostsCards(); renderAudioNotesCards(); renderVocabCards();
-            showLoading(false);
-        }).getAllDataFromSheets();
+            renderChecklistValues();
+            
+            let dashboardMode = 'year';
+            if (currentView === 'dashboard') dashboardMode = isDateFilteringActive ? 'day' : 'month';
+            calculateAndRenderDashboard(dashboardMode);
+            
+            if (currentView === 'resources') { renderResourcesCards(); renderPostsCards(); }
+        }
+        showLoading(false);
     }
-
-    function showLoading(s) { document.getElementById('sync-loading').style.display = s ? 'block' : 'none'; }
-    function getLunarString(d) { try { return new Intl.DateTimeFormat('vi-VN-u-ca-chinese', {day: 'numeric', month: 'numeric'}).format(d); } catch(e) { return ""; } }
+    
+    function showLoading(status) { document.getElementById('sync-loading').style.display = status ? 'block' : 'none'; }
+    function getLunarString(dateObj) { try { return new Intl.DateTimeFormat('vi-VN-u-ca-chinese', {day: 'numeric', month: 'numeric'}).format(dateObj); } catch(e) { return ""; } }
 
     function updateLiveClock() {
-        const now = new Date(); document.getElementById('live-clock').innerText = now.toLocaleTimeString('vi-VN');
-        document.getElementById('analog-hour').style.transform = `translateX(-50%) rotate(${ (now.getHours()%12)*30 + now.getMinutes()*0.5 }deg)`;
-        document.getElementById('analog-minute').style.transform = `translateX(-50%) rotate(${ now.getMinutes()*6 }deg)`;
-        document.getElementById('analog-second').style.transform = `translateX(-50%) rotate(${ now.getSeconds()*6 }deg)`;
+        const now = new Date();
+        document.getElementById('live-clock').innerText = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const hourDeg = (now.getHours() % 12) * 30 + now.getMinutes() * 0.5;
+        document.getElementById('analog-hour').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+        document.getElementById('analog-minute').style.transform = `translateX(-50%) rotate(${now.getMinutes() * 6}deg)`;
+        document.getElementById('analog-second').style.transform = `translateX(-50%) rotate(${now.getSeconds() * 6}deg)`;
     }
-    setInterval(updateLiveClock, 1000);
+    setInterval(updateLiveClock, 1000); updateLiveClock();
+
+    function handleUpdateYoutubePlayer() {
+        const urlInput = document.getElementById('music-url-src').value.trim();
+        if (!urlInput) { alert("Vui lòng nhập đường dẫn hoặc mã nhúng nhé!"); return; }
+        
+        let embedUrl = "";
+        const placeholder = document.getElementById('player-placeholder-text');
+        const playerFrame = document.getElementById('mini-player-frame');
+
+        if (urlInput.toLowerCase().includes("<iframe")) {
+            const matchSrc = urlInput.match(/src=["']([^"']+)["']/i);
+            if (matchSrc && matchSrc[1]) { embedUrl = matchSrc[1]; }
+        } 
+        else if (urlInput.includes("list=")) {
+            let match = urlInput.match(/list=([^&]+)/); 
+            if(match && match[1]) embedUrl = "https://www.youtube.com/embed/videoseries?list=" + match[1];
+        } else if (urlInput.includes("v=")) {
+            let match = urlInput.match(/v=([^&]+)/); 
+            if(match && match[1]) embedUrl = "https://www.youtube.com/embed/" + match[1];
+        } else if (urlInput.includes("youtu.be/")) {
+            let parts = urlInput.split("youtu.be/"); 
+            if(parts[1]) embedUrl = "https://www.youtube.com/embed/" + parts[1].split(/[?#]/)[0];
+        } 
+        else if (urlInput.includes("spotify.com/")) {
+            embedUrl = urlInput.replace("spotify.com/", "spotify.com/embed/");
+        }
+        else if (urlInput.startsWith("http://") || urlInput.startsWith("https://")) {
+            embedUrl = urlInput;
+        }
+
+        if (embedUrl) {
+            placeholder.style.display = "none";
+            playerFrame.style.display = "block";
+            playerFrame.src = embedUrl;
+        } else { 
+            alert("Đường dẫn nhập vào không hợp lệ hoặc không đúng cấu trúc!"); 
+        }
+    }
+
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+    function toggleCard(cardId) {
+        document.getElementById(cardId).classList.toggle('collapsed');
+        let icon = document.getElementById('icon-' + cardId);
+        if(icon) icon.innerText = document.getElementById(cardId).classList.contains('collapsed') ? '▼' : '▲';
+    }
+    function toggleSubResourceCard(cardId) {
+        document.getElementById(cardId).classList.toggle('expanded');
+        let body = document.getElementById(cardId).querySelector('.section-body');
+        if(body) body.style.display = document.getElementById(cardId).classList.contains('expanded') ? 'block' : 'none';
+        let icon = document.getElementById(cardId).querySelector('.toggle-icon');
+        if(icon) icon.innerText = document.getElementById(cardId).classList.contains('expanded') ? '▲' : '▼';
+    }
+
+    window.showPopupSelection = function(segment, mode) {
+        const targetPopup = document.getElementById(`popup-${mode}-${segment}`);
+        const isShowing = targetPopup.style.display === 'flex';
+        document.querySelectorAll('.popup-selection').forEach(p => p.style.display = 'none');
+        if (!isShowing) targetPopup.style.display = 'flex';
+    }
+
+    function isFutureDate(d) {
+        let today = new Date(); today.setHours(0,0,0,0);
+        let checkDate = new Date(d); checkDate.setHours(0,0,0,0);
+        return checkDate > today;
+    }
+
+    window.adjustDate = function(days) {
+        let tempDate = new Date(selectedDate); tempDate.setDate(tempDate.getDate() + days);
+        if(tempDate.getFullYear() === YEAR) { 
+            selectedDate = tempDate;
+            activeDashboardMonth = selectedDate.getMonth();
+            if (currentView === 'dashboard') isDateFilteringActive = true;
+            document.getElementById('btn-nav-prev').classList.remove('active-nav');
+            document.getElementById('btn-nav-next').classList.remove('active-nav');
+            if(days === -1) document.getElementById('btn-nav-prev').classList.add('active-nav');
+            if(days === 1) document.getElementById('btn-nav-next').classList.add('active-nav');
+            if(currentView === 'year' || currentView === 'dashboard') { buildMonthSelectors(); selectCalendarMonth(selectedDate.getMonth()); }
+            renderChecklistValues(); 
+            calculateAndRenderDashboard(currentView === 'year' ? 'year' : (currentView === 'dashboard' ? (isDateFilteringActive ? 'day' : 'month') : 'day'));
+        } else { alert("Workspace hiện tại được tối ưu hóa dữ liệu trong năm 2026!"); }
+    }
+
+    window.backToToday = function() {
+        selectedDate = new Date(); if(selectedDate.getFullYear() !== YEAR) selectedDate = new Date(YEAR, 5, 5);
+        activeDashboardMonth = selectedDate.getMonth();
+        isDateFilteringActive = (currentView === 'today' || currentView === 'dashboard');
+        document.getElementById('btn-nav-prev').classList.remove('active-nav');
+        document.getElementById('btn-nav-next').classList.remove('active-nav');
+        if(currentView === 'year' || currentView === 'dashboard') { buildMonthSelectors(); selectCalendarMonth(selectedDate.getMonth()); }
+        renderChecklistValues();
+        calculateAndRenderDashboard(currentView === 'year' ? 'year' : (isDateFilteringActive ? 'day' : 'month'));
+    }
 
     function switchView(view) {
         currentView = view;
+        document.querySelectorAll('.menu-item').forEach(btn => btn.classList.remove('active'));
+        if(document.getElementById(`btn-view-${view}`)) document.getElementById(`btn-view-${view}`).classList.add('active');
+        
         document.getElementById('calendar-container').style.display = (view === 'year' || view === 'dashboard') ? 'block' : 'none';
         document.getElementById('hy-dashboard-panel').style.display = (view === 'year' || view === 'dashboard') ? 'block' : 'none';
         document.getElementById('checklist-container').style.display = (view === 'today') ? 'block' : 'none';
+        
         document.getElementById('total-progress-box').style.display = (view === 'today') ? 'block' : 'none';
         document.getElementById('resources-box').style.display = (view === 'resources') ? 'block' : 'none';
-        if(view === 'resources') {
-            document.querySelectorAll('.sub-resource-card').forEach(c => { c.classList.add('expanded'); c.querySelector('.section-body').style.display = 'block'; });
+        
+        if (view === 'year') {
+            document.getElementById('main-title').innerText = "🌸 LỊCH CẢ NĂM 2026 🌸";
+            isDateFilteringActive = false;
+            buildMonthSelectors(); selectCalendarMonth(selectedDate.getMonth());
+            calculateAndRenderDashboard('year');
+            setTimeout(scrollToCalendar, 350);
+        } else if (view === 'dashboard') {
+            document.getElementById('main-title').innerText = "📊 DASHBOARD HỆ THỐNG 📊";
+            isDateFilteringActive = false;
+            buildMonthSelectors(); selectCalendarMonth(selectedDate.getMonth());
+            calculateAndRenderDashboard('month');
+            setTimeout(() => { document.getElementById('hy-dashboard-panel').scrollIntoView({ behavior: 'smooth' }); }, 350);
+        } else if (view === 'resources') {
+            document.getElementById('main-title').innerText = "🎐 KHO TÀI NGUYÊN 🎐";
+            renderResourcesCards(); renderPostsCards();
+            document.getElementById('res-card-part1').classList.add('expanded');
+            document.getElementById('target-original-content-body').style.display = 'block';
+            document.getElementById('res-card-part2').classList.add('expanded');
+            document.getElementById('res-card-part2').querySelector('.section-body').style.display = 'block';
+            requestAnimationFrame(() => {
+                setTimeout(() => { document.getElementById('res-card-part1').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 350);
+            });
+        } else {
+            document.getElementById('main-title').innerText = "🌸 HY HY WORKSPACE 🌸";
+            isDateFilteringActive = true;
+            renderChecklistValues();
+            calculateAndRenderDashboard('day');
         }
-        toggleSidebar();
+        document.getElementById('sidebar').classList.remove('open');
     }
 
-    // --- RECORDING AUDIO ENGINE ---
-    window.startRecordingAudio = function() {
-        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-            mediaRecorder = new MediaRecorder(stream); mediaRecorder.start(); audioChunks = [];
-            document.getElementById('btn-start-record').disabled = true;
-            document.getElementById('btn-stop-record').disabled = false;
-            document.getElementById('txt-rec-wave').style.display = 'inline';
-        }).catch(err => alert("Hy Hy ơi, hãy cấp quyền Micro cho trình duyệt nhé nhen!"));
+    function buildMonthSelectors() {
+        const bar = document.getElementById('months-bar-container'); bar.innerHTML = '';
+        const shortMonths = ["Thg 1", "Thg 2", "Thg 3", "Thg 4", "Thg 5", "Thg 6", "Thg 7", "Thg 8", "Thg 9", "Thg 10", "Thg 11", "Thg 12"];
+        shortMonths.forEach((m, idx) => {
+            let btn = document.createElement('button'); btn.className = 'month-selector-btn';
+            btn.style.backgroundColor = monthPastelColors[idx]; 
+            
+            if(activeDashboardMonth === idx && currentView !== 'year') btn.classList.add('active-month');
+            
+            btn.innerText = m;
+            btn.onclick = () => {
+                if (currentView === 'dashboard' && activeDashboardMonth === idx) {
+                    currentView = 'year';
+                    document.getElementById('btn-view-dashboard').classList.remove('active');
+                    document.getElementById('btn-view-year').classList.add('active');
+                    document.getElementById('main-title').innerText = "🌸 LỊCH CẢ NĂM 2026 🌸";
+                    isDateFilteringActive = false;
+                    buildMonthSelectors();
+                    selectCalendarMonth(idx);
+                    calculateAndRenderDashboard('year');
+                    return;
+                }
+
+                if(currentView === 'year') { 
+                    currentView = 'dashboard'; 
+                    document.getElementById('btn-view-year').classList.remove('active'); 
+                    document.getElementById('btn-view-dashboard').classList.add('active'); 
+                    document.getElementById('main-title').innerText = "📊 DASHBOARD HỆ THỐNG 📊";
+                }
+                
+                document.querySelectorAll('.month-selector-btn').forEach(b => b.classList.remove('active-month'));
+                btn.classList.add('active-month'); 
+                activeDashboardMonth = idx;
+                isDateFilteringActive = false;
+                selectCalendarMonth(idx);
+                calculateAndRenderDashboard('month');
+            };
+            bar.appendChild(btn);
+        });
     }
 
-    window.stopRecordingAudio = function() {
-        mediaRecorder.stop();
-        mediaRecorder.ondataavailable = e => { audioChunks.push(e.data); };
-        mediaRecorder.onstop = () => {
-            const blob = new Blob(audioChunks, { type: 'audio/mp3' });
-            const audioUrl = URL.createObjectURL(blob);
-            let widget = document.getElementById('audio-playback-widget');
-            widget.src = audioUrl;
-            document.getElementById('audio-preview-container').style.display = 'block';
-            document.getElementById('btn-start-record').disabled = false;
-            document.getElementById('btn-stop-record').disabled = true;
-            document.getElementById('txt-rec-wave').style.display = 'none';
+    window.selectCalendarMonth = function(m) {
+        const grid = document.getElementById('calendar-grid'); grid.innerHTML = '';
+        grid.style.backgroundColor = monthPastelColors[m]; 
+        ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'].forEach(dn => {
+            let div = document.createElement('div'); div.className = 'weekday-header'; div.innerText = dn; grid.appendChild(div);
+        });
+        let firstDay = new Date(YEAR, m, 1).getDay();
+        let emptyCells = firstDay === 0 ? 6 : firstDay - 1;
+        for(let i=0; i<emptyCells; i++) grid.appendChild(document.createElement('div'));
+        let totalDays = new Date(YEAR, m + 1, 0).getDate();
+        for(let i=1; i<=totalDays; i++) { let d = new Date(YEAR, m, i); createCalButton(d, i, grid, m); }
+    }
+
+    window.writeNoteOnCalendar = async function(dateKey) {
+        initDayKey(dateKey);
+        let oldNote = db[dateKey].note || "";
+        let newNote = prompt("🌸 Nhập thông tin ghi chú cho ngày này:", oldNote);
+        if (newNote !== null) {
+            db[dateKey].note = newNote.trim(); showLoading(true);
+            await callFetchAPI(null, { action: "saveLich", dateKey: dateKey, dayDataObj: db[dateKey] });
+            selectCalendarMonth(activeDashboardMonth); 
+            showLoading(false);
+        }
+    }
+
+    function createCalButton(dateObj, mainText, targetGrid, monthIdx) {
+        let btn = document.createElement('button'); btn.className = 'cal-btn';
+        let dayIdx = parseInt(mainText) - 1;
+        btn.style.backgroundColor = dayPastelColors[dayIdx % 31]; 
+
+        let key = formatDateKey(dateObj); let todayKey = formatDateKey(new Date());
+        let hasData = false;
+        if(db[key]) {
+            if(Object.keys(db[key].tasks || {}).length > 0) hasData = true;
+            let c = db[key].customs || {}; for(let k in c) { if((c[k]||[]).length > 0) hasData = true; }
+        }
+        if(hasData) btn.classList.add('has-data');
+        if(key === todayKey) btn.classList.add('today-highlight');
+        
+        if(formatDateKey(selectedDate) === key && isDateFilteringActive) btn.classList.add('active');
+
+        if(db[key] && db[key].note && db[key].note.trim() !== "") { btn.title = `📝 Ghi chú: ${db[key].note.trim()}`; } 
+        else { btn.title = "Nhấp đúp chuột để thêm ghi chú nhanh 🌸"; }
+
+        let lunarStr = getLunarString(dateObj); let htmlStr = `<span>${mainText}</span>`;
+        if(lunarStr) htmlStr += `<span class="lunar-date">(${lunarStr})</span>`;
+        if(db[key] && db[key].note && db[key].note.trim() !== "") { htmlStr += `<span class="cal-note-indicator">🌸</span>`; }
+
+        btn.innerHTML = htmlStr;
+        btn.onclick = () => { 
+            if (isDateFilteringActive && formatDateKey(selectedDate) === key) {
+                isDateFilteringActive = false;
+                btn.classList.remove('active');
+                if (currentView === 'dashboard') { calculateAndRenderDashboard('month'); } 
+                else { calculateAndRenderDashboard('year'); }
+                return;
+            }
+
+            selectedDate = dateObj; 
+            activeDashboardMonth = dateObj.getMonth();
+            isDateFilteringActive = true;
+            
+            document.querySelectorAll('.month-selector-btn').forEach((b, i) => {
+                if(i === dateObj.getMonth() && currentView !== 'year') b.classList.add('active-month'); else b.classList.remove('active-month');
+            });
+            selectCalendarMonth(dateObj.getMonth()); 
+            renderChecklistValues(); 
+            calculateAndRenderDashboard(currentView === 'year' ? 'year' : 'day');
         };
+        btn.ondblclick = () => { writeNoteOnCalendar(key); };
+        targetGrid.appendChild(btn);
     }
 
-    window.saveAudioNoteAction = function() {
-        let txt = document.getElementById('audio-text-note').value.trim();
-        let url = document.getElementById('audio-drive-url').value.trim();
-        if(!txt && !url) return;
-        hy_audio_notes.push({ id: Date.now(), date: new Date().toLocaleString('vi-VN'), text: txt || "Ghi âm thoại", audioUrl: url || "File local/Drive" });
-        document.getElementById('audio-text-note').value = ''; document.getElementById('audio-drive-url').value = '';
-        renderAudioNotesCards(); showLoading(true);
-        google.script.run.withSuccessHandler(() => showLoading(false)).saveAudioNotesToSheet(hy_audio_notes);
-    }
+    window.calculateAndRenderDashboard = function(mode) {
+        let summary = {
+            tiktok: { video: 0 }, instagram: { video: 0 }, zalo: { video: 0 },
+            facebook: {
+                hyhy: { trans: 0, video: 0 }, hyblog: { trans: 0, video: 0 }, shokai: { trans: 0, video: 0 }
+            }
+        };
 
-    window.deleteAudioNoteItem = function(id) {
-        hy_audio_notes = hy_audio_notes.filter(a => a.id !== id); renderAudioNotesCards(); showLoading(true);
-        google.script.run.withSuccessHandler(() => showLoading(false)).saveAudioNotesToSheet(hy_audio_notes);
-    }
+        let titleScope = document.getElementById('dash-scope-title');
+        let targetKeys = [];
 
-    function renderAudioNotesCards() {
-        let area = document.getElementById('audio-notes-list-area'); if(!area) return; area.innerHTML = '';
-        hy_audio_notes.forEach(a => {
-            let row = document.createElement('div'); row.className = 'resource-item-row';
-            row.style.borderLeft = "5px solid #0284c7";
-            row.innerHTML = `
-                <div class="res-meta-left"><span>🎙️ <b>[${a.date}]</b> ${a.text}</span></div>
-                <div class="res-meta-right">
-                    <a href="${a.audioUrl}" target="_blank" class="badge-platform" style="background:#E0F2FE; color:#0369a1; text-decoration:none;">🔗 Nghe File</a>
-                    <button class="delete-custom-btn" onclick="deleteAudioNoteItem(${a.id})">×</button>
-                </div>
-            `;
-            area.appendChild(row);
+        if (mode === 'day') {
+            let key = formatDateKey(selectedDate); targetKeys.push(key);
+            titleScope.innerText = `🌸 TỔNG KẾT NGÀY: ${selectedDate.toLocaleDateString('vi-VN')} 🌸`;
+        } else if (mode === 'month') {
+            titleScope.innerText = `🌸 TỔNG KẾT THÁNG ${activeDashboardMonth + 1} / NĂM ${YEAR} 🌸`;
+            for (let i = 1; i <= 31; i++) {
+                let mStr = String(activeDashboardMonth + 1).padStart(2, '0');
+                let dStr = String(i).padStart(2, '0');
+                targetKeys.push(`${YEAR}-${mStr}-${dStr}`);
+            }
+        } else if (mode === 'year') {
+            titleScope.innerText = `🌸 HỆ THỐNG ANH ĐÀO TOÀN DIỆN CẢ NĂM 2026 🌸`;
+            for (let m = 1; m <= 12; m++) {
+                for (let d = 1; d <= 31; d++) {
+                    let mStr = String(m).padStart(2, '0');
+                    let dStr = String(d).padStart(2, '0');
+                    targetKeys.push(`${YEAR}-${mStr}-${dStr}`);
+                }
+            }
+        }
+
+        targetKeys.forEach(k => {
+            if (!db[k]) return;
+            let t = db[k].tasks || {}; let c = db[k].customs || {};
+
+            if (t[1] && t[1].checked) summary.tiktok.video++; 
+            if (t[2] && t[2].checked) summary.tiktok.video++; 
+            if (t[10] && t[10].checked) summary.tiktok.video++; 
+            if (c['tiktok']) {
+                c['tiktok'].forEach(item => { if (item.checked && item.text.toLowerCase().includes('video')) summary.tiktok.video++; });
+            }
+
+            if (t[3] && t[3].checked) summary.instagram.video++;
+            if (c['instagram']) {
+                c['instagram'].forEach(item => { if (item.checked && item.text.toLowerCase().includes('video')) summary.instagram.video++; });
+            }
+
+            for (let id = 12; id <= 21; id++) { if (t[id] && t[id].checked) summary.zalo.video++; }
+            if (c['zalo']) {
+                c['zalo'].forEach(item => { if (item.checked && item.text.toLowerCase().includes('video')) summary.zalo.video++; });
+            }
+
+            if (t[4] && t[4].checked) summary.facebook.hyhy.trans++; 
+            if (t[5] && t[5].checked) summary.facebook.hyhy.video++; 
+            if (c['fb-hyhy']) {
+                c['fb-hyhy'].forEach(item => {
+                    if (item.checked) {
+                        if (item.text.toLowerCase().includes('video')) summary.facebook.hyhy.video++;
+                        if (item.text.toLowerCase().includes('bản dịch')) summary.facebook.hyhy.trans++;
+                    }
+                });
+            }
+
+            if (t[6] && t[6].checked) summary.facebook.hyblog.trans++; 
+            if (t[7] && t[7].checked) summary.facebook.hyblog.video++; 
+            if (c['fb-hyblog']) {
+                c['fb-hyblog'].forEach(item => {
+                    if (item.checked) {
+                        if (item.text.toLowerCase().includes('video')) summary.facebook.hyblog.video++;
+                        if (item.text.toLowerCase().includes('bản dịch')) summary.facebook.hyblog.trans++;
+                    }
+                });
+            }
+
+            if (t[8] && t[8].checked) summary.facebook.shokai.trans++; 
+            if (t[11] && t[11].checked) summary.facebook.shokai.trans++; 
+            if (c['fb-shokaimono']) {
+                c['fb-shokaimono'].forEach(item => {
+                    if (item.checked) {
+                        if (item.text.toLowerCase().includes('video')) summary.facebook.shokai.video++;
+                        if (item.text.toLowerCase().includes('bản dịch')) summary.facebook.shokai.trans++;
+                    }
+                });
+            }
         });
+
+        document.getElementById('dash-tk-video').innerText = summary.tiktok.video;
+        document.getElementById('dash-ig-video').innerText = summary.instagram.video;
+        document.getElementById('dash-zl-video').innerText = summary.zalo.video;
+        
+        document.getElementById('dash-fb-hyhy-trans').innerText = summary.facebook.hyhy.trans;
+        document.getElementById('dash-fb-hyhy-video').innerText = summary.facebook.hyhy.video;
+        document.getElementById('dash-fb-hyblog-trans').innerText = summary.facebook.hyblog.trans;
+        document.getElementById('dash-fb-hyblog-video').innerText = summary.facebook.hyblog.video;
+        document.getElementById('dash-fb-shokai-trans').innerText = summary.facebook.shokai.trans;
+        document.getElementById('dash-fb-shokai-video').innerText = summary.facebook.shokai.video;
     }
 
-    // --- KHO TỪ VỰNG ENGINE ---
-    window.saveNewVocabAction = function() {
-        let w = document.getElementById('vocab-word').value.trim();
-        let r = document.getElementById('vocab-reading').value.trim();
-        let m = document.getElementById('vocab-meaning').value.trim();
-        let n = document.getElementById('vocab-note').value.trim();
-        if(!w || !m) { alert("Hy Hy nhập thiếu từ hoặc nghĩa rồi nè!"); return; }
-        hy_vocab.push({ id: Date.now(), word: w, reading: r || "---", meaning: m, note: n || "Đa ngôn ngữ" });
-        document.getElementById('vocab-word').value=''; document.getElementById('vocab-reading').value='';
-        document.getElementById('vocab-meaning').value=''; document.getElementById('vocab-note').value='';
-        renderVocabCards(); showLoading(true);
-        google.script.run.withSuccessHandler(() => showLoading(false)).saveVocabToSheet(hy_vocab);
-    }
-
-    window.deleteVocabItem = function(id) {
-        hy_vocab = hy_vocab.filter(v => v.id !== id); renderVocabCards(); showLoading(true);
-        google.script.run.withSuccessHandler(() => showLoading(false)).saveVocabToSheet(hy_vocab);
-    }
-
-    function renderVocabCards() {
-        let area = document.getElementById('vocab-list-area'); if(!area) return; area.innerHTML = '';
-        hy_vocab.forEach(v => {
-            let row = document.createElement('div'); row.className = 'resource-item-row';
-            row.style.borderLeft = "5px solid #10b981";
-            row.innerHTML = `
-                <div class="res-meta-left">
-                    <span>💮 <b style="font-size:1rem; color:#111827;">${v.word}</b> (${v.reading}) : <i style="color:#059669">${v.meaning}</i></span>
-                </div>
-                <div class="res-meta-right">
-                    <span class="badge-platform" style="background:#D1FAE5;">${v.note}</span>
-                    <button class="delete-custom-btn" onclick="deleteVocabItem(${v.id})">×</button>
-                </div>
-            `;
-            area.appendChild(row);
-        });
-    }
-
-    // --- CÁC HÀM XỬ LÝ CŨ ---
-    window.adjustDate = function(days) {
-        selectedDate.setDate(selectedDate.getDate() + days); renderChecklistValues();
-    }
-    window.backToToday = function() { selectedDate = new Date(); renderChecklistValues(); }
-    
-    function formatDateKey(d) { let mm = String(d.getMonth() + 1).padStart(2, '0'); let dd = String(d.getDate()).padStart(2, '0'); return `${d.getFullYear()}-${mm}-${dd}`; }
-    
     function renderChecklistValues() {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('date-banner').innerText = selectedDate.toLocaleDateString('vi-VN', options) + " (Âm lịch: " + getLunarString(selectedDate) + ")";
-        let key = formatDateKey(selectedDate);
-        let dayData = db[key] || { tasks: {}, customs: {} };
-        let tasksData = dayData.tasks || {};
-        let totalCheckedGlobal = 0;
         
-        for (const app in appMapping) {
-            let checked = 0;
-            appMapping[app].forEach(id => {
-                let cb = document.getElementById(`check-${id}`);
-                if(cb) {
-                    cb.checked = tasksData[id] ? tasksData[id].checked : false;
-                    if(cb.checked) { checked++; totalCheckedGlobal++; }
-                }
-            });
-            let miniPct = Math.round((checked / appMapping[app].length) * 100);
-            if(document.getElementById(`fill-mini-${app}`)) document.getElementById(`fill-mini-${app}`).style.width = miniPct + '%';
-            if(document.getElementById(`text-mini-${app}`)) document.getElementById(`text-mini-${app}`).innerText = miniPct + '%';
-        }
-        let pctGlobal = Math.round((totalCheckedGlobal / TOTAL_FIXED_TASKS) * 100);
-        document.getElementById('progress-bar-fill').style.width = pctGlobal + '%';
-        document.getElementById('progress-text').innerText = pctGlobal + '%';
-    }
+        let currentDayOfWeek = selectedDate.getDay();
+        document.documentElement.style.setProperty('--current-page-bg', `var(--day-bg-${currentDayOfWeek})`);
+        document.getElementById('date-banner').style.backgroundColor = `var(--nav-banner-${currentDayOfWeek})`;
 
-    window.updateTask = function(id) {
         let key = formatDateKey(selectedDate);
-        if(!db[key]) db[key] = { tasks: {}, customs: {} };
-        if(!db[key].tasks) db[key].tasks = {};
-        db[key].tasks[id] = { checked: document.getElementById(`check-${id}`).checked };
-        renderChecklistValues(); showLoading(true);
-        google.script.run.withSuccessHandler(() => showLoading(false)).saveLichToSheet(key, db[key]);
+        initDynamicEffects();
+
+        let dayData = db[key] || { tasks: {}, customs: {} };
+        let tasksData = dayData.tasks || {}; let customsData = dayData.customs || {};
+        let totalCheckedGlobal = 0; let totalCountGlobal = TOTAL_FIXED_TASKS;
+
+        let futureLocked = isFutureDate(selectedDate);
+
+        const allSegments = ['tiktok', 'instagram', 'fb-hyhy', 'fb-hyblog', 'fb-shokaimono', 'zalo'];
+        allSegments.forEach(seg => {
+            let btnAdd = document.getElementById(`btn-add-${seg}`);
+            if(btnAdd) btnAdd.style.display = futureLocked ? 'none' : 'inline-flex';
+        });
+
+        for (const segment in segmentMapping) {
+            let customContainer = document.getElementById(`custom-container-${segment}`);
+            if(customContainer) customContainer.innerHTML = '';
+            
+            segmentMapping[segment].forEach(id => {
+                let tData = tasksData[id] || { checked: false };
+                let cb = document.getElementById(`check-${id}`); let lbl = document.getElementById(`lbl-${id}`);
+                if(cb) { cb.checked = tData.checked; cb.disabled = futureLocked; }
+                if(tData.checked) { if(lbl) lbl.classList.add('completed'); totalCheckedGlobal++; } else { if(lbl) lbl.classList.remove('completed'); }
+            });
+
+            let segCustomsList = customsData[segment] || []; totalCountGlobal += segCustomsList.length;
+            segCustomsList.forEach(cTask => {
+                if(cTask.checked) totalCheckedGlobal++;
+                let isPrepItem = cTask.isPrep || false;
+                
+                let lbl = document.createElement('label');
+                lbl.className = `inline-task-box ${cTask.checked ? 'completed' : ''} ${isPrepItem ? 'prep-item-box' : ''}`;
+                let isCheckboxDisabled = (futureLocked && !isPrepItem);
+
+                lbl.innerHTML = `
+                    <span class="d-flex align-items-center">
+                        <input type="checkbox" ${cTask.checked ? 'checked' : ''} ${isCheckboxDisabled ? 'disabled' : ''} onchange="toggleCustomTask('${segment}', ${cTask.id})">
+                        <div><span>${cTask.text}</span>${cTask.note ? `<span class="prep-text-desc">🌸 Chi tiết chuẩn bị: ${cTask.note}</span>` : ''}</div>
+                    </span>
+                    <button class="delete-custom-btn" onclick="deleteCustomTask('${segment}', ${cTask.id}); event.preventDefault();">×</button>
+                `;
+                if(customContainer) customContainer.appendChild(lbl);
+            });
+        }
+
+        let zaloIds = segmentMapping['zalo'];
+        let totalZaloFixedChecked = 0;
+        zaloIds.forEach(id => { if(tasksData[id] && tasksData[id].checked) totalZaloFixedChecked++; });
+        let bulkCheck = document.getElementById('zalo-bulk-checkbox');
+        bulkCheck.checked = (totalZaloFixedChecked === zaloIds.length);
+        bulkCheck.disabled = futureLocked;
+
+        for(const app in appMapping) {
+            let appChecked = 0; let appTotal = appMapping[app].length;
+            appMapping[app].forEach(id => { if(tasksData[id] && tasksData[id].checked) appChecked++; });
+            if(app === 'facebook') {
+                ['fb-hyhy', 'fb-hyblog', 'fb-shokaimono'].forEach(seg => {
+                    let list = customsData[seg] || []; appTotal += list.length; list.forEach(c => { if(c.checked) appChecked++; });
+                });
+            } else {
+                let list = customsData[app] || []; appTotal += list.length; list.forEach(c => { if(c.checked) appChecked++; });
+            }
+            let miniPct = appTotal > 0 ? Math.round((appChecked / appTotal) * 100) : 0;
+            document.getElementById(`fill-mini-${app}`).style.width = miniPct + '%';
+            document.getElementById(`text-mini-${app}`).innerText = `${miniPct}% (${appChecked}/${appTotal})`;
+        }
+        let pctGlobal = totalCountGlobal > 0 ? Math.round((totalCheckedGlobal / totalCountGlobal) * 100) : 0;
+        document.getElementById('progress-bar-fill').style.width = pctGlobal + '%';
+        document.getElementById('progress-text').innerText = `${pctGlobal}% (${totalCheckedGlobal}/${totalCountGlobal})`;
     }
 
-    window.processAndSaveResource = function() {
-        let input = document.getElementById('resource-url-input'); if(!input.value) return;
-        hy_resources.push({ id: Date.now(), checked: false, link: input.value, platform: "Xiaohongshu", account: "Hy Hy", cre: "Hy Hy" });
-        input.value = ''; renderResourcesCards(); showLoading(true);
-        google.script.run.withSuccessHandler(() => showLoading(false)).saveResourcesToSheet(hy_resources);
+    window.updateTask = function(id) { 
+        let key = formatDateKey(selectedDate); initDayKey(key); 
+        db[key].tasks[id].checked = document.getElementById(`check-${id}`).checked; 
+        saveLichData(key); 
     }
-    window.toggleResourceCheck = function(id) {
-        let t = hy_resources.find(r => r.id === id); if(t) t.checked = !t.checked; renderResourcesCards();
-        showLoading(true); google.script.run.withSuccessHandler(() => showLoading(false)).saveResourcesToSheet(hy_resources);
+    
+    window.handleZaloBulkToggle = function(event) {
+        if(isFutureDate(selectedDate)) return;
+        let bulkCheck = document.getElementById('zalo-bulk-checkbox');
+        if(event.target !== bulkCheck) { bulkCheck.checked = !bulkCheck.checked; }
+        let targetState = bulkCheck.checked;
+        let key = formatDateKey(selectedDate); initDayKey(key);
+        let zaloIds = segmentMapping['zalo'];
+        zaloIds.forEach(id => { db[key].tasks[id].checked = targetState; });
+        saveLichData(key);
     }
-    window.deleteResourceItem = function(id) {
-        hy_resources = hy_resources.filter(r => r.id !== id); renderResourcesCards();
-        showLoading(true); google.script.run.withSuccessHandler(() => showLoading(false)).saveResourcesToSheet(hy_resources);
+
+    window.addCustomToApp = function(segment, type, mode) {
+        let key = formatDateKey(selectedDate); initDayKey(key);
+        if(!db[key].customs[segment]) db[key].customs[segment] = [];
+        
+        let noteText = ""; 
+        if(mode === 'prep') { 
+            noteText = prompt(`🌸 Chi tiết nội dung chuẩn bị:`); 
+            if(noteText === null || noteText.trim() === "") return; 
+        }
+        
+        let searchKeyword = (type === 'Video') ? 'video' : 'bản dịch';
+        let count = 0;
+        if(segmentMapping[segment]) {
+            segmentMapping[segment].forEach(id => {
+                let lbl = document.getElementById(`lbl-${id}`);
+                if(lbl && lbl.innerText.toLowerCase().includes(searchKeyword)) count++;
+            });
+        }
+        db[key].customs[segment].forEach(c => { if(c.text.toLowerCase().includes(searchKeyword)) count++; });
+        
+        let nextNumber = count + 1; 
+        let finalLabel = `${type} ${nextNumber}`; 
+        
+        db[key].customs[segment].push({ 
+            id: Date.now(), text: finalLabel, note: noteText ? noteText.trim() : "", checked: false, isPrep: (mode === 'prep')
+        });
+        document.getElementById(`popup-${mode}-${segment}`).style.display = 'none'; 
+        saveLichData(key);
     }
+    
+    window.toggleCustomTask = function(segment, customId) { let key = formatDateKey(selectedDate); let target = db[key].customs[segment].find(c => c.id === customId); if(target) target.checked = !target.checked; saveLichData(key); }
+    window.deleteCustomTask = function(segment, customId) { let key = formatDateKey(selectedDate); db[key].customs[segment] = db[key].customs[segment].filter(c => c.id !== customId); saveLichData(key); }
+    
+    function initDayKey(key) { 
+        if(!db[key]) db[key] = { tasks: {}, customs: {}, note: '' }; 
+        if(!db[key].tasks) db[key].tasks = {}; 
+        if(!db[key].customs) db[key].customs = {}; 
+        for(let seg in segmentMapping) { if(!db[key].customs[seg]) db[key].customs[seg] = []; } 
+        const allIds = [1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21]; 
+        allIds.forEach(id => { if(!db[key].tasks[id]) db[key].tasks[id] = { checked: false }; }); 
+    }
+    function formatDateKey(d) { let mm = String(d.getMonth() + 1).padStart(2, '0'); let dd = String(d.getDate()).padStart(2, '0'); return `${d.getFullYear()}-${mm}-${dd}`; }
+    
+    async function saveLichData(key) { 
+        renderChecklistValues(); 
+        calculateAndRenderDashboard(currentView === 'year' ? 'year' : (currentView === 'dashboard' ? (isDateFilteringActive ? 'day' : 'month') : 'day'));
+        showLoading(true); 
+        await callFetchAPI(null, { action: "saveLich", dateKey: key, dayDataObj: db[key] });
+        showLoading(false); 
+    }
+
+    function detectPlatformFromUrl(url) {
+        let lower = url.toLowerCase();
+        if (lower.includes('threads.net') || lower.includes('threads.com')) return "Threads";
+        if (lower.includes('xiaohongshu.com') || lower.includes('xhslink.com')) return "Xiaohongshu";
+        if (lower.includes('tiktok.com')) return "TikTok";
+        if (lower.includes('instagram.com')) return "Instagram";
+        if (lower.includes('facebook.com') || lower.includes('fb.watch')) return "Facebook";
+        if (lower.includes('youtube.com') || lower.includes('youtu.be')) return "YouTube";
+        return "Khác";
+    }
+
+    window.processAndSaveResource = async function() {
+        let urlInput = document.getElementById('resource-url-input'); let rawInput = urlInput.value.trim(); if(!rawInput) return;
+        let finalUrl = rawInput; let platform = detectPlatformFromUrl(rawInput); let username = "Nguồn ẩn danh";
+        if(platform === "Xiaohongshu") {
+            let firstSpaceIdx = rawInput.indexOf(' ');
+            if(firstSpaceIdx !== -1) { finalUrl = rawInput.substring(0, firstSpaceIdx).trim(); username = rawInput.substring(firstSpaceIdx).trim(); } 
+            else { let match = rawInput.match(/user\/([^\/\?]+)/i); username = (match && match[1]) ? match[1] : "XHS_User"; }
+        } else { let match = rawInput.match(/@([^\/\?]+)/i); if(match && match[1]) username = match[1]; }
+        hy_resources.push({ id: Date.now(), checked: false, link: finalUrl, platform: platform, account: username, cre: username });
+        urlInput.value = ''; renderResourcesCards(); showLoading(true); 
+        await callFetchAPI(null, { action: "saveResources", resourcesArray: hy_resources });
+        showLoading(false);
+    }
+    window.toggleResourceCheck = async function(id) { let target = hy_resources.find(r => r.id === id); if(target) target.checked = !target.checked; renderResourcesCards(); showLoading(true); await callFetchAPI(null, { action: "saveResources", resourcesArray: hy_resources }); showLoading(false); }
+    window.deleteResourceItem = async function(id) { hy_resources = hy_resources.filter(r => r.id !== id); renderResourcesCards(); showLoading(true); await callFetchAPI(null, { action: "saveResources", resourcesArray: hy_resources }); showLoading(false); }
+    
     function renderResourcesCards() {
-        let area = document.getElementById('resource-cards-list-area'); if(!area) return; area.innerHTML = '';
+        let listArea = document.getElementById('resource-cards-list-area'); if(!listArea) return; listArea.innerHTML = '';
+        if(hy_resources.length === 0) { listArea.innerHTML = `<div style="font-size:0.8rem; color:#94a3b8; text-align:center; padding:10px;">Chưa có bài gốc nào rơi xuống đây hết á~ 🌸</div>`; return; }
         hy_resources.forEach(item => {
-            let row = document.createElement('div'); row.className = `resource-item-row ${item.checked ? 'completed' : ''}`;
-            row.innerHTML = `
-                <div class="res-meta-left"><input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleResourceCheck(${item.id})"><a class="res-link-anchor" href="${item.link}" target="_blank">${item.link}</a></div>
-                <div class="res-meta-right"><span class="badge-platform">${item.platform}</span><button class="delete-custom-btn" onclick="deleteResourceItem(${item.id})">×</button></div>
+            let cardRow = document.createElement('div'); cardRow.className = `resource-item-row ${item.checked ? 'completed' : ''}`;
+            cardRow.innerHTML = `
+                <div class="res-meta-left">
+                    <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleResourceCheck(${item.id})">
+                    <a class="res-link-anchor" href="${item.link}" target="_blank">${item.link}</a>
+                </div>
+                <div class="res-meta-right">
+                    <span class="badge-platform">${item.platform}</span>
+                    <span class="res-acc-text" title="${item.account}">👤 ${item.account}</span>
+                    <button class="btn-copy-mini" onclick="copyOneTouchCre('${item.cre}')">📋 Copy Cre</button>
+                    <button class="delete-custom-btn" onclick="deleteResourceItem(${item.id})">×</button>
+                </div>
             `;
-            area.appendChild(row);
+            listArea.appendChild(cardRow);
         });
     }
 
-    window.processAndSavePublishedPost = function() {
-        let input = document.getElementById('post-url-input'); if(!input.value) return;
-        hy_posts.push({ id: Date.now(), link: input.value, platform: "Facebook" });
-        input.value = ''; renderPostsCards(); showLoading(true);
-        google.script.run.withSuccessHandler(() => showLoading(false)).savePostsToSheet(hy_posts);
+    window.processAndSavePublishedPost = async function() {
+        let postInput = document.getElementById('post-url-input'); let rawUrl = postInput.value.trim(); if (!rawUrl) return;
+        hy_posts.push({ id: Date.now(), link: rawUrl, platform: detectPlatformFromUrl(rawUrl) });
+        postInput.value = ''; renderPostsCards(); showLoading(true); 
+        await callFetchAPI(null, { action: "savePosts", postsArray: hy_posts });
+        showLoading(false);
     }
-    window.deletePostItem = function(id) {
-        hy_posts = hy_posts.filter(p => p.id !== id); renderPostsCards();
-        showLoading(true); google.script.run.withSuccessHandler(() => showLoading(false)).savePostsToSheet(hy_posts);
-    }
+    window.deletePostItem = async function(id) { hy_posts = hy_posts.filter(p => p.id !== id); renderPostsCards(); showLoading(true); await callFetchAPI(null, { action: "savePosts", postsArray: hy_posts }); showLoading(false); }
+    
     function renderPostsCards() {
-        let area = document.getElementById('post-cards-list-area'); if(!area) return; area.innerHTML = '';
+        let listArea = document.getElementById('post-cards-list-area'); if (!listArea) return; listArea.innerHTML = '';
+        if(hy_posts.length === 0) { listArea.innerHTML = `<div style="font-size:0.8rem; color:#94a3b8; text-align:center; padding:10px;">Chưa có thành quả đăng tải nào nè~ 💮</div>`; return; }
         hy_posts.forEach(item => {
-            let row = document.createElement('div'); row.className = 'resource-item-row';
-            row.innerHTML = `
-                <div class="res-meta-left">🌸 <a class="res-link-anchor" href="${item.link}" target="_blank">${item.link}</a></div>
-                <div class="res-meta-right"><span class="badge-platform">${item.platform}</span><button class="delete-custom-btn" onclick="deletePostItem(${item.id})">×</button></div>
+            let cardRow = document.createElement('div'); cardRow.className = 'resource-item-row';
+            cardRow.innerHTML = `
+                <div class="res-meta-left" style="min-width: 250px;">
+                    <span style="color:#10b981;">🌸</span> <a class="res-link-anchor" href="${item.link}" target="_blank" style="color:#047857;">${item.link}</a>
+                </div>
+                <div class="res-meta-right">
+                    <span class="badge-platform" style="background:#D1FAE5; border-color:#047857;">${item.platform}</span>
+                    <button class="delete-custom-btn" onclick="deletePostItem(${item.id})">×</button>
+                </div>
             `;
-            area.appendChild(row);
+            listArea.appendChild(cardRow);
         });
     }
 
-    loadDataFromGoogleSheets();
+    window.copyOneTouchCre = function(text) { 
+        let formattedCre = "Cre: " + text;
+        navigator.clipboard.writeText(formattedCre).then(() => { alert(`🌸 Đã copy thành công: "${formattedCre}"`); }); 
+    }
+    
+    window.clearEverything = async function() { 
+        if(confirm("Cảnh báo! Bạn có thực sự muốn xóa sạch toàn bộ dữ liệu trên Sheet không?")) { 
+            backup_db = JSON.parse(JSON.stringify(db)); backup_resources = JSON.parse(JSON.stringify(hy_resources)); backup_posts = JSON.parse(JSON.stringify(hy_posts));
+            db = {}; hy_resources = []; hy_posts = []; 
+            document.getElementById('btn-restore-action').style.display = 'inline-flex';
+            showLoading(true); 
+            await callFetchAPI(null, { action: "clearAll" });
+            renderChecklistValues(); calculateAndRenderDashboard('day'); renderResourcesCards(); renderPostsCards(); showLoading(false); 
+            alert("Đã xóa xong! Nếu bấm lầm, hãy nhấn nút 'Khôi Phục Liền' kế bên liền nha!");
+        } 
+    }
+
+    window.restoreBackupData = async function() {
+        if(!backup_db && !backup_resources && !backup_posts) { alert("Không tìm thấy dữ liệu sao lưu!"); return; }
+        showLoading(true);
+        db = JSON.parse(JSON.stringify(backup_db)); hy_resources = JSON.parse(JSON.stringify(backup_resources)); hy_posts = JSON.parse(JSON.stringify(backup_posts));
+        await callFetchAPI(null, { action: "restoreAll", db: db, resources: hy_resources, posts: hy_posts });
+        renderChecklistValues(); calculateAndRenderDashboard('day'); renderResourcesCards(); renderPostsCards();
+        document.getElementById('btn-restore-action').style.display = 'none'; showLoading(false);
+        alert("🎉 Toàn bộ dữ liệu cũ đã được khôi phục nguyên vẹn lên Google Sheets thành công!");
+    }
+
+    // Điền sẵn link API cũ nếu có lưu
+    if (API_URL) {
+        document.getElementById('api-url-input').value = API_URL;
+        loadDataFromGoogleSheets();
+    }
+    switchView('today');
 </script>
 </body>
 </html>
