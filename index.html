@@ -910,9 +910,16 @@
     }
 
     function isFutureDate(d) {
-        let today = new Date(); today.setHours(0,0,0,0);
-        let checkDate = new Date(d); checkDate.setHours(0,0,0,0);
-        return checkDate > today;
+      // Thay vì so sánh với ngày hiện tại thật, hãy cho phép hiển thị đầy đủ nếu thuộc năm 2026
+function isFutureDate(d) {
+    // Nếu ngày đang xem thuộc năm 2026, mở khóa toàn bộ để thao tác thoải mái
+    if (new Date(d).getFullYear() === YEAR) {
+        return false; 
+    }
+    let today = new Date(); today.setHours(0,0,0,0);
+    let checkDate = new Date(d); checkDate.setHours(0,0,0,0);
+    return checkDate > today;
+}
     }
 
     window.adjustDate = function(days) {
