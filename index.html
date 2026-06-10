@@ -35,16 +35,6 @@
             pointer-events: none; z-index: 9999;
         }
 
-        /* CONFIG MANAGER BOX */
-        .api-config-wrapper {
-            background: #fff; border: var(--main-border); border-radius: 20px; padding: 15px; margin-bottom: 20px; box-shadow: var(--box-shadow-3d);
-        }
-        .api-config-title { font-weight: 900; font-size: 0.9rem; margin-bottom: 8px; color: var(--sakura-dark); text-transform: uppercase; }
-        .api-config-row { display: flex; gap: 8px; }
-        .api-config-row input { flex: 1; padding: 10px 14px; border: 2px solid #1e293b; border-radius: 12px; font-family: inherit; font-size: 0.8rem; font-weight: 600; }
-        .api-config-row button { font-family: inherit; font-weight: 800; font-size: 0.8rem; padding: 10px 18px; border: 2px solid #1e293b; border-radius: 12px; background: #C8E6C9; cursor: pointer; box-shadow: 2px 2px 0 #1e293b; }
-        .api-config-row button:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 #1e293b; }
-
         /* --- SIDEBAR --- */
         .menu-btn {
             position: fixed; top: 15px; left: 15px; font-size: 22px; background: #ffffff; border: var(--main-border);
@@ -100,7 +90,7 @@
         .chime-animation { display: inline-block; animation: swingChime 2s ease-in-out infinite alternate; transform-origin: top center; }
         @keyframes swingChime { from { transform: rotate(-8deg); } to { transform: rotate(8deg); } }
 
-        .loading-text { font-size:0.85rem; color:#d63384; font-weight:800; display:none; text-align:center; margin-bottom:15px; animation: pulse 1s infinite alternate; }
+        .loading-text { font-size:0.85rem; color:#d63384; font-weight:800; display:block; text-align:center; margin-bottom:15px; animation: pulse 1s infinite alternate; }
         @keyframes pulse { from { opacity: 0.6; } to { opacity: 1; } }
 
         /* NAVIGATOR */
@@ -171,7 +161,8 @@
             .info-widgets-sidebar .widget-music-controls { flex: 0 0 280px; flex-direction: row; align-items: center; gap: 8px; padding: 8px 10px; }
             .mini-player-container { width: 110px; height: 55px; flex-shrink: 0; }
             .widget-music-controls > div:last-child { display: flex; flex-direction: column; gap: 4px; flex: 1; }
-            .widget-music-controls input { padding: 4px 8px; font-size: 0.7rem; border-radius: 8px; }
+            .widget-music-controls input { padding: 4px 8px; font-size: 0.7
+rem; border-radius: 8px; }
             .widget-music-controls button { padding: 4px; font-size: 0.7rem; border-radius: 8px; }
             .clock-container-wrapper { justify-content: flex-start; gap: 8px; }
             .analog-clock { width: 32px; height: 32px; }
@@ -262,13 +253,6 @@
 
         .sub-resource-card .section-body { display: none; margin-top: 15px; }
         .sub-resource-card.expanded .section-body { display: block; }
-        
-        .res-input-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
-        @media (min-width: 600px) { .res-input-group { flex-direction: row; } }
-        .res-input-group input { flex: 1; padding: 12px 16px; border: 2px solid #1e293b; border-radius: 16px; font-family: inherit; font-size: 0.85rem; font-weight: 600; background: #FAFAFA; }
-        .res-input-group input:focus { background: #fff; outline: none; border-color: var(--sakura-dark); }
-        .res-btn { background: #BBF7D0; border: 2px solid #1e293b; border-radius: 16px; padding: 12px 22px; font-weight: 900; font-size: 0.85rem; cursor: pointer; font-family: inherit; white-space: nowrap; box-shadow: 2px 2px 0 #1e293b; transition: all 0.1s; }
-        .res-btn:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 #1e293b; }
 
         .resource-cards-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
         .resource-item-row {
@@ -280,11 +264,11 @@
         .resource-item-row.completed a { color: #64748b; text-decoration: line-through; }
         
         .res-meta-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px; }
-        .res-meta-left input[type="checkbox"] { width: 18px; height: 18px; accent-color: #10b981; cursor: pointer; }
+        .res-meta-left input[type="checkbox"] { width: 18px; height: 18px; accent-color: #10b981; cursor: not-allowed; }
         .res-link-anchor { font-weight: 700; font-size: 0.85rem; color: #2563eb; text-decoration: none; word-break: break-all; }
         
         .res-meta-right { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
-        .badge-platform { background: #E2E8F0; border: 1.5px solid #1e293b; padding: 4px 8px; border-radius: 10px; font-size: 0.7Rules; font-weight: 800; text-transform: uppercase; }
+        .badge-platform { background: #E2E8F0; border: 1.5px solid #1e293b; padding: 4px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
         .res-acc-text { font-size: 0.8rem; font-weight: 700; color: #475569; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
         /* CHECKLIST CARDS */
@@ -305,46 +289,26 @@
         @media (min-width: 600px) { .task-grid-horizontal { flex-direction: row; flex-wrap: wrap; } }
         
         .inline-task-box { 
-            display: flex; align-items: center; background: #fff; border: 2px solid #1e293b; border-radius: 16px; padding: 10px 14px; font-size: 0.85rem; font-weight: 700; cursor: pointer; justify-content: space-between; gap: 8px; box-sizing: border-box; width: 100%; box-shadow: 2px 2px 0 #1e293b; transition: all 0.2s;
+            display: flex; align-items: center; background: #fff; border: 2px solid #1e293b; border-radius: 16px; padding: 10px 14px; font-size: 0.85rem; font-weight: 700; justify-content: space-between; gap: 8px; box-sizing: border-box; width: 100%; box-shadow: 2px 2px 0 #1e293b; cursor: not-allowed;
         }
-        .inline-task-box:hover { transform: translateY(-2px); box-shadow: 3px 3px 0 #1e293b; }
         @media (min-width: 600px) { .inline-task-box { width: auto; justify-content: flex-start; } }
-        .inline-task-box input[type="checkbox"] { width: 18px; height: 18px; margin-right: 4px; accent-color: #10b981; cursor: pointer; flex-shrink: 0; }
-        .inline-task-box input[type="checkbox"]:disabled { cursor: not-allowed; }
+        .inline-task-box input[type="checkbox"] { width: 18px; height: 18px; margin-right: 4px; accent-color: #10b981; cursor: not-allowed; flex-shrink: 0; }
         .inline-task-box.completed { background: #e2fcd4 !important; color: #64748b; text-decoration: line-through; border-color: #cbd5e1; box-shadow: none; transform: none; }
         
         .inline-task-box.prep-item-box { border-color: var(--sakura-dark); background: #FFF5F5; }
         .prep-text-desc { font-size: 0.75rem; color: #b91c1c; font-style: italic; display: block; margin-top: 2px; }
 
         .btn-copy-mini { font-family: inherit; background: #ffe066; border: 1.5px solid #1e293b; border-radius: 10px; padding: 4px 10px; font-size: 0.7rem; font-weight: 800; cursor: pointer; box-shadow: 1px 1px 0 #1e293b; }
-        .delete-custom-btn { background: none; border: none; color: #ef4444; font-weight: 900; cursor: pointer; font-size: 1.4rem; padding: 0 4px; display: inline-flex; align-items: center; justify-content: center; }
-        .delete-custom-btn:hover { transform: scale(1.2); }
-        
-        .btn-add-mini { font-family: inherit; background: #fff; border: 2px solid #1e293b; padding: 8px 14px; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 0.8rem; margin-top: 6px; margin-right: 5px; display: inline-flex; align-items: center; gap: 3px; box-shadow: 2px 2px 0 #1e293b; }
-        .btn-add-mini:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 #1e293b; }
-        .btn-add-mini.prep-style { background: #FFF0F5; border-color: var(--sakura-dark); }
-        
-        .popup-selection { display: none; gap: 6px; margin-top: 8px; background: #fff; padding: 8px; border: 2px dashed #1e293b; border-radius: 14px; flex-wrap: wrap; animation: fadeIn 0.15s ease; }
-        .popup-btn { font-family: inherit; padding: 6px 12px; border: 1.5px solid #1e293b; border-radius: 10px; font-size: 0.75rem; font-weight: 800; cursor: pointer; background: #F8FAFC; box-shadow: 1px 1px 0 #1e293b; }
-        
-        .danger-zone-wrapper { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 30px 0; }
-        @media (min-width: 600px) { .danger-zone-wrapper { grid-template-columns: 2fr 1fr; } }
-        
-        .btn-clear-all { font-family: inherit; padding: 14px; background: #ff8787; border: var(--main-border); border-radius: 20px; font-weight: 900; box-shadow: var(--box-shadow-3d); cursor: pointer; font-size: 0.95rem; transition: all 0.1s; }
-        .btn-clear-all:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #1e293b; }
-        .btn-restore-backup { font-family: inherit; padding: 14px; background: #A7F3D0; border: var(--main-border); border-radius: 20px; font-weight: 900; box-shadow: var(--box-shadow-3d); cursor: pointer; font-size: 0.95rem; color: #064E3B; display: none; align-items: center; justify-content: center; gap: 5px; transition: all 0.1s; }
-
         .btn-back-to-top {
             position: fixed; bottom: 25px; right: 25px; width: 48px; height: 48px; background: #ffffff; border: var(--main-border);
             border-radius: 50%; font-size: 20px; cursor: pointer; display: none; align-items: center; justify-content: center;
             box-shadow: 3px 3px 0px #1e293b; z-index: 999; transition: all 0.2s;
         }
         .btn-back-to-top:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px #1e293b; background: var(--nav-banner-0); }
-
-        .zalo-bulk-select-box { background: #EBF8FF; border: 2px dashed #2b6cb0; border-radius: 14px; padding: 10px 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 800; color: #2b6cb0; cursor: pointer; }
-        .zalo-bulk-select-box input { width: 18px; height: 18px; accent-color: #2b6cb0; cursor: pointer; }
-
+        .zalo-bulk-select-box { background: #EBF8FF; border: 2px dashed #2b6cb0; border-radius: 14px; padding: 10px 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 800; color: #2b6cb0; cursor: not-allowed; }
+        .zalo-bulk-select-box input { width: 18px; height: 18px; accent-color: #2b6cb0; cursor: not-allowed; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+        .read-only-badge { background-color: #fee2e2; color: #ef4444; border: 2px solid #ef4444; border-radius: 12px; padding: 8px 12px; font-size: 0.8rem; font-weight: 800; text-align: center; margin-bottom: 15px; box-shadow: 3px 3px 0 #ef4444; }
     </style>
 </head>
 <body>
@@ -367,14 +331,8 @@
     </div>
 
     <div class="main-content">
-        <div class="api-config-wrapper">
-            <div class="api-config-title">⚙️ Kết nối Hệ Thống Anh Đào</div>
-            <div class="api-config-row">
-                <input type="text" id="api-url-input" placeholder="Dán đường dẫn Web App của Google Apps Script vào đây...">
-                <button onclick="saveApiUrlConfig()">Kết Nối</button>
-            </div>
-        </div>
-
+        <div class="read-only-badge">📌 Chế độ Đồng Bộ Trực Tiếp (Read-Only từ Google Sheets). Hãy chỉnh sửa trên file Gốc để cập nhật dữ liệu về đây!</div>
+        
         <div class="info-widgets-sidebar" id="fixed-widget-panel">
             <div class="clock-container-wrapper">
                 <div class="analog-clock">
@@ -389,11 +347,11 @@
                     <div class="block-val" id="live-clock" style="color: #ef4444; font-size: 1rem;">00:00:00</div>
                 </div>
             </div>
-            <div class="widget-block block-loc" onclick="updateLocationPrompt()">
+            <div class="widget-block block-loc">
                 <div class="block-text">🎋 Vị Trí</div>
                 <div class="block-val" id="val-location-text" style="color: var(--zalo-color);">Vĩnh Long</div>
             </div>
-            <div class="widget-block block-weather" onclick="updateWeatherPrompt()">
+            <div class="widget-block block-weather">
                 <div class="block-text">🎏 Thời Tiết</div>
                 <div class="block-val" id="val-weather-text" style="color: #b45309;">31°C • Nắng Đẹp</div>
             </div>
@@ -414,7 +372,7 @@
             <h1 id="main-title">🌸 HY HY WORKSPACE 🌸</h1>
         </div>
         
-        <div class="loading-text" id="sync-loading">💮 Đang kết nối cánh hoa anh đào với Google Sheets...</div>
+        <div class="loading-text" id="sync-loading">💮 Đang kéo những cánh hoa dữ liệu từ Google Sheets về...</div>
 
         <div class="date-navigator">
             <button class="nav-arrow-btn" id="btn-nav-prev" onclick="adjustDate(-1)">◀ Hôm qua</button>
@@ -434,7 +392,7 @@
             </div>
             <div class="calendar-body" id="calendar-body-area">
                 <div class="grid-months" id="months-bar-container"></div>
-                <div style="font-size:0.75rem; color:#d63384; text-align:center; margin-bottom:8px; font-style:italic; font-weight:800;">💮 Nhấp đúp vào ngày bất kỳ để ghi chú lịch nhanh!</div>
+                <div style="font-size:0.75rem; color:#d63384; text-align:center; margin-bottom:8px; font-style:italic; font-weight:800;">💮 Nhấp chọn ngày để xem lịch sử tiến độ phân rã!</div>
                 <div id="calendar-grid" class="grid-days"></div>
             </div>
         </div>
@@ -491,10 +449,6 @@
                     <span class="toggle-icon">▼</span>
                 </div>
                 <div class="section-body" id="target-original-content-body">
-                    <div class="res-input-group">
-                        <input type="text" id="resource-url-input" placeholder="Dán link Xiaohongshu hoặc bài gốc chuẩn bị biên dịch...">
-                        <button class="res-btn" onclick="processAndSaveResource()">💮 Lưu Bài Gốc</button>
-                    </div>
                     <div class="resource-cards-list" id="resource-cards-list-area"></div>
                 </div>
             </div>
@@ -505,10 +459,6 @@
                     <span class="toggle-icon">▼</span>
                 </div>
                 <div class="section-body">
-                    <div class="res-input-group">
-                        <input type="text" id="post-url-input" placeholder="Dán đường dẫn bài viết/video bạn đã biên tập dịch xong...">
-                        <button class="res-btn" style="background: #e2e8f0;" onclick="processAndSavePublishedPost()">💮 Lưu Bài Đăng</button>
-                    </div>
                     <div class="resource-cards-list" id="post-cards-list-area"></div>
                 </div>
             </div>
@@ -524,16 +474,12 @@
                     </div>
                     <div class="sub-group-title">📋 Nhiệm vụ cố định</div>
                     <div class="task-grid-horizontal" id="grid-tasks-tiktok">
-                        <label class="inline-task-box" id="lbl-1"><span class="d-flex align-items-center"><input type="checkbox" id="check-1" onchange="updateTask(1)"> Video Kanji (1 chữ cũ + 1 chữ mới)</span></label>
-                        <label class="inline-task-box" id="lbl-2"><span class="d-flex align-items-center"><input type="checkbox" id="check-2" onchange="updateTask(2)"> Video 1</span></label>
-                        <label class="inline-task-box" id="lbl-10"><span class="d-flex align-items-center"><input type="checkbox" id="check-10" onchange="updateTask(10)"> Video 2</span></label>
+                        <label class="inline-task-box" id="lbl-1"><span class="d-flex align-items-center"><input type="checkbox" id="check-1" disabled> Video Kanji (1 chữ cũ + 1 chữ mới)</span></label>
+                        <label class="inline-task-box" id="lbl-2"><span class="d-flex align-items-center"><input type="checkbox" id="check-2" disabled> Video 1</span></label>
+                        <label class="inline-task-box" id="lbl-10"><span class="d-flex align-items-center"><input type="checkbox" id="check-10" disabled> Video 2</span></label>
                     </div>
                     <div class="sub-group-title">🌸 Nhiệm vụ làm thêm</div>
                     <div class="task-grid-horizontal" id="custom-container-tiktok"></div>
-                    <button class="btn-add-mini" id="btn-add-tiktok" onclick="showPopupSelection('tiktok', 'add')">💮 Thêm</button>
-                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('tiktok', 'prep')">🌸 Chuẩn bị</button>
-                    <div class="popup-selection" id="popup-add-tiktok"><button class="popup-btn" onclick="addCustomToApp('tiktok', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('tiktok', 'Bản dịch', 'add')">+ Bản dịch</button></div>
-                    <div class="popup-selection" id="popup-prep-tiktok"><button class="popup-btn" onclick="addCustomToApp('tiktok', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('tiktok', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
                 </div>
             </div>
 
@@ -546,13 +492,9 @@
                     </div>
                     <div class="sub-group-title">📋 Nhiệm vụ cố định</div>
                     <div class="task-grid-horizontal" id="grid-tasks-instagram">
-                        <label class="inline-task-box" id="lbl-3"><span class="d-flex align-items-center"><input type="checkbox" id="check-3" onchange="updateTask(3)"> Video Kanji (Up từ TikTok)</span></label>
+                        <label class="inline-task-box" id="lbl-3"><span class="d-flex align-items-center"><input type="checkbox" id="check-3" disabled> Video Kanji (Up từ TikTok)</span></label>
                     </div>
                     <div class="task-grid-horizontal" id="custom-container-instagram"></div>
-                    <button class="btn-add-mini" id="btn-add-instagram" onclick="showPopupSelection('instagram', 'add')">💮 Thêm</button>
-                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('instagram', 'prep')">🌸 Chuẩn bị</button>
-                    <div class="popup-selection" id="popup-add-instagram"><button class="popup-btn" onclick="addCustomToApp('instagram', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('instagram', 'Bản dịch', 'add')">+ Bản dịch</button></div>
-                    <div class="popup-selection" id="popup-prep-instagram"><button class="popup-btn" onclick="addCustomToApp('instagram', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('instagram', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
                 </div>
             </div>
 
@@ -565,36 +507,24 @@
                     </div>
                     <div class="sub-group-title" style="color:var(--facebook-color);">🌸 Trang HY HY</div>
                     <div class="task-grid-horizontal" id="grid-tasks-fb-hyhy">
-                        <label class="inline-task-box" id="lbl-4"><span class="d-flex align-items-center"><input type="checkbox" id="check-4" onchange="updateTask(4)"> Bản dịch 1</span></label>
-                        <label class="inline-task-box" id="lbl-5"><span class="d-flex align-items-center"><input type="checkbox" id="check-5" onchange="updateTask(5)"> Video 1</span></label>
+                        <label class="inline-task-box" id="lbl-4"><span class="d-flex align-items-center"><input type="checkbox" id="check-4" disabled> Bản dịch 1</span></label>
+                        <label class="inline-task-box" id="lbl-5"><span class="d-flex align-items-center"><input type="checkbox" id="check-5" disabled> Video 1</span></label>
                     </div>
                     <div class="task-grid-horizontal" id="custom-container-fb-hyhy"></div>
-                    <button class="btn-add-mini" id="btn-add-fb-hyhy" onclick="showPopupSelection('fb-hyhy', 'add')">💮 Thêm (HY)</button>
-                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('fb-hyhy', 'prep')">🌸 Chuẩn bị</button>
-                    <div class="popup-selection" id="popup-add-fb-hyhy"><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Bản dịch', 'add')">+ Bản dịch</button></div>
-                    <div class="popup-selection" id="popup-prep-fb-hyhy"><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyhy', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
 
                     <div class="sub-group-title" style="color:var(--facebook-color); margin-top:15px;">💮 Trang HY đang làm Blog</div>
                     <div class="task-grid-horizontal" id="grid-tasks-fb-hyblog">
-                        <label class="inline-task-box" id="lbl-6"><span class="d-flex align-items-center"><input type="checkbox" id="check-6" onchange="updateTask(6)"> Bản dịch 1</span></label>
-                        <label class="inline-task-box" id="lbl-7"><span class="d-flex align-items-center"><input type="checkbox" id="check-7" onchange="updateTask(7)"> Video 1</span></label>
+                        <label class="inline-task-box" id="lbl-6"><span class="d-flex align-items-center"><input type="checkbox" id="check-6" disabled> Bản dịch 1</span></label>
+                        <label class="inline-task-box" id="lbl-7"><span class="d-flex align-items-center"><input type="checkbox" id="check-7" disabled> Video 1</span></label>
                     </div>
                     <div class="task-grid-horizontal" id="custom-container-fb-hyblog"></div>
-                    <button class="btn-add-mini" id="btn-add-fb-hyblog" onclick="showPopupSelection('fb-hyblog', 'add')">💮 Thêm (Blog)</button>
-                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('fb-hyblog', 'prep')">🌸 Chuẩn bị</button>
-                    <div class="popup-selection" id="popup-add-fb-hyblog"><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Bản dịch', 'add')">+ Bản dịch</button></div>
-                    <div class="popup-selection" id="popup-prep-fb-hyblog"><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-hyblog', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
 
                     <div class="sub-group-title" style="color:var(--facebook-color); margin-top:15px;">💮 Trang Shokaimono</div>
                     <div class="task-grid-horizontal" id="grid-tasks-fb-shokaimono">
-                        <label class="inline-task-box" id="lbl-8"><span class="d-flex align-items-center"><input type="checkbox" id="check-8" onchange="updateTask(8)"> Bản dịch 1</span></label>
-                        <label class="inline-task-box" id="lbl-11"><span class="d-flex align-items-center"><input type="checkbox" id="check-11" onchange="updateTask(11)"> Bản dịch 2</span></label>
+                        <label class="inline-task-box" id="lbl-8"><span class="d-flex align-items-center"><input type="checkbox" id="check-8" disabled> Bản dịch 1</span></label>
+                        <label class="inline-task-box" id="lbl-11"><span class="d-flex align-items-center"><input type="checkbox" id="check-11" disabled> Bản dịch 2</span></label>
                     </div>
                     <div class="task-grid-horizontal" id="custom-container-fb-shokaimono"></div>
-                    <button class="btn-add-mini" id="btn-add-fb-shokaimono" onclick="showPopupSelection('fb-shokaimono', 'add')">💮 Thêm (Shokai)</button>
-                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('fb-shokaimono', 'prep')">🌸 Chuẩn bị</button>
-                    <div class="popup-selection" id="popup-add-fb-shokaimono"><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Bản dịch', 'add')">+ Bản dịch</button></div>
-                    <div class="popup-selection" id="popup-prep-fb-shokaimono"><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('fb-shokaimono', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
                 </div>
             </div>
 
@@ -606,37 +536,28 @@
                         <div class="progress-bar-bg"><div class="progress-bar-fill" id="fill-mini-zalo"></div></div>
                     </div>
                     
-                    <div class="zalo-bulk-select-box" id="zalo-bulk-box" onclick="handleZaloBulkToggle(event)">
-                        <input type="checkbox" id="zalo-bulk-checkbox">
-                        <span>🌸 Chọn nhanh / Bỏ chọn nhanh cả 10 Video bên dưới</span>
+                    <div class="zalo-bulk-select-box" id="zalo-bulk-box">
+                        <input type="checkbox" id="zalo-bulk-checkbox" disabled>
+                        <span>🌸 Trạng thái chọn nhanh 10 Video tự động đồng bộ</span>
                     </div>
 
                     <div class="sub-group-title">📋 Nhiệm vụ cố định (10 Video)</div>
                     <div class="task-grid-horizontal" id="grid-tasks-zalo">
-                        <label class="inline-task-box" id="lbl-12"><span class="d-flex align-items-center"><input type="checkbox" id="check-12" onchange="updateTask(12)"> Video 1</span></label>
-                        <label class="inline-task-box" id="lbl-13"><span class="d-flex align-items-center"><input type="checkbox" id="check-13" onchange="updateTask(13)"> Video 2</span></label>
-                        <label class="inline-task-box" id="lbl-14"><span class="d-flex align-items-center"><input type="checkbox" id="check-14" onchange="updateTask(14)"> Video 3</span></label>
-                        <label class="inline-task-box" id="lbl-15"><span class="d-flex align-items-center"><input type="checkbox" id="check-15" onchange="updateTask(15)"> Video 4</span></label>
-                        <label class="inline-task-box" id="lbl-16"><span class="d-flex align-items-center"><input type="checkbox" id="check-16" onchange="updateTask(16)"> Video 5</span></label>
-                        <label class="inline-task-box" id="lbl-17"><span class="d-flex align-items-center"><input type="checkbox" id="check-17" onchange="updateTask(17)"> Video 6</span></label>
-                        <label class="inline-task-box" id="lbl-18"><span class="d-flex align-items-center"><input type="checkbox" id="check-18" onchange="updateTask(18)"> Video 7</span></label>
-                        <label class="inline-task-box" id="lbl-19"><span class="d-flex align-items-center"><input type="checkbox" id="check-19" onchange="updateTask(19)"> Video 8</span></label>
-                        <label class="inline-task-box" id="lbl-20"><span class="d-flex align-items-center"><input type="checkbox" id="check-20" onchange="updateTask(20)"> Video 9</span></label>
-                        <label class="inline-task-box" id="lbl-21"><span class="d-flex align-items-center"><input type="checkbox" id="check-21" onchange="updateTask(21)"> Video 10</span></label>
+                        <label class="inline-task-box" id="lbl-12"><span class="d-flex align-items-center"><input type="checkbox" id="check-12" disabled> Video 1</span></label>
+                        <label class="inline-task-box" id="lbl-13"><span class="d-flex align-items-center"><input type="checkbox" id="check-13" disabled> Video 2</span></label>
+                        <label class="inline-task-box" id="lbl-14"><span class="d-flex align-items-center"><input type="checkbox" id="check-14" disabled> Video 3</span></label>
+                        <label class="inline-task-box" id="lbl-15"><span class="d-flex align-items-center"><input type="checkbox" id="check-15" disabled> Video 4</span></label>
+                        <label class="inline-task-box" id="lbl-16"><span class="d-flex align-items-center"><input type="checkbox" id="check-16" disabled> Video 5</span></label>
+                        <label class="inline-task-box" id="lbl-17"><span class="d-flex align-items-center"><input type="checkbox" id="check-17" disabled> Video 6</span></label>
+                        <label class="inline-task-box" id="lbl-18"><span class="d-flex align-items-center"><input type="checkbox" id="check-18" disabled> Video 7</span></label>
+                        <label class="inline-task-box" id="lbl-19"><span class="d-flex align-items-center"><input type="checkbox" id="check-19" disabled> Video 8</span></label>
+                        <label class="inline-task-box" id="lbl-20"><span class="d-flex align-items-center"><input type="checkbox" id="check-20" disabled> Video 9</span></label>
+                        <label class="inline-task-box" id="lbl-21"><span class="d-flex align-items-center"><input type="checkbox" id="check-21" disabled> Video 10</span></label>
                     </div>
                     <div class="sub-group-title">🌸 Nhiệm vụ làm thêm</div>
                     <div class="task-grid-horizontal" id="custom-container-zalo"></div>
-                    <button class="btn-add-mini" id="btn-add-zalo" onclick="showPopupSelection('zalo', 'add')">💮 Thêm</button>
-                    <button class="btn-add-mini prep-style" onclick="showPopupSelection('zalo', 'prep')">🌸 Chuẩn bị</button>
-                    <div class="popup-selection" id="popup-add-zalo"><button class="popup-btn" onclick="addCustomToApp('zalo', 'Video', 'add')">+ Video</button><button class="popup-btn" onclick="addCustomToApp('zalo', 'Bản dịch', 'add')">+ Bản dịch</button></div>
-                    <div class="popup-selection" id="popup-prep-zalo"><button class="popup-btn" onclick="addCustomToApp('zalo', 'Video', 'prep')">+ Chuẩn bị Video</button><button class="popup-btn" onclick="addCustomToApp('zalo', 'Bản dịch', 'prep')">+ Chuẩn bị Bản dịch</button></div>
                 </div>
             </div>
-        </div>
-
-        <div class="danger-zone-wrapper">
-            <button class="btn-clear-all" onclick="clearEverything()">Xóa Hết Dữ Liệu Lưu Trữ Trên Sheets</button>
-            <button class="btn-restore-backup" id="btn-restore-action" onclick="restoreBackupData()">🌸 Khôi Phục Liền</button>
         </div>
     </div>
 
@@ -649,11 +570,11 @@
     if(selectedDate.getFullYear() !== YEAR) { selectedDate = new Date(YEAR, 5, 5); } 
 
     let db = {}; let hy_resources = []; let hy_posts = []; 
-    let backup_db = null; let backup_resources = null; let backup_posts = null;
     let activeDashboardMonth = selectedDate.getMonth();
-    
     let isDateFilteringActive = false;
-    let API_URL = localStorage.getItem('hy_workspace_api_url') || '';
+
+    // LINK CHỨA FILE CSV XUẤT BẢN TRỰC TIẾP TỪ GOOGLE SHEETS
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQwe2sWar__q5A3ZP7vsURTnFNdYEcdZXmreSFwrfJpZaNVFOMVMF5PnLWMa5zMbLQ-iAj4P3lT4l5X/pub?output=csv";
 
     const segmentMapping = {
         'tiktok': [1, 2, 10], 'instagram': [3], 'fb-hyhy': [4, 5],
@@ -665,58 +586,61 @@
     };
     const TOTAL_FIXED_TASKS = 20;
 
-    const monthPastelColors = [
-        "#FFF5F5", "#F0FDF4", "#EFF6FF", "#FDF4FF", 
-        "#FFFBEB", "#F5F5F7", "#E6FFFA", "#FFF0F6",
-        "#FEF2F2", "#F0FDFA", "#FAF5FF", "#FFF7ED"
-    ];
+    const monthPastelColors = ["#FFF5F5", "#F0FDF4", "#EFF6FF", "#FDF4FF", "#FFFBEB", "#F5F5F7", "#E6FFFA", "#FFF0F6", "#FEF2F2", "#F0FDFA", "#FAF5FF", "#FFF7ED"];
+    const dayPastelColors = ["#FFF5F5", "#F0FDF4", "#EFF6FF", "#FDF4FF", "#FFFBEB", "#F5F5F7", "#E6FFFA", "#FFF0F6", "#FEF2F2", "#F0FDFA", "#FAF5FF", "#FFF7ED", "#F8FAFC", "#F1F5F9", "#EEF2F6", "#E0F2FE", "#E0F2F1", "#E8F5E9", "#F1F8E9", "#FFFDE7", "#FFF8E1", "#FFE0B2", "#FFCCBC", "#FCE4EC", "#F3E5F5", "#EDE7F6", "#E8EAF6", "#E1F5FE", "#E0F7FA", "#E2F3F5", "#F7F9FA"];
 
-    const dayPastelColors = [
-        "#FFF5F5", "#F0FDF4", "#EFF6FF", "#FDF4FF", "#FFFBEB", "#F5F5F7", "#E6FFFA",
-        "#FFF0F6", "#FEF2F2", "#F0FDFA", "#FAF5FF", "#FFF7ED", "#F8FAFC", "#F1F5F9",
-        "#EEF2F6", "#E0F2FE", "#E0F2F1", "#E8F5E9", "#F1F8E9", "#FFFDE7", "#FFF8E1",
-        "#FFE0B2", "#FFCCBC", "#FCE4EC", "#F3E5F5", "#EDE7F6", "#E8EAF6", "#E1F5FE",
-        "#E0F7FA", "#E2F3F5", "#F7F9FA"
-    ];
-
-    // Cấu hình API và Lưu vào LocalStorage
-    function saveApiUrlConfig() {
-        const inputVal = document.getElementById('api-url-input').value.trim();
-        if (!inputVal) { alert("Vui lòng điền link Web App!"); return; }
-        API_URL = inputVal;
-        localStorage.setItem('hy_workspace_api_url', API_URL);
-        alert("🎉 Kết nối thành công! Hệ thống tiến hành đồng bộ dữ liệu...");
-        loadDataFromGoogleSheets();
+    // HÀM PARSE FILE CSV THÀNH DỮ LIỆU ĐỂ HỆ THỐNG ĐỌC
+    function parseCSV(text) {
+        let lines = text.split(/\r\n|\n/);
+        let result = [];
+        for (let i = 0; i < lines.length; i++) {
+            let line = lines[i].trim();
+            if (!line) continue;
+            // Xử lý cơ bản chia theo dấu phẩy (Cấu trúc Sheet của bạn: Date_Key ở cột 1, JSON ở cột 2)
+            let firstComma = line.indexOf(',');
+            if (firstComma === -1) continue;
+            let key = line.substring(0, firstComma).replace(/^"|"$/g, '').trim();
+            let jsonStr = line.substring(firstComma + 1).trim();
+            if (jsonStr.startsWith('"') && jsonStr.endsWith('"')) {
+                jsonStr = jsonStr.substring(1, jsonStr.length - 1).replace(/""/g, '"');
+            }
+            result.push({ key: key, value: jsonStr });
+        }
+        return result;
     }
 
-    // Hàm gọi API lõi (thay cho lệnh google.script.run cũ)
-    async function callFetchAPI(params, bodyData = null) {
-        if (!API_URL) {
-            showLoading(false);
-            return null;
-        }
-        
-        let url = API_URL;
-        if (params) {
-            let queryString = Object.keys(params).map(key => key + '=' + encodeURIComponent(params[key])).join('&');
-            url += (url.includes('?') ? '&' : '?') + queryString;
-        }
-
+    // HÀM TẢI DỮ LIỆU TRỰC TIẾP TỪ LINK SHEET XUẤT BẢN KHÔNG QUA APPSCRIPT
+    async function loadDataFromGoogleSheets() {
+        showLoading(true);
         try {
-            let options = { method: 'GET' };
-            if (bodyData) {
-                options = {
-                    method: 'POST',
-                    body: JSON.stringify(bodyData),
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' } // Tránh lỗi CORS Preflight
-                };
-            }
-            let res = await fetch(url, options);
-            return await res.json();
+            let response = await fetch(CSV_URL);
+            let csvText = await response.text();
+            let parsedData = parseCSV(csvText);
+            
+            db = {}; hy_resources = []; hy_posts = [];
+            
+            parsedData.forEach(row => {
+                if(row.key === "Date_Key" || row.key === "Resources_JSON" || row.key === "Posts_JSON") return;
+                
+                // Phân loại luồng dữ liệu dựa trên cấu trúc Key
+                if (row.key.startsWith("2026-")) {
+                    try { db[row.key] = JSON.parse(row.value); } catch(e){}
+                } else if (row.key === "resources") {
+                    try { hy_resources = JSON.parse(row.value); } catch(e){}
+                } else if (row.key === "posts") {
+                    try { hy_posts = JSON.parse(row.value); } catch(e){}
+                }
+            });
+
+            renderChecklistValues();
+            let dashboardMode = 'year';
+            if (currentView === 'dashboard') dashboardMode = isDateFilteringActive ? 'day' : 'month';
+            calculateAndRenderDashboard(dashboardMode);
+            if (currentView === 'resources') { renderResourcesCards(); renderPostsCards(); }
         } catch (err) {
-            console.error("Lỗi API kết nối:", err);
-            return null;
+            console.error("Lỗi khi kéo dữ liệu CSV công khai:", err);
         }
+        showLoading(false);
     }
 
     window.addEventListener('scroll', function() {
@@ -794,17 +718,6 @@
         }
     }
 
-    function updateLocationPrompt() {
-        let currentLoc = document.getElementById('val-location-text').innerText;
-        let nextLoc = prompt("🌸 Nhập vị trí làm việc mới của bạn nhé:", currentLoc);
-        if(nextLoc !== null && nextLoc.trim() !== "") document.getElementById('val-location-text').innerText = nextLoc.trim();
-    }
-    function updateWeatherPrompt() {
-        let currentWea = document.getElementById('val-weather-text').innerText;
-        let nextWea = prompt("🌸 Cập nhật tình hình thời tiết hiện tại:", currentWea);
-        if(nextWea !== null && nextWea.trim() !== "") document.getElementById('val-weather-text').innerText = nextWea.trim();
-    }
-
     function toggleCalendarSection() {
         const container = document.getElementById('calendar-container');
         const icon = document.getElementById('calendar-toggle-icon');
@@ -818,23 +731,6 @@
         const fbHeader = document.getElementById('dash-fb-trigger');
         fbCard.classList.toggle('collapsed');
         fbHeader.classList.toggle('collapsed');
-    }
-
-    async function loadDataFromGoogleSheets() {
-        if(!API_URL) return;
-        showLoading(true);
-        let result = await callFetchAPI({ action: "getAllData" });
-        if(result) {
-            db = result.db || {}; hy_resources = result.resources || []; hy_posts = result.posts || [];
-            renderChecklistValues();
-            
-            let dashboardMode = 'year';
-            if (currentView === 'dashboard') dashboardMode = isDateFilteringActive ? 'day' : 'month';
-            calculateAndRenderDashboard(dashboardMode);
-            
-            if (currentView === 'resources') { renderResourcesCards(); renderPostsCards(); }
-        }
-        showLoading(false);
     }
     
     function showLoading(status) { document.getElementById('sync-loading').style.display = status ? 'block' : 'none'; }
@@ -900,19 +796,6 @@
         if(body) body.style.display = document.getElementById(cardId).classList.contains('expanded') ? 'block' : 'none';
         let icon = document.getElementById(cardId).querySelector('.toggle-icon');
         if(icon) icon.innerText = document.getElementById(cardId).classList.contains('expanded') ? '▲' : '▼';
-    }
-
-    window.showPopupSelection = function(segment, mode) {
-        const targetPopup = document.getElementById(`popup-${mode}-${segment}`);
-        const isShowing = targetPopup.style.display === 'flex';
-        document.querySelectorAll('.popup-selection').forEach(p => p.style.display = 'none');
-        if (!isShowing) targetPopup.style.display = 'flex';
-    }
-
-    function isFutureDate(d) {
-        let today = new Date(); today.setHours(0,0,0,0);
-        let checkDate = new Date(d); checkDate.setHours(0,0,0,0);
-        return checkDate > today;
     }
 
     window.adjustDate = function(days) {
@@ -1039,18 +922,6 @@
         for(let i=1; i<=totalDays; i++) { let d = new Date(YEAR, m, i); createCalButton(d, i, grid, m); }
     }
 
-    window.writeNoteOnCalendar = async function(dateKey) {
-        initDayKey(dateKey);
-        let oldNote = db[dateKey].note || "";
-        let newNote = prompt("🌸 Nhập thông tin ghi chú cho ngày này:", oldNote);
-        if (newNote !== null) {
-            db[dateKey].note = newNote.trim(); showLoading(true);
-            await callFetchAPI(null, { action: "saveLich", dateKey: dateKey, dayDataObj: db[dateKey] });
-            selectCalendarMonth(activeDashboardMonth); 
-            showLoading(false);
-        }
-    }
-
     function createCalButton(dateObj, mainText, targetGrid, monthIdx) {
         let btn = document.createElement('button'); btn.className = 'cal-btn';
         let dayIdx = parseInt(mainText) - 1;
@@ -1068,7 +939,7 @@
         if(formatDateKey(selectedDate) === key && isDateFilteringActive) btn.classList.add('active');
 
         if(db[key] && db[key].note && db[key].note.trim() !== "") { btn.title = `📝 Ghi chú: ${db[key].note.trim()}`; } 
-        else { btn.title = "Nhấp đúp chuột để thêm ghi chú nhanh 🌸"; }
+        else { btn.title = "Đồng bộ từ Google Sheets 🌸"; }
 
         let lunarStr = getLunarString(dateObj); let htmlStr = `<span>${mainText}</span>`;
         if(lunarStr) htmlStr += `<span class="lunar-date">(${lunarStr})</span>`;
@@ -1095,7 +966,6 @@
             renderChecklistValues(); 
             calculateAndRenderDashboard(currentView === 'year' ? 'year' : 'day');
         };
-        btn.ondblclick = () => { writeNoteOnCalendar(key); };
         targetGrid.appendChild(btn);
     }
 
@@ -1213,14 +1083,6 @@
         let tasksData = dayData.tasks || {}; let customsData = dayData.customs || {};
         let totalCheckedGlobal = 0; let totalCountGlobal = TOTAL_FIXED_TASKS;
 
-        let futureLocked = isFutureDate(selectedDate);
-
-        const allSegments = ['tiktok', 'instagram', 'fb-hyhy', 'fb-hyblog', 'fb-shokaimono', 'zalo'];
-        allSegments.forEach(seg => {
-            let btnAdd = document.getElementById(`btn-add-${seg}`);
-            if(btnAdd) btnAdd.style.display = futureLocked ? 'none' : 'inline-flex';
-        });
-
         for (const segment in segmentMapping) {
             let customContainer = document.getElementById(`custom-container-${segment}`);
             if(customContainer) customContainer.innerHTML = '';
@@ -1228,7 +1090,7 @@
             segmentMapping[segment].forEach(id => {
                 let tData = tasksData[id] || { checked: false };
                 let cb = document.getElementById(`check-${id}`); let lbl = document.getElementById(`lbl-${id}`);
-                if(cb) { cb.checked = tData.checked; cb.disabled = futureLocked; }
+                if(cb) { cb.checked = tData.checked; }
                 if(tData.checked) { if(lbl) lbl.classList.add('completed'); totalCheckedGlobal++; } else { if(lbl) lbl.classList.remove('completed'); }
             });
 
@@ -1239,14 +1101,12 @@
                 
                 let lbl = document.createElement('label');
                 lbl.className = `inline-task-box ${cTask.checked ? 'completed' : ''} ${isPrepItem ? 'prep-item-box' : ''}`;
-                let isCheckboxDisabled = (futureLocked && !isPrepItem);
 
                 lbl.innerHTML = `
                     <span class="d-flex align-items-center">
-                        <input type="checkbox" ${cTask.checked ? 'checked' : ''} ${isCheckboxDisabled ? 'disabled' : ''} onchange="toggleCustomTask('${segment}', ${cTask.id})">
+                        <input type="checkbox" ${cTask.checked ? 'checked' : ''} disabled>
                         <div><span>${cTask.text}</span>${cTask.note ? `<span class="prep-text-desc">🌸 Chi tiết chuẩn bị: ${cTask.note}</span>` : ''}</div>
                     </span>
-                    <button class="delete-custom-btn" onclick="deleteCustomTask('${segment}', ${cTask.id}); event.preventDefault();">×</button>
                 `;
                 if(customContainer) customContainer.appendChild(lbl);
             });
@@ -1257,7 +1117,6 @@
         zaloIds.forEach(id => { if(tasksData[id] && tasksData[id].checked) totalZaloFixedChecked++; });
         let bulkCheck = document.getElementById('zalo-bulk-checkbox');
         bulkCheck.checked = (totalZaloFixedChecked === zaloIds.length);
-        bulkCheck.disabled = futureLocked;
 
         for(const app in appMapping) {
             let appChecked = 0; let appTotal = appMapping[app].length;
@@ -1278,100 +1137,7 @@
         document.getElementById('progress-text').innerText = `${pctGlobal}% (${totalCheckedGlobal}/${totalCountGlobal})`;
     }
 
-    window.updateTask = function(id) { 
-        let key = formatDateKey(selectedDate); initDayKey(key); 
-        db[key].tasks[id].checked = document.getElementById(`check-${id}`).checked; 
-        saveLichData(key); 
-    }
-    
-    window.handleZaloBulkToggle = function(event) {
-        if(isFutureDate(selectedDate)) return;
-        let bulkCheck = document.getElementById('zalo-bulk-checkbox');
-        if(event.target !== bulkCheck) { bulkCheck.checked = !bulkCheck.checked; }
-        let targetState = bulkCheck.checked;
-        let key = formatDateKey(selectedDate); initDayKey(key);
-        let zaloIds = segmentMapping['zalo'];
-        zaloIds.forEach(id => { db[key].tasks[id].checked = targetState; });
-        saveLichData(key);
-    }
-
-    window.addCustomToApp = function(segment, type, mode) {
-        let key = formatDateKey(selectedDate); initDayKey(key);
-        if(!db[key].customs[segment]) db[key].customs[segment] = [];
-        
-        let noteText = ""; 
-        if(mode === 'prep') { 
-            noteText = prompt(`🌸 Chi tiết nội dung chuẩn bị:`); 
-            if(noteText === null || noteText.trim() === "") return; 
-        }
-        
-        let searchKeyword = (type === 'Video') ? 'video' : 'bản dịch';
-        let count = 0;
-        if(segmentMapping[segment]) {
-            segmentMapping[segment].forEach(id => {
-                let lbl = document.getElementById(`lbl-${id}`);
-                if(lbl && lbl.innerText.toLowerCase().includes(searchKeyword)) count++;
-            });
-        }
-        db[key].customs[segment].forEach(c => { if(c.text.toLowerCase().includes(searchKeyword)) count++; });
-        
-        let nextNumber = count + 1; 
-        let finalLabel = `${type} ${nextNumber}`; 
-        
-        db[key].customs[segment].push({ 
-            id: Date.now(), text: finalLabel, note: noteText ? noteText.trim() : "", checked: false, isPrep: (mode === 'prep')
-        });
-        document.getElementById(`popup-${mode}-${segment}`).style.display = 'none'; 
-        saveLichData(key);
-    }
-    
-    window.toggleCustomTask = function(segment, customId) { let key = formatDateKey(selectedDate); let target = db[key].customs[segment].find(c => c.id === customId); if(target) target.checked = !target.checked; saveLichData(key); }
-    window.deleteCustomTask = function(segment, customId) { let key = formatDateKey(selectedDate); db[key].customs[segment] = db[key].customs[segment].filter(c => c.id !== customId); saveLichData(key); }
-    
-    function initDayKey(key) { 
-        if(!db[key]) db[key] = { tasks: {}, customs: {}, note: '' }; 
-        if(!db[key].tasks) db[key].tasks = {}; 
-        if(!db[key].customs) db[key].customs = {}; 
-        for(let seg in segmentMapping) { if(!db[key].customs[seg]) db[key].customs[seg] = []; } 
-        const allIds = [1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21]; 
-        allIds.forEach(id => { if(!db[key].tasks[id]) db[key].tasks[id] = { checked: false }; }); 
-    }
     function formatDateKey(d) { let mm = String(d.getMonth() + 1).padStart(2, '0'); let dd = String(d.getDate()).padStart(2, '0'); return `${d.getFullYear()}-${mm}-${dd}`; }
-    
-    async function saveLichData(key) { 
-        renderChecklistValues(); 
-        calculateAndRenderDashboard(currentView === 'year' ? 'year' : (currentView === 'dashboard' ? (isDateFilteringActive ? 'day' : 'month') : 'day'));
-        showLoading(true); 
-        await callFetchAPI(null, { action: "saveLich", dateKey: key, dayDataObj: db[key] });
-        showLoading(false); 
-    }
-
-    function detectPlatformFromUrl(url) {
-        let lower = url.toLowerCase();
-        if (lower.includes('threads.net') || lower.includes('threads.com')) return "Threads";
-        if (lower.includes('xiaohongshu.com') || lower.includes('xhslink.com')) return "Xiaohongshu";
-        if (lower.includes('tiktok.com')) return "TikTok";
-        if (lower.includes('instagram.com')) return "Instagram";
-        if (lower.includes('facebook.com') || lower.includes('fb.watch')) return "Facebook";
-        if (lower.includes('youtube.com') || lower.includes('youtu.be')) return "YouTube";
-        return "Khác";
-    }
-
-    window.processAndSaveResource = async function() {
-        let urlInput = document.getElementById('resource-url-input'); let rawInput = urlInput.value.trim(); if(!rawInput) return;
-        let finalUrl = rawInput; let platform = detectPlatformFromUrl(rawInput); let username = "Nguồn ẩn danh";
-        if(platform === "Xiaohongshu") {
-            let firstSpaceIdx = rawInput.indexOf(' ');
-            if(firstSpaceIdx !== -1) { finalUrl = rawInput.substring(0, firstSpaceIdx).trim(); username = rawInput.substring(firstSpaceIdx).trim(); } 
-            else { let match = rawInput.match(/user\/([^\/\?]+)/i); username = (match && match[1]) ? match[1] : "XHS_User"; }
-        } else { let match = rawInput.match(/@([^\/\?]+)/i); if(match && match[1]) username = match[1]; }
-        hy_resources.push({ id: Date.now(), checked: false, link: finalUrl, platform: platform, account: username, cre: username });
-        urlInput.value = ''; renderResourcesCards(); showLoading(true); 
-        await callFetchAPI(null, { action: "saveResources", resourcesArray: hy_resources });
-        showLoading(false);
-    }
-    window.toggleResourceCheck = async function(id) { let target = hy_resources.find(r => r.id === id); if(target) target.checked = !target.checked; renderResourcesCards(); showLoading(true); await callFetchAPI(null, { action: "saveResources", resourcesArray: hy_resources }); showLoading(false); }
-    window.deleteResourceItem = async function(id) { hy_resources = hy_resources.filter(r => r.id !== id); renderResourcesCards(); showLoading(true); await callFetchAPI(null, { action: "saveResources", resourcesArray: hy_resources }); showLoading(false); }
     
     function renderResourcesCards() {
         let listArea = document.getElementById('resource-cards-list-area'); if(!listArea) return; listArea.innerHTML = '';
@@ -1380,29 +1146,19 @@
             let cardRow = document.createElement('div'); cardRow.className = `resource-item-row ${item.checked ? 'completed' : ''}`;
             cardRow.innerHTML = `
                 <div class="res-meta-left">
-                    <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleResourceCheck(${item.id})">
+                    <input type="checkbox" ${item.checked ? 'checked' : ''} disabled>
                     <a class="res-link-anchor" href="${item.link}" target="_blank">${item.link}</a>
                 </div>
                 <div class="res-meta-right">
                     <span class="badge-platform">${item.platform}</span>
                     <span class="res-acc-text" title="${item.account}">👤 ${item.account}</span>
                     <button class="btn-copy-mini" onclick="copyOneTouchCre('${item.cre}')">📋 Copy Cre</button>
-                    <button class="delete-custom-btn" onclick="deleteResourceItem(${item.id})">×</button>
                 </div>
             `;
             listArea.appendChild(cardRow);
         });
     }
 
-    window.processAndSavePublishedPost = async function() {
-        let postInput = document.getElementById('post-url-input'); let rawUrl = postInput.value.trim(); if (!rawUrl) return;
-        hy_posts.push({ id: Date.now(), link: rawUrl, platform: detectPlatformFromUrl(rawUrl) });
-        postInput.value = ''; renderPostsCards(); showLoading(true); 
-        await callFetchAPI(null, { action: "savePosts", postsArray: hy_posts });
-        showLoading(false);
-    }
-    window.deletePostItem = async function(id) { hy_posts = hy_posts.filter(p => p.id !== id); renderPostsCards(); showLoading(true); await callFetchAPI(null, { action: "savePosts", postsArray: hy_posts }); showLoading(false); }
-    
     function renderPostsCards() {
         let listArea = document.getElementById('post-cards-list-area'); if (!listArea) return; listArea.innerHTML = '';
         if(hy_posts.length === 0) { listArea.innerHTML = `<div style="font-size:0.8rem; color:#94a3b8; text-align:center; padding:10px;">Chưa có thành quả đăng tải nào nè~ 💮</div>`; return; }
@@ -1414,7 +1170,6 @@
                 </div>
                 <div class="res-meta-right">
                     <span class="badge-platform" style="background:#D1FAE5; border-color:#047857;">${item.platform}</span>
-                    <button class="delete-custom-btn" onclick="deletePostItem(${item.id})">×</button>
                 </div>
             `;
             listArea.appendChild(cardRow);
@@ -1425,34 +1180,9 @@
         let formattedCre = "Cre: " + text;
         navigator.clipboard.writeText(formattedCre).then(() => { alert(`🌸 Đã copy thành công: "${formattedCre}"`); }); 
     }
-    
-    window.clearEverything = async function() { 
-        if(confirm("Cảnh báo! Bạn có thực sự muốn xóa sạch toàn bộ dữ liệu trên Sheet không?")) { 
-            backup_db = JSON.parse(JSON.stringify(db)); backup_resources = JSON.parse(JSON.stringify(hy_resources)); backup_posts = JSON.parse(JSON.stringify(hy_posts));
-            db = {}; hy_resources = []; hy_posts = []; 
-            document.getElementById('btn-restore-action').style.display = 'inline-flex';
-            showLoading(true); 
-            await callFetchAPI(null, { action: "clearAll" });
-            renderChecklistValues(); calculateAndRenderDashboard('day'); renderResourcesCards(); renderPostsCards(); showLoading(false); 
-            alert("Đã xóa xong! Nếu bấm lầm, hãy nhấn nút 'Khôi Phục Liền' kế bên liền nha!");
-        } 
-    }
 
-    window.restoreBackupData = async function() {
-        if(!backup_db && !backup_resources && !backup_posts) { alert("Không tìm thấy dữ liệu sao lưu!"); return; }
-        showLoading(true);
-        db = JSON.parse(JSON.stringify(backup_db)); hy_resources = JSON.parse(JSON.stringify(backup_resources)); hy_posts = JSON.parse(JSON.stringify(backup_posts));
-        await callFetchAPI(null, { action: "restoreAll", db: db, resources: hy_resources, posts: hy_posts });
-        renderChecklistValues(); calculateAndRenderDashboard('day'); renderResourcesCards(); renderPostsCards();
-        document.getElementById('btn-restore-action').style.display = 'none'; showLoading(false);
-        alert("🎉 Toàn bộ dữ liệu cũ đã được khôi phục nguyên vẹn lên Google Sheets thành công!");
-    }
-
-    // Điền sẵn link API cũ nếu có lưu
-    if (API_URL) {
-        document.getElementById('api-url-input').value = API_URL;
-        loadDataFromGoogleSheets();
-    }
+    // KÍCH HOẠT QUÉT DỮ LIỆU TỰ ĐỘNG KHI MỞ TRANG
+    loadDataFromGoogleSheets();
     switchView('today');
 </script>
 </body>
